@@ -5,7 +5,9 @@
 
 #include "pch.h"
 #include "DirectXPage.xaml.h"
+#include <ppltasks.h>
 
+using namespace std;
 using namespace VBA10;
 
 using namespace Platform;
@@ -23,6 +25,11 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace concurrency;
+using namespace Windows::Storage::Pickers;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Windows::Storage::FileProperties;
+using namespace Windows::UI::ViewManagement;
 
 DirectXPage::DirectXPage():
 	m_windowVisible(true),
@@ -80,8 +87,53 @@ DirectXPage::DirectXPage():
 	// Run task on a dedicated high priority background thread.
 	m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
+	//copy DEMO ROm
+	auto settings = ApplicationData::Current->LocalSettings->Values;
+	if (!settings->HasKey("FIRSTSTART"))
+	{
+		settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
+		this->CopyDemoROM();
+	}
+
+	//start
 	m_main = std::unique_ptr<VBA10Main>(new VBA10Main(m_deviceResources));
 	m_main->StartRenderLoop();
+}
+
+void DirectXPage::CopyDemoROM(void)
+{
+	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+	create_task(installDir->GetFolderAsync("Assets/")).then([](task<StorageFolder ^> t)
+	{
+		StorageFolder ^assetsFolder = t.get();
+		return assetsFolder->GetFileAsync("Bunny Advance (Demo).gba");
+
+	}).then([](StorageFile ^file)
+	{
+
+		file->CopyAsync(ApplicationData::Current->LocalFolder);
+
+#if _DEBUG
+		wstring wstr((ApplicationData::Current->LocalFolder->Path->Data()));
+		OutputDebugStringW((wstr + L"\n").c_str());
+#endif
+	}).then([](task<void> t)
+	{
+		try
+		{
+			t.get();
+			// .get() didn't throw, so we succeeded.
+			OutputDebugStringW(L"File copied\n");
+		}
+		catch (Platform::Exception ^ex)
+		{
+#if _DEBUG
+			Platform::String ^message = ex->Message;
+			wstring wstr(message->Begin(), message->End());
+			OutputDebugStringW(wstr.c_str());
+#endif
+		}
+	});
 }
 
 DirectXPage::~DirectXPage()
@@ -190,4 +242,16 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 	critical_section::scoped_lock lock(m_main->GetCriticalSection());
 	m_deviceResources->SetLogicalSize(e->NewSize);
 	m_main->CreateWindowSizeDependentResources();
+}
+
+
+
+
+void VBA10::DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
+	String^ name = "Bunny Advance (Demo).gba";
+	create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
+		//Do something with the rom file 	
+	});
 }
