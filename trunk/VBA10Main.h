@@ -2,8 +2,8 @@
 
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
-#include "Content\Sample3DSceneRenderer.h"
-#include "Content\SampleFpsTextRenderer.h"
+#include "Sample3DSceneRenderer.h"
+#include "SampleFpsTextRenderer.h"
 
 // Renders Direct2D and 3D content on the screen.
 namespace VBA10
