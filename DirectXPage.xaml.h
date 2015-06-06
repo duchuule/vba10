@@ -25,6 +25,12 @@ namespace VBA10
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 
 	private:
+		//variables
+		bool loadingDialogOpen;
+
+		//function
+		void CopyDemoROM(void);
+
 		// XAML low-level rendering event handler.
 		void OnRendering(Platform::Object^ sender, Platform::Object^ args);
 
@@ -54,6 +60,8 @@ namespace VBA10
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 		std::unique_ptr<VBA10Main> m_main; 
 		bool m_windowVisible;
+		void AppBarButton_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }
 
