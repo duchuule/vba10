@@ -8,9 +8,6 @@
       <UniqueIdentifier>bcaae759-a512-4dc6-bce9-b4d78f2470e0</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Filter Include="Content">
-      <UniqueIdentifier>bd0f28b9-2054-4434-b73d-45b8d1b8ac78</UniqueIdentifier>
-    </Filter>
     <ClInclude Include="Common\DirectXHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -38,6 +35,27 @@
     <Image Include="Assets\WideLogo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
+    <Filter Include="VBAM">
+      <UniqueIdentifier>{d4d980f5-df06-4e41-b19e-3f76f0196b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VBAM\apu">
+      <UniqueIdentifier>{da38798d-e4d9-4a6d-b466-d162e7476eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VBAM\common">
+      <UniqueIdentifier>{dec20c3a-9dd0-4a3c-90c7-bb355ad67040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VBAM\gb">
+      <UniqueIdentifier>{b74e5ea6-4840-4441-a063-56977c04526a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VBAM\gba">
+      <UniqueIdentifier>{96ff12e1-9b7a-449b-9871-661c27dcbcaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VBAM\zlib">
+      <UniqueIdentifier>{f75b5fa4-c5aa-401a-aabc-749c451e171c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Emulator">
+      <UniqueIdentifier>{47f33fd4-0f95-4237-a4a0-3540213c56ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -47,17 +65,419 @@
     <ClCompile Include="VBA10Main.cpp" />
     <ClCompile Include="DirectXPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
+    <ClCompile Include="Sample3DSceneRenderer.cpp" />
+    <ClCompile Include="SampleFpsTextRenderer.cpp" />
+    <ClCompile Include="VBAM\Util.cpp">
+      <Filter>VBAM</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Blip_Buffer.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Effects_Buffer.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Gb_Apu.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Gb_Apu_State.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Gb_Oscs.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\apu\Multi_Buffer.cpp">
+      <Filter>VBAM\apu</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\common\memgzio.c">
+      <Filter>VBAM\common</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\common\Patch.cpp">
+      <Filter>VBAM\common</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\common\XAudio2.cpp">
+      <Filter>VBAM\common</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\GB.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbCheats.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbDis.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbGfx.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbGlobals.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbMemory.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbPrinter.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbSGB.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gb\gbSound.cpp">
+      <Filter>VBAM\gb</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\agbprint.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\armdis.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\bios.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Cheats.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\CheatSearch.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\EEprom.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\elf.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Flash.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBA.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBA-arm.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\gbafilter.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBAGfx.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBALink.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBASockClient.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\GBA-thumb.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Globals.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode0.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode1.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode2.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode3.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode4.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Mode5.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\RTC.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Sound.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="VBAM\gba\Sram.cpp">
+      <Filter>VBAM\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="CheatData.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerInput.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="CXBOXController.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSpriteBatch.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Emulator.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="EmulatorFileHandler.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="EmulatorRenderer.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="EmulatorSettings.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardInput.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="stringhelper.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3DBase.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="VBA10Main.h" />
     <ClInclude Include="DirectXPage.xaml.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Content\Sample3DSceneRenderer.h" />
-    <ClInclude Include="Content\SampleFpsTextRenderer.h" />
-    <ClInclude Include="Content\ShaderStructures.h" />
+    <ClInclude Include="Sample3DSceneRenderer.h" />
+    <ClInclude Include="SampleFpsTextRenderer.h" />
+    <ClInclude Include="ShaderStructures.h" />
+    <ClInclude Include="VBAM\NLS.h">
+      <Filter>VBAM</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\System.h">
+      <Filter>VBAM</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\Util.h">
+      <Filter>VBAM</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\blargg_common.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\blargg_config.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\blargg_source.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\Blip_Buffer.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\Effects_Buffer.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\Gb_Apu.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\Gb_Oscs.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\apu\Multi_Buffer.h">
+      <Filter>VBAM\apu</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\Array.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\memgzio.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\Patch.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\Port.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\RingBuffer.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\SoundDriver.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\common\Types.h">
+      <Filter>VBAM\common</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gb.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbCheats.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbCodes.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbCodesCB.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbGlobals.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbMemory.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbPrinter.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbSGB.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gb\gbSound.h">
+      <Filter>VBAM\gb</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\agbprint.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\armdis.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\bios.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\Cheats.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\CheatSearch.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\EEprom.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\elf.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\Flash.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBA.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBAcpu.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\gbafilter.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBAGfx.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBAinline.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBALink.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\GBASockClient.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\Globals.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\RTC.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\Sound.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\gba\Sram.h">
+      <Filter>VBAM\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\zlib\zconf.h">
+      <Filter>VBAM\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\zlib\zlib.h">
+      <Filter>VBAM\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatData.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerInput.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="CXBOXController.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSpriteBatch.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Emulator.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="EmulatorFileHandler.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="EmulatorRenderer.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="EmulatorSettings.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardInput.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="OnResizeBuffer.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="stringhelper.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="EmulatorInput.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3DBase.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXHelper.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -67,12 +487,21 @@
     <None Include="Assets\Bunny Advance (Demo).gba">
       <Filter>Assets</Filter>
     </None>
+    <None Include="SpriteBatch.hlsli">
+      <Filter>Emulator</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Content\SamplePixelShader.hlsl" />
-    <FxCompile Include="Content\SampleVertexShader.hlsl" />
+    <FxCompile Include="SamplePixelShader.hlsl" />
+    <FxCompile Include="SampleVertexShader.hlsl" />
+    <FxCompile Include="SpriteBatch_PS.hlsl">
+      <Filter>Emulator</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteBatch_VS.hlsl">
+      <Filter>Emulator</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
