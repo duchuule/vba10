@@ -10,6 +10,9 @@
 #include "Common\DeviceResources.h"
 #include "VBA10Main.h"
 
+
+
+
 namespace VBA10
 {
 	/// <summary>
