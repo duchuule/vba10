@@ -253,6 +253,12 @@
     <ClCompile Include="Direct3DBase.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
+    <ClCompile Include="vbaFunctions.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualControllerInput.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -476,6 +482,9 @@
       <Filter>Emulator</Filter>
     </ClInclude>
     <ClInclude Include="DirectXHelper.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="virtualcontrollerinput.h">
       <Filter>Emulator</Filter>
     </ClInclude>
   </ItemGroup>

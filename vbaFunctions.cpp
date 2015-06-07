@@ -5,7 +5,7 @@
 #include "Emulator.h"
 #include "EmulatorSettings.h"
 
-using namespace Win8Snes9x;
+using namespace VBA10;
 
 bool enableTurboMode = false;
 

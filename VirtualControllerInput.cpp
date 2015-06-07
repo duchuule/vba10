@@ -93,7 +93,7 @@
 
 using namespace Windows::Foundation;
 
-namespace Win8Snes9x
+namespace VBA10
 {
 	VirtualControllerInput *VirtualControllerInput::instance = nullptr;
 
