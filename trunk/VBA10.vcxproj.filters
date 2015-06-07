@@ -499,6 +499,9 @@
     <None Include="SpriteBatch.hlsli">
       <Filter>Emulator</Filter>
     </None>
+    <None Include="Assets\vba-over.ini">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
@@ -512,5 +515,28 @@
     <FxCompile Include="SpriteBatch_VS.hlsl">
       <Filter>Emulator</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\pad_buttons.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\pad_cross.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\pad_l_button.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\pad_r_button.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\pad_start_select.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ThumbStick.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\ThumbStickCenter.dds">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

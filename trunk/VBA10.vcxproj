@@ -188,9 +188,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.scale-100.png" />
+    <Image Include="Assets\pad_buttons.dds" />
+    <Image Include="Assets\pad_cross.dds" />
+    <Image Include="Assets\pad_l_button.dds" />
+    <Image Include="Assets\pad_r_button.dds" />
+    <Image Include="Assets\pad_start_select.dds" />
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png" />
+    <Image Include="Assets\ThumbStick.dds" />
+    <Image Include="Assets\ThumbStickCenter.dds" />
     <Image Include="Assets\WideLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +507,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Assets\Bunny Advance (Demo).gba">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="Assets\vba-over.ini">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="SpriteBatch.hlsli" />

@@ -34,7 +34,7 @@ VBA10Main::~VBA10Main()
 }
 
 // Updates application state when the window size changes (e.g. device orientation change)
-void VBA10Main::CreateWindowSizeDependentResources() 
+void VBA10Main::CreateWindowSizeDependentResources()
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
 	m_sceneRenderer->CreateWindowSizeDependentResources();
@@ -73,7 +73,7 @@ void VBA10Main::StopRenderLoop()
 }
 
 // Updates the application state once per frame.
-void VBA10Main::Update() 
+void VBA10Main::Update()
 {
 	ProcessInput();
 
@@ -95,7 +95,7 @@ void VBA10Main::ProcessInput()
 
 // Renders the current frame according to the current application state.
 // Returns true if the frame was rendered and is ready to be displayed.
-bool VBA10Main::Render() 
+bool VBA10Main::Render()
 {
 	// Don't try to render anything before the first Update.
 	if (m_timer.GetFrameCount() == 0)

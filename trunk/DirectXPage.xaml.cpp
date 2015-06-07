@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "DirectXPage.xaml.h"
 #include <ppltasks.h>
+#include "EmulatorFileHandler.h"
 
 using namespace std;
 using namespace VBA10;
@@ -30,6 +31,8 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
+
+extern bool enableTurboMode;
 
 DirectXPage::DirectXPage():
 	m_windowVisible(true),
@@ -247,11 +250,12 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 
 
-void VBA10::DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
 	String^ name = "Bunny Advance (Demo).gba";
 	create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
-		//Do something with the rom file 	
+		//Do something with the rom file 
+		LoadROMAsync(romFile, localFolder);
 	});
 }
