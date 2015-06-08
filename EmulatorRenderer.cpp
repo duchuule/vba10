@@ -85,9 +85,11 @@ namespace VBA10
 
 		//m_window = CoreWindow::GetForCurrentThread();
 
-		//no longer needs, we did this in constructor for DirectXPage
-		//CreateDeviceResources();
-		//CreateWindowSizeDependentResources();
+
+
+		//load textures and similar stuff 
+		CreateDeviceDependentResources();
+		CreateWindowSizeDependentResources();
 
 		this->emulator->ResizeBuffer(m_deviceResources->GetOutputSize().Width, m_deviceResources->GetOutputSize().Height);
 		this->controller = this->emulator->GetVirtualController();

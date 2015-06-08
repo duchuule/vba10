@@ -178,11 +178,11 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	if (m_windowVisible)
 	{
 		//need code to pause game here
-		m_main->StartRenderLoop();
+		//m_main->StartRenderLoop();
 	}
 	else
 	{
-		m_main->StopRenderLoop();
+		//m_main->StopRenderLoop();
 	}
 }
 
