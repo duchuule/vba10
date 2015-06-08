@@ -2,15 +2,16 @@
 #include "Emulator.h"
 #include "EmulatorSettings.h"
 
-#define CROSS_RECT_X		20
+//these positions are based on 1920x1080
+#define CROSS_RECT_X		20   //distance from left side of screen to left side of button
 #define CROSS_RECT_Y		100
 #define CROSS_RECT_WIDTH	230
 #define CROSS_RECT_HEIGHT	230
-#define BUTTONS_RECT_X		20
+#define BUTTONS_RECT_X		20 //distance from right side of screen to right side of button
 #define BUTTONS_RECT_Y		84
 #define BUTTONS_RECT_WIDTH	280
 #define BUTTONS_RECT_HEIGHT	280
-#define SS_RECT_X			850
+#define SS_RECT_X			0  //distance from center of screen to center of button
 #define SS_RECT_Y			100
 #define SS_RECT_WIDTH		240
 #define SS_RECT_HEIGHT		60
@@ -235,6 +236,7 @@ namespace VBA10
 		}
 		// 1920x1080 as reference value
 		float resolutionScale = this->emulator->GetHeight() / 1080.0f;
+
 		yOffset *= resolutionScale;
 		Windows::Foundation::Rect tmp;
 
@@ -256,7 +258,7 @@ namespace VBA10
 		this->padCrossRectangle.top -= yOffset;
 		this->padCrossRectangle.bottom -= yOffset;
 
-		this->CreateRectangleOnTheLeft(&tmp, SS_RECT_X, SS_RECT_Y, SS_RECT_WIDTH, SS_RECT_HEIGHT, resolutionScale);
+		this->CreateRectangleCenter(&tmp, SS_RECT_X, SS_RECT_Y, SS_RECT_WIDTH, SS_RECT_HEIGHT, resolutionScale);
 
 		tmp.Y += (1.0f - controllerScale) * (tmp.Height / 2.0f);
 		tmp.Height *= controllerScale;
@@ -508,6 +510,19 @@ namespace VBA10
 		rect->Height = scaledHeight;
 	}
 
+	void VirtualControllerInput::CreateRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
+	{
+		float scaledWidth = width * scale;
+		float scaledHeight = height * scale;
+		float scaledX = this->emulator->GetWidth() /2.0  - scaledWidth / 2.0f - x * scale;
+		float scaledY = this->emulator->GetHeight() - scaledHeight - (y * scale);
+
+		rect->X = scaledX;
+		rect->Y = scaledY;
+		rect->Width = scaledWidth;
+		rect->Height = scaledHeight;
+	}
+
 	void VirtualControllerInput::CreateRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
 	{
 		float scaledWidth = width * scale;
@@ -520,6 +535,8 @@ namespace VBA10
 		rect->Width = scaledWidth;
 		rect->Height = scaledHeight;
 	}
+
+
 
 	void VirtualControllerInput::CreateTouchRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
 	{
