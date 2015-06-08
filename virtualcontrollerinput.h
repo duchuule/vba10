@@ -83,5 +83,6 @@ namespace VBA10
 		void CreateRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 		void CreateTouchRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 		void CreateTouchRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
+		void CreateTouchRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 	};
 }

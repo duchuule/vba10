@@ -49,11 +49,11 @@
 #define DOWN_RECT_WIDTH		CROSS_RECT_WIDTH + CROSS_TOUCH_OVERLAP * 2
 #define DOWN_RECT_HEIGHT	CROSS_TOUCH_WIDTH + CROSS_TOUCH_OVERLAP
 
-#define SELECT_RECT_X		SS_RECT_X
+#define SELECT_RECT_X		SS_RECT_X - SS_RECT_WIDTH / 2 + START_TOUCH_WIDTH
 #define SELECT_RECT_Y		SS_RECT_Y
 #define SELECT_RECT_WIDTH	SELECT_TOUCH_WIDTH
 #define SELECT_RECT_HEIGHT	SS_RECT_HEIGHT
-#define START_RECT_X		SS_RECT_X + SS_RECT_WIDTH - START_TOUCH_WIDTH
+#define START_RECT_X		SS_RECT_X + SS_RECT_WIDTH / 2- START_TOUCH_WIDTH
 #define START_RECT_Y		SS_RECT_Y
 #define START_RECT_WIDTH	START_TOUCH_WIDTH
 #define START_RECT_HEIGHT	SS_RECT_HEIGHT
@@ -372,13 +372,13 @@ namespace VBA10
 			this->upRect.Width = this->downRect.Width;
 		}
 
-		this->CreateTouchRectangleOnTheLeft(&this->startRect, START_RECT_X, START_RECT_Y, START_RECT_WIDTH, START_RECT_HEIGHT, resolutionScale);
+		this->CreateTouchRectangleCenter(&this->startRect, START_RECT_X, START_RECT_Y, START_RECT_WIDTH, START_RECT_HEIGHT, resolutionScale);
 		this->startRect.Width *= controllerScale;
 		this->startRect.Y += (1.0f - controllerScale) * (this->startRect.Height / 2.0f);
 		this->startRect.Height *= controllerScale;
 		
 
-		this->CreateTouchRectangleOnTheLeft(&this->selectRect, SELECT_RECT_X, SELECT_RECT_Y, SELECT_RECT_WIDTH, SELECT_RECT_HEIGHT, resolutionScale);
+		this->CreateTouchRectangleCenter(&this->selectRect, SELECT_RECT_X, SELECT_RECT_Y, SELECT_RECT_WIDTH, SELECT_RECT_HEIGHT, resolutionScale);
 		this->selectRect.X += (1.0f - controllerScale) * this->selectRect.Width;
 		this->selectRect.Width *= controllerScale;
 		this->selectRect.Y += (1.0f - controllerScale) * (this->selectRect.Height / 2.0f);
@@ -514,7 +514,7 @@ namespace VBA10
 	{
 		float scaledWidth = width * scale;
 		float scaledHeight = height * scale;
-		float scaledX = this->emulator->GetWidth() /2.0  - scaledWidth / 2.0f - x * scale;
+		float scaledX = this->emulator->GetWidth() /2.0  - scaledWidth / 2.0f + x * scale;
 		float scaledY = this->emulator->GetHeight() - scaledHeight - (y * scale);
 
 		rect->X = scaledX;
@@ -545,6 +545,20 @@ namespace VBA10
 		float scaledHeight = height * scale;
 		float scaledX = (x * scale);
 		float scaledY = (this->emulator->GetHeight()  / windowscale) - scaledHeight - (y * scale);
+
+		rect->X = scaledX;
+		rect->Y = scaledY;
+		rect->Width = scaledWidth;
+		rect->Height = scaledHeight;
+	}
+
+	void VirtualControllerInput::CreateTouchRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
+	{
+		float windowscale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+		float scaledWidth = width * scale;
+		float scaledHeight = height * scale;
+		float scaledX = this->emulator->GetWidth() / windowscale / 2.0 - scaledWidth / 2.0f + x * scale;
+		float scaledY = (this->emulator->GetHeight() / windowscale) - scaledHeight - (y * scale);
 
 		rect->X = scaledX;
 		rect->Y = scaledY;
