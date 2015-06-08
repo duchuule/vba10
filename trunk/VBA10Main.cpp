@@ -9,15 +9,28 @@ using namespace Concurrency;
 
 // Loads and initializes application assets when the application is loaded.
 VBA10Main::VBA10Main(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
-	m_deviceResources(deviceResources), m_pointerLocationX(0.0f)
+	m_deviceResources(deviceResources)
 {
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	// TODO: Replace this with your app's content initialization.
-	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
+	try
+	{
+		this->emulator = new EmulatorGame(false);
+		this->emulator->Initialize();
 
-	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+		renderer = std::unique_ptr<EmulatorRenderer>(new EmulatorRenderer(deviceResources));
+		m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+	}
+	catch (std::exception &e)
+	{
+	#if _DEBUG
+		string s(e.what());
+		OutputDebugStringA(s.c_str());
+	#endif
+	}
+	
 
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
@@ -37,7 +50,7 @@ VBA10Main::~VBA10Main()
 void VBA10Main::CreateWindowSizeDependentResources()
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
-	m_sceneRenderer->CreateWindowSizeDependentResources();
+	renderer->CreateWindowSizeDependentResources();
 }
 
 void VBA10Main::StartRenderLoop()
@@ -69,29 +82,26 @@ void VBA10Main::StartRenderLoop()
 
 void VBA10Main::StopRenderLoop()
 {
-	m_renderLoopWorker->Cancel();
+	if (m_renderLoopWorker)
+		m_renderLoopWorker->Cancel();
 }
 
 // Updates the application state once per frame.
 void VBA10Main::Update()
 {
-	ProcessInput();
+	//process input from user 
+	//ProcessInput();
 
 	// Update scene objects.
 	m_timer.Tick([&]()
 	{
 		// TODO: Replace this with your app's content update functions.
-		m_sceneRenderer->Update(m_timer);
+		renderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
 	});
 }
 
-// Process all input from the user before updating game state
-void VBA10Main::ProcessInput()
-{
-	// TODO: Add per frame input handling here.
-	m_sceneRenderer->TrackingUpdate(m_pointerLocationX);
-}
+
 
 // Renders the current frame according to the current application state.
 // Returns true if the frame was rendered and is ready to be displayed.
@@ -119,7 +129,7 @@ bool VBA10Main::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	m_sceneRenderer->Render();
+	renderer->Render();
 	m_fpsTextRenderer->Render();
 
 	return true;
@@ -128,14 +138,14 @@ bool VBA10Main::Render()
 // Notifies renderers that device resources need to be released.
 void VBA10Main::OnDeviceLost()
 {
-	m_sceneRenderer->ReleaseDeviceDependentResources();
+	renderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
 void VBA10Main::OnDeviceRestored()
 {
-	m_sceneRenderer->CreateDeviceDependentResources();
+	renderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }

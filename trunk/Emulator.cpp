@@ -225,23 +225,22 @@ namespace VBA10
 
 	void EmulatorGame::Pause(void)
 	{
-		//emulating = FALSE;
+
 		if(emulating)
 		{
-			EnterCriticalSection(&pauseSync);
+			//EnterCriticalSection(&pauseSync);
 			emulating = false;
 		}
-		//LeaveCriticalSection(&pauseSync);
+
 	}
 
 	void EmulatorGame::Unpause(void)
 	{
 		if(IsROMLoaded() && !emulating)
 		{
-			//emulating = TRUE;
-			//EnterCriticalSection(&pauseSync);
+
 			emulating = true;
-			LeaveCriticalSection(&pauseSync);
+			//LeaveCriticalSection(&pauseSync);
 		}
 	}
 

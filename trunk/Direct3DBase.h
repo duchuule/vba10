@@ -1,18 +1,16 @@
 ﻿#pragma once
 
-#include "DirectXHelper.h"
+#include "Common/DirectXHelper.h"
 #include <d3d11_1.h>
 
 using namespace Windows::UI::Xaml::Controls;
 
 // Helper class that initializes DirectX APIs for 3D rendering.
-ref class Direct3DBase abstract
+class Direct3DBase abstract
 {
-internal:
-	Direct3DBase();
 
 public:
-	virtual void Initialize(SwapChainBackgroundPanel ^swapChainPanel);// ISwapChainBackgroundPanelNative *swapChainPanelNative);// Windows::UI::Core::CoreWindow^ window);
+	Direct3DBase();
 	virtual void HandleDeviceLost();
 	virtual void CreateDeviceResources();
 	virtual void CreateWindowSizeDependentResources();
@@ -21,7 +19,7 @@ public:
 	virtual void Present();
 	virtual float ConvertDipsToPixels(float dips);
 
-protected private:
+private:
 	// Direct3D Objects.
 	Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
@@ -34,6 +32,5 @@ protected private:
 	Windows::Foundation::Size m_renderTargetSize;
 	Windows::Foundation::Rect m_windowBounds;
 	Windows::UI::Core::CoreWindow ^m_window;
-	SwapChainBackgroundPanel ^swapChainPanel;
 	Windows::Graphics::Display::DisplayOrientations m_orientation;
 };

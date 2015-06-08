@@ -98,9 +98,12 @@ DirectXPage::DirectXPage():
 		this->CopyDemoROM();
 	}
 
-	//start
+	//initalize main object for rendering
 	m_main = std::unique_ptr<VBA10Main>(new VBA10Main(m_deviceResources));
-	m_main->StartRenderLoop();
+
+	//start rendering
+	//DL: modified to not do it autmatically
+	//m_main->StartRenderLoop();
 }
 
 void DirectXPage::CopyDemoROM(void)
@@ -174,11 +177,11 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	m_windowVisible = args->Visible;
 	if (m_windowVisible)
 	{
-		m_main->StartRenderLoop();
+		m_main->emulator->Unpause();
 	}
 	else
 	{
-		m_main->StopRenderLoop();
+		m_main->emulator->Pause();
 	}
 }
 
@@ -205,32 +208,24 @@ void DirectXPage::OnDisplayContentsInvalidated(DisplayInformation^ sender, Objec
 	m_deviceResources->ValidateDevice();
 }
 
-// Called when the app bar button is clicked.
-void DirectXPage::AppBarButton_Click(Object^ sender, RoutedEventArgs^ e)
-{
-	// Use the app bar if it is appropriate for your app. Design the app bar, 
-	// then fill in event handlers (like this one).
-}
+
 
 void DirectXPage::OnPointerPressed(Object^ sender, PointerEventArgs^ e)
 {
 	// When the pointer is pressed begin tracking the pointer movement.
-	m_main->StartTracking();
+
 }
 
 void DirectXPage::OnPointerMoved(Object^ sender, PointerEventArgs^ e)
 {
 	// Update the pointer tracking code.
-	if (m_main->IsTracking())
-	{
-		m_main->TrackingUpdate(e->CurrentPoint->Position.X);
-	}
+
 }
 
 void DirectXPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
 {
 	// Stop tracking pointer movement when the pointer is released.
-	m_main->StopTracking();
+
 }
 
 void DirectXPage::OnCompositionScaleChanged(SwapChainPanel^ sender, Object^ args)
@@ -252,10 +247,12 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
-	String^ name = "Bunny Advance (Demo).gba";
-	create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
-		//Do something with the rom file 
-		LoadROMAsync(romFile, localFolder);
-	});
+	m_main->StartRenderLoop();
+
+	//StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
+	//String^ name = "Bunny Advance (Demo).gba";
+	//create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
+	//	//Do something with the rom file 
+	//	LoadROMAsync(romFile, localFolder);
+	//});
 }

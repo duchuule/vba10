@@ -5,42 +5,54 @@
 #include "VirtualControllerInput.h"
 #include "DXSpriteBatch.h"
 
+#include "..\Common\DeviceResources.h"
+#include "..\Common\StepTimer.h"
+
 using namespace Engine;
 using namespace DirectX;
 using namespace Microsoft::WRL;
 
 namespace VBA10
 {
-	ref class EmulatorRenderer sealed
-		: public Direct3DBase
+	class EmulatorRenderer
 	{
 	public:
-		static EmulatorRenderer ^GetInstance(void);
+		static std::unique_ptr<EmulatorRenderer> GetInstance(void);
 
-		EmulatorRenderer();
-		virtual ~EmulatorRenderer(void);
+		EmulatorRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		~EmulatorRenderer(void);
 
-		// Direct3DBase methods.
-		virtual void Initialize(SwapChainBackgroundPanel ^swapChainPanel) override;
-		virtual void HandleDeviceLost() override;
-		virtual void CreateDeviceResources() override;
-		virtual void Render() override;
-		virtual void UpdateForWindowSizeChange() override;
-	
-		void Update(void);
+		void CreateDeviceDependentResources();
+		void CreateWindowSizeDependentResources();
+		void ReleaseDeviceDependentResources();
+		void Render();
+		void Update(DX::StepTimer const& timer);
+
 		GameTime ^GetGameTime(void);
 
 	private:
-		static EmulatorRenderer ^renderer;
-		
+		// Cached pointer to device resources.
+		std::shared_ptr<DX::DeviceResources> m_deviceResources;
+
+		// Direct3D Objects.
+		Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
+		Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+		// Cached renderer properties.
+		D3D_FEATURE_LEVEL m_featureLevel;
+		Windows::Foundation::Size m_renderTargetSize;
+		Windows::Foundation::Rect m_windowBounds;
+		Windows::UI::Core::CoreWindow ^m_window;
+		Windows::Graphics::Display::DisplayOrientations m_orientation;
+
 		HANDLE waitEvent;
 
 		float lastElapsed;
 
-		/*Windows::Foundation::IAsyncAction ^threadAction;
-		HANDLE autosaveEvent;
-		HANDLE autosaveDoneEvent;	
-		bool stopThread;*/
+		//emulator variables
 		float autosaveElapsed;
 		float elapsedTime;
 		int frames;
@@ -87,5 +99,8 @@ namespace VBA10
 		void FPSCounter(void);
 		//void MeasureTime(void);
 		void Autosave(void);
+
+
+
 	};
 }

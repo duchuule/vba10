@@ -13,6 +13,7 @@
 
 
 
+
 namespace VBA10
 {
 	/// <summary>
@@ -30,6 +31,7 @@ namespace VBA10
 	private:
 		//variables
 		bool loadingDialogOpen;
+		
 
 		//function
 		void CopyDemoROM(void);
@@ -46,7 +48,6 @@ namespace VBA10
 		void OnDisplayContentsInvalidated(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
 
 		// Other event handlers.
-		void AppBarButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel^ sender, Object^ args);
 		void OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
 

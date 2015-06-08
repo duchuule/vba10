@@ -1,3 +1,5 @@
+#include "pch.h"
+#include "..\Common\DirectXHelper.h"
 #include "EmulatorRenderer.h"
 #include "EmulatorFileHandler.h"
 #include "EmulatorSettings.h"
@@ -5,6 +7,7 @@
 #include <sstream>
 #include "Vector4.h"
 #include "TextureLoader.h"
+
 
 #define CROSS_TEXTURE_FILE_NAME						L"Assets/pad_cross.dds"
 #define BUTTONS_TEXTURE_FILE_NAME					L"Assets/pad_buttons.dds"
@@ -58,21 +61,13 @@ namespace VBA10
 	extern bool autosaving;
 	extern bool gbaROMLoaded;
 
-	EmulatorRenderer ^EmulatorRenderer::renderer = nullptr;
 
-	EmulatorRenderer ^EmulatorRenderer::GetInstance(void)
-	{
-		return renderer;
-	}
-
-	EmulatorRenderer::EmulatorRenderer()
-		: emulator(EmulatorGame::GetInstance()),
-		frontbuffer(0), controller(nullptr), 
-		elapsedTime(0.0f), frames(0), autosaveElapsed(0.0f)
+	EmulatorRenderer::EmulatorRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
+		: frontbuffer(0), controller(nullptr), 
+		elapsedTime(0.0f), frames(0), autosaveElapsed(0.0f),
+		m_deviceResources(deviceResources)
 	{ 
 		this->gameTime = ref new GameTime();
-		renderer = this;
-
 		this->waitEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
 
 		swapEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
@@ -85,6 +80,28 @@ namespace VBA10
 		{
 		this->AutosaveAsync();
 		}), WorkItemPriority::High, WorkItemOptions::None);*/
+
+
+		m_window = CoreWindow::GetForCurrentThread();
+
+		//no longer needs, we did this in constructor for VBA10Main
+		//CreateDeviceResources();
+		//CreateWindowSizeDependentResources();
+
+		this->emulator->ResizeBuffer(this->m_renderTargetSize.Width, this->m_renderTargetSize.Height);
+		this->controller = this->emulator->GetVirtualController();
+
+		this->width = this->m_renderTargetSize.Width;
+		this->height = this->m_renderTargetSize.Height;
+
+		if (!this->dxSpriteBatch)
+		{
+			this->dxSpriteBatch = new DXSpriteBatch(this->m_d3dDevice.Get(), this->m_d3dContext.Get(), this->width, this->height);
+		}
+		else
+		{
+			this->dxSpriteBatch->OnResize(this->width, this->height);
+		}
 	}
 
 	EmulatorRenderer::~EmulatorRenderer(void)
@@ -106,38 +123,16 @@ namespace VBA10
 		this->dxSpriteBatch = nullptr;
 	}
 
-	void EmulatorRenderer::Initialize(SwapChainBackgroundPanel ^swapChainPanel) 
-	{
-		Direct3DBase::Initialize(swapChainPanel);
 
-		this->emulator->ResizeBuffer(this->m_renderTargetSize.Width, this->m_renderTargetSize.Height);
-		this->controller = this->emulator->GetVirtualController();
-
-		this->width = this->m_renderTargetSize.Width;
-		this->height = this->m_renderTargetSize.Height;
-
-		if(!this->dxSpriteBatch)
-		{
-			this->dxSpriteBatch = new DXSpriteBatch(this->m_d3dDevice.Get(), this->m_d3dContext.Get(), this->width, this->height);
-		}else
-		{
-			this->dxSpriteBatch->OnResize(this->width, this->height);
-		}
-	}
 
 	GameTime ^EmulatorRenderer::GetGameTime(void)
 	{
 		return this->gameTime;
 	}
 
-	void EmulatorRenderer::HandleDeviceLost(void)
-	{
 
-	}
-
-	void EmulatorRenderer::CreateDeviceResources()
+	void EmulatorRenderer::CreateDeviceDependentResources()
 	{
-		Direct3DBase::CreateDeviceResources();
 
 		this->m_d3dDevice->GetImmediateContext1(this->m_d3dContext.GetAddressOf());		
 		
@@ -247,10 +242,8 @@ namespace VBA10
 			);
 	}
 
-	void EmulatorRenderer::UpdateForWindowSizeChange()
+	void EmulatorRenderer::CreateWindowSizeDependentResources()
 	{
-		Direct3DBase::UpdateForWindowSizeChange();
-
 		//float scale = ((int)Windows::Graphics::Display::DisplayProperties::ResolutionScale) / 100.0f;
 		this->width = m_renderTargetSize.Width;// width * scale;
 		this->height = m_renderTargetSize.Height;//height * scale;
@@ -265,6 +258,16 @@ namespace VBA10
 
 		//this->emulator->ResizeBuffer(this->width, this->height);
 	}
+
+	void EmulatorRenderer::ReleaseDeviceDependentResources()
+	{
+		// Reset these member variables to ensure that UpdateForWindowSizeChange recreates all resources.
+		//NOTE: may not be correct
+		m_windowBounds.Width = 0;
+		m_windowBounds.Height = 0;
+		m_swapChain = nullptr;
+	}
+
 
 	void EmulatorRenderer::FPSCounter(void)
 	{
@@ -329,7 +332,7 @@ namespace VBA10
 		}
 	}
 
-	void EmulatorRenderer::Update(void)
+	void EmulatorRenderer::Update(DX::StepTimer const& timer)
 	{
 		this->gameTime->Update();
 
@@ -377,6 +380,8 @@ namespace VBA10
 		}
 		this->FPSCounter();
 	}
+
+
 	void EmulatorRenderer::Render()
 	{
 		m_d3dContext->OMSetRenderTargets(
@@ -579,8 +584,6 @@ namespace VBA10
 		}*/
 
 		this->dxSpriteBatch->End();
-
-		this->Present();
 
 		frames++;
 	}
