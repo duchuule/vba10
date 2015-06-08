@@ -83,17 +83,17 @@ namespace VBA10
 		}), WorkItemPriority::High, WorkItemOptions::None);*/
 
 
-		m_window = CoreWindow::GetForCurrentThread();
+		//m_window = CoreWindow::GetForCurrentThread();
 
 		//no longer needs, we did this in constructor for DirectXPage
 		//CreateDeviceResources();
 		//CreateWindowSizeDependentResources();
 
-		this->emulator->ResizeBuffer(this->m_renderTargetSize.Width, this->m_renderTargetSize.Height);
+		this->emulator->ResizeBuffer(m_deviceResources->GetOutputSize().Width, m_deviceResources->GetOutputSize().Height);
 		this->controller = this->emulator->GetVirtualController();
 
-		this->width = this->m_renderTargetSize.Width;
-		this->height = this->m_renderTargetSize.Height;
+		this->width = m_deviceResources->GetOutputSize().Width;
+		this->height = m_deviceResources->GetOutputSize().Height;
 
 		if (!this->dxSpriteBatch)
 		{
@@ -246,8 +246,8 @@ namespace VBA10
 	void EmulatorRenderer::CreateWindowSizeDependentResources()
 	{
 		//float scale = ((int)Windows::Graphics::Display::DisplayProperties::ResolutionScale) / 100.0f;
-		this->width = m_renderTargetSize.Width;// width * scale;
-		this->height = m_renderTargetSize.Height;//height * scale;
+		this->width = m_deviceResources->GetOutputSize().Width;// width * scale;
+		this->height = m_deviceResources->GetOutputSize().Height;//height * scale;
 
 		if(!this->dxSpriteBatch)
 		{
@@ -264,8 +264,8 @@ namespace VBA10
 	{
 		// Reset these member variables to ensure that UpdateForWindowSizeChange recreates all resources.
 		//NOTE: may not be correct
-		m_windowBounds.Width = 0;
-		m_windowBounds.Height = 0;
+		//m_windowBounds.Width = 0;
+		//m_windowBounds.Height = 0;
 		//m_swapChain = nullptr;
 	}
 
@@ -463,6 +463,7 @@ namespace VBA10
 			width = height;
 			break;
 		}
+		//TO DO NEXT: fix the calculation of draw rect
 		int leftOffset = (this->width - width) / 2;
 		RECT rect;
 		rect.left = leftOffset;

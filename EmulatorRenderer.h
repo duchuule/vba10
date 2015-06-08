@@ -41,12 +41,12 @@ namespace VBA10
 		//Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
 		//Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
-		// Cached renderer properties.
-		D3D_FEATURE_LEVEL m_featureLevel;
-		Windows::Foundation::Size m_renderTargetSize;
-		Windows::Foundation::Rect m_windowBounds;
-		Windows::UI::Core::CoreWindow ^m_window;
-		Windows::Graphics::Display::DisplayOrientations m_orientation;
+		// Cached renderer properties, no longer defined here, we moved it to Common/DeviceResources.h
+		//D3D_FEATURE_LEVEL m_featureLevel;
+		//Windows::Foundation::Size m_renderTargetSize;
+		//Windows::Foundation::Rect m_windowBounds;
+		//Windows::UI::Core::CoreWindow ^m_window;
+		//Windows::Graphics::Display::DisplayOrientations m_orientation;
 
 		HANDLE waitEvent;
 
