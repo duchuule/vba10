@@ -8,9 +8,6 @@
       <UniqueIdentifier>bcaae759-a512-4dc6-bce9-b4d78f2470e0</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <ClInclude Include="Common\DirectXHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\StepTimer.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -65,7 +62,6 @@
     <ClCompile Include="VBA10Main.cpp" />
     <ClCompile Include="DirectXPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Sample3DSceneRenderer.cpp" />
     <ClCompile Include="SampleFpsTextRenderer.cpp" />
     <ClCompile Include="VBAM\Util.cpp">
       <Filter>VBAM</Filter>
@@ -265,7 +261,6 @@
     <ClInclude Include="VBA10Main.h" />
     <ClInclude Include="DirectXPage.xaml.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Sample3DSceneRenderer.h" />
     <ClInclude Include="SampleFpsTextRenderer.h" />
     <ClInclude Include="ShaderStructures.h" />
     <ClInclude Include="VBAM\NLS.h">
@@ -481,11 +476,11 @@
     <ClInclude Include="Direct3DBase.h">
       <Filter>Emulator</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXHelper.h">
-      <Filter>Emulator</Filter>
-    </ClInclude>
     <ClInclude Include="virtualcontrollerinput.h">
       <Filter>Emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DirectXHelper.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

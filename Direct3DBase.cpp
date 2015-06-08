@@ -14,16 +14,6 @@ Direct3DBase::Direct3DBase()
 {
 }
 
-// Initialize the Direct3D resources required to run.
-void Direct3DBase::Initialize(SwapChainBackgroundPanel ^swapChainPanel)
-{
-	
-	m_window = CoreWindow::GetForCurrentThread();
-	this->swapChainPanel = swapChainPanel;
-	
-	CreateDeviceResources();
-	CreateWindowSizeDependentResources();
-}
 
 // Recreate all device resources and set them back to the current state.
 void Direct3DBase::HandleDeviceLost()
@@ -95,140 +85,140 @@ void Direct3DBase::CreateDeviceResources()
 // Allocate all memory resources that change on a window SizeChanged event.
 void Direct3DBase::CreateWindowSizeDependentResources()
 { 
-	// Store the window bounds so the next time we get a SizeChanged event we can
-	// avoid rebuilding everything if the size is identical.
-	m_windowBounds = m_window->Bounds;
+	//// Store the window bounds so the next time we get a SizeChanged event we can
+	//// avoid rebuilding everything if the size is identical.
+	//m_windowBounds = m_window->Bounds;
 
-	// Calculate the necessary swap chain and render target size in pixels.
-	float windowWidth = ConvertDipsToPixels(m_windowBounds.Width);
-	float windowHeight = ConvertDipsToPixels(m_windowBounds.Height);
-	
-	m_renderTargetSize.Width = windowWidth;
-	m_renderTargetSize.Height = windowHeight;
+	//// Calculate the necessary swap chain and render target size in pixels.
+	//float windowWidth = ConvertDipsToPixels(m_windowBounds.Width);
+	//float windowHeight = ConvertDipsToPixels(m_windowBounds.Height);
+	//
+	//m_renderTargetSize.Width = windowWidth;
+	//m_renderTargetSize.Height = windowHeight;
 
-	if(m_swapChain != nullptr)
-	{
-		// If the swap chain already exists, resize it.
-		DX::ThrowIfFailed(
-			m_swapChain->ResizeBuffers(
-				2, // Double-buffered swap chain.
-				static_cast<UINT>(m_renderTargetSize.Width),
-				static_cast<UINT>(m_renderTargetSize.Height),
-				DXGI_FORMAT_B8G8R8A8_UNORM,
-				0
-				)
-			);
-	}
-	else
-	{
-		// Otherwise, create a new one using the same adapter as the existing Direct3D device.
-		DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {0};
-		swapChainDesc.Width = static_cast<UINT>(m_renderTargetSize.Width); // Match the size of the window.
-		swapChainDesc.Height = static_cast<UINT>(m_renderTargetSize.Height);
-		swapChainDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // This is the most common swap chain format.
-		swapChainDesc.Stereo = false;
-		swapChainDesc.SampleDesc.Count = 1; // Don't use multi-sampling.
-		swapChainDesc.SampleDesc.Quality = 0;
-		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		swapChainDesc.BufferCount = 2; // Use double-buffering to minimize latency.
-		swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
-		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL; // All Windows Store apps must use this SwapEffect.
-		swapChainDesc.Flags = 0;
+	//if(m_swapChain != nullptr)
+	//{
+	//	// If the swap chain already exists, resize it.
+	//	DX::ThrowIfFailed(
+	//		m_swapChain->ResizeBuffers(
+	//			2, // Double-buffered swap chain.
+	//			static_cast<UINT>(m_renderTargetSize.Width),
+	//			static_cast<UINT>(m_renderTargetSize.Height),
+	//			DXGI_FORMAT_B8G8R8A8_UNORM,
+	//			0
+	//			)
+	//		);
+	//}
+	//else
+	//{
+	//	// Otherwise, create a new one using the same adapter as the existing Direct3D device.
+	//	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {0};
+	//	swapChainDesc.Width = static_cast<UINT>(m_renderTargetSize.Width); // Match the size of the window.
+	//	swapChainDesc.Height = static_cast<UINT>(m_renderTargetSize.Height);
+	//	swapChainDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // This is the most common swap chain format.
+	//	swapChainDesc.Stereo = false;
+	//	swapChainDesc.SampleDesc.Count = 1; // Don't use multi-sampling.
+	//	swapChainDesc.SampleDesc.Quality = 0;
+	//	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	//	swapChainDesc.BufferCount = 2; // Use double-buffering to minimize latency.
+	//	swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
+	//	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL; // All Windows Store apps must use this SwapEffect.
+	//	swapChainDesc.Flags = 0;
 
-		ComPtr<IDXGIDevice1>  dxgiDevice;
-		DX::ThrowIfFailed(
-			m_d3dDevice.As(&dxgiDevice)
-			);
+	//	ComPtr<IDXGIDevice1>  dxgiDevice;
+	//	DX::ThrowIfFailed(
+	//		m_d3dDevice.As(&dxgiDevice)
+	//		);
 
-		ComPtr<IDXGIAdapter> dxgiAdapter;
-		DX::ThrowIfFailed(
-			dxgiDevice->GetAdapter(&dxgiAdapter)
-			);
+	//	ComPtr<IDXGIAdapter> dxgiAdapter;
+	//	DX::ThrowIfFailed(
+	//		dxgiDevice->GetAdapter(&dxgiAdapter)
+	//		);
 
-		ComPtr<IDXGIFactory2> dxgiFactory;
-		DX::ThrowIfFailed(
-			dxgiAdapter->GetParent(
-				__uuidof(IDXGIFactory2), 
-				&dxgiFactory
-				)
-			);
+	//	ComPtr<IDXGIFactory2> dxgiFactory;
+	//	DX::ThrowIfFailed(
+	//		dxgiAdapter->GetParent(
+	//			__uuidof(IDXGIFactory2), 
+	//			&dxgiFactory
+	//			)
+	//		);
 
-		DX::ThrowIfFailed(
-			dxgiFactory->CreateSwapChainForComposition(
-				m_d3dDevice.Get(),
-				&swapChainDesc,
-				nullptr,
-				&m_swapChain)
-			);
+	//	DX::ThrowIfFailed(
+	//		dxgiFactory->CreateSwapChainForComposition(
+	//			m_d3dDevice.Get(),
+	//			&swapChainDesc,
+	//			nullptr,
+	//			&m_swapChain)
+	//		);
 
-		Microsoft::WRL::ComPtr<ISwapChainBackgroundPanelNative>	swapChainNative;
-		IInspectable* panelInspectable = (IInspectable*) reinterpret_cast<IInspectable*>(swapChainPanel);
-		panelInspectable->QueryInterface(__uuidof(ISwapChainBackgroundPanelNative), (void **)&swapChainNative);
-		
-		swapChainNative->SetSwapChain(this->m_swapChain.Get());
-			
-		// Ensure that DXGI does not queue more than one frame at a time. This both reduces latency and
-		// ensures that the application will only render after each VSync, minimizing power consumption.
-		DX::ThrowIfFailed(
-			dxgiDevice->SetMaximumFrameLatency(1)
-			);
-	}
+	//	Microsoft::WRL::ComPtr<ISwapChainBackgroundPanelNative>	swapChainNative;
+	//	IInspectable* panelInspectable = (IInspectable*) reinterpret_cast<IInspectable*>(swapChainPanel);
+	//	panelInspectable->QueryInterface(__uuidof(ISwapChainBackgroundPanelNative), (void **)&swapChainNative);
+	//	
+	//	swapChainNative->SetSwapChain(this->m_swapChain.Get());
+	//		
+	//	// Ensure that DXGI does not queue more than one frame at a time. This both reduces latency and
+	//	// ensures that the application will only render after each VSync, minimizing power consumption.
+	//	DX::ThrowIfFailed(
+	//		dxgiDevice->SetMaximumFrameLatency(1)
+	//		);
+	//}
 
-	// Create a render target view of the swap chain back buffer.
-	ComPtr<ID3D11Texture2D> backBuffer;
-	DX::ThrowIfFailed(
-		m_swapChain->GetBuffer(
-			0,
-			__uuidof(ID3D11Texture2D),
-			&backBuffer
-			)
-		);
+	//// Create a render target view of the swap chain back buffer.
+	//ComPtr<ID3D11Texture2D> backBuffer;
+	//DX::ThrowIfFailed(
+	//	m_swapChain->GetBuffer(
+	//		0,
+	//		__uuidof(ID3D11Texture2D),
+	//		&backBuffer
+	//		)
+	//	);
 
-	DX::ThrowIfFailed(
-		m_d3dDevice->CreateRenderTargetView(
-			backBuffer.Get(),
-			nullptr,
-			&m_renderTargetView
-			)
-		);
+	//DX::ThrowIfFailed(
+	//	m_d3dDevice->CreateRenderTargetView(
+	//		backBuffer.Get(),
+	//		nullptr,
+	//		&m_renderTargetView
+	//		)
+	//	);
 
-	// Create a depth stencil view.
-	CD3D11_TEXTURE2D_DESC depthStencilDesc(
-		DXGI_FORMAT_D24_UNORM_S8_UINT, 
-		static_cast<UINT>(m_renderTargetSize.Width),
-		static_cast<UINT>(m_renderTargetSize.Height),
-		1,
-		1,
-		D3D11_BIND_DEPTH_STENCIL
-		);
+	//// Create a depth stencil view.
+	//CD3D11_TEXTURE2D_DESC depthStencilDesc(
+	//	DXGI_FORMAT_D24_UNORM_S8_UINT, 
+	//	static_cast<UINT>(m_renderTargetSize.Width),
+	//	static_cast<UINT>(m_renderTargetSize.Height),
+	//	1,
+	//	1,
+	//	D3D11_BIND_DEPTH_STENCIL
+	//	);
 
-	ComPtr<ID3D11Texture2D> depthStencil;
-	DX::ThrowIfFailed(
-		m_d3dDevice->CreateTexture2D(
-			&depthStencilDesc,
-			nullptr,
-			&depthStencil
-			)
-		);
+	//ComPtr<ID3D11Texture2D> depthStencil;
+	//DX::ThrowIfFailed(
+	//	m_d3dDevice->CreateTexture2D(
+	//		&depthStencilDesc,
+	//		nullptr,
+	//		&depthStencil
+	//		)
+	//	);
 
-	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
-	DX::ThrowIfFailed(
-		m_d3dDevice->CreateDepthStencilView(
-			depthStencil.Get(),
-			&depthStencilViewDesc,
-			&m_depthStencilView
-			)
-		);
+	//CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
+	//DX::ThrowIfFailed(
+	//	m_d3dDevice->CreateDepthStencilView(
+	//		depthStencil.Get(),
+	//		&depthStencilViewDesc,
+	//		&m_depthStencilView
+	//		)
+	//	);
 
-	// Set the rendering viewport to target the entire window.
-	CD3D11_VIEWPORT viewport(
-		0.0f,
-		0.0f,
-		m_renderTargetSize.Width,
-		m_renderTargetSize.Height
-		);
+	//// Set the rendering viewport to target the entire window.
+	//CD3D11_VIEWPORT viewport(
+	//	0.0f,
+	//	0.0f,
+	//	m_renderTargetSize.Width,
+	//	m_renderTargetSize.Height
+	//	);
 
-	m_d3dContext->RSSetViewports(1, &viewport);
+	//m_d3dContext->RSSetViewports(1, &viewport);
 }
 
 // This method is called in the event handler for the SizeChanged event.

@@ -30,6 +30,29 @@ namespace VBA10
 
 	class EmulatorGame
 	{
+	public:
+		static EmulatedSystem emulator;
+
+		EmulatorGame(bool restore);
+		~EmulatorGame(void);
+		void Start(void);
+		void ReleaseAllResources(void);
+		static EmulatorGame *GetInstance();
+		VirtualControllerInput *GetVirtualController(void) const;
+		KeyboardInput *GetKeyboardInput(void) const;
+		ControllerInput *GetControllerInput(void) const;
+		int GetWidth(void);
+		int GetHeight(void);
+		void FocusChanged(bool focus);
+		void ResizeBuffer(float width, float height);
+		void Initialize();
+		task<void> StopROMAsync(void);
+		bool IsPaused(void);
+		void Pause(void);
+		void Unpause(void);
+		void Update(void);
+		bool LastFrameSkipped(void);
+
 	private:
 		static EmulatorGame *instance;
 
@@ -56,28 +79,7 @@ namespace VBA10
 		void FlipBuffers(void *buffer, size_t rowPitch);
 		
 
-	public:
-		static EmulatedSystem emulator;
-
-		EmulatorGame(bool restore);
-		~EmulatorGame(void);
-		void Start(void);
-		void ReleaseAllResources(void);
-		static EmulatorGame *GetInstance();		
-		VirtualControllerInput *GetVirtualController(void) const;
-		KeyboardInput *GetKeyboardInput(void) const;
-		ControllerInput *GetControllerInput(void) const;
-		int GetWidth(void);
-		int GetHeight(void);
-		void FocusChanged(bool focus);
-		void ResizeBuffer(float width, float height);
-		void Initialize();
-		task<void> StopROMAsync(void);
-		bool IsPaused(void);
-		void Pause(void);
-		void Unpause(void);
-		void Update(void);
-		bool LastFrameSkipped(void);
+	
 	};
 }
 
