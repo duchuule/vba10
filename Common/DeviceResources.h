@@ -39,6 +39,10 @@ namespace DX
 		D3D11_VIEWPORT			GetScreenViewport() const { return m_screenViewport; }
 		DirectX::XMFLOAT4X4		GetOrientationTransform3D() const { return m_orientationTransform3D; }
 
+		//D3D Addresses
+		ID3D11DeviceContext2**		GetD3DDeviceContextAddress() { return m_d3dContext.GetAddressOf(); }
+		ID3D11RenderTargetView**	GetBackBufferRenderTargetViewAddress()  { return m_d3dRenderTargetView.GetAddressOf(); }
+
 		// D2D Accessors.
 		ID2D1Factory2*			GetD2DFactory() const { return m_d2dFactory.Get(); }
 		ID2D1Device1*			GetD2DDevice() const { return m_d2dDevice.Get(); }

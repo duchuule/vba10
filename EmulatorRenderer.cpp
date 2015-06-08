@@ -63,7 +63,8 @@ namespace VBA10
 
 
 	EmulatorRenderer::EmulatorRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
-		: frontbuffer(0), controller(nullptr), 
+		: emulator(EmulatorGame::GetInstance()),
+		frontbuffer(0), controller(nullptr),
 		elapsedTime(0.0f), frames(0), autosaveElapsed(0.0f),
 		m_deviceResources(deviceResources)
 	{ 
@@ -84,7 +85,7 @@ namespace VBA10
 
 		m_window = CoreWindow::GetForCurrentThread();
 
-		//no longer needs, we did this in constructor for VBA10Main
+		//no longer needs, we did this in constructor for DirectXPage
 		//CreateDeviceResources();
 		//CreateWindowSizeDependentResources();
 
@@ -96,7 +97,7 @@ namespace VBA10
 
 		if (!this->dxSpriteBatch)
 		{
-			this->dxSpriteBatch = new DXSpriteBatch(this->m_d3dDevice.Get(), this->m_d3dContext.Get(), this->width, this->height);
+			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->width, this->height);
 		}
 		else
 		{
@@ -106,9 +107,9 @@ namespace VBA10
 
 	EmulatorRenderer::~EmulatorRenderer(void)
 	{
-		if(this->m_d3dContext)
+		if(m_deviceResources->GetD3DDeviceContext())
 		{
-			this->m_d3dContext->Unmap(this->buffers[(this->frontbuffer + 1) % 2].Get(), 0);
+			m_deviceResources->GetD3DDeviceContext()->Unmap(this->buffers[(this->frontbuffer + 1) % 2].Get(), 0);
 		}
 
 		CloseHandle(this->waitEvent);
@@ -133,53 +134,53 @@ namespace VBA10
 
 	void EmulatorRenderer::CreateDeviceDependentResources()
 	{
-
-		this->m_d3dDevice->GetImmediateContext1(this->m_d3dContext.GetAddressOf());		
+		//this does not seem neccessary 
+		m_deviceResources->GetD3DDevice()->GetImmediateContext2(m_deviceResources->GetD3DDeviceContextAddress());
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			STICK_TEXTURE_FILE_NAME,
 			this->stickResource.GetAddressOf(), 
 			this->stickSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			STICK_CENTER_TEXTURE_FILE_NAME,
 			this->stickCenterResource.GetAddressOf(), 
 			this->stickCenterSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			CROSS_TEXTURE_FILE_NAME,
 			this->crossResource.GetAddressOf(), 
 			this->crossSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			BUTTONS_TEXTURE_FILE_NAME,
 			this->buttonsResource.GetAddressOf(), 
 			this->buttonsSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			SS_TEXTURE_FILE_NAME,
 			this->startSelectResource.GetAddressOf(), 
 			this->startSelectSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			L_TEXTURE_FILE_NAME,
 			this->lButtonResource.GetAddressOf(), 
 			this->lButtonSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
-			this->m_d3dDevice.Get(), 
+			m_deviceResources->GetD3DDevice(),
 			R_TEXTURE_FILE_NAME,
 			this->rButtonResource.GetAddressOf(), 
 			this->rButtonSRV.GetAddressOf()
@@ -202,10 +203,10 @@ namespace VBA10
 		desc.Usage = D3D11_USAGE_DYNAMIC;
 
 		DX::ThrowIfFailed(
-			this->m_d3dDevice->CreateTexture2D(&desc, nullptr, this->buffers[0].GetAddressOf())
+			m_deviceResources->GetD3DDevice()->CreateTexture2D(&desc, nullptr, this->buffers[0].GetAddressOf())
 			);
 		DX::ThrowIfFailed(
-			this->m_d3dDevice->CreateTexture2D(&desc, nullptr, this->buffers[1].GetAddressOf())
+			m_deviceResources->GetD3DDevice()->CreateTexture2D(&desc, nullptr, this->buffers[1].GetAddressOf())
 			);
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
@@ -216,10 +217,10 @@ namespace VBA10
 		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 
 		DX::ThrowIfFailed(
-			this->m_d3dDevice->CreateShaderResourceView(this->buffers[0].Get(), &srvDesc, this->bufferSRVs[0].GetAddressOf())
+			m_deviceResources->GetD3DDevice()->CreateShaderResourceView(this->buffers[0].Get(), &srvDesc, this->bufferSRVs[0].GetAddressOf())
 			);
 		DX::ThrowIfFailed(
-			this->m_d3dDevice->CreateShaderResourceView(this->buffers[1].Get(), &srvDesc, this->bufferSRVs[1].GetAddressOf())
+			m_deviceResources->GetD3DDevice()->CreateShaderResourceView(this->buffers[1].Get(), &srvDesc, this->bufferSRVs[1].GetAddressOf())
 			);
 
 		// Map backbuffer so it can be unmapped on first update
@@ -238,7 +239,7 @@ namespace VBA10
 		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		DX::ThrowIfFailed(
-			this->m_d3dDevice->CreateBlendState(&blendDesc, this->alphablend.GetAddressOf())
+			m_deviceResources->GetD3DDevice()->CreateBlendState(&blendDesc, this->alphablend.GetAddressOf())
 			);
 	}
 
@@ -250,7 +251,7 @@ namespace VBA10
 
 		if(!this->dxSpriteBatch)
 		{
-			this->dxSpriteBatch = new DXSpriteBatch(this->m_d3dDevice.Get(), this->m_d3dContext.Get(), this->width, this->height);
+			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->width, this->height);
 		}else
 		{
 			this->dxSpriteBatch->OnResize(this->width, this->height);
@@ -265,7 +266,7 @@ namespace VBA10
 		//NOTE: may not be correct
 		m_windowBounds.Width = 0;
 		m_windowBounds.Height = 0;
-		m_swapChain = nullptr;
+		//m_swapChain = nullptr;
 	}
 
 
@@ -384,20 +385,20 @@ namespace VBA10
 
 	void EmulatorRenderer::Render()
 	{
-		m_d3dContext->OMSetRenderTargets(
+		m_deviceResources->GetD3DDeviceContext()->OMSetRenderTargets(
 			1,
-			m_renderTargetView.GetAddressOf(),
-			m_depthStencilView.Get()
+			m_deviceResources->GetBackBufferRenderTargetViewAddress(),
+			m_deviceResources->GetDepthStencilView()
 			);
 
 		const float black[] = { 0.0f, 0.0f, 0.0f, 1.000f };
-		m_d3dContext->ClearRenderTargetView(
-			m_renderTargetView.Get(),
+		m_deviceResources->GetD3DDeviceContext()->ClearRenderTargetView(
+			m_deviceResources->GetBackBufferRenderTargetView(),
 			black
 			);
 
-		m_d3dContext->ClearDepthStencilView(
-			m_depthStencilView.Get(),
+		m_deviceResources->GetD3DDeviceContext()->ClearDepthStencilView(
+			m_deviceResources->GetDepthStencilView(),
 			D3D11_CLEAR_DEPTH,
 			1.0f,
 			0
@@ -422,7 +423,7 @@ namespace VBA10
 
 					pix = buffer;
 
-					this->m_d3dContext->Unmap(this->buffers[this->frontbuffer].Get(), 0);
+					m_deviceResources->GetD3DDeviceContext()->Unmap(this->buffers[this->frontbuffer].Get(), 0);
 
 					SetEvent(updateEvent);
 				}else
@@ -594,12 +595,14 @@ namespace VBA10
 		ZeroMemory(&map, sizeof(D3D11_MAPPED_SUBRESOURCE));
 
 		DX::ThrowIfFailed(
-			this->m_d3dContext->Map(this->buffers[index].Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &map)
+			m_deviceResources->GetD3DDeviceContext()->Map(this->buffers[index].Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &map)
 			);
 
 		*rowPitch = map.RowPitch;
 		return map.pData;
 	}
+
+
 
 }
 
