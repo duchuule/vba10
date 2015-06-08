@@ -34,12 +34,12 @@ namespace VBA10
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		// Direct3D Objects.
-		Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
-		Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+		// Direct3D Objects, no longer defined here, we moved it out to Common/DeviceResources.h
+		//Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
+		//Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
+		//Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
+		//Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
+		//Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
 
 		// Cached renderer properties.
 		D3D_FEATURE_LEVEL m_featureLevel;
@@ -99,6 +99,8 @@ namespace VBA10
 		void FPSCounter(void);
 		//void MeasureTime(void);
 		void Autosave(void);
+
+
 
 
 

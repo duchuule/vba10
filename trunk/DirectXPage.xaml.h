@@ -13,7 +13,6 @@
 
 
 
-
 namespace VBA10
 {
 	/// <summary>
@@ -31,7 +30,7 @@ namespace VBA10
 	private:
 		//variables
 		bool loadingDialogOpen;
-		
+
 
 		//function
 		void CopyDemoROM(void);
