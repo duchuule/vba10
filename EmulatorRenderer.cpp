@@ -259,7 +259,7 @@ namespace VBA10
 			this->dxSpriteBatch->OnResize(this->width, this->height);
 		}
 
-		//this->emulator->ResizeBuffer(this->width, this->height);
+		this->emulator->ResizeBuffer(this->width, this->height);
 	}
 
 	void EmulatorRenderer::ReleaseDeviceDependentResources()
