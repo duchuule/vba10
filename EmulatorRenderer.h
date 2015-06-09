@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Direct3DBase.h"
+
 #include "Emulator.h"
 #include "VirtualControllerInput.h"
 #include "DXSpriteBatch.h"

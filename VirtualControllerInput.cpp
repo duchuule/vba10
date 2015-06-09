@@ -13,8 +13,8 @@
 #define BUTTONS_RECT_HEIGHT	280
 #define SS_RECT_X			0  //distance from center of screen to center of button
 #define SS_RECT_Y			100
-#define SS_RECT_WIDTH		240
-#define SS_RECT_HEIGHT		60
+#define SS_RECT_WIDTH		400
+#define SS_RECT_HEIGHT		70
 #define L_RECT_X			0
 #define L_RECT_Y			380
 #define L_RECT_WIDTH		120
@@ -28,7 +28,7 @@
 #define CROSS_TOUCH_WIDTH	77 // vorher 80
 #define BUTTONS_TOUCH_OVERLAP	0
 #define BUTTONS_TOUCH_WIDTH	93	// vorher 85
-#define START_TOUCH_WIDTH	100
+#define START_TOUCH_WIDTH	200
 #define SELECT_TOUCH_WIDTH	100
 #define VCONTROLLER_Y_OFFSET 550
 
@@ -49,11 +49,11 @@
 #define DOWN_RECT_WIDTH		CROSS_RECT_WIDTH + CROSS_TOUCH_OVERLAP * 2
 #define DOWN_RECT_HEIGHT	CROSS_TOUCH_WIDTH + CROSS_TOUCH_OVERLAP
 
-#define SELECT_RECT_X		SS_RECT_X - SS_RECT_WIDTH / 2 + START_TOUCH_WIDTH
+#define SELECT_RECT_X		SS_RECT_X - SS_RECT_WIDTH / 4 
 #define SELECT_RECT_Y		SS_RECT_Y
 #define SELECT_RECT_WIDTH	SELECT_TOUCH_WIDTH
 #define SELECT_RECT_HEIGHT	SS_RECT_HEIGHT
-#define START_RECT_X		SS_RECT_X + SS_RECT_WIDTH / 2- START_TOUCH_WIDTH
+#define START_RECT_X		SS_RECT_X + SS_RECT_WIDTH / 4 
 #define START_RECT_Y		SS_RECT_Y
 #define START_RECT_WIDTH	START_TOUCH_WIDTH
 #define START_RECT_HEIGHT	SS_RECT_HEIGHT
@@ -661,6 +661,7 @@ namespace VBA10
 					}
 				}
 			}
+
 			if(!stickFinger)
 			{
 				if(this->startRect.Contains(point))
