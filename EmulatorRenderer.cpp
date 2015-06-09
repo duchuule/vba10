@@ -438,7 +438,7 @@ namespace VBA10
 			}
 		}
 
-		int height = this->height * (GetImageScale() / 100.0f);
+		int height = this->height; // *(GetImageScale() / 100.0f);
 		int width;
 		switch(GetAspectRatio())
 		{
@@ -453,7 +453,7 @@ namespace VBA10
 			}
 			break;
 		case AspectRatioMode::Stretch:
-			width = this->width * (GetImageScale() / 100.0f);
+			width = this->width; //* (GetImageScale() / 100.0f);
 			break;
 		case AspectRatioMode::FourToThree:
 			width = (int)(height * (4.0f / 3.0f));
@@ -465,7 +465,13 @@ namespace VBA10
 			width = height;
 			break;
 		}
-		//TO DO NEXT: fix the calculation of draw rect
+
+		if (width > this->width) //fix the position of the image
+		{
+			height = height * 1.0f / width * this->width;
+			width = this->width;
+		}
+
 		int leftOffset = (this->width - width) / 2;
 		RECT rect;
 		rect.left = leftOffset;
