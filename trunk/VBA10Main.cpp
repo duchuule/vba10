@@ -99,6 +99,8 @@ void VBA10Main::Update()
 		renderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
 	});
+
+	//renderer->Update(m_timer);
 }
 
 

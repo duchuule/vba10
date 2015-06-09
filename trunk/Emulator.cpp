@@ -228,7 +228,7 @@ namespace VBA10
 
 		if(emulating)
 		{
-			//EnterCriticalSection(&pauseSync);
+			EnterCriticalSection(&pauseSync);
 			emulating = false;
 		}
 
@@ -240,7 +240,7 @@ namespace VBA10
 		{
 
 			emulating = true;
-			//LeaveCriticalSection(&pauseSync);
+			LeaveCriticalSection(&pauseSync);
 		}
 	}
 

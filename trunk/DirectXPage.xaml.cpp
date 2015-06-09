@@ -178,11 +178,11 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	if (m_windowVisible)
 	{
 		//need code to pause game here
-		//m_main->StartRenderLoop();
+		m_main->StartRenderLoop();
 	}
 	else
 	{
-		//m_main->StopRenderLoop();
+		m_main->StopRenderLoop();
 	}
 }
 
@@ -248,12 +248,17 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	m_main->StartRenderLoop();
+	//pause emulator 
+	m_main->emulator->Pause();
 
-	//StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
-	//String^ name = "Bunny Advance (Demo).gba";
-	//create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
-	//	//Do something with the rom file 
-	//	LoadROMAsync(romFile, localFolder);
-	//});
+	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
+	String^ name = "Bunny Advance (Demo).gba";
+	create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
+		//Do something with the rom file 
+		LoadROMAsync(romFile, localFolder);
+	});
+
+	//m_main->StartRenderLoop();
+
+	
 }
