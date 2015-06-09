@@ -193,12 +193,17 @@
         <Grid Background="#FF222222">            
             <Rectangle Fill="#FF555555" Stroke="Black" Height="87" VerticalAlignment="Top"/>
             <TextBlock Margin="115,39,0,0" TextWrapping="Wrap" Text="Select ROM" FontSize="24" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="180"/>
-            <Button  Tag="Refresh" Click="BackClick"
-                AutomationProperties.AutomationId="BackAppBarButton" 
-                Margin="10,21,0,0" RenderTransformOrigin="1.23,0.758" 
-                     HorizontalAlignment="Left" Width="100" Height="66"
-                     VerticalAlignment="Top"/>
-            <Grid Margin="0,87,0,0">
+            <ToggleButton Click="BackClick" VerticalAlignment="Top" 
+                          HorizontalAlignment="Left"
+                          Foreground="White" Margin="10,10,0,0" Padding="4"
+                          Background="Transparent" 
+                          Width="60" Height="60"
+                          >
+                        <FontIcon x:Name="Hamburger" FontFamily="Segoe MDL2 Assets" 
+                                  Glyph="&#xE10A;" FontSize="50"
+                                  HorizontalAlignment="Center"/>
+            </ToggleButton>
+             <Grid Margin="0,87,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="2*" />

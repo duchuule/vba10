@@ -246,15 +246,13 @@
     <ClCompile Include="Vector4.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
-    <ClCompile Include="Direct3DBase.cpp">
-      <Filter>Emulator</Filter>
-    </ClCompile>
     <ClCompile Include="vbaFunctions.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
     <ClCompile Include="VirtualControllerInput.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
+    <ClCompile Include="SelectROMPane.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -472,15 +470,13 @@
     <ClInclude Include="EmulatorInput.h">
       <Filter>Emulator</Filter>
     </ClInclude>
-    <ClInclude Include="Direct3DBase.h">
-      <Filter>Emulator</Filter>
-    </ClInclude>
     <ClInclude Include="virtualcontrollerinput.h">
       <Filter>Emulator</Filter>
     </ClInclude>
     <ClInclude Include="Common\DirectXHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="SelectROMPane.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
