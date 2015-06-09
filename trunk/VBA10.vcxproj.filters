@@ -262,7 +262,6 @@
     <ClInclude Include="DirectXPage.xaml.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SampleFpsTextRenderer.h" />
-    <ClInclude Include="ShaderStructures.h" />
     <ClInclude Include="VBAM\NLS.h">
       <Filter>VBAM</Filter>
     </ClInclude>
@@ -500,10 +499,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
+    <Page Include="SelectROMPane.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="SamplePixelShader.hlsl" />
-    <FxCompile Include="SampleVertexShader.hlsl" />
     <FxCompile Include="SpriteBatch_PS.hlsl">
       <Filter>Emulator</Filter>
     </FxCompile>

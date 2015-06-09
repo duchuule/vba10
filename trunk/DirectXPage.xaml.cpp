@@ -7,6 +7,7 @@
 #include "DirectXPage.xaml.h"
 #include <ppltasks.h>
 #include "EmulatorFileHandler.h"
+#include "SelectROMPane.xaml.h"
 
 using namespace std;
 using namespace VBA10;
@@ -31,6 +32,8 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
+
+#define SETTINGS_WIDTH			346
 
 extern bool enableTurboMode;
 
@@ -90,8 +93,10 @@ DirectXPage::DirectXPage():
 	// Run task on a dedicated high priority background thread.
 	m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
-	//copy DEMO ROm
+	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
+
+	//copy DEMO ROm
 	if (!settings->HasKey("FIRSTSTART"))
 	{
 		settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
@@ -248,17 +253,54 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	//pause emulator 
-	m_main->emulator->Pause();
+	////pause emulator 
+	//m_main->emulator->Pause();
 
-	StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
-	String^ name = "Bunny Advance (Demo).gba";
-	create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
-		//Do something with the rom file 
-		LoadROMAsync(romFile, localFolder);
+	//StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
+	//String^ name = "Bunny Advance (Demo).gba";
+	//create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
+	//	//Do something with the rom file 
+	//	LoadROMAsync(romFile, localFolder);
+	//});
+
+	if (this->loadingDialogOpen)
+		return;
+
+	Popup ^selectRomPopup = ref new Popup();
+	selectRomPopup->Width = Window::Current->Bounds.Width - 200;
+	selectRomPopup->Height = Window::Current->Bounds.Height - 200;
+	selectRomPopup->IsLightDismissEnabled = false;
+
+	SelectROMPane ^pane = ref new SelectROMPane();
+	pane->Width = Window::Current->Bounds.Width * 0.95;
+	pane->Height = Window::Current->Bounds.Height * 0.95;
+	selectRomPopup->Child = pane;
+
+	selectRomPopup->Opened += ref new EventHandler<Object ^>([this](Object ^sender, Object ^args)
+	{
+		m_main->emulator->Pause();
+	});
+	selectRomPopup->Closed += ref new EventHandler<Object ^>([this, pane](Object ^sender, Object ^args)
+	{
+		if (pane->Cancelled)
+		{
+			m_main->emulator->Unpause();
+		}
+		this->loadingDialogOpen = false;
+		m_main->emulator->GetVirtualController()->Reset();
 	});
 
-	//m_main->StartRenderLoop();
+	pane->ROMSelected = ref new ROMSelectedDelegate([=](StorageFile ^file, StorageFolder ^folder)
+	{
+		LoadROMAsync(file, folder);
+		this->BottomAppBar->IsOpen = false;
+		this->loadingDialogOpen = false;
+	});
+
+	selectRomPopup->SetValue(Canvas::LeftProperty, 100);
+	selectRomPopup->SetValue(Canvas::TopProperty, 100);
+	selectRomPopup->IsOpen = true;
+	this->loadingDialogOpen = true;
 
 	
 }
