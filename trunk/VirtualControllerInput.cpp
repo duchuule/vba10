@@ -1,6 +1,7 @@
 #include "VirtualControllerInput.h"
 #include "Emulator.h"
 #include "EmulatorSettings.h"
+#include <math.h>
 
 //these positions are based on 1920x1080
 #define CROSS_RECT_X		20   //distance from left side of screen to left side of button
@@ -235,7 +236,7 @@ namespace VBA10
 			yOffset = VCONTROLLER_Y_OFFSET;
 		}
 		// 1920x1080 as reference value
-		float resolutionScale = this->emulator->GetHeight() / 1080.0f;
+		float resolutionScale = sqrt( this->emulator->GetHeight() / 1080.0f * this->emulator->GetWidth() / 1920.0f);
 
 		yOffset *= resolutionScale;
 		Windows::Foundation::Rect tmp;
