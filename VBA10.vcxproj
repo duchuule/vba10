@@ -224,7 +224,9 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SampleFpsTextRenderer.h" />
-    <ClInclude Include="ShaderStructures.h" />
+    <ClInclude Include="SelectROMPane.xaml.h">
+      <DependentUpon>SelectROMPane.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Size.h" />
     <ClInclude Include="stringhelper.h" />
     <ClInclude Include="TextureLoader.h" />
@@ -336,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="SampleFpsTextRenderer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SelectROMPane.xaml.cpp">
+      <DependentUpon>SelectROMPane.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="stringhelper.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -527,14 +532,9 @@
     <Page Include="DirectXPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SelectROMPane.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="SamplePixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="SampleVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-    </FxCompile>
     <FxCompile Include="SpriteBatch_PS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SpriteBatch_PS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

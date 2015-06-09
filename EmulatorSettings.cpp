@@ -5,7 +5,7 @@ using namespace Windows::Foundation;
 #define DEFAULT_SHOW_FPS_VALUE		false
 #define DEFAULT_SOUND_ENABLED_VALUE	true
 #define DEFAULT_TOUCH_ENABLED_VALUE	true
-#define DEFAULT_TOUCH_ON_TOP		true
+#define DEFAULT_TOUCH_ON_TOP		false
 #define DEFAULT_CONTROL_ASSIGNED_TO_P2 false
 #define DEFAULT_TOUCH_BUTTONS_INTERSECTING	false
 #define DEFAULT_AUTOSAVING_ENABLED true
