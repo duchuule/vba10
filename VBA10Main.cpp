@@ -53,38 +53,38 @@ void VBA10Main::CreateWindowSizeDependentResources()
 	renderer->CreateWindowSizeDependentResources();
 }
 
-void VBA10Main::StartRenderLoop()
-{
-	// If the animation render loop is already running then do not start another thread.
-	if (m_renderLoopWorker != nullptr && m_renderLoopWorker->Status == AsyncStatus::Started)
-	{
-		return;
-	}
-
-	// Create a task that will be run on a background thread.
-	auto workItemHandler = ref new WorkItemHandler([this](IAsyncAction ^ action)
-	{
-		// Calculate the updated frame and render once per vertical blanking interval.
-		while (action->Status == AsyncStatus::Started)
-		{
-			critical_section::scoped_lock lock(m_criticalSection);
-			Update();
-			if (Render())
-			{
-				m_deviceResources->Present();
-			}
-		}
-	});
-
-	// Run task on a dedicated high priority background thread.
-	m_renderLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
-}
-
-void VBA10Main::StopRenderLoop()
-{
-	if (m_renderLoopWorker)
-		m_renderLoopWorker->Cancel();
-}
+//void VBA10Main::StartRenderLoop()
+//{
+//	// If the animation render loop is already running then do not start another thread.
+//	if (m_renderLoopWorker != nullptr && m_renderLoopWorker->Status == AsyncStatus::Started)
+//	{
+//		return;
+//	}
+//
+//	// Create a task that will be run on a background thread.
+//	auto workItemHandler = ref new WorkItemHandler([this](IAsyncAction ^ action)
+//	{
+//		// Calculate the updated frame and render once per vertical blanking interval.
+//		while (action->Status == AsyncStatus::Started)
+//		{
+//			critical_section::scoped_lock lock(m_criticalSection);
+//			Update();
+//			if (Render())
+//			{
+//				m_deviceResources->Present();
+//			}
+//		}
+//	});
+//
+//	// Run task on a dedicated high priority background thread.
+//	m_renderLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
+//}
+//
+//void VBA10Main::StopRenderLoop()
+//{
+//	if (m_renderLoopWorker)
+//		m_renderLoopWorker->Cancel();
+//}
 
 // Updates the application state once per frame.
 void VBA10Main::Update()
@@ -135,6 +135,12 @@ bool VBA10Main::Render()
 	m_fpsTextRenderer->Render();
 
 	return true;
+}
+
+
+void VBA10Main::Present()
+{
+	m_deviceResources->Present();
 }
 
 // Notifies renderers that device resources need to be released.

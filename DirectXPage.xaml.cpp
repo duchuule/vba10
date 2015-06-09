@@ -49,6 +49,16 @@ DirectXPage::DirectXPage():
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &DirectXPage::OnVisibilityChanged);
 
+	//we replace the pointer events by doing it on the UI thread
+	Window::Current->CoreWindow->PointerPressed +=
+		ref new TypedEventHandler<CoreWindow ^, PointerEventArgs ^>(this, &DirectXPage::OnPointerPressed);
+
+	Window::Current->CoreWindow->PointerMoved +=
+		ref new TypedEventHandler<CoreWindow ^, PointerEventArgs ^>(this, &DirectXPage::OnPointerMoved);
+
+	Window::Current->CoreWindow->PointerReleased +=
+		ref new TypedEventHandler<CoreWindow ^, PointerEventArgs ^>(this, &DirectXPage::OnPointerReleased);
+
 	DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
 	currentDisplayInformation->DpiChanged +=
@@ -66,32 +76,36 @@ DirectXPage::DirectXPage():
 	swapChainPanel->SizeChanged +=
 		ref new SizeChangedEventHandler(this, &DirectXPage::OnSwapChainPanelSizeChanged);
 
+	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &DirectXPage::OnRendering));
+
 	// At this point we have access to the device. 
 	// We can create the device-dependent resources.
 	m_deviceResources = std::make_shared<DX::DeviceResources>();
 	m_deviceResources->SetSwapChainPanel(swapChainPanel);
 
 	// Register our SwapChainPanel to get independent input pointer events
-	auto workItemHandler = ref new WorkItemHandler([this] (IAsyncAction ^)
-	{
-		// The CoreIndependentInputSource will raise pointer events for the specified device types on whichever thread it's created on.
-		m_coreInput = swapChainPanel->CreateCoreIndependentInputSource(
-			Windows::UI::Core::CoreInputDeviceTypes::Mouse |
-			Windows::UI::Core::CoreInputDeviceTypes::Touch |
-			Windows::UI::Core::CoreInputDeviceTypes::Pen
-			);
+	//auto workItemHandler = ref new WorkItemHandler([this] (IAsyncAction ^)
+	//{
+	//	// The CoreIndependentInputSource will raise pointer events for the specified device types on whichever thread it's created on.
+	//	m_coreInput = swapChainPanel->CreateCoreIndependentInputSource(
+	//		Windows::UI::Core::CoreInputDeviceTypes::Mouse |
+	//		Windows::UI::Core::CoreInputDeviceTypes::Touch |
+	//		Windows::UI::Core::CoreInputDeviceTypes::Pen 
+	//		);
 
-		// Register for pointer events, which will be raised on the background thread.
-		m_coreInput->PointerPressed += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerPressed);
-		m_coreInput->PointerMoved += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerMoved);
-		m_coreInput->PointerReleased += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerReleased);
+	//	// Register for pointer events, which will be raised on the background thread.
+	//	m_coreInput->PointerPressed += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerPressed);
+	//	m_coreInput->PointerMoved += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerMoved);
+	//	m_coreInput->PointerReleased += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &DirectXPage::OnPointerReleased);
 
-		// Begin processing input messages as they're delivered.
-		m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
-	});
+	//	// Begin processing input messages as they're delivered.
+	//	m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
+	//});
 
-	// Run task on a dedicated high priority background thread.
-	m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
+
+
+	//// Run task on a dedicated high priority background thread.
+	//m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
@@ -150,7 +164,7 @@ void DirectXPage::CopyDemoROM(void)
 DirectXPage::~DirectXPage()
 {
 	// Stop rendering and processing events on destruction.
-	m_main->StopRenderLoop();
+	//m_main->StopRenderLoop();
 	m_coreInput->Dispatcher->StopProcessEvents();
 }
 
@@ -161,7 +175,7 @@ void DirectXPage::SaveInternalState(IPropertySet^ state)
 	m_deviceResources->Trim();
 
 	// Stop rendering when the app is suspended.
-	m_main->StopRenderLoop();
+	//m_main->StopRenderLoop();
 
 	// Put code to save app state here.
 }
@@ -172,7 +186,7 @@ void DirectXPage::LoadInternalState(IPropertySet^ state)
 	// Put code to load app state here.
 
 	// Start rendering when the app is resumed.
-	m_main->StartRenderLoop();
+	//m_main->StartRenderLoop();
 }
 
 // Window event handlers.
@@ -183,11 +197,11 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	if (m_windowVisible)
 	{
 		//need code to pause game here
-		m_main->StartRenderLoop();
+		//m_main->StartRenderLoop();
 	}
 	else
 	{
-		m_main->StopRenderLoop();
+		//m_main->StopRenderLoop();
 	}
 }
 
@@ -215,23 +229,34 @@ void DirectXPage::OnDisplayContentsInvalidated(DisplayInformation^ sender, Objec
 }
 
 
+void DirectXPage::OnRendering(Object^ sender, Object^ args)
+{
+	//this->manager->SingleUpdate(this->emulator);
+	m_main->Update();
+	m_main->Render();
+	m_main->Present();
+	/*this->emulator->Update();
+	this->emulator->Draw();*/
+}
 
-void DirectXPage::OnPointerPressed(Object^ sender, PointerEventArgs^ e)
+void DirectXPage::OnPointerPressed(CoreWindow ^window, PointerEventArgs ^args)
 {
 	// When the pointer is pressed begin tracking the pointer movement.
+	m_main->emulator->GetVirtualController()->PointerPressed(args->CurrentPoint);
 
 }
 
-void DirectXPage::OnPointerMoved(Object^ sender, PointerEventArgs^ e)
+void DirectXPage::OnPointerMoved(CoreWindow ^window, PointerEventArgs ^args)
 {
 	// Update the pointer tracking code.
+	m_main->emulator->GetVirtualController()->PointerMoved(args->CurrentPoint);
 
 }
 
-void DirectXPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
+void DirectXPage::OnPointerReleased(CoreWindow ^window, PointerEventArgs ^args)
 {
 	// Stop tracking pointer movement when the pointer is released.
-
+	m_main->emulator->GetVirtualController()->PointerReleased(args->CurrentPoint);
 }
 
 void DirectXPage::OnCompositionScaleChanged(SwapChainPanel^ sender, Object^ args)
@@ -301,6 +326,7 @@ void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	selectRomPopup->SetValue(Canvas::TopProperty, 100);
 	selectRomPopup->IsOpen = true;
 	this->loadingDialogOpen = true;
+
 
 	
 }

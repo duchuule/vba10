@@ -16,8 +16,8 @@ namespace VBA10
 		~VBA10Main();
 		void CreateWindowSizeDependentResources();
 
-		void StartRenderLoop();
-		void StopRenderLoop();
+		//void StartRenderLoop();
+		//void StopRenderLoop();
 		Concurrency::critical_section& GetCriticalSection() { return m_criticalSection; }
 
 		// IDeviceNotify
@@ -26,10 +26,14 @@ namespace VBA10
 
 		//variables
 		EmulatorGame *emulator;
-	private:
 
+		//functions
 		void Update();
 		bool Render();
+		void Present();
+	private:
+
+		
 
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
