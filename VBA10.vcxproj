@@ -208,9 +208,6 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="AppShell.xaml.h">
-      <DependentUpon>AppShell.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="BasicPage.xaml.h">
       <DependentUpon>BasicPage.xaml</DependentUpon>
     </ClInclude>
@@ -307,9 +304,6 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="AppShell.xaml.cpp">
-      <DependentUpon>AppShell.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="BasicPage.xaml.cpp">
       <DependentUpon>BasicPage.xaml</DependentUpon>
@@ -617,7 +611,6 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AppShell.xaml" />
     <Page Include="BasicPage.xaml" />
     <Page Include="DirectXPage.xaml">
       <SubType>Designer</SubType>

@@ -10,6 +10,9 @@
 #include "Common\DeviceResources.h"
 #include "VBA10Main.h"
 
+#include "NavMenuItem.h"
+#include "NavMenuListView.h"
+
 
 using namespace Platform;
 using namespace Platform::Collections;
@@ -34,6 +37,33 @@ namespace VBA10
 		void SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 
+		//from AppShell
+		property Windows::UI::Xaml::Controls::Frame^ AppFrame
+		{
+			Windows::UI::Xaml::Controls::Frame^ get();
+		}
+
+	//from AppShell
+	internal:
+		/// <summary>
+		/// An event to notify listeners when the hamburger button may occlude other content in the app.
+		/// The custom "PageHeader" user control is using this.
+		/// </summary>
+		event TypedEventHandler<DirectXPage^, Rect>^ TogglePaneButtonRectChanged;
+		property Rect TogglePaneButtonRect
+		{
+			Rect get() { return _togglePaneButtonRect; }
+		private:
+			void set(Rect value) { _togglePaneButtonRect = value; }
+		}
+
+		static property DirectXPage^ Current
+		{
+			DirectXPage^ get()
+			{
+				return _current;
+			}
+		}
 
 
 	private:
@@ -78,6 +108,17 @@ namespace VBA10
 		bool m_windowVisible;
 		void AppBarButton_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+		//from AppShell
+		void NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ e);
+		void TogglePaneButton_Checked(Object^ sender, RoutedEventArgs^ e);
+		void CheckTogglePaneButtonSizeChanged();
+		void NavMenuItemContainerContentChanging(ListViewBase^ sender, ContainerContentChangingEventArgs^ args);
+
+		Vector<NavMenuItem^>^ navlist;
+		Rect _togglePaneButtonRect;
+
+		static DirectXPage^ _current;
 	};
 }
 

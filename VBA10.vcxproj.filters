@@ -518,7 +518,6 @@
     <Page Include="PageHeader.xaml">
       <Filter>Controls</Filter>
     </Page>
-    <Page Include="AppShell.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
