@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "DirectXPage.xaml.h"
+#include "AppShell.xaml.h"
 
 using namespace VBA10;
 
@@ -44,7 +45,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 #if _DEBUG
 	if (IsDebuggerPresent())
 	{
-		DebugSettings->EnableFrameRateCounter = true;
+		//DebugSettings->EnableFrameRateCounter = true;
 	}
 #endif
 
@@ -52,6 +53,18 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	{
 		m_directXPage = ref new DirectXPage();
 	}
+
+
+	// Create a AppShell to act as the navigation context and navigate to the first page
+	//auto shell = ref new AppShell();
+
+	//if (shell->AppFrame->Content == nullptr)
+	//{
+	//	// When the navigation stack isn't restored navigate to the first page,
+	//	// suppressing the initial entrance animation and configuring the new 
+	//	// page by passing required information as a navigation parameter
+	//	//shell->AppFrame->Navigate(TypeName(Views::LandingPage::typeid), e->Arguments, ref new Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+	//}
 
 	if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
 	{

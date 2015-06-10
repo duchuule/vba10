@@ -11,6 +11,13 @@
 #include "VBA10Main.h"
 
 
+using namespace Platform;
+using namespace Platform::Collections;
+using namespace Windows::Foundation::Collections;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Input;
+using namespace Windows::UI::Xaml::Navigation;
 
 
 namespace VBA10
@@ -26,6 +33,8 @@ namespace VBA10
 
 		void SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
+
+
 
 	private:
 		//variables
