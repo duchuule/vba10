@@ -5,4 +5,14 @@
     xmlns:local="using:VBA10"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+    
 </Application>

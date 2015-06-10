@@ -141,7 +141,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /Zm120 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);METRO_APP;__WIN32__;C_CORE;NO_ASM;NO_OGL;NO_OAL;NO_LINK;NO_PNG;_CRT_SECURE_NO_WARNINGS;DNO_DEFLATE;FINAL_VERSION;NO_DEFLATE</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -208,6 +208,12 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="AppShell.xaml.h">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="BasicPage.xaml.h">
+      <DependentUpon>BasicPage.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="CheatData.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Common\DeviceResources.h" />
@@ -223,7 +229,12 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="NavMenuItem.h" />
+    <ClInclude Include="NavMenuListView.h" />
     <ClInclude Include="OnResizeBuffer.h" />
+    <ClInclude Include="PageHeader.xaml.h">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SampleFpsTextRenderer.h" />
@@ -297,6 +308,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="AppShell.xaml.cpp">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="BasicPage.xaml.cpp">
+      <DependentUpon>BasicPage.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="CheatData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -338,6 +355,14 @@
     <ClCompile Include="KeyboardInput.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NavMenuItem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NavMenuListView.cpp" />
+    <ClCompile Include="PageHeader.xaml.cpp">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Point.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -592,10 +617,14 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AppShell.xaml" />
+    <Page Include="BasicPage.xaml" />
     <Page Include="DirectXPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PageHeader.xaml" />
     <Page Include="SelectROMPane.xaml" />
+    <Page Include="Styles.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">

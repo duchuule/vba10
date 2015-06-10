@@ -53,6 +53,9 @@
     <Filter Include="Emulator">
       <UniqueIdentifier>{47f33fd4-0f95-4237-a4a0-3540213c56ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{5aa54788-306c-4329-9343-78e0af927d51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -253,6 +256,13 @@
       <Filter>Emulator</Filter>
     </ClCompile>
     <ClCompile Include="SelectROMPane.xaml.cpp" />
+    <ClCompile Include="NavMenuListView.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="NavMenuItem.cpp" />
+    <ClCompile Include="AppShell.xaml.cpp" />
+    <ClCompile Include="BasicPage.xaml.cpp" />
+    <ClCompile Include="PageHeader.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -477,6 +487,13 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="SelectROMPane.xaml.h" />
+    <ClInclude Include="NavMenuListView.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="NavMenuItem.h" />
+    <ClInclude Include="AppShell.xaml.h" />
+    <ClInclude Include="BasicPage.xaml.h" />
+    <ClInclude Include="PageHeader.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -496,6 +513,12 @@
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
     <Page Include="SelectROMPane.xaml" />
+    <Page Include="Styles.xaml" />
+    <Page Include="BasicPage.xaml" />
+    <Page Include="PageHeader.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="AppShell.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
