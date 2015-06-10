@@ -5,7 +5,7 @@
 
 //these positions are based on 1920x1080
 #define CROSS_RECT_X		20   //distance from left side of screen to left side of button
-#define CROSS_RECT_Y		100
+#define CROSS_RECT_Y		100  //distance from top side of screen to top side of button
 #define CROSS_RECT_WIDTH	230
 #define CROSS_RECT_HEIGHT	230
 #define BUTTONS_RECT_X		20 //distance from right side of screen to right side of button
@@ -145,17 +145,19 @@ namespace VBA10
 		this->pointers->Insert(point->PointerId, point);
 		LeaveCriticalSection(&this->cs);
 
+
 		int dpad = GetDPadStyle();
 		if(dpad >= 1)
 		{
 			Windows::Foundation::Point p = point->Position;
+			this->ptest = p;
 
 			if(this->stickBoundaries.Contains(p) && !stickFingerDown && !this->lRect.Contains(p))
 			{
 				float scale = (int) Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
 				if(dpad == 2)
 				{
-					stickPos = p;
+					this->stickPos = p;
 				}
 				if(dpad == 2)
 				{
@@ -163,11 +165,11 @@ namespace VBA10
 					this->visibleStickPos.y = this->stickPos.Y * scale;
 				}
 
-				stickFingerID = point->PointerId;
-				stickFingerDown = true;
+				this->stickFingerID = point->PointerId;
+				this->stickFingerDown = true;
 
-				stickOffset.X = p.X - this->stickPos.X;
-				stickOffset.Y = p.Y - this->stickPos.Y;
+				this->stickOffset.X = p.X - this->stickPos.X;
+				this->stickOffset.Y = p.Y - this->stickPos.Y;
 
 				this->visibleStickOffset.x = this->stickOffset.X * scale;
 				this->visibleStickOffset.y = this->stickOffset.Y * scale;
@@ -337,7 +339,8 @@ namespace VBA10
 			yOffset = VCONTROLLER_Y_OFFSET;
 		}
 		// 1920x1080 as reference value
-		resolutionScale = (this->emulator->GetHeight() / scale) / 1080.0f;
+		resolutionScale = sqrt(this->emulator->GetHeight() / scale / 1080.0f * this->emulator->GetWidth() / scale / 1920.0f);
+
 		yOffset *= resolutionScale;
 
 		this->CreateTouchRectangleOnTheLeft(&this->leftRect, LEFT_RECT_X, LEFT_RECT_Y, LEFT_RECT_WIDTH, LEFT_RECT_HEIGHT, resolutionScale);
@@ -440,8 +443,8 @@ namespace VBA10
 		this->aRect.Y -= yOffset;
 		this->bRect.Y -= yOffset;	
 
-		this->visibleStickPos.x = (LONG) (this->padCrossRectangle.left + ((this->padCrossRectangle.right - this->padCrossRectangle.left) * 1.0f) / 2.0f);
-		this->visibleStickPos.y = (LONG) (this->padCrossRectangle.top + (this->padCrossRectangle.bottom - this->padCrossRectangle.top) / 2.0f);
+		this->visibleStickPos.x = (LONG) (this->padCrossRectangle.right + this->padCrossRectangle.left) / 2.0f;
+		this->visibleStickPos.y = (LONG) (this->padCrossRectangle.top + this->padCrossRectangle.bottom ) / 2.0f;
 
 		this->visibleStickOffset.x = 0;
 		this->visibleStickOffset.y = 0;

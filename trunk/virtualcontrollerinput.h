@@ -51,6 +51,7 @@ namespace VBA10
 		int stickFingerID;
 		Windows::Foundation::Point stickPos;
 		Windows::Foundation::Point stickOffset;
+		Windows::Foundation::Point ptest;
 		POINT visibleStickPos;
 		POINT visibleStickOffset;
 		Windows::Foundation::Rect stickBoundaries;
