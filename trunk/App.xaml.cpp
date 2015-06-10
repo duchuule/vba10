@@ -5,7 +5,6 @@
 
 #include "pch.h"
 #include "DirectXPage.xaml.h"
-#include "AppShell.xaml.h"
 
 using namespace VBA10;
 

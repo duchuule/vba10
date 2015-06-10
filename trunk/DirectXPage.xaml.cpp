@@ -9,8 +9,14 @@
 #include "EmulatorFileHandler.h"
 #include "SelectROMPane.xaml.h"
 
+#include "NavMenuItem.h"
+#include "NavMenuListView.h"
+#include "BasicPage.xaml.h"
+
+
 using namespace std;
 using namespace VBA10;
+using namespace VBA10::Controls;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -36,6 +42,13 @@ using namespace Windows::UI::ViewManagement;
 #define SETTINGS_WIDTH			346
 
 extern bool enableTurboMode;
+
+DirectXPage^ DirectXPage::_current;
+
+Frame^ DirectXPage::AppFrame::get()
+{
+	return frame;
+}
 
 DirectXPage::DirectXPage():
 	m_windowVisible(true),
@@ -107,6 +120,14 @@ DirectXPage::DirectXPage():
 	//// Run task on a dedicated high priority background thread.
 	//m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
+	// Declare the top level nav items
+	navlist = ref new Vector<NavMenuItem^>();
+	navlist->Append(
+		ref new NavMenuItem(
+			"Basic Page",
+			Symbol::Contact,
+			TypeName(Views::BasicPage::typeid)));
+	NavMenuList->ItemsSource = navlist;
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
 
@@ -276,6 +297,8 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 
 
+
+
 void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	////pause emulator 
@@ -326,7 +349,76 @@ void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	selectRomPopup->SetValue(Canvas::TopProperty, 100);
 	selectRomPopup->IsOpen = true;
 	this->loadingDialogOpen = true;
-
-
-	
 }
+
+
+
+
+/// <summary>
+/// Navigate to the Page for the selected <paramref name="listViewItem"/>.
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="listViewItem"></param>
+void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listViewItem)
+{
+	auto item = (NavMenuItem^)((NavMenuListView^)(sender))->ItemFromContainer(listViewItem);
+
+	if (item != nullptr)
+	{
+		if (item->DestPage.Name != AppFrame->CurrentSourcePageType.Name)
+		{
+			AppFrame->Navigate(item->DestPage, item->Arguments);
+		}
+	}
+}
+
+/// <summary>
+/// Callback when the SplitView's Pane is toggled open or close.  When the Pane is not visible
+/// then the floating hamburger may be occluding other content in the app unless it is aware.
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void DirectXPage::TogglePaneButton_Checked(Object^ sender, RoutedEventArgs^ e)
+{
+	CheckTogglePaneButtonSizeChanged();
+}
+
+/// <summary>
+/// Check for the conditions where the navigation pane does not occupy the space under the floating
+/// hamburger button and trigger the event.
+/// </summary>
+void DirectXPage::CheckTogglePaneButtonSizeChanged()
+{
+	if (RootSplitView->DisplayMode == SplitViewDisplayMode::Inline ||
+		RootSplitView->DisplayMode == SplitViewDisplayMode::Overlay)
+	{
+		auto transform = TogglePaneButton->TransformToVisual(this);
+		auto rect = transform->TransformBounds(Rect(0, 0, (float)TogglePaneButton->ActualWidth, (float)TogglePaneButton->ActualHeight));
+		_togglePaneButtonRect = rect;
+	}
+	else
+	{
+		_togglePaneButtonRect = Rect();
+	}
+
+	TogglePaneButtonRectChanged(this, TogglePaneButtonRect);
+}
+
+/// <summary>
+/// Enable accessibility on each nav menu item by setting the AutomationProperties.Name on each container
+/// using the associated Label of each item.
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="args"></param>
+void DirectXPage::NavMenuItemContainerContentChanging(ListViewBase^ sender, ContainerContentChangingEventArgs^ args)
+{
+	if (!args->InRecycleQueue && args->Item != nullptr && dynamic_cast<NavMenuItem^>(args->Item) != nullptr)
+	{
+		args->ItemContainer->SetValue(Windows::UI::Xaml::Automation::AutomationProperties::NameProperty, ((NavMenuItem^)args->Item)->Label);
+	}
+	else
+	{
+		args->ItemContainer->ClearValue(Windows::UI::Xaml::Automation::AutomationProperties::NameProperty);
+	}
+}
+
