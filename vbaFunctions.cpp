@@ -64,15 +64,28 @@ u32 systemReadJoypad(int gamepad)
 
 	EmulatorGame *emulator = EmulatorGame::GetInstance();
 	KeyboardInput *keyboard = emulator->GetKeyboardInput();
+#ifndef NO_XBOX
 	ControllerInput *controller = emulator->GetControllerInput();
+#endif
 
 	VirtualControllerInput *vController = VirtualControllerInput::GetInstance();
-	if(!controller || !vController || !keyboard)
+	if (
+#ifndef NO_XBOX
+		!controller || 
+#endif 
+		!vController || !keyboard)
 		return res;
 
 	//const ControllerState *state = controller->GetControllerState();
 	const ControllerState *keyboardState = keyboard->GetControllerState();
+#ifndef NO_XBOX
 	const ControllerState *controllerState = controller->GetControllerState();
+#else
+	
+	ControllerState controllerState1 = { false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+	const ControllerState *controllerState = &controllerState1;
+#endif
+
 	const ControllerState *vControllerState = vController->GetControllerState();
 
 	if(keyboardState->APressed || controllerState->APressed || vControllerState->APressed)

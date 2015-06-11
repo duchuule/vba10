@@ -1,5 +1,5 @@
 #include "CXBOXController.h"
-
+#ifndef NO_XBOX
 namespace VBA10
 {
 	CXBOXController::CXBOXController(int playerNumber)
@@ -34,3 +34,4 @@ namespace VBA10
 		XInputSetState(this->controllerNumber, &vibration);
 	}
 }
+#endif

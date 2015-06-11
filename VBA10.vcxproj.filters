@@ -260,7 +260,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="NavMenuItem.cpp" />
-    <ClCompile Include="AppShell.xaml.cpp" />
     <ClCompile Include="BasicPage.xaml.cpp" />
     <ClCompile Include="PageHeader.xaml.cpp" />
   </ItemGroup>
@@ -491,7 +490,6 @@
       <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="NavMenuItem.h" />
-    <ClInclude Include="AppShell.xaml.h" />
     <ClInclude Include="BasicPage.xaml.h" />
     <ClInclude Include="PageHeader.xaml.h" />
   </ItemGroup>

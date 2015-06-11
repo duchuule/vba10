@@ -1,3 +1,4 @@
+#ifndef NO_XBOX
 #include "ControllerInput.h"
 
 namespace VBA10
@@ -48,3 +49,4 @@ namespace VBA10
 	}
 
 }
+#endif

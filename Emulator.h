@@ -40,7 +40,9 @@ namespace VBA10
 		static EmulatorGame *GetInstance();
 		VirtualControllerInput *GetVirtualController(void) const;
 		KeyboardInput *GetKeyboardInput(void) const;
+#ifndef NO_XBOX
 		ControllerInput *GetControllerInput(void) const;
+#endif
 		int GetWidth(void);
 		int GetHeight(void);
 		void FocusChanged(bool focus);
@@ -67,7 +69,9 @@ namespace VBA10
 		bool focus;		
 		bool graphicsResourcesReleased;
 		bool restoreState;
+#ifndef NO_XBOX
 		ControllerInput *p1Controller;
+#endif
 		KeyboardInput *keyboard;
 		VirtualControllerInput *virtualInput;
 		int updateCount;
