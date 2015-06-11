@@ -29,6 +29,7 @@ namespace VBA10
 			NavMenuListView();
 			event EventHandler<ListViewItem^>^ ItemInvoked;
 			void SetSelectedItem(ListViewItem^ item);
+			void InvokeItem(Object^ focusedItem);
 
 		protected:
 			virtual void OnApplyTemplate() override;
@@ -37,7 +38,7 @@ namespace VBA10
 		private:
 			SplitView^ _splitViewHost;
 			void ItemClickHandler(Object^ sender, ItemClickEventArgs^ e);
-			void InvokeItem(Object^ focusedItem);
+
 			void OnLoaded(Object ^sender, RoutedEventArgs ^e);
 			void OnPaneToggled();
 			void IsOpenPanePropertyChangedCallback(DependencyObject^ sender, DependencyProperty^ args);

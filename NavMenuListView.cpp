@@ -212,16 +212,16 @@ namespace VBA10
 			SetSelectedItem(item);
 			ItemInvoked(this, item);
 
-			if (_splitViewHost->IsPaneOpen && (
-				_splitViewHost->DisplayMode == SplitViewDisplayMode::CompactOverlay ||
-				_splitViewHost->DisplayMode == SplitViewDisplayMode::Overlay))
-			{
-				_splitViewHost->IsPaneOpen = false;
-				if (item != nullptr)
-				{
-					item->Focus(Windows::UI::Xaml::FocusState::Programmatic);
-				}
-			}
+			//if (_splitViewHost->IsPaneOpen && (
+			//	_splitViewHost->DisplayMode == SplitViewDisplayMode::CompactOverlay ||
+			//	_splitViewHost->DisplayMode == SplitViewDisplayMode::Overlay))
+			//{
+			//	_splitViewHost->IsPaneOpen = false;
+			//	if (item != nullptr)
+			//	{
+			//		item->Focus(Windows::UI::Xaml::FocusState::Programmatic);
+			//	}
+			//}
 		}
 
 		/// <summary>
