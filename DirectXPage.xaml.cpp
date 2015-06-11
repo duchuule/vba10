@@ -12,6 +12,7 @@
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
 #include "BasicPage.xaml.h"
+#include "SelectROMPane.xaml.h"
 
 
 using namespace std;
@@ -54,6 +55,8 @@ DirectXPage::DirectXPage():
 	m_coreInput(nullptr)
 {
 	InitializeComponent();
+
+	DirectXPage::_current = this;
 
 	// Register event handlers for page lifecycle.
 	CoreWindow^ window = Window::Current->CoreWindow;
@@ -121,6 +124,13 @@ DirectXPage::DirectXPage():
 
 	// Declare the top level nav items
 	navlist = ref new Vector<NavMenuItem^>();
+
+	navlist->Append(
+		ref new NavMenuItem(
+			"Data",
+			Symbol::Contact,
+			TypeName(SelectROMPane::typeid)));
+
 	navlist->Append(
 		ref new NavMenuItem(
 			"Basic Page",
@@ -379,12 +389,17 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 /// <param name="e"></param>
 void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	
 	//unload the content of app frame
 	AppFrame->Content = nullptr;
+
+	//unselect item
 	NavMenuList->SetSelectedItem(nullptr);
 
 	CheckTogglePaneButtonSizeChanged();
 }
+
+
 
 /// <summary>
 /// Check for the conditions where the navigation pane does not occupy the space under the floating
@@ -435,4 +450,12 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
 	NavMenuList->InvokeItem(item);
 
+}
+
+void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
+{
+	LoadROMAsync(file, folder);
+
+	RootSplitView->IsPaneOpen = false;
+	//TogglePaneButton_UnChecked(nullptr, nullptr);
 }

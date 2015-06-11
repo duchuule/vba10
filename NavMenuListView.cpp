@@ -69,32 +69,7 @@ namespace VBA10
 			}
 		}
 
-		/// <summary>
-		/// Mark the <paramref name="item"/> as selected and ensures everything else is not.
-		/// If the <paramref name="item"/> is null then everything is unselected.
-		/// </summary>
-		/// <param name="item"></param>
-		void NavMenuListView::SetSelectedItem(ListViewItem^ item)
-		{
-			int index = -1;
-			if (item != nullptr)
-			{
-				index = IndexFromContainer(item);
-			}
-
-			for (int i = 0; i < (int)Items->Size; i++)
-			{
-				auto lvi = (ListViewItem^)ContainerFromIndex(i);
-				if (i != index)
-				{
-					lvi->IsSelected = false;
-				}
-				else if (i == index)
-				{
-					lvi->IsSelected = true;
-				}
-			}
-		}
+		
 
 		/// <summary>
 		/// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
@@ -222,6 +197,38 @@ namespace VBA10
 			//		item->Focus(Windows::UI::Xaml::FocusState::Programmatic);
 			//	}
 			//}
+		}
+
+		/// <summary>
+		/// Mark the <paramref name="item"/> as selected and ensures everything else is not.
+		/// If the <paramref name="item"/> is null then everything is unselected.
+		/// </summary>
+		/// <param name="item"></param>
+		void NavMenuListView::SetSelectedItem(ListViewItem^ item)
+		{
+			int index = -1;
+			if (item != nullptr)
+			{
+				index = IndexFromContainer(item);
+			}
+
+			for (int i = 0; i < (int)Items->Size; i++)
+			{
+				auto lvi = (ListViewItem^)ContainerFromIndex(i);
+				if (lvi != nullptr)
+				{
+
+					if (i != index)
+					{
+						lvi->IsSelected = false;
+					}
+					else if (i == index)
+					{
+						lvi->IsSelected = true;
+					}
+				}
+
+			}
 		}
 
 		/// <summary>

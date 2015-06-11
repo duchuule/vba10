@@ -43,6 +43,8 @@ namespace VBA10
 			Windows::UI::Xaml::Controls::Frame^ get();
 		}
 
+		void LoadROM(StorageFile ^file, StorageFolder ^folder);
+
 	//from AppShell
 	internal:
 		/// <summary>
@@ -121,6 +123,7 @@ namespace VBA10
 	
 		void TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
 	};
 }
 
