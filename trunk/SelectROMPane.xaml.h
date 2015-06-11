@@ -78,7 +78,6 @@ namespace VBA10
 
 		void InitializeStorageLists(void);
 		void Close(void);
-		void BackClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void DeleteFolderClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 

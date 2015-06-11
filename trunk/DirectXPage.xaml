@@ -43,7 +43,7 @@
                         <VisualState.Setters>
                             <!--<Setter Target="RootSplitView.DisplayMode" Value="CompactInline"/>
                             <Setter Target="RootSplitView.IsPaneOpen" Value="True"/>-->
-                            <!--<Setter Target="RootSplitView.OpenPaneLength" Value="256"/>-->
+                            <Setter Target="RootSplitView.OpenPaneLength" Value="256"/>
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState>
@@ -52,7 +52,7 @@
                         </VisualState.StateTriggers>
                         <VisualState.Setters>
                             <!--<Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>-->
-                            <!--<Setter Target="RootSplitView.OpenPaneLength" Value="150"/>-->
+                            <Setter Target="RootSplitView.OpenPaneLength" Value="150"/>
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -62,8 +62,9 @@
             <SplitView x:Name="RootSplitView"
                    DisplayMode="Inline"
                      IsTabStop="False"
+                       Background="Transparent"
                        >
-                <SplitView.Pane>
+                <SplitView.Pane  >
                     <RelativePanel Background="#FF4D3A89">
                         <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
                         <controls:NavMenuListView x:Name="NavMenuList"
@@ -89,7 +90,7 @@
 
                 <!-- OnNavigatingToPage we synchronize the selected item in the nav menu with the current page.
                  OnNavigatedToPage we move keyboard focus to the first item on the page after it's loaded. -->
-                <Frame x:Name="frame">
+                <Frame x:Name="frame" Margin="-1,0,0,0">
                    <!--Navigating="OnNavigatingToPage"
                    Navigated="OnNavigatedToPage"-->
                     
@@ -118,7 +119,7 @@
 
     </SwapChainPanel>
 
-  <Page.BottomAppBar>
+  <!--<Page.BottomAppBar>
     <AppBar x:Name="bottomAppBar" Padding="10,0,10,0">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
         <AppBarButton 
@@ -127,5 +128,5 @@
             Click="StartROM_Click"/>
       </StackPanel>
     </AppBar>
-  </Page.BottomAppBar>
+  </Page.BottomAppBar>-->
 </Page>

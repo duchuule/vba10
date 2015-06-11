@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "SelectROMPane.xaml.h"
 #include <Windows.h>
+#include "DirectXPage.xaml.h";
 
 using namespace VBA10;
 
@@ -122,11 +123,6 @@ void SelectROMPane::InitializeStorageLists(void)
 	});	
 }
 
-void VBA10::SelectROMPane::BackClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	this->Cancelled = true;
-	this->Close();
-}
 
 void SelectROMPane::Close()
 {
@@ -143,7 +139,7 @@ void SelectROMPane::Close()
 	}
 }
 
-void VBA10::SelectROMPane::AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void SelectROMPane::AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	FolderPicker ^picker = ref new FolderPicker();
 	
@@ -179,7 +175,7 @@ void VBA10::SelectROMPane::AddRomDirectoryClick(Platform::Object^ sender, Window
 	});
 }
 
-void VBA10::SelectROMPane::DeleteFolderClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void SelectROMPane::DeleteFolderClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	Button ^button = safe_cast<Button ^>(sender);
 	StorageFolderModel ^model = safe_cast<StorageFolderModel ^>(button->DataContext);
@@ -313,12 +309,14 @@ void SelectROMPane::RefreshROMList(void)
 }
 
 
-void VBA10::SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
 	StorageFileModel ^model =	safe_cast<StorageFileModel ^>(this->romList->SelectedValue);
-	this->Close();
-	if(this->ROMSelected)
-	{
-		this->ROMSelected(model->File, model->Folder);
-	}
+	//this->Close();
+	//if(this->ROMSelected)
+	//{
+		//this->ROMSelected(model->File, model->Folder);
+	//}
+
+	DirectXPage::Current->LoadROM(model->File, model->Folder);
 }
