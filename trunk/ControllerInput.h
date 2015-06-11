@@ -1,4 +1,7 @@
+
 #pragma once
+
+#ifndef NO_XBOX
 
 #include "Input.h"
 #include "CXBOXController.h"
@@ -21,3 +24,4 @@ namespace VBA10
 		CXBOXController *xboxPad;
 	};
 }
+#endif

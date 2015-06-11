@@ -390,8 +390,8 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	
-	//unload the content of app frame
-	AppFrame->Content = nullptr;
+	//change the size of app frame to zero to hide content
+	AppFrame->Width = 0.0f;
 
 	//unselect item
 	NavMenuList->SetSelectedItem(nullptr);
@@ -446,6 +446,9 @@ void DirectXPage::NavMenuItemContainerContentChanging(ListViewBase^ sender, Cont
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//change width to 100%, NAN means auto
+	AppFrame->Width = NAN;
+
 	//navigate to the first item
 	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
 	NavMenuList->InvokeItem(item);

@@ -74,7 +74,9 @@ namespace VBA10
 
 	void EmulatorGame::ReleaseAllResources(void)
 	{
+#ifndef NO_XBOX
 		delete this->p1Controller;
+#endif
 		delete this->keyboard;
 		delete this->virtualInput;
 
@@ -91,7 +93,9 @@ namespace VBA10
 
 	void EmulatorGame::Initialize()
 	{
+#ifndef NO_XBOX
 		this->p1Controller = new ControllerInput(1);
+#endif
 		this->keyboard = new KeyboardInput();
 		this->virtualInput = new VirtualControllerInput();
 		
@@ -170,11 +174,12 @@ namespace VBA10
 	{
 		return this->keyboard;
 	}
-
+#ifndef NO_XBOX
 	ControllerInput *EmulatorGame::GetControllerInput(void) const
 	{
 		return this->p1Controller;
 	}
+#endif
 
 	void EmulatorGame::FocusChanged(bool focus)
 	{
@@ -284,7 +289,9 @@ namespace VBA10
 	void EmulatorGame::Update(void)
 	{		
 		this->keyboard->Update();
+#ifndef NO_XBOX
 		this->p1Controller->Update();
+#endif
 		this->virtualInput->Update();
 
 		/*if(timeMeasured && IsROMLoaded() && (!Settings.StopEmulation || autosaving))
