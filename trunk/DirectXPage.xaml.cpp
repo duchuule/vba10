@@ -39,9 +39,8 @@ using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
 
-#define SETTINGS_WIDTH			346
 
-extern bool enableTurboMode;
+
 
 DirectXPage^ DirectXPage::_current;
 
@@ -365,7 +364,7 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 
 	if (item != nullptr)
 	{
-		if (item->DestPage.Name != AppFrame->CurrentSourcePageType.Name)
+		//if (item->DestPage.Name != AppFrame->CurrentSourcePageType.Name)
 		{
 			AppFrame->Navigate(item->DestPage, item->Arguments);
 		}
@@ -373,19 +372,24 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 }
 
 /// <summary>
-/// Callback when the SplitView's Pane is toggled open or close.  When the Pane is not visible
+/// Callback when the SplitView's Pane is toggled close.  When the Pane is not visible
 /// then the floating hamburger may be occluding other content in the app unless it is aware.
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void DirectXPage::TogglePaneButton_Checked(Object^ sender, RoutedEventArgs^ e)
+void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//unload the content of app frame
+	AppFrame->Content = nullptr;
+	NavMenuList->SetSelectedItem(nullptr);
+
 	CheckTogglePaneButtonSizeChanged();
 }
 
 /// <summary>
 /// Check for the conditions where the navigation pane does not occupy the space under the floating
 /// hamburger button and trigger the event.
+/// Actually: this one is triggerd when the menu is closed and what it does is to feed information to Pageheader about the margin
 /// </summary>
 void DirectXPage::CheckTogglePaneButtonSizeChanged()
 {
@@ -422,3 +426,13 @@ void DirectXPage::NavMenuItemContainerContentChanging(ListViewBase^ sender, Cont
 	}
 }
 
+
+
+
+void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//navigate to the first item
+	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
+	NavMenuList->InvokeItem(item);
+
+}

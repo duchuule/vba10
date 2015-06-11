@@ -10,10 +10,10 @@
 
     <Page.Resources>
     <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="local:NavMenuItem">
-        <Grid>
+        <Grid  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="48" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="600"/>
             </Grid.ColumnDefinitions>
             <!-- Showing a ToolTip and the Label is redundant.  We put the ToolTip on the icon.
                      It appears when the user hovers over the icon, but not the label which provides
@@ -24,7 +24,8 @@
                       ToolTipService.ToolTip="{x:Bind Label}"
                       Foreground="White"/>
             <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}"
-                       Foreground="White"/>
+                       Foreground="White"
+                       />
         </Grid>
     </DataTemplate>
     </Page.Resources>
@@ -42,7 +43,7 @@
                         <VisualState.Setters>
                             <!--<Setter Target="RootSplitView.DisplayMode" Value="CompactInline"/>
                             <Setter Target="RootSplitView.IsPaneOpen" Value="True"/>-->
-                            <Setter Target="RootSplitView.OpenPaneLength" Value="256"/>
+                            <!--<Setter Target="RootSplitView.OpenPaneLength" Value="256"/>-->
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState>
@@ -51,7 +52,7 @@
                         </VisualState.StateTriggers>
                         <VisualState.Setters>
                             <!--<Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>-->
-                            <Setter Target="RootSplitView.OpenPaneLength" Value="150"/>
+                            <!--<Setter Target="RootSplitView.OpenPaneLength" Value="150"/>-->
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -60,8 +61,7 @@
             <!-- Top-level navigation menu + app content -->
             <SplitView x:Name="RootSplitView"
                    DisplayMode="Inline"
-                   OpenPaneLength="100"
-                   IsTabStop="False"
+                     IsTabStop="False"
                        >
                 <SplitView.Pane>
                     <RelativePanel Background="#FF4D3A89">
@@ -110,7 +110,8 @@
                       TabIndex="1"
                       Style="{StaticResource SplitViewTogglePaneButtonStyle}"
                       IsChecked="{Binding IsPaneOpen, ElementName=RootSplitView, Mode=TwoWay}"
-                      Unchecked="TogglePaneButton_Checked"
+                      Unchecked="TogglePaneButton_UnChecked"
+                          Checked="TogglePaneButton_Checked"
                       AutomationProperties.Name="Menu"
                       ToolTipService.ToolTip="Menu" 
                         />
