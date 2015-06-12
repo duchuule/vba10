@@ -9,7 +9,7 @@
   <Identity
     Name="2b9558e5-6253-426c-8989-3284f508e743"
     Publisher="CN=lehuu"
-    Version="1.0.0.0" />
+    Version="1.0.0.1" />
 
   <mp:PhoneIdentity PhoneProductId="2b9558e5-6253-426c-8989-3284f508e743" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

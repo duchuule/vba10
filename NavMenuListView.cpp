@@ -71,108 +71,108 @@ namespace VBA10
 
 		
 
-		/// <summary>
-		/// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
-		/// until a 'Space' or 'Enter' key is pressed. 
-		/// </summary>
-		/// <param name="e"></param>
-		void NavMenuListView::OnKeyDown(KeyRoutedEventArgs^ e)
-		{
-			auto focusedItem = FocusManager::GetFocusedElement();
+		///// <summary>
+		///// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
+		///// until a 'Space' or 'Enter' key is pressed. 
+		///// </summary>
+		///// <param name="e"></param>
+		//void NavMenuListView::OnKeyDown(KeyRoutedEventArgs^ e)
+		//{
+		//	auto focusedItem = FocusManager::GetFocusedElement();
 
-			auto shiftKeyState = CoreWindow::GetForCurrentThread()->GetKeyState(VirtualKey::Shift);
-			auto shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+		//	auto shiftKeyState = CoreWindow::GetForCurrentThread()->GetKeyState(VirtualKey::Shift);
+		//	auto shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
 
-			switch (e->Key)
-			{
-			case VirtualKey::Up:
-				this->TryMoveFocus(FocusNavigationDirection::Up);
-				e->Handled = true;
-				break;
+		//	switch (e->Key)
+		//	{
+		//	case VirtualKey::Up:
+		//		this->TryMoveFocus(FocusNavigationDirection::Up);
+		//		e->Handled = true;
+		//		break;
 
-			case VirtualKey::Down:
-				this->TryMoveFocus(FocusNavigationDirection::Down);
-				e->Handled = true;
-				break;
+		//	case VirtualKey::Down:
+		//		this->TryMoveFocus(FocusNavigationDirection::Down);
+		//		e->Handled = true;
+		//		break;
 
-			case VirtualKey::Tab:
-				// If we're on the header item then this will be null and we'll still get the default behavior.
-				if (dynamic_cast<ListViewItem^>(focusedItem) != nullptr)
-				{
-					auto currentItem = (ListViewItem^)focusedItem;
-					bool onlastitem = currentItem != nullptr && IndexFromContainer(currentItem) == Items->Size - 1;
-					bool onfirstitem = currentItem != nullptr && IndexFromContainer(currentItem) == 0;
+		//	case VirtualKey::Tab:
+		//		// If we're on the header item then this will be null and we'll still get the default behavior.
+		//		if (dynamic_cast<ListViewItem^>(focusedItem) != nullptr)
+		//		{
+		//			auto currentItem = (ListViewItem^)focusedItem;
+		//			bool onlastitem = currentItem != nullptr && IndexFromContainer(currentItem) == Items->Size - 1;
+		//			bool onfirstitem = currentItem != nullptr && IndexFromContainer(currentItem) == 0;
 
-					if (!shiftKeyDown)
-					{
-						if (onlastitem)
-						{
-							this->TryMoveFocus(FocusNavigationDirection::Next);
-						}
-						else
-						{
-							this->TryMoveFocus(FocusNavigationDirection::Down);
-						}
-					}
-					else // Shift + Tab
-					{
-						if (onfirstitem)
-						{
-							this->TryMoveFocus(FocusNavigationDirection::Previous);
-						}
-						else
-						{
-							this->TryMoveFocus(FocusNavigationDirection::Up);
-						}
-					}
-				}
-				else if (dynamic_cast<Control^>(focusedItem) != nullptr)
-				{
-					if (!shiftKeyDown)
-					{
-						this->TryMoveFocus(FocusNavigationDirection::Down);
-					}
-					else // Shift + Tab
-					{
-						this->TryMoveFocus(FocusNavigationDirection::Up);
-					}
-				}
+		//			if (!shiftKeyDown)
+		//			{
+		//				if (onlastitem)
+		//				{
+		//					this->TryMoveFocus(FocusNavigationDirection::Next);
+		//				}
+		//				else
+		//				{
+		//					this->TryMoveFocus(FocusNavigationDirection::Down);
+		//				}
+		//			}
+		//			else // Shift + Tab
+		//			{
+		//				if (onfirstitem)
+		//				{
+		//					this->TryMoveFocus(FocusNavigationDirection::Previous);
+		//				}
+		//				else
+		//				{
+		//					this->TryMoveFocus(FocusNavigationDirection::Up);
+		//				}
+		//			}
+		//		}
+		//		else if (dynamic_cast<Control^>(focusedItem) != nullptr)
+		//		{
+		//			if (!shiftKeyDown)
+		//			{
+		//				this->TryMoveFocus(FocusNavigationDirection::Down);
+		//			}
+		//			else // Shift + Tab
+		//			{
+		//				this->TryMoveFocus(FocusNavigationDirection::Up);
+		//			}
+		//		}
 
-				e->Handled = true;
-				break;
+		//		e->Handled = true;
+		//		break;
 
-			case VirtualKey::Space:
-			case VirtualKey::Enter:
-				// Fire our event using the item with current keyboard focus
-				InvokeItem(focusedItem);
-				e->Handled = true;
-				break;
+		//	case VirtualKey::Space:
+		//	case VirtualKey::Enter:
+		//		// Fire our event using the item with current keyboard focus
+		//		InvokeItem(focusedItem);
+		//		e->Handled = true;
+		//		break;
 
-			default:
-				ListView::OnKeyDown(e);
-				break;
-			}
-		}
+		//	default:
+		//		ListView::OnKeyDown(e);
+		//		break;
+		//	}
+		//}
 
 		/// <summary>
 		/// This method is a work-around until the bug in FocusManager.TryMoveFocus is fixed.
 		/// </summary>
 		/// <param name="direction"></param>
-		void NavMenuListView::TryMoveFocus(FocusNavigationDirection direction)
-		{
-			if (direction == FocusNavigationDirection::Next || direction == FocusNavigationDirection::Previous)
-			{
-				FocusManager::TryMoveFocus(direction);
-			}
-			else
-			{
-				auto control = dynamic_cast<Control^>(FocusManager::FindNextFocusableElement(direction));
-				if (control != nullptr)
-				{
-					control->Focus(Windows::UI::Xaml::FocusState::Programmatic);
-				}
-			}
-		}
+		//void NavMenuListView::TryMoveFocus(FocusNavigationDirection direction)
+		//{
+		//	if (direction == FocusNavigationDirection::Next || direction == FocusNavigationDirection::Previous)
+		//	{
+		//		FocusManager::TryMoveFocus(direction);
+		//	}
+		//	else
+		//	{
+		//		auto control = dynamic_cast<Control^>(FocusManager::FindNextFocusableElement(direction));
+		//		if (control != nullptr)
+		//		{
+		//			control->Focus(Windows::UI::Xaml::FocusState::Programmatic);
+		//		}
+		//	}
+		//}
 
 		void NavMenuListView::ItemClickHandler(Object^ sender, ItemClickEventArgs^ e)
 		{

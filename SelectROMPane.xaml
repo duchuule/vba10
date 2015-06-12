@@ -198,14 +198,62 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <ctl:PageHeader>
-            <ctl:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" 
-                           Text="HOME"/>
-            </ctl:PageHeader.HeaderContent>
-        </ctl:PageHeader>
-        
+
+        <!-- Adaptive triggers -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="mediumView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="saveBtn.Width" Value="68"/>
+                        <Setter Target="selectStateBtn.Width" Value="68"/>
+                        <Setter Target="resetBtn.Width" Value="68"/>
+                        <Setter Target="loadBtn.Width" Value="68"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="saveBtn.Width" Value="48"/>
+                        <Setter Target="selectStateBtn.Width" Value="48"/>
+                        <Setter Target="resetBtn.Width" Value="48"/>
+                        <Setter Target="loadBtn.Width" Value="48"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <CommandBar x:Name="topbar" VerticalAlignment="Top" 
+                    HorizontalContentAlignment="Stretch"
+                    ClosedDisplayMode="Compact">
+           
+            <!--<AppBarSeparator/>-->
+            <AppBarButton Icon="Save" Label="Save"  x:Name="saveBtn" Click="saveBtn_Click"/>
+            <AppBarButton Icon="AllApps" Label="Select State" x:Name="selectStateBtn" />
+            <AppBarButton Icon="Sync" Label="Reset" x:Name="resetBtn"/>
+            <AppBarButton Icon="Go" Label="Load" x:Name="loadBtn"/>
+
+            <!--<CommandBar.SecondaryCommands>
+                <AppBarButton Label="Menu Item 1"/>
+                <AppBarButton Label="Menu Item 2"/>
+                <AppBarButton Label="Menu Item 3"/>
+            </CommandBar.SecondaryCommands>-->
+            <CommandBar.Content>
+
+                <ctl:PageHeader>
+                    <ctl:PageHeader.HeaderContent>
+                        <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" 
+                           Text=""/>
+                    </ctl:PageHeader.HeaderContent>
+                </ctl:PageHeader>
+            </CommandBar.Content>
+        </CommandBar>
+
         <Grid Grid.Row="1" >            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>

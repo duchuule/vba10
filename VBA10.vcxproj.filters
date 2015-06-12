@@ -260,8 +260,8 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="NavMenuItem.cpp" />
-    <ClCompile Include="BasicPage.xaml.cpp" />
     <ClCompile Include="PageHeader.xaml.cpp" />
+    <ClCompile Include="SettingsPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -490,8 +490,8 @@
       <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="NavMenuItem.h" />
-    <ClInclude Include="BasicPage.xaml.h" />
     <ClInclude Include="PageHeader.xaml.h" />
+    <ClInclude Include="SettingsPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -516,6 +516,7 @@
       <Filter>Controls</Filter>
     </Page>
     <Page Include="SettingsPage.xaml" />
+    <Page Include="HelpPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
