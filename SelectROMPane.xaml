@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VBA10"
+    xmlns:ctl="using:VBA10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -36,7 +37,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
-                        <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <Border x:Name="LayoutRoot" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal"/>
@@ -189,26 +193,26 @@
         </Style>
     </UserControl.Resources>
 
-        <Grid Background="White" >            
-            <!--<Rectangle Fill="#FF555555" Stroke="Black" Height="87" VerticalAlignment="Top"/>
-            <TextBlock Margin="115,39,0,0" TextWrapping="Wrap" Text="Select ROM" FontSize="24" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="180"/>
-            <ToggleButton Click="BackClick" VerticalAlignment="Top" 
-                          HorizontalAlignment="Left"
-                          Foreground="White" Margin="10,10,0,0" Padding="4"
-                          Background="Transparent" 
-                          Width="60" Height="60"
-                          >
-                        <FontIcon x:Name="Hamburger" FontFamily="Segoe MDL2 Assets" 
-                                  Glyph="&#xE10A;" FontSize="50"
-                                  HorizontalAlignment="Center"/>
-            </ToggleButton>-->
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <ctl:PageHeader>
+            <ctl:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" 
+                           Text="HOME"/>
+            </ctl:PageHeader.HeaderContent>
+        </ctl:PageHeader>
+        
+        <Grid Grid.Row="1" >            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderThickness="1 1 1 0" BorderBrush="Black" />
-            <Border Grid.Column="1" BorderThickness="1 1 1 0" BorderBrush="Black" />
+            <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="Black" />
+            <Border Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="Black" />
             <TextBlock Grid.Column="0" Margin="10,20,0,0" Text="Available ROMs" 
                        FontSize="20" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left"/>
             <TextBlock Grid.Column="1" Margin="10,20,0,0" 
@@ -252,4 +256,5 @@
             </ListBox>
         </Grid>
 
+    </Grid>
 </Page>

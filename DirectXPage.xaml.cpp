@@ -11,8 +11,8 @@
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
-#include "BasicPage.xaml.h"
 #include "SelectROMPane.xaml.h"
+#include "SettingsPage.xaml.h"
 
 
 using namespace std;
@@ -127,15 +127,15 @@ DirectXPage::DirectXPage():
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Data",
-			Symbol::Contact,
+			"Home",
+			Symbol::Home,
 			TypeName(SelectROMPane::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Basic Page",
-			Symbol::Contact,
-			TypeName(Views::BasicPage::typeid)));
+			"Settings",
+			Symbol::Setting,
+			TypeName(SettingsPage::typeid)));
 	NavMenuList->ItemsSource = navlist;
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
@@ -308,61 +308,6 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 
 
-void DirectXPage::StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	////pause emulator 
-	//m_main->emulator->Pause();
-
-	//StorageFolder^ localFolder = ApplicationData::Current->LocalFolder;
-	//String^ name = "Bunny Advance (Demo).gba";
-	//create_task(localFolder->GetFileAsync(name)).then([=](StorageFile^ romFile) {
-	//	//Do something with the rom file 
-	//	LoadROMAsync(romFile, localFolder);
-	//});
-
-	if (this->loadingDialogOpen)
-		return;
-
-	Popup ^selectRomPopup = ref new Popup();
-	selectRomPopup->Width = Window::Current->Bounds.Width - 200;
-	selectRomPopup->Height = Window::Current->Bounds.Height - 200;
-	selectRomPopup->IsLightDismissEnabled = false;
-
-	SelectROMPane ^pane = ref new SelectROMPane();
-	pane->Width = Window::Current->Bounds.Width * 0.95;
-	pane->Height = Window::Current->Bounds.Height * 0.95;
-	selectRomPopup->Child = pane;
-
-	selectRomPopup->Opened += ref new EventHandler<Object ^>([this](Object ^sender, Object ^args)
-	{
-		m_main->emulator->Pause();
-	});
-	selectRomPopup->Closed += ref new EventHandler<Object ^>([this, pane](Object ^sender, Object ^args)
-	{
-		if (pane->Cancelled)
-		{
-			m_main->emulator->Unpause();
-		}
-		this->loadingDialogOpen = false;
-		m_main->emulator->GetVirtualController()->Reset();
-	});
-
-	pane->ROMSelected = ref new ROMSelectedDelegate([=](StorageFile ^file, StorageFolder ^folder)
-	{
-		LoadROMAsync(file, folder);
-		this->BottomAppBar->IsOpen = false;
-		this->loadingDialogOpen = false;
-	});
-
-	selectRomPopup->SetValue(Canvas::LeftProperty, 100);
-	selectRomPopup->SetValue(Canvas::TopProperty, 100);
-	selectRomPopup->IsOpen = true;
-	this->loadingDialogOpen = true;
-}
-
-
-
-
 /// <summary>
 /// Navigate to the Page for the selected <paramref name="listViewItem"/>.
 /// </summary>
@@ -389,6 +334,8 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 /// <param name="e"></param>
 void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//change splitview to overlay, so that it disappear
+	//RootSplitView->DisplayMode = SplitViewDisplayMode::Overlay;
 	
 	//change the size of app frame to zero to hide content
 	AppFrame->Width = 0.0f;
@@ -397,6 +344,9 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	NavMenuList->SetSelectedItem(nullptr);
 
 	CheckTogglePaneButtonSizeChanged();
+
+	//unpause emulator
+	m_main->emulator->Unpause();
 }
 
 
@@ -446,6 +396,14 @@ void DirectXPage::NavMenuItemContainerContentChanging(ListViewBase^ sender, Cont
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//pause emulator
+	m_main->emulator->Pause();
+
+	//change splitview to compact overlay and open pane
+	//RootSplitView->DisplayMode = SplitViewDisplayMode::CompactOverlay;
+	//RootSplitView->IsPaneOpen = true;
+
+
 	//change width to 100%, NAN means auto
 	AppFrame->Width = NAN;
 
