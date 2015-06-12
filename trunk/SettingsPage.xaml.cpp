@@ -74,6 +74,13 @@ SettingsPage::SettingsPage()
 		break;
 	}
 
+	//general
+	this->loadConfirmationToggle->IsOn = IsLoadConfirmationDisabled();
+	this->saveConfirmationToggle->IsOn = IsSaveConfirmationDisabled();
+	this->soundToggle->IsOn = SoundEnabled();
+	this->soundSyncToggle->IsOn = SynchronizeAudio();
+
+
 	initdone = true;
 
 	
@@ -318,6 +325,42 @@ void SettingsPage::fpsToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml
 	if (initdone)
 	{
 		ShowFPS(this->fpsToggle->IsOn);
+	}
+}
+
+
+//####### SOUND SETTING
+void SettingsPage::saveConfirmationToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (this->initdone)
+	{
+		DisableSaveConfirmation(this->saveConfirmationToggle->IsOn);
+	}
+}
+
+
+void SettingsPage::loadConfirmationToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (this->initdone)
+	{
+		DisableLoadConfirmation(this->loadConfirmationToggle->IsOn);
+	}
+}
+
+void SettingsPage::soundToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EnableSound(this->soundToggle->IsOn);
+	}
+}
+
+
+void SettingsPage::soundSyncToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		SetSynchronizeAudio(this->soundSyncToggle->IsOn);
 	}
 }
 

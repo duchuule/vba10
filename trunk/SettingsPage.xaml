@@ -249,13 +249,37 @@
                 </ScrollViewer>
             </PivotItem>
 
-            <PivotItem Header="Video">
+            <PivotItem Header="General">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
+                        <ToggleSwitch Header="Disable save confirmation" 
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" 
+                                      IsOn="False" 
+                                      Name="saveConfirmationToggle" 
+                                      Toggled="saveConfirmationToggle_Toggled_1"/>
+                        <ToggleSwitch Header="Disable load confirmation" 
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" 
+                                      IsOn="False" 
+                                      Name="loadConfirmationToggle" 
+                                      Toggled="loadConfirmationToggle_Toggled_1"/>
+                        <ToggleSwitch Header="Sound" 
+                                      Toggled="soundToggle_Toggled" 
+                                      Name="soundToggle" 
+                                      IsOn="True"
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top"/>
+
+                        <ToggleSwitch Header="Synchronize audio (better quality)" 
+                                      Toggled="soundSyncToggle_Toggled_1" 
+                                      Name="soundSyncToggle" 
+                                      IsOn="True" HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top"/>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
