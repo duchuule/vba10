@@ -68,10 +68,8 @@ namespace VBA10
 	public ref class SelectROMPane sealed
 	{
 	public:
-		property ROMSelectedDelegate ^ROMSelected;
-		property bool Cancelled;
-
 		SelectROMPane();
+
 	private:
 		Platform::Collections::Vector<StorageFolderModel ^> ^storageFolderVector;
 		Platform::Collections::Vector<StorageFileModel ^> ^storageFileVector;
@@ -84,5 +82,6 @@ namespace VBA10
 		void RemoveFolderByToken(Platform::String ^token);
 		void RefreshROMList(void);
 		void romList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
+		void saveBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

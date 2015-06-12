@@ -7,6 +7,8 @@
 #include "SelectROMPane.xaml.h"
 #include <Windows.h>
 #include "DirectXPage.xaml.h";
+#include "EmulatorSettings.h";
+#include "EmulatorFileHandler.h"
 
 using namespace VBA10;
 
@@ -20,6 +22,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
@@ -38,10 +41,12 @@ StorageFileModel::StorageFileModel(StorageFile ^file, StorageFolder ^folder)
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 SelectROMPane::SelectROMPane()
 {
-	this->ROMSelected = nullptr;
-	this->Cancelled = false;
+
 	this->InitializeComponent();
 	this->InitializeStorageLists();
+
+	//disable the command bar if no rom is loaded
+	topbar->IsEnabled = IsROMLoaded();
 }
 
 void SelectROMPane::InitializeStorageLists(void)
@@ -312,11 +317,47 @@ void SelectROMPane::RefreshROMList(void)
 void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
 	StorageFileModel ^model =	safe_cast<StorageFileModel ^>(this->romList->SelectedValue);
-	//this->Close();
-	//if(this->ROMSelected)
-	//{
-		//this->ROMSelected(model->File, model->Folder);
-	//}
+
 
 	DirectXPage::Current->LoadROM(model->File, model->Folder);
+}
+
+
+void SelectROMPane::saveBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (IsSaveConfirmationDisabled())
+	{
+		DirectXPage::Current->SaveState();
+	}
+	else
+	{
+		MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to save? This will overwrite the selected save state.", "Overwrite?");
+		UICommand ^confirm = ref new UICommand("Yes",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			DirectXPage::Current->SaveState();
+		}));
+
+		UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			DisableSaveConfirmation(true);
+			DirectXPage::Current->SaveState();
+		}));
+
+		UICommand ^no = ref new UICommand("No",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			//do nothing
+		}));
+
+		dialog->Commands->Append(confirm);
+		//dialog->Commands->Append(confirmRemember); //windows phone crashes when there are 3 options
+		dialog->Commands->Append(no);
+
+		dialog->DefaultCommandIndex = 0;
+		dialog->CancelCommandIndex = 1; //would be two if confirm remember is used
+
+		dialog->ShowAsync();
+	}
 }

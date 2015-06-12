@@ -44,6 +44,7 @@ namespace VBA10
 		}
 
 		void LoadROM(StorageFile ^file, StorageFolder ^folder);
+		void SaveState();
 
 	//from AppShell
 	internal:
@@ -90,6 +91,9 @@ namespace VBA10
 		// Other event handlers.
 		void OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel^ sender, Object^ args);
 		void OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
+
+		//keyboard
+		void AppShell_KeyDown(Object^ sender, KeyRoutedEventArgs^ e);
 
 		// Track our independent input on a background worker thread.
 		Windows::Foundation::IAsyncAction^ m_inputLoopWorker;

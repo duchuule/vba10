@@ -33,7 +33,7 @@ namespace VBA10
 
 		protected:
 			virtual void OnApplyTemplate() override;
-			virtual void OnKeyDown(KeyRoutedEventArgs^ e) override;
+			//virtual void OnKeyDown(KeyRoutedEventArgs^ e) override;
 
 		private:
 			SplitView^ _splitViewHost;
@@ -42,7 +42,7 @@ namespace VBA10
 			void OnLoaded(Object ^sender, RoutedEventArgs ^e);
 			void OnPaneToggled();
 			void IsOpenPanePropertyChangedCallback(DependencyObject^ sender, DependencyProperty^ args);
-			void TryMoveFocus(FocusNavigationDirection direction);
+			//void TryMoveFocus(FocusNavigationDirection direction);
 		};
 	}
 }

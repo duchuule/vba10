@@ -42,12 +42,12 @@ namespace VBA10
 			DirectXPage::Current->TogglePaneButtonRectChanged +=
 				ref new TypedEventHandler<DirectXPage^, Rect>(this, &PageHeader::Current_TogglePaneButtonSizeChanged);
 
-			titleBar->Margin = Thickness(DirectXPage::Current->TogglePaneButtonRect.Right, 0, 0, 0);
+			//titleBar->Margin = Thickness(DirectXPage::Current->TogglePaneButtonRect.Right, 0, 0, 0);
 		}
 
 		void PageHeader::Current_TogglePaneButtonSizeChanged(DirectXPage^ sender, Rect e)
 		{
-			titleBar->Margin = Thickness(e.Right, 0, 0, 0);
+			//titleBar->Margin = Thickness(e.Right, 0, 0, 0);
 		}
 	}
 }

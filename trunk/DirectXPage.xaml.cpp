@@ -13,7 +13,7 @@
 #include "NavMenuListView.h"
 #include "SelectROMPane.xaml.h"
 #include "SettingsPage.xaml.h"
-
+#include "HelpPage.xaml.h"
 
 using namespace std;
 using namespace VBA10;
@@ -136,6 +136,13 @@ DirectXPage::DirectXPage():
 			"Settings",
 			Symbol::Setting,
 			TypeName(SettingsPage::typeid)));
+
+	navlist->Append(
+		ref new NavMenuItem(
+			"Help",
+			Symbol::Help,
+			TypeName(HelpPage::typeid)));
+
 	NavMenuList->ItemsSource = navlist;
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
@@ -326,28 +333,7 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 	}
 }
 
-/// <summary>
-/// Callback when the SplitView's Pane is toggled close.  When the Pane is not visible
-/// then the floating hamburger may be occluding other content in the app unless it is aware.
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
-void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	//change splitview to overlay, so that it disappear
-	//RootSplitView->DisplayMode = SplitViewDisplayMode::Overlay;
-	
-	//change the size of app frame to zero to hide content
-	AppFrame->Width = 0.0f;
 
-	//unselect item
-	NavMenuList->SetSelectedItem(nullptr);
-
-	CheckTogglePaneButtonSizeChanged();
-
-	//unpause emulator
-	m_main->emulator->Unpause();
-}
 
 
 
@@ -392,7 +378,28 @@ void DirectXPage::NavMenuItemContainerContentChanging(ListViewBase^ sender, Cont
 }
 
 
+/// <summary>
+/// Callback when the SplitView's Pane is toggled close.  When the Pane is not visible
+/// then the floating hamburger may be occluding other content in the app unless it is aware.
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//change splitview to overlay, so that it disappear
+	//RootSplitView->DisplayMode = SplitViewDisplayMode::Overlay;
 
+	//change the size of app frame to zero to hide content
+	AppFrame->Width = 0.0f;
+
+	//unselect item
+	NavMenuList->SetSelectedItem(nullptr);
+
+	CheckTogglePaneButtonSizeChanged();
+
+	//unpause emulator
+	m_main->emulator->Unpause();
+}
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -413,10 +420,30 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 }
 
+
+void DirectXPage::AppShell_KeyDown(Object^ sender, KeyRoutedEventArgs^ e)
+{
+	if (e->Key == VirtualKey::Escape )
+	{
+		RootSplitView->IsPaneOpen = !RootSplitView->IsPaneOpen;
+
+	}
+
+
+}
+
 void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 {
 	LoadROMAsync(file, folder);
 
-	RootSplitView->IsPaneOpen = false;
-	//TogglePaneButton_UnChecked(nullptr, nullptr);
+	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
+
+}
+
+void DirectXPage::SaveState()
+{
+	SaveStateAsync();
+	m_main->emulator->GetVirtualController()->Reset();
+
+	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
 }

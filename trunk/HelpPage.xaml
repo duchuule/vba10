@@ -1,0 +1,93 @@
+﻿<Page
+    x:Class="VBA10.HelpPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VBA10"
+    xmlns:ctl="using:VBA10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ctl:PageHeader>
+            <ctl:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" 
+                           Style="{ThemeResource PageTitleTextBlockStyle}" Text="HELP"/>
+            </ctl:PageHeader.HeaderContent>
+        </ctl:PageHeader>
+
+        <Pivot Grid.Row="1" >
+            <PivotItem Header="Keyboard">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+                    <StackPanel Orientation="Vertical"
+                                      HorizontalAlignment="Left" 
+                                    MaxWidth="440">
+                        <TextBlock TextWrapping="Wrap" >
+                            <Run Text="Here are some keyboard shortcut"/>
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="About">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+                    <StackPanel Orientation="Vertical"
+                                      HorizontalAlignment="Left" 
+                                    MaxWidth="440">
+                        <TextBlock TextWrapping="Wrap" >
+                            <Run Text="VBA10"/>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Name="versionBlock"
+                               Text="Version: check .cpp">
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap"  Name="contactBlock"
+                               Tapped="contactBlock_Tapped"
+                               >
+                	        <Run>Contact:&#160; </Run>  
+                        <Underline>
+                            <Run Foreground="#4444D9">store.support@outlook.com</Run>
+                        </Underline>
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap" >
+                    	    <LineBreak />
+                    	    <Run  Text="Feel free to report bugs or broken games."/>
+                    	    <LineBreak />
+                    	    <LineBreak />
+                    	    <Run  Text="The author is not responsible for any illegal use of this software. "/>
+                    	    <LineBreak/>
+                     	    <LineBreak/>
+                    	    <Run  Text="This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or(at your option) any later version.  "/>
+                    	    <LineBreak/>
+                    	    <LineBreak/>
+                    	    <Run  Text="This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.  "/>
+                    	    <LineBreak/>
+                    	    <LineBreak/>
+                    	    <Run  Text="You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."/>
+                    	    <LineBreak/>
+
+                        </TextBlock>
+                        <Button Name="gplButton" Content="GNU Public License v3" 
+                                Click="gplButton_Click" 
+                                Margin="0,0,0,8"/>
+                        
+                        <Button Name="sourceButton" Content="Source code"
+                                Click="sourceButton_Click"
+                                Margin="0,0,0,8"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Page>
