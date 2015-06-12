@@ -1,0 +1,265 @@
+﻿<Page
+    x:Class="VBA10.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VBA10"
+    xmlns:ctl="using:VBA10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ctl:PageHeader>
+            <ctl:PageHeader.HeaderContent>
+                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" Text="SETTINGS"/>
+            </ctl:PageHeader.HeaderContent>
+        </ctl:PageHeader>
+
+        
+        <Pivot Grid.Row="1" >
+            <PivotItem Header="Input">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+                    <StackPanel Orientation="Vertical" x:Name="InputStackPanel" 
+                                  HorizontalAlignment="Left" 
+                                MaxWidth="440">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Text="Tip: This emulator supports Xbox 360 Gamepads."
+                                   Margin="0,0,0,8"/>
+
+                        <ToggleSwitch Header="Enable Touch Controls" 
+                                      Name="touchToggle" HorizontalAlignment="Left" 
+                                      Toggled="touchToggle_Toggled"/>
+
+                        <ToggleSwitch Header="Virtual Controller Position" 
+                                      OffContent="Bottom"
+                                      OnContent="Top" IsOn="True" 
+                                              x:Name="touchControlPosToggle" 
+                                              Toggled="touchControlPosToggle_Toggled"/>
+
+                        <ComboBox Name="dpadComboBox" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                  SelectedIndex="1"
+                                  SelectionChanged="dpadComboBox_SelectionChanged_1"
+                                  Header="D-Pad Style">
+                            <ComboBoxItem>8-way</ComboBoxItem>
+                            <ComboBoxItem>fixed analogue stick</ComboBoxItem>
+                            <ComboBoxItem>dynamic analogue stick</ComboBoxItem>
+                        </ComboBox>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Name="deadzoneLabel2" >Deadzone (analogue stick):</TextBlock>
+                            <TextBlock Name="deadzoneLabel"   Text="10.0" />
+                        </StackPanel>
+                        <Slider Minimum="0.0" 
+                                Maximum="50.0" Value="10.0" 
+                                Name="deadzoneSlider" 
+                                ValueChanged="deadzoneSlider_ValueChanged_1"
+                                />
+
+
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock >Controller Scale:</TextBlock>
+                            <TextBlock Name="valueLabel"  Text="100" />
+                            <TextBlock Text="%" />
+                        </StackPanel>
+                        <Slider  Minimum="50" Maximum="150" Value="100" 
+                                 Name="controllerScaleSlider" 
+                                 ValueChanged="controllerScaleSlider_ValueChanged_1"
+                                 />
+
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock   >Controller Opacity:</TextBlock>
+                            <TextBlock Name="opacityValueLabel"  Text="50" />
+                            <TextBlock  Text="%" />
+                        </StackPanel>
+                        <Slider  Minimum="10" Maximum="100" Value="50" 
+                                 Name="controllerOpacitySlider" 
+                                 ValueChanged="controllerOpacitySlider_ValueChanged_1"
+                                />
+
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="16" 
+                                   Text="Key Bindings"
+                                   VerticalAlignment="Top"/>
+
+                        <Grid Margin="0,4,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap"
+                                                Text="Left" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1" Name="leftKeyBox" AcceptsReturn="False" 
+                                             KeyDown="keyDown" KeyUp="leftKeyBox_KeyUp" TextWrapping="Wrap" Text="Left"  Margin="0,4,0,4"
+                                             VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Up" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1" x:Name="upKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="upKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="Up" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Right" VerticalAlignment="Center"/>
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1" x:Name="rightKeyBox" Margin="0,0,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="rightKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="Right" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Down" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" x:Name="downKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="downKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="Down" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="B" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="4" Grid.Column="1" x:Name="bKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="bKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="B" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="A" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="1" x:Name="aKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="aKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="A" VerticalAlignment="Top"/>
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" TextWrapping="Wrap" Name="lKeyLabel"
+                                               Text="L" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="1" x:Name="lKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="lKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="L" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" TextWrapping="Wrap"  Name="rKeyLabel"
+                                               Text="R" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="7" Grid.Column="1" x:Name="rKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="rKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="R" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Start" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="8" Grid.Column="1" x:Name="startKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="startKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="Start" VerticalAlignment="Top"/>
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="9" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Select" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="9" Grid.Column="1" x:Name="selectKeyBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="selectKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             Text="Select" VerticalAlignment="Top" />
+
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="10" Grid.Column="0" TextWrapping="Wrap" 
+                                               Text="Turbo Mode" VerticalAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Grid.Row="10" Grid.Column="1" x:Name="turboModeBox" Margin="0,4,0,4"
+                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="turboModeBox_KeyUp_1" TextWrapping="Wrap" 
+                                             Text="T" VerticalAlignment="Top" />
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            
+            <PivotItem Header="Video">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+                    <StackPanel Orientation="Vertical"
+                                  HorizontalAlignment="Left" 
+                                MaxWidth="440">
+                        <!--<ToggleSwitch Toggled="hzToggle_Toggled" Header="30 Hz mode for displays with 30 Hz" Name="hzToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
+
+                        <ComboBox Name="monitorComboBox" HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                   SelectedIndex="1" 
+                                  SelectionChanged="monitorComboBox_SelectionChanged_1"
+                                  Header="Display Type">
+                            <ComboBoxItem>30 Hz</ComboBoxItem>
+                            <ComboBoxItem>60 Hz (default)</ComboBoxItem>
+                            <ComboBoxItem>120 Hz</ComboBoxItem>
+                        </ComboBox>
+
+                        <!--<ToggleSwitch Toggled="fpsToggle_Toggled" Header="Show Frames per Second" x:Name="fpsToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
+
+                        <ComboBox Name="skipComboBox" HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                   SelectedIndex="0" 
+                                  SelectionChanged="skipComboBox_SelectionChanged_1"
+                                  Header="Frame skip (normal mode)">
+                            <ComboBoxItem>automatic</ComboBoxItem>
+                            <ComboBoxItem>0</ComboBoxItem>
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                        </ComboBox>
+
+
+
+                        <ComboBox Name="turboSkipComboBox" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                  SelectedIndex="0" 
+                                  SelectionChanged="turboSkipComboBox_SelectionChanged_1"
+                                  Header="Frame skip (turbo mode)">
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>4</ComboBoxItem>
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                        </ComboBox>
+
+                        <ComboBox Name="aspectComboBox" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top"
+                                  SelectedIndex="0" 
+                                  SelectionChanged="aspectComboBox_SelectionChanged_1"
+                                  Header="Aspect Ratio"
+                                  >
+                            <ComboBoxItem>Original</ComboBoxItem>
+                            <ComboBoxItem>Stretch</ComboBoxItem>
+                            <ComboBoxItem>4:3</ComboBoxItem>
+                            <ComboBoxItem>5:4</ComboBoxItem>
+                            <ComboBoxItem>1:1</ComboBoxItem>
+                        </ComboBox>
+
+                        <ToggleSwitch Header="Show FPS" 
+                                      Name="fpsToggle" 
+                                      IsOn="True"
+                                      Toggled="fpsToggle_Toggled"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem Header="Video">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      >
+                    <StackPanel Orientation="Vertical"
+                                  HorizontalAlignment="Left" 
+                                MaxWidth="440">
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+            
+    </Grid>
+</Page>

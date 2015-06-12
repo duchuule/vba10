@@ -2,7 +2,7 @@
 
 using namespace Windows::Foundation;
 
-#define DEFAULT_SHOW_FPS_VALUE		false
+#define DEFAULT_SHOW_FPS_VALUE		true
 #define DEFAULT_SOUND_ENABLED_VALUE	true
 #define DEFAULT_TOUCH_ENABLED_VALUE	true
 #define DEFAULT_TOUCH_ON_TOP		false

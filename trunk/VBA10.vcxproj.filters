@@ -512,10 +512,10 @@
     <Page Include="DirectXPage.xaml" />
     <Page Include="SelectROMPane.xaml" />
     <Page Include="Styles.xaml" />
-    <Page Include="BasicPage.xaml" />
     <Page Include="PageHeader.xaml">
       <Filter>Controls</Filter>
     </Page>
+    <Page Include="SettingsPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">

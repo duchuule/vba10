@@ -208,9 +208,6 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="BasicPage.xaml.h">
-      <DependentUpon>BasicPage.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="CheatData.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Common\DeviceResources.h" />
@@ -237,6 +234,9 @@
     <ClInclude Include="SampleFpsTextRenderer.h" />
     <ClInclude Include="SelectROMPane.xaml.h">
       <DependentUpon>SelectROMPane.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="SettingsPage.xaml.h">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Size.h" />
     <ClInclude Include="stringhelper.h" />
@@ -305,9 +305,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="BasicPage.xaml.cpp">
-      <DependentUpon>BasicPage.xaml</DependentUpon>
-    </ClCompile>
     <ClCompile Include="CheatData.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -371,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="SelectROMPane.xaml.cpp">
       <DependentUpon>SelectROMPane.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="SettingsPage.xaml.cpp">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="stringhelper.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -611,12 +611,14 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BasicPage.xaml" />
     <Page Include="DirectXPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PageHeader.xaml" />
     <Page Include="SelectROMPane.xaml" />
+    <Page Include="SettingsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles.xaml" />
   </ItemGroup>
   <ItemGroup>

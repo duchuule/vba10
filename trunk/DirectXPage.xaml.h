@@ -108,8 +108,6 @@ namespace VBA10
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 		std::unique_ptr<VBA10Main> m_main; 
 		bool m_windowVisible;
-		void AppBarButton_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void StartROM_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
 		//from AppShell
 		void NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ e);

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "VBA10Main.h"
 #include "Common\DirectXHelper.h"
+#include "EmulatorSettings.h"
 
 using namespace VBA10;
 using namespace Windows::Foundation;
@@ -132,7 +133,8 @@ bool VBA10Main::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 	renderer->Render();
-	m_fpsTextRenderer->Render();
+	if (ShowingFPS())
+		m_fpsTextRenderer->Render();
 
 	return true;
 }
