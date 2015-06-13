@@ -467,7 +467,10 @@ void DirectXPage::LoadState()
 	{
 		CloseMenu();
 	});
-	
+}
 
-	
+void DirectXPage::Reset()
+{
+	CloseMenu();
+	ResetSync();
 }

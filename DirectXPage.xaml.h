@@ -46,6 +46,7 @@ namespace VBA10
 		void LoadROM(StorageFile ^file, StorageFolder ^folder);
 		void SaveState();
 		void LoadState();
+		void Reset();
 
 	//from AppShell
 	internal:

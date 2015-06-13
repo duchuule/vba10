@@ -401,3 +401,29 @@ void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 		dialog->ShowAsync();
 	}
 }
+
+
+void SelectROMPane::resetBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to reset the console?", "Warning");
+	UICommand ^confirm = ref new UICommand("Yes",
+		ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+	{
+		DirectXPage::Current->Reset();
+	}));
+
+
+	UICommand ^no = ref new UICommand("No",
+		ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+	{
+		//do nothing
+	}));
+
+	dialog->Commands->Append(confirm);
+	dialog->Commands->Append(no);
+
+	dialog->DefaultCommandIndex = 0;
+	dialog->CancelCommandIndex = 1;
+
+	dialog->ShowAsync();
+}

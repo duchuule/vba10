@@ -28,7 +28,8 @@ namespace VBA10
 	task<void> LoadGBROMAsync(StorageFile ^file, StorageFolder ^folder);
 	task<void> LoadGBAROMAsync(StorageFile ^file, StorageFolder ^folder);
 	task<void> LoadROMAsync(StorageFile ^file, StorageFolder ^folder);
-	task<void> ResetAsync(void);
+	void ResetSync();
+	//task<void> ResetAsync(void);
 	task<ROMData> GetROMBytesFromFileAsync(StorageFile ^file);
 	task<void> SaveSRAMAsync(void);
 	task<void> SaveGBSRAMAsync(void);
