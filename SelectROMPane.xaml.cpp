@@ -361,3 +361,43 @@ void SelectROMPane::saveBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 		dialog->ShowAsync();
 	}
 }
+
+
+void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (IsLoadConfirmationDisabled())
+	{
+		DirectXPage::Current->LoadState();
+	}
+	else
+	{
+		MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to load? All unsaved progress will be lost.", "Warning");
+		UICommand ^confirm = ref new UICommand("Yes",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			DirectXPage::Current->LoadState();
+		}));
+
+		UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			DisableLoadConfirmation(true);
+			DirectXPage::Current->LoadState();
+		}));
+
+		UICommand ^no = ref new UICommand("No",
+			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		{
+			//do nothing
+		}));
+
+		dialog->Commands->Append(confirm);
+		//dialog->Commands->Append(confirmRemember);
+		dialog->Commands->Append(no);
+
+		dialog->DefaultCommandIndex = 0;
+		dialog->CancelCommandIndex = 1;
+
+		dialog->ShowAsync();
+	}
+}

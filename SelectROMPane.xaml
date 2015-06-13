@@ -7,10 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    d:DesignWidth="320"
     >
     <UserControl.Resources>
         <Style x:Key="ROMListStyle" TargetType="ListBox">
-            <Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
+            <!--<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
             <Setter Property="Background" Value="{StaticResource ListBoxBackgroundThemeBrush}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderThemeBrush}"/>
             <Setter Property="BorderThickness" Value="{StaticResource ListBoxBorderThemeThickness}"/>
@@ -72,10 +73,10 @@
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
+            </Setter>-->
         </Style>
         <Style x:Key="ROMListItemStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="Transparent"/>
+            <!--<Setter Property="Background" Value="Transparent"/>
             <Setter Property="TabNavigation" Value="Local"/>
             <Setter Property="Padding" Value="8,10"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -189,7 +190,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>-->
         </Style>
     </UserControl.Resources>
 
@@ -202,6 +203,17 @@
         <!-- Adaptive triggers -->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="saveBtn.Width" Value="88"/>
+                        <Setter Target="selectStateBtn.Width" Value="88"/>
+                        <Setter Target="resetBtn.Width" Value="88"/>
+                        <Setter Target="loadBtn.Width" Value="88"/>
+                    </VisualState.Setters>
+                </VisualState>
                 <VisualState x:Name="mediumView">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="500" />
@@ -219,10 +231,10 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="saveBtn.Width" Value="48"/>
-                        <Setter Target="selectStateBtn.Width" Value="48"/>
-                        <Setter Target="resetBtn.Width" Value="48"/>
-                        <Setter Target="loadBtn.Width" Value="48"/>
+                        <Setter Target="saveBtn.Width" Value="56"/>
+                        <Setter Target="selectStateBtn.Width" Value="56"/>
+                        <Setter Target="resetBtn.Width" Value="56"/>
+                        <Setter Target="loadBtn.Width" Value="56"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -233,11 +245,12 @@
                     ClosedDisplayMode="Compact">
            
             <!--<AppBarSeparator/>-->
-            <AppBarButton Icon="Save" Label="Save"  x:Name="saveBtn" Click="saveBtn_Click"/>
+            <AppBarButton Icon="Save" Label="Save"  x:Name="saveBtn" Click="saveBtn_Click"
+                          HorizontalContentAlignment="Left"/>
             <AppBarButton Icon="AllApps" Label="Select State" x:Name="selectStateBtn" />
             <AppBarButton Icon="Sync" Label="Reset" x:Name="resetBtn"/>
-            <AppBarButton Icon="Go" Label="Load" x:Name="loadBtn"/>
-
+            <AppBarButton Icon="Go" Label="Load" x:Name="loadBtn" Click="loadBtn_Click"/>
+            <AppBarButton x:Name="spacerBtn" IsEnabled="False" Width="1000"/>
             <!--<CommandBar.SecondaryCommands>
                 <AppBarButton Label="Menu Item 1"/>
                 <AppBarButton Label="Menu Item 2"/>

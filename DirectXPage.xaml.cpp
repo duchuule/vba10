@@ -428,22 +428,46 @@ void DirectXPage::AppShell_KeyDown(Object^ sender, KeyRoutedEventArgs^ e)
 		RootSplitView->IsPaneOpen = !RootSplitView->IsPaneOpen;
 
 	}
+	m_main->emulator->GetVirtualController()->Reset();
 
+}
 
+void DirectXPage::CloseMenu()
+{
+	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
+	m_main->emulator->GetVirtualController()->Reset();
 }
 
 void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 {
+	CloseMenu();
 	LoadROMAsync(file, folder);
 
-	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
+	//this is OK after we fixed the ParseVBAiniAsync so that it does not branch to another thread but it makes the UI unreponsive
+	//LoadROMAsync(file, folder).then([this]
+	//{
+	//	CloseMenu();
+	//});
+
 
 }
 
 void DirectXPage::SaveState()
 {
-	SaveStateAsync();
-	m_main->emulator->GetVirtualController()->Reset();
+	SaveStateAsync().then([this]
+	{
+		CloseMenu();
+	});
+}
 
-	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
+void DirectXPage::LoadState()
+{
+
+	LoadStateAsync().then([this]
+	{
+		CloseMenu();
+	});
+	
+
+	
 }
