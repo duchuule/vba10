@@ -1345,12 +1345,24 @@ namespace VBA10
 		});	
 	}
 
-	task<void> ResetAsync(void)
+	void ResetSync()
 	{
-		if(!ROMFile || !ROMFolder)
-			return task<void>([](){});
-		return LoadROMAsync(ROMFile, ROMFolder);
+		if (!ROMFile || !ROMFolder)
+			return;
+
+		EmulatorGame *emulator = EmulatorGame::GetInstance();
+		emulator->Pause();
+		//gbexecute = false; //TODO: need to uncomment when we update the VBA-M engine
+
+		EmulatorGame::emulator.emuReset();
+		emulator->Unpause();
 	}
+	//task<void> ResetAsync(void)
+	//{
+	//	if(!ROMFile || !ROMFolder)
+	//		return task<void>([](){});
+	//	return LoadROMAsync(ROMFile, ROMFolder);
+	//}
 
 	task<void> SaveStateAsync(void)
 	{
