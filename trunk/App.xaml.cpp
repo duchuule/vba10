@@ -48,6 +48,10 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	}
 #endif
 
+	//change minimum suze to 320 px
+	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
+	Windows::UI::ViewManagement::ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
+
 	if (m_directXPage == nullptr)
 	{
 		m_directXPage = ref new DirectXPage();

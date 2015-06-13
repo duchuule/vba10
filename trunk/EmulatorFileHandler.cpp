@@ -116,10 +116,10 @@ namespace VBA10
 
 	task<void> ParseVBAIniAsync()
 	{
-		if(iniParsed)
-		{
-			return create_task([](){});
-		}
+		//if(iniParsed)
+		//{
+		//	return create_task([](){}); //this will make make the operation continue on another thread!!!!
+		//}
 
 		auto reader = make_shared<DataReader ^>();
 
