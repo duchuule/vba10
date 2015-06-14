@@ -205,6 +205,9 @@
     <Image Include="Assets\WideLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CheatPane.xaml.h">
+      <DependentUpon>CheatPane.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="HelpPage.xaml.h">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </ClInclude>
@@ -307,6 +310,9 @@
     <ClInclude Include="virtualcontrollerinput.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CheatPane.xaml.cpp">
+      <DependentUpon>CheatPane.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="HelpPage.xaml.cpp">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </ClCompile>
@@ -623,6 +629,7 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CheatPane.xaml" />
     <Page Include="HelpPage.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -263,6 +263,7 @@
     <ClCompile Include="PageHeader.xaml.cpp" />
     <ClCompile Include="SettingsPage.xaml.cpp" />
     <ClCompile Include="HelpPage.xaml.cpp" />
+    <ClCompile Include="SelectStatePane.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -494,6 +495,7 @@
     <ClInclude Include="PageHeader.xaml.h" />
     <ClInclude Include="SettingsPage.xaml.h" />
     <ClInclude Include="HelpPage.xaml.h" />
+    <ClInclude Include="SelectStatePane.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -520,6 +522,7 @@
     <Page Include="SettingsPage.xaml" />
     <Page Include="HelpPage.xaml" />
     <Page Include="SelectStatePane.xaml" />
+    <Page Include="CheatPane.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">

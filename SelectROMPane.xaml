@@ -252,7 +252,7 @@
                           Click="selectStateBtn_Click" IsTabStop="False"/>
             <AppBarButton Icon="Sync" Label="Reset" x:Name="resetBtn" 
                           Click="resetBtn_Click" IsTabStop="False"/>
-            <AppBarButton Icon="Go" Label="Load" x:Name="loadBtn" 
+            <AppBarButton Icon="Undo" Label="Load" x:Name="loadBtn" 
                           Click="loadBtn_Click"  IsTabStop="False"/>
             <AppBarButton x:Name="spacerBtn" IsEnabled="False" Width="1000"/>
             <!--<CommandBar.SecondaryCommands>
