@@ -41,7 +41,8 @@
                       >
                     <StackPanel Orientation="Vertical"
                                       HorizontalAlignment="Left" 
-                                    MaxWidth="440">
+                                    MaxWidth="440"
+                                >
                         <TextBlock TextWrapping="Wrap" >
                             <Run Text="VBA10"/>
                         </TextBlock>

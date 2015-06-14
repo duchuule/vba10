@@ -14,6 +14,7 @@
 #include "SelectROMPane.xaml.h"
 #include "SettingsPage.xaml.h"
 #include "HelpPage.xaml.h"
+#include "CheatPane.xaml.h"
 
 using namespace std;
 using namespace VBA10;
@@ -130,6 +131,12 @@ DirectXPage::DirectXPage():
 			"Home",
 			Symbol::Home,
 			TypeName(SelectROMPane::typeid)));
+
+	navlist->Append(
+		ref new NavMenuItem(
+			"Cheats",
+			Symbol::Admin,
+			TypeName(CheatPane::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
