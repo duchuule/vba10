@@ -262,6 +262,7 @@
     <ClCompile Include="NavMenuItem.cpp" />
     <ClCompile Include="PageHeader.xaml.cpp" />
     <ClCompile Include="SettingsPage.xaml.cpp" />
+    <ClCompile Include="HelpPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -492,6 +493,7 @@
     <ClInclude Include="NavMenuItem.h" />
     <ClInclude Include="PageHeader.xaml.h" />
     <ClInclude Include="SettingsPage.xaml.h" />
+    <ClInclude Include="HelpPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -517,6 +519,7 @@
     </Page>
     <Page Include="SettingsPage.xaml" />
     <Page Include="HelpPage.xaml" />
+    <Page Include="SelectStatePane.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
