@@ -9,6 +9,7 @@
 #include "DirectXPage.xaml.h";
 #include "EmulatorSettings.h";
 #include "EmulatorFileHandler.h"
+#include "SelectStatePane.xaml.h"
 
 using namespace VBA10;
 
@@ -426,4 +427,31 @@ void SelectROMPane::resetBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::
 	dialog->CancelCommandIndex = 1;
 
 	dialog->ShowAsync();
+}
+
+
+void SelectROMPane::selectStateBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Popup ^statePopup = ref new Popup();
+	statePopup->IsLightDismissEnabled = true;
+
+	SelectStatePane ^pane = ref new SelectStatePane(GetSavestateSlot());
+	statePopup->Child = pane;
+	//pane->Width = 200;//statePopup->Width;
+	pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
+
+	
+	//auto transform = ((UIElement^)sender)->TransformToVisual(nullptr); //nullptr to get position related to windows
+	auto transform = ((UIElement^)topbar)->TransformToVisual(nullptr);
+
+	Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
+	statePopup->HorizontalOffset = point.X; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
+	statePopup->VerticalOffset = point.Y + selectStateBtn->ActualHeight; 
+
+	//statePopup->Measure(Windows::Foundation::Size(Window::Current->Bounds.Width, Window::Current->Bounds.Height));
+	//statePopup->SetValue(Canvas::LeftProperty, Window::Current->Bounds.Left);
+	//statePopup->SetValue(Canvas::TopProperty, this->windowBounds.Height - (88 + pane->DesiredSize.Height));
+
+
+	statePopup->IsOpen = true;
 }

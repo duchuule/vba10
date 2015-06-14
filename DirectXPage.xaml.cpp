@@ -147,12 +147,7 @@ DirectXPage::DirectXPage():
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
 
-	//copy DEMO ROm
-	if (!settings->HasKey("FIRSTSTART"))
-	{
-		settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
-		this->CopyDemoROM();
-	}
+	
 
 	//initalize main object for rendering
 	m_main = std::unique_ptr<VBA10Main>(new VBA10Main(m_deviceResources));
@@ -160,12 +155,30 @@ DirectXPage::DirectXPage():
 	//start rendering
 	//DL: modified to not do it autmatically
 	//m_main->StartRenderLoop();
+
+	
+	if (!settings->HasKey("FIRSTSTART"))
+	{
+		settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
+
+		//copy DEMO ROm then open menu
+		CopyDemoROM().then([this]
+		{
+			//open menu
+			RootSplitView->IsPaneOpen = true;
+		});
+	}
+	else
+	{
+		//just open menu
+		RootSplitView->IsPaneOpen = true;
+	}
 }
 
-void DirectXPage::CopyDemoROM(void)
+task<void> DirectXPage::CopyDemoROM(void)
 {
 	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
-	create_task(installDir->GetFolderAsync("Assets/")).then([](task<StorageFolder ^> t)
+	return create_task(installDir->GetFolderAsync("Assets/")).then([](task<StorageFolder ^> t)
 	{
 		StorageFolder ^assetsFolder = t.get();
 		return assetsFolder->GetFileAsync("Bunny Advance (Demo).gba");
@@ -473,4 +486,9 @@ void DirectXPage::Reset()
 {
 	CloseMenu();
 	ResetSync();
+}
+
+void DirectXPage::SelectSaveState(int slot)
+{
+	SelectSavestateSlot(slot);
 }
