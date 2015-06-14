@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #include "GBA.h"
 #include "GBAinline.h"
@@ -9,6 +10,7 @@
 #include "Globals.h"
 #include "../NLS.h"
 #include "../Util.h"
+//#include "WP8VBAMComponent.h"
 
 /**
  * Gameshark code types: (based on AR v1.0)
@@ -910,24 +912,24 @@ int cheatsCheckKeys(u32 keys, u32 extended)
 		}
         break;
       case GSA_8_BIT_POINTER :
-        if (((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000)) ||
-            ((CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000)))
+        if ((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000) ||
+            (CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000))
         {
           CPUWriteByte(CPUReadMemory(cheatsList[i].address)+((cheatsList[i].value & 0xFFFFFF00) >> 8),
                        cheatsList[i].value & 0xFF);
         }
         break;
       case GSA_16_BIT_POINTER :
-        if (((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000)) ||
-            ((CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000)))
+        if ((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000) ||
+            (CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000))
         {
           CPUWriteHalfWord(CPUReadMemory(cheatsList[i].address)+((cheatsList[i].value & 0xFFFF0000) >> 15),
                        cheatsList[i].value & 0xFFFF);
         }
         break;
       case GSA_32_BIT_POINTER :
-        if (((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000)) ||
-            ((CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000)))
+        if ((CPUReadMemory(cheatsList[i].address)>=0x02000000) && (CPUReadMemory(cheatsList[i].address)<0x02040000) ||
+            (CPUReadMemory(cheatsList[i].address)>=0x03000000) && (CPUReadMemory(cheatsList[i].address)<0x03008000))
         {
           CPUWriteMemory(CPUReadMemory(cheatsList[i].address),
                        cheatsList[i].value);
@@ -935,15 +937,15 @@ int cheatsCheckKeys(u32 keys, u32 extended)
         break;
       case GSA_8_BIT_ADD :
         CPUWriteByte(cheatsList[i].address,
-                    ((cheatsList[i].value & 0xFF) + CPUReadMemory(cheatsList[i].address)) & 0xFF);
+                    (cheatsList[i].value & 0xFF) + CPUReadMemory(cheatsList[i].address) & 0xFF);
         break;
       case GSA_16_BIT_ADD :
         CPUWriteHalfWord(cheatsList[i].address,
-                        ((cheatsList[i].value & 0xFFFF) + CPUReadMemory(cheatsList[i].address)) & 0xFFFF);
+                        (cheatsList[i].value & 0xFFFF) + CPUReadMemory(cheatsList[i].address) & 0xFFFF);
         break;
       case GSA_32_BIT_ADD :
         CPUWriteMemory(cheatsList[i].address ,
-                       (cheatsList[i].value + CPUReadMemory(cheatsList[i].address)) & 0xFFFFFFFF);
+                       cheatsList[i].value + CPUReadMemory(cheatsList[i].address) & 0xFFFFFFFF);
         break;
       case GSA_8_BIT_IF_LOWER_U:
         if (!(CPUReadByte(cheatsList[i].address) < (cheatsList[i].value & 0xFF))) {
@@ -1616,10 +1618,28 @@ void cheatsAddGSACode(const char *code, const char *desc, bool v3)
     if(gamecode != address) {
       char buffer[5];
       *((u32 *)buffer) = address;
-      buffer[4] = 0;
+      buffer[4] = 0; 
+
+	  wchar_t wbuffer[5 ];
+	  mbstowcs( wbuffer, buffer, 5 );
+
+
       char buffer2[5];
       *((u32 *)buffer2) = READ32LE(((u32 *)&rom[0xac]));
       buffer2[4] = 0;
+
+	  wchar_t wbuffer2[5 ];
+	  mbstowcs( wbuffer2, buffer2, 5 );
+
+	  wchar_t wcode[17 ];
+	  mbstowcs( wcode, code, 16 );
+	  wcode[16] = 0;
+
+	  //TODO: show message about wrong cheat version
+	 // if(Direct3DBackground::WrongCheatVersion)
+	 //{
+		//Direct3DBackground::WrongCheatVersion(ref new Platform::String(wcode), ref new Platform::String(wbuffer), ref new Platform::String(wbuffer2));
+	 //}
       /*systemMessage(MSG_GBA_CODE_WARNING, N_("Warning: cheats are for game %s. Current game is %s.\nCodes may not work correctly."),
                     buffer, buffer2);*/
     }

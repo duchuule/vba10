@@ -402,6 +402,9 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	//change splitview to overlay, so that it disappear
 	//RootSplitView->DisplayMode = SplitViewDisplayMode::Overlay;
 
+	//disable AppFrame so that it does not receive input accidentally
+	AppFrame->IsEnabled = false;
+
 	//change the size of app frame to zero to hide content
 	AppFrame->Width = 0.0f;
 
@@ -423,6 +426,8 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	//RootSplitView->DisplayMode = SplitViewDisplayMode::CompactOverlay;
 	//RootSplitView->IsPaneOpen = true;
 
+	//enable app frame
+	AppFrame->IsEnabled = true;
 
 	//change width to 100%, NAN means auto
 	AppFrame->Width = NAN;

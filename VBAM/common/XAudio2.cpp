@@ -309,17 +309,23 @@ void XAudio2_Output::write(u16 * finalWave, int length)
 {
 	if( !initialized || failed ) return;
 
-	while( true ) {
-		if ( device_changed ) {
+
+
+	while( true ) 
+	{
+		if ( device_changed ) 
+		{
 			close();
 			if (!init(freq)) return;
 		}
+
 
 		sVoice->GetState( &vState );
 
 		//ASSERT( vState.BuffersQueued <= bufferCount );
 
-		if( vState.BuffersQueued < bufferCount ) {
+		if( vState.BuffersQueued < bufferCount ) 
+		{
 			if( vState.BuffersQueued == 0 ) {
 				// buffers ran dry
 				if( systemVerbose & VERBOSE_SOUNDOUTPUT ) {
@@ -342,6 +348,7 @@ void XAudio2_Output::write(u16 * finalWave, int length)
 				return;
 			}
 		}
+		
 	}
 
 	// copy & protect the audio data in own memory area while playing it
@@ -355,6 +362,7 @@ void XAudio2_Output::write(u16 * finalWave, int length)
 
 	HRESULT hr = sVoice->SubmitSourceBuffer( &buf ); // send buffer to queue
 	//ASSERT( hr == S_OK );
+
 }
 
 

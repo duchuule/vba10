@@ -46,6 +46,20 @@ extern bool skipSaveGameBattery; // skip battery data when reading save states
 extern bool skipSaveGameCheats;  // skip cheat list data when reading save states
 extern int customBackdropColor;
 
+//typedef struct {
+//	u8 *bios;
+//	u8 *rom;
+//	u8 *internalRAM;
+//	u8 *workRAM;
+//	u8 *paletteRAM;
+//	u8 *vram;
+//	u8 *pix;
+//	u8 *oam;
+//	u8 *ioMem;
+//} DEVICEMEMORY;
+//
+//extern DEVICEMEMORY deviceMemory[2];
+
 extern u8 *bios;
 extern u8 *rom;
 extern u8 *internalRAM;

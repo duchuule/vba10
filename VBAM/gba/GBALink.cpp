@@ -2,6 +2,8 @@
 // with major changes by tjm
 #include <string.h>
 #include <stdio.h>
+#include <windows.h>
+
 
 // malloc.h does not seem to exist on Mac OS 10.7
 #ifdef __APPLE__
@@ -10,7 +12,11 @@
 #include <malloc.h>
 #endif
 
-int vbaid = 0;
+#ifdef _MSC_VER
+#define snprintf _snprintf
+#endif
+
+static int vbaid = 0;
 const char *MakeInstanceFilename(const char *Input)
 {
 	if (vbaid == 0)
@@ -28,12 +34,6 @@ const char *MakeInstanceFilename(const char *Input)
 
 #ifndef NO_LINK
 
-// Joybus
-bool gba_joybus_enabled = false;
-
-// If disabled, gba core won't call any (non-joybus) link functions
-bool gba_link_enabled = false;
-
 #define LOCAL_LINK_NAME "VBA link memory"
 #define IP_LINK_PORT 5738
 
@@ -41,6 +41,9 @@ bool gba_link_enabled = false;
 #include "GBA.h"
 #include "GBALink.h"
 #include "GBASockClient.h"
+
+#include <SFML/Network.hpp>
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(x) gettext(x)
@@ -48,6 +51,9 @@ bool gba_link_enabled = false;
 #define _(x) x
 #endif
 #define N_(x) x
+
+
+
 #if (defined __WIN32__ || defined _WIN32)
 #include <windows.h>
 #else
@@ -56,6 +62,8 @@ bool gba_link_enabled = false;
 #include <semaphore.h>
 #include <fcntl.h>
 #include <errno.h>
+
+
 #define ReleaseSemaphore(sem, nrel, orel) do { \
 	for(int i = 0; i < nrel; i++) \
 		sem_post(sem); \
@@ -157,60 +165,205 @@ int WaitForSingleObject(sem_t *s, int t)
 #endif
 #endif
 
+using namespace Windows::System::Threading;
+
+#define UNSUPPORTED -1
+#define MULTIPLAYER 0
+#define NORMAL8 1
+#define NORMAL32 2
+#define UART 3
+#define JOYBUS 4
+#define GP 5
+
+#define RFU_INIT 0
+#define RFU_COMM 1
+#define RFU_SEND 2
+#define RFU_RECV 3
+
+static ConnectionState InitIPC();
+static ConnectionState InitSocket();
+static ConnectionState JoyBusConnect();
+
+static void JoyBusShutdown();
+static void CloseIPC();
+static void CloseSocket();
+
+static void StartCableSocket(u16 siocnt);
+static void StartRFU(u16 siocnt);
+static void StartCableIPC(u16 siocnt);
+
+static void JoyBusUpdate(int ticks);
+static void UpdateCableIPC(int ticks);
+static void UpdateRFUIPC(int ticks);
+static void UpdateSocket(int ticks);
+
+
+
+
+
+static ConnectionState ConnectUpdateSocket(char * const message, size_t size);
+
+struct LinkDriver {
+	typedef ConnectionState (ConnectFunc)();
+	typedef ConnectionState (ConnectUpdateFunc)(char * const message, size_t size);
+	typedef void (StartFunc)(u16 siocnt);
+	typedef void (UpdateFunc)(int ticks);
+	typedef void (CloseFunc)();
+
+	LinkMode mode;
+	ConnectFunc *connect;
+	ConnectUpdateFunc *connectUpdate;
+	StartFunc *start;
+	UpdateFunc *update;
+	CloseFunc *close;
+};
+static const LinkDriver linkDrivers[] =
+{
+	{ LINK_CABLE_IPC,			InitIPC,		NULL,					StartCableIPC,		UpdateCableIPC,	CloseIPC },
+	{ LINK_CABLE_SOCKET,		InitSocket,		ConnectUpdateSocket,	StartCableSocket,	UpdateSocket,	CloseSocket },
+	{ LINK_RFU_IPC,				InitIPC,		NULL,					StartRFU,			UpdateRFUIPC,	CloseIPC },
+	{ LINK_GAMECUBE_DOLPHIN,	JoyBusConnect,	NULL,					NULL,				JoyBusUpdate,	JoyBusShutdown }
+};
+
+
+enum
+{
+	JOY_CMD_RESET	= 0xff,
+	JOY_CMD_STATUS	= 0x00,
+	JOY_CMD_READ	= 0x14,
+	JOY_CMD_WRITE	= 0x15
+};
+
 #define UPDATE_REG(address, value) WRITE16LE(((u16 *)&ioMem[address]),value)
 
-int linktime = 0;
+typedef struct {
+	u16 linkdata[5];
+	u16 linkcmd;
+	u16 numtransfers;
+	int lastlinktime;
+	u8 numgbas;
+	u8 trgbas;
+	u8 linkflags;
+	int rfu_q[4];
+	u8 rfu_request[4];
+	int rfu_linktime[4];
+	u32 rfu_bdata[4][7];
+	u32 rfu_data[4][32];
+} LINKDATA;
 
-GBASockClient* dol = NULL;
-sf::IPAddress joybusHostAddr = sf::IPAddress::LocalHost;
+typedef struct {
+	sf::SocketTCP tcpsocket;
+	int numslaves;
+	int connectedSlaves;
+	int type;
+	bool server;
+	bool speed;
+	Windows::Foundation::IAsyncAction ^linkthread;
+} LANLINKDATA;
+
+class lserver{
+	int numbytes;
+	sf::Selector<sf::SocketTCP> fdset;
+	//timeval udptimeout;
+	char inbuffer[256], outbuffer[256];
+	s32 *intinbuffer;
+	u16 *u16inbuffer;
+	s32 *intoutbuffer;
+	u16 *u16outbuffer;
+	int counter;
+	int done;
+public:
+	int howmanytimes;
+	sf::SocketTCP tcpsocket[4];
+	sf::IPAddress udpaddr[4];
+	lserver(void);
+	void Send(void);
+	void Recv(void);
+};
+
+class lclient{
+	sf::Selector<sf::SocketTCP> fdset;
+	char inbuffer[256], outbuffer[256];
+	s32 *intinbuffer;
+	u16 *u16inbuffer;
+	s32 *intoutbuffer;
+	u16 *u16outbuffer;
+	int numbytes;
+public:
+	sf::IPAddress serveraddr;
+	unsigned short serverport;
+	int numtransfers;
+	lclient(void);
+	void Send(void);
+	void Recv(void);
+	void CheckConn(void);
+};
+
+static const LinkDriver *linkDriver = NULL;
+static ConnectionState gba_connection_state = LINK_OK;
+
+LinkMode GetLinkMode() {
+	if (linkDriver && gba_connection_state == LINK_OK)
+		return linkDriver->mode;
+	else
+		return LINK_DISCONNECTED;
+}
+
+static int linktime = 0;
+
+static GBASockClient* dol = NULL;
+static sf::IPAddress joybusHostAddr = sf::IPAddress::LocalHost;
 
 // Hodgepodge
-u8 tspeed = 3;
-u8 transfer = 0;
-LINKDATA *linkmem = NULL;
-int linkid = 0;
+static u8 tspeed = 3;
+static u8 transfer = 0;
+static LINKDATA *linkmem = NULL;
+static int linkid = 0;
 #if (defined __WIN32__ || defined _WIN32)
-HANDLE linksync[4];
+static HANDLE linksync[4];
 #else
-sem_t *linksync[4];
+static sem_t *linksync[4];
 #endif
-int savedlinktime = 0;
+static int savedlinktime = 0;
 #if (defined __WIN32__ || defined _WIN32)
-HANDLE mmf = NULL;
+static HANDLE mmf = NULL;
 #else
-int mmf = -1;
+static int mmf = -1;
 #endif
-char linkevent[] =
+static char linkevent[] =
 #if !(defined __WIN32__ || defined _WIN32)
 	"/"
 #endif
 	"VBA link event  ";
 static int i, j;
-int linktimeout = 1000;
-LANLINKDATA lanlink;
-u16 linkdata[4];
-lserver ls;
-lclient lc;
-bool oncewait = false, after = false;
+static int linktimeout = 1000;
+static LANLINKDATA lanlink;
+static u16 linkdata[4];
+static lserver ls;
+static lclient lc;
+static bool oncewait = false, after = false;
 
 // RFU crap (except for numtransfers note...should probably check that out)
-bool rfu_enabled = false;
-u8 rfu_cmd, rfu_qsend, rfu_qrecv;
-int rfu_state, rfu_polarity, rfu_counter, rfu_masterq;
+static u8 rfu_cmd, rfu_qsend, rfu_qrecv;
+static int rfu_state, rfu_polarity, rfu_counter, rfu_masterq;
 // numtransfers seems to be used interchangeably with linkmem->numtransfers
 // in rfu code; probably a bug?
-int rfu_transfer_end;
+static int rfu_transfer_end;
 // in local comm, setting this keeps slaves from trying to communicate even
 // when master isn't
-u16 numtransfers = 0;
-u32 rfu_masterdata[32];
+static u16 numtransfers = 0;
+static u32 rfu_masterdata[32];
 
 // time to end of single GBA's transfer, in 16.78 MHz clock ticks
 // first index is GBA #
-int trtimedata[4][4] = {
-      // 9600 38400 57600 115200
-	{34080, 8520, 5680, 2840},
-	{65536, 16384, 10923, 5461},
+static const int trtimedata[4][4] = {
+      //baudrate: 9600 38400 57600 115200
+	//{34080, 8520, 5680, 2840}, //time to finish transfering data from master (#0)
+	//{65536, 16384, 10923, 5461}, //time to finish transfer data from master and slave #1
+	//{31440, 7860, 5240, 2620}, //time to finish transfering data from master (#0) (new calculation)
+	//{62880, 15720, 10480, 5240}, //time to finish transfer data from master and slave #1 (new calculation)
+	{17040, 4260, 2840, 1420}, //time to finish transfering data from master (#0)
+	{32768, 8192, 5462, 2730}, //time to finish transfer data from master and slave #1
 	{99609, 24903, 16602, 8301},
 	{133692, 33423, 22282, 11141}
 };
@@ -220,506 +373,43 @@ int trtimedata[4][4] = {
 // for < 3 slaves, this is time to transfer last machine + time to detect lack
 // of start bit from next slave
 // first index is (# of slaves) - 1
-int trtimeend[3][4] = {
-      // 9600 38400 57600 115200
-	{72527, 18132, 12088, 6044},
+static const int trtimeend[3][4] = {
+      //baudrate: 9600 38400 57600 115200
+	//{72527, 18132, 12088, 6044}, //if 2 slaves, the all transfer should be done after this
+	//{34584, 8646, 11528, 5764}, //if 2 slaves, the all transfer should be done after this (new calculation)
+	{36263, 9066, 6044, 3022},
 	{106608, 26652, 17768, 8884},
-	{133692, 33423, 22282, 11141}
+	{133692, 33423, 22282, 11141} 
 };
 
-int gbtime = 1024;
+static int GetSIOMode(u16, u16);
 
-int GetSIOMode(u16, u16);
-
-void LinkClientThread(void *);
-void LinkServerThread(void *);
-
-int StartServer(void);
-
-u16 StartRFU(u16);
-
-void StartLink(u16 value)
-{
-	if (ioMem == NULL)
-		return;
-
-	if (rfu_enabled) {
-		UPDATE_REG(COMM_SIOCNT, StartRFU(value));
-		return;
-	}
-
-	switch (GetSIOMode(value, READ16LE(&ioMem[COMM_RCNT]))) {
-	case MULTIPLAYER: {
-		bool start = (value & 0x80) && !linkid && !transfer && gba_link_enabled;
-		u16 si = value & 4;
-		// clear start, seqno, si (RO on slave, start = pulse on master)
-		value &= 0xff4b;
-		// get current si.  This way, on slaves, it is low during xfer
-		if(linkid) {
-			if(!transfer)
-				value |= 4;
-			else
-				value |= READ16LE(&ioMem[COMM_SIOCNT]) & 4;
-		}
-		if (start) {
-			if (lanlink.active)
-			{
-				if (lanlink.connected)
-				{
-					linkdata[0] = READ16LE(&ioMem[COMM_SIODATA8]);
-					savedlinktime = linktime;
-					tspeed = value & 3;
-					ls.Send();
-					transfer = 1;
-					linktime = 0;
-					UPDATE_REG(COMM_SIOMULTI0, linkdata[0]);
-					UPDATE_REG(COMM_SIOMULTI1, 0xffff);
-					WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
-					if (lanlink.speed&&oncewait == false)
-						ls.howmanytimes++;
-					after = false;
-					value &= ~0x40;
-				} else
-					value |= 0x40; // comm error
-			}
-			else if (linkmem->numgbas > 1)
-			{
-				// find first active attached GBA
-				// doing this first reduces the potential
-				// race window size for new connections
-				int n = linkmem->numgbas + 1;
-				int f = linkmem->linkflags;
-				int m;
-				do {
-					n--;
-					m = (1 << n) - 1;
-				} while((f & m) != m);
-				linkmem->trgbas = n;
-
-				// before starting xfer, make pathetic attempt
-				// at clearing out any previous stuck xfer
-				// this will fail if a slave was stuck for
-				// too long
-				for(int i = 0; i < 4; i++)
-					while(WaitForSingleObject(linksync[i], 0) != WAIT_TIMEOUT);
-
-				// transmit first value
-				linkmem->linkcmd = ('M' << 8) + (value & 3);
-				linkmem->linkdata[0] = READ16LE(&ioMem[COMM_SIODATA8]);
-
-				// start up slaves & sync clocks
-				numtransfers = linkmem->numtransfers;
-				if (numtransfers != 0)
-					linkmem->lastlinktime = linktime;
-				else
-					linkmem->lastlinktime = 0;
-
-				if ((++numtransfers) == 0)
-					linkmem->numtransfers = 2;
-				else
-					linkmem->numtransfers = numtransfers;
-
-				transfer = 1;
-				linktime = 0;
-				tspeed = value & 3;
-				WRITE32LE(&ioMem[COMM_SIOMULTI0], 0xffffffff);
-				WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
-				value &= ~0x40;
-			}
-		}
-		value |= (transfer != 0) << 7;
-		value |= (linkid && !transfer ? 0xc : 8); // set SD (high), SI (low on master)
-		value |= linkid << 4; // set seq
-		UPDATE_REG(COMM_SIOCNT, value);
-		if (linkid)
-			// SC low -> transfer in progress
-			// not sure why SO is low
-			UPDATE_REG(COMM_RCNT, transfer ? 6 : 7);
-		else
-			// SI is always low on master
-			// SO, SC always low during transfer
-			// not sure why SO low otherwise
-			UPDATE_REG(COMM_RCNT, transfer ? 2 : 3);
-		break;
-	}
-	case NORMAL8:
-	case NORMAL32:
-	case UART:
-	default:
-		UPDATE_REG(COMM_SIOCNT, value);
-		break;
-	}
-}
-
-void StartGPLink(u16 value)
-{
-	UPDATE_REG(COMM_RCNT, value);
-
-	if (!value)
-		return;
-
-	switch (GetSIOMode(READ16LE(&ioMem[COMM_SIOCNT]), value)) {
-	case MULTIPLAYER:
-		value &= 0xc0f0;
-		value |= 3;
-		if (linkid)
-			value |= 4;
-		UPDATE_REG(COMM_SIOCNT, ((READ16LE(&ioMem[COMM_SIOCNT])&0xff8b)|(linkid ? 0xc : 8)|(linkid<<4)));
-		break;
-
-	case GP:
-		if (rfu_enabled)
-			rfu_state = RFU_INIT;
-		break;
-	}
-}
-
-void JoyBusConnect()
-{
-	delete dol;
-	dol = NULL;
-
-	dol = new GBASockClient(joybusHostAddr);
-}
-
-void JoyBusShutdown()
-{
-	delete dol;
-	dol = NULL;
-}
-
-void JoyBusUpdate(int ticks)
-{
-	linktime += ticks;
-	static int lastjoybusupdate = 0;
-
-	// Kinda ugly hack to update joybus stuff intermittently
-	if (linktime > lastjoybusupdate + 0x3000)
-	{
-		lastjoybusupdate = linktime;
-
-		char data[5] = {0x10, 0, 0, 0, 0}; // init with invalid cmd
-		std::vector<char> resp;
-
-		if (!dol)
-			JoyBusConnect();
-
-		u8 cmd = dol->ReceiveCmd(data);
-		switch (cmd) {
-		case JOY_CMD_RESET:
-			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_RESET);
-
-		case JOY_CMD_STATUS:
-			resp.push_back(0x00); // GBA device ID
-			resp.push_back(0x04);
-			break;
-		
-		case JOY_CMD_READ:
-			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_L]) & 0xff));
-			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_L]) >> 8));
-			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_H]) & 0xff));
-			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_H]) >> 8));
-			UPDATE_REG(COMM_JOYSTAT, READ16LE(&ioMem[COMM_JOYSTAT]) & ~JOYSTAT_SEND);
-			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_SEND_COMPLETE);
-			break;
-
-		case JOY_CMD_WRITE:
-			UPDATE_REG(COMM_JOY_RECV_L, (u16)((u16)data[2] << 8) | (u8)data[1]);
-			UPDATE_REG(COMM_JOY_RECV_H, (u16)((u16)data[4] << 8) | (u8)data[3]);
-			UPDATE_REG(COMM_JOYSTAT, READ16LE(&ioMem[COMM_JOYSTAT]) | JOYSTAT_RECV);
-			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_RECV_COMPLETE);
-			break;
-
-		default:
-			return; // ignore
-		}
-
-		resp.push_back((u8)READ16LE(&ioMem[COMM_JOYSTAT]));
-		dol->Send(resp);
-
-		// Generate SIO interrupt if we can
-		if ( ((cmd == JOY_CMD_RESET) || (cmd == JOY_CMD_READ) || (cmd == JOY_CMD_WRITE))
-			&& (READ16LE(&ioMem[COMM_JOYCNT]) & JOYCNT_INT_ENABLE) )
-		{
-			IF |= 0x80;
-			UPDATE_REG(0x202, IF);
-		}
-	}
-}
-
-static void ReInitLink();
-
-void LinkUpdate(int ticks)
-{
-	// this actually gets called every single instruction, so keep default
-	// path as short as possible
-
-	linktime += ticks;
-
-	if (rfu_enabled)
-	{
-		rfu_transfer_end -= ticks;
-		if (transfer && rfu_transfer_end <= 0) 
-		{
-			transfer = 0;
-			if (READ16LE(&ioMem[COMM_SIOCNT]) & 0x4000)
-			{
-				IF |= 0x80;
-				UPDATE_REG(0x202, IF);
-			}
-			UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & 0xff7f);
-		}
-		return;
-	}
-
-	if (lanlink.active)
-	{
-		if (lanlink.connected)
-		{
-			if (after)
-			{
-				if (linkid && linktime > 6044) {
-					lc.Recv();
-					oncewait = true;
-				}
-				else
-					return;
-			}
-
-			if (linkid && !transfer && lc.numtransfers > 0 && linktime >= savedlinktime)
-			{
-				linkdata[linkid] = READ16LE(&ioMem[COMM_SIODATA8]);
-
-				lc.Send();
-
-				UPDATE_REG(COMM_SIODATA32_L, linkdata[0]);
-				UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) | 0x80);
-				transfer = 1;
-				if (lc.numtransfers==1)
-					linktime = 0;
-				else
-					linktime -= savedlinktime;
-			}
-
-			if (transfer && linktime >= trtimeend[lanlink.numslaves-1][tspeed])
-			{
-				if (READ16LE(&ioMem[COMM_SIOCNT]) & 0x4000)
-				{
-					IF |= 0x80;
-					UPDATE_REG(0x202, IF);
-				}
-
-				UPDATE_REG(COMM_SIOCNT, (READ16LE(&ioMem[COMM_SIOCNT]) & 0xff0f) | (linkid << 4));
-				transfer = 0;
-				linktime -= trtimeend[lanlink.numslaves-1][tspeed];
-				oncewait = false;
-
-				if (!lanlink.speed)
-				{
-					if (linkid)
-						lc.Recv();
-					else
-						ls.Recv(); // WTF is the point of this?
-
-					UPDATE_REG(COMM_SIOMULTI1, linkdata[1]);
-					UPDATE_REG(COMM_SIOMULTI2, linkdata[2]);
-					UPDATE_REG(COMM_SIOMULTI3, linkdata[3]);
-					oncewait = true;
-
-				} else {
-
-					after = true;
-					if (lanlink.numslaves == 1)
-					{
-						UPDATE_REG(COMM_SIOMULTI1, linkdata[1]);
-						UPDATE_REG(COMM_SIOMULTI2, linkdata[2]);
-						UPDATE_REG(COMM_SIOMULTI3, linkdata[3]);
-					}
-				}
-			}
-		}
-		return;
-	}
-
-	// slave startup depends on detecting change in numtransfers
-	// and syncing clock with master (after first transfer)
-	// this will fail if > ~2 minutes have passed since last transfer due
-	// to integer overflow
-	if(!transfer && numtransfers && linktime < 0) {
-		linktime = 0;
-		// there is a very, very, small chance that this will abort
-		// a transfer that was just started
-		linkmem->numtransfers = numtransfers = 0;
-	}
-	if (linkid && !transfer && linktime >= linkmem->lastlinktime &&
-	    linkmem->numtransfers != numtransfers)
-	{
-		numtransfers = linkmem->numtransfers;
-		if(!numtransfers)
-			return;
-
-		// if this or any previous machine was dropped, no transfer
-		// can take place
-		if(linkmem->trgbas <= linkid) {
-			transfer = 0;
-			numtransfers = 0;
-			// if this is the one that was dropped, reconnect
-			if(!(linkmem->linkflags & (1 << linkid)))
-				ReInitLink();
-			return;
-		}
-
-		// sync clock
-		if (numtransfers == 1)
-			linktime = 0;
-		else
-			linktime -= linkmem->lastlinktime;
-
-		// there's really no point to this switch; 'M' is the only
-		// possible command.
-#if 0
-		switch ((linkmem->linkcmd) >> 8)
-		{
-		case 'M':
-#endif
-			tspeed = linkmem->linkcmd & 3;
-			transfer = 1;
-			WRITE32LE(&ioMem[COMM_SIOMULTI0], 0xffffffff);
-			WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
-			UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & ~0x40 | 0x80);
-#if 0
-			break;
-		}
-#endif
-	}
-
-	if (!transfer)
-		return;
-
-	if (transfer <= linkmem->trgbas && linktime >= trtimedata[transfer-1][tspeed])
-	{
-		// transfer #n -> wait for value n - 1
-		if(transfer > 1 && linkid != transfer - 1) {
-			if(WaitForSingleObject(linksync[transfer - 1], linktimeout) == WAIT_TIMEOUT) {
-				// assume slave has dropped off if timed out
-				if(!linkid) {
-					linkmem->trgbas = transfer - 1;
-					int f = linkmem->linkflags;
-					f &= ~(1 << (transfer - 1));
-					linkmem->linkflags = f;
-					if(f < (1 << transfer) - 1)
-						linkmem->numgbas = transfer - 1;
-					char message[30];
-					sprintf(message, _("Player %d disconnected."), transfer - 1);
-					systemScreenMessage(message);
-				}
-				transfer = linkmem->trgbas + 1;
-				// next cycle, transfer will finish up
-				return;
-			}
-		}
-		// now that value is available, store it
-		UPDATE_REG((COMM_SIOMULTI0 - 2) + (transfer<<1), linkmem->linkdata[transfer-1]);
-
-		// transfer machine's value at start of its transfer cycle
-		if(linkid == transfer) {
-			// skip if dropped
-			if(linkmem->trgbas <= linkid) {
-				transfer = 0;
-				numtransfers = 0;
-				// if this is the one that was dropped, reconnect
-				if(!(linkmem->linkflags & (1 << linkid)))
-					ReInitLink();
-				return;
-			}
-			// SI becomes low
-			UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & ~4);
-			UPDATE_REG(COMM_RCNT, 10);
-			linkmem->linkdata[linkid] = READ16LE(&ioMem[COMM_SIODATA8]);
-			ReleaseSemaphore(linksync[linkid], linkmem->numgbas-1, NULL);
-		}
-		if(linkid == transfer - 1) {
-			// SO becomes low to begin next trasnfer
-			// may need to set DDR as well
-			UPDATE_REG(COMM_RCNT, 0x22);
-		}
-
-		// next cycle
-		transfer++;
-	}
-
-	if (transfer > linkmem->trgbas && linktime >= trtimeend[transfer-3][tspeed])
-	{
-		// wait for slaves to finish
-		// this keeps unfinished slaves from screwing up last xfer
-		// not strictly necessary; may just slow things down
-		if(!linkid) {
-			for(int i = 2; i < transfer; i++)
-				if(WaitForSingleObject(linksync[0], linktimeout) == WAIT_TIMEOUT) {
-					// impossible to determine which slave died
-					// so leave them alone for now
-					systemScreenMessage(_("Unknown slave timed out; resetting comm"));
-					linkmem->numtransfers = numtransfers = 0;
-					break;
-				}
-		} else if(linkmem->trgbas > linkid)
-			// signal master that this slave is finished
-			ReleaseSemaphore(linksync[0], 1, NULL);
-		linktime -= trtimeend[transfer - 3][tspeed];
-		transfer = 0;
-		u16 value = READ16LE(&ioMem[COMM_SIOCNT]);
-		if(!linkid)
-			value |= 4; // SI becomes high on slaves after xfer
-		UPDATE_REG(COMM_SIOCNT, (value & 0xff0f) | (linkid << 4));
-		// SC/SI high after transfer
-		UPDATE_REG(COMM_RCNT, linkid ? 15 : 11);
-		if (value & 0x4000)
-		{
-			IF |= 0x80;
-			UPDATE_REG(0x202, IF);
-		}
-	}
-
-	return;
-}
-
-inline int GetSIOMode(u16 siocnt, u16 rcnt)
-{
-	if (!(rcnt & 0x8000))
-	{
-		switch (siocnt & 0x3000) {
-		case 0x0000: return NORMAL8;
-		case 0x1000: return NORMAL32;
-		case 0x2000: return MULTIPLAYER;
-		case 0x3000: return UART;
-		}
-	}
-
-	if (rcnt & 0x4000)
-		return JOYBUS;
-
-	return GP;
-}
+static HANDLE startSendEvent; //signal start sending
+static HANDLE finishSendEvent; //signal finish sending
+static HANDLE startReceiveEvent; //signal start receiving
+static HANDLE finishReceiveEvent; //singal stop receiving
+static void LANLinkThread();
+static bool endLANThread;
+static bool newMasterCycle;
 
 // The GBA wireless RFU (see adapter3.txt)
 // Just try to avert your eyes for now ^^ (note, it currently can be called, tho)
-u16 StartRFU(u16 value)
+static void StartRFU(u16 siocnt)
 {
-	switch (GetSIOMode(value, READ16LE(&ioMem[COMM_RCNT]))) {
+	switch (GetSIOMode(siocnt, READ16LE(&ioMem[COMM_RCNT]))) {
 	case NORMAL8:
 		rfu_polarity = 0;
-		return value;
 		break;
 
 	case NORMAL32:
-		if (value & 8)
-			value &= 0xfffb;	// A kind of acknowledge procedure
+		if (siocnt & 8)
+			siocnt &= 0xfffb;	// A kind of acknowledge procedure
 		else
-			value |= 4;
+			siocnt |= 4;
 
-		if (value & 0x80)
+		if (siocnt & 0x80)
 		{
-			if ((value&3) == 1)
+			if ((siocnt&3) == 1)
 				rfu_transfer_end = 2048;
 			else
 				rfu_transfer_end = 256;
@@ -806,7 +496,7 @@ u16 StartRFU(u16 value)
 						linkmem->rfu_linktime[vbaid] = linktime;
 						if(linkmem->numgbas==2){
 							ReleaseSemaphore(linksync[1-vbaid], 1, NULL);
-							WaitForSingleObject(linksync[vbaid], linktimeout);
+							WaitForSingleObjectEx(linksync[vbaid], linktimeout, false);
 						}
 						rfu_cmd |= 0x80;
 						linktime = 0;
@@ -844,14 +534,14 @@ u16 StartRFU(u16 value)
 						if (linkmem->numgbas == 2) {
 							if (!linkid || (linkid && numtransfers))
 								ReleaseSemaphore(linksync[1-vbaid], 1, NULL);
-							WaitForSingleObject(linksync[vbaid], linktimeout);
+							WaitForSingleObjectEx(linksync[vbaid], linktimeout, false);
 						}
 						if ( linkid > 0) {
 							memcpy(rfu_masterdata, linkmem->rfu_data[1-vbaid], 128);
 							rfu_masterq = linkmem->rfu_q[1-vbaid];
 						}
 						rfu_transfer_end = linkmem->rfu_linktime[1-vbaid] - linktime + 256;
-						
+
 						if (rfu_transfer_end < 256)
 							rfu_transfer_end = 256;
 
@@ -914,52 +604,731 @@ u16 StartRFU(u16 value)
 					rfu_counter++;
 					break;
 
-			case 0xa6:
-				if (linkid>0) {
-					UPDATE_REG(COMM_SIODATA32_L, rfu_masterdata[rfu_counter]&0xffff);
-					UPDATE_REG(COMM_SIODATA32_H, rfu_masterdata[rfu_counter++]>>16);
-				} else {
-					UPDATE_REG(COMM_SIODATA32_L, linkmem->rfu_data[1-vbaid][rfu_counter]&0xffff);
-					UPDATE_REG(COMM_SIODATA32_H, linkmem->rfu_data[1-vbaid][rfu_counter++]>>16);
+				case 0xa6:
+					if (linkid>0) {
+						UPDATE_REG(COMM_SIODATA32_L, rfu_masterdata[rfu_counter]&0xffff);
+						UPDATE_REG(COMM_SIODATA32_H, rfu_masterdata[rfu_counter++]>>16);
+					} else {
+						UPDATE_REG(COMM_SIODATA32_L, linkmem->rfu_data[1-vbaid][rfu_counter]&0xffff);
+						UPDATE_REG(COMM_SIODATA32_H, linkmem->rfu_data[1-vbaid][rfu_counter++]>>16);
+					}
+					break;
+
+				case 0x93:	// it seems like the game doesn't care about this value
+					UPDATE_REG(COMM_SIODATA32_L, 0x1234);	// put anything in here
+					UPDATE_REG(COMM_SIODATA32_H, 0x0200);	// also here, but it should be 0200
+					break;
+
+				case 0xa0:
+				case 0xa1:
+					UPDATE_REG(COMM_SIODATA32_L, 0x641b);
+					UPDATE_REG(COMM_SIODATA32_H, 0x0000);
+					break;
+
+				case 0x9a:
+					UPDATE_REG(COMM_SIODATA32_L, 0x61f9);
+					UPDATE_REG(COMM_SIODATA32_H, 0);
+					break;
+
+				case 0x91:
+					UPDATE_REG(COMM_SIODATA32_L, 0x00ff);
+					UPDATE_REG(COMM_SIODATA32_H, 0x0000);
+					break;
+
+				default:
+					UPDATE_REG(COMM_SIODATA32_L, 0x0173);
+					UPDATE_REG(COMM_SIODATA32_H, 0x0000);
+					break;
 				}
 				break;
-
-			case 0x93:	// it seems like the game doesn't care about this value
-				UPDATE_REG(COMM_SIODATA32_L, 0x1234);	// put anything in here
-				UPDATE_REG(COMM_SIODATA32_H, 0x0200);	// also here, but it should be 0200
-				break;
-
-			case 0xa0:
-			case 0xa1:
-				UPDATE_REG(COMM_SIODATA32_L, 0x641b);
-				UPDATE_REG(COMM_SIODATA32_H, 0x0000);
-				break;
-
-			case 0x9a:
-				UPDATE_REG(COMM_SIODATA32_L, 0x61f9);
-				UPDATE_REG(COMM_SIODATA32_H, 0);
-				break;
-
-			case 0x91:
-				UPDATE_REG(COMM_SIODATA32_L, 0x00ff);
-				UPDATE_REG(COMM_SIODATA32_H, 0x0000);
-				break;
-
-			default:
-				UPDATE_REG(COMM_SIODATA32_L, 0x0173);
-				UPDATE_REG(COMM_SIODATA32_H, 0x0000);
-				break;
 			}
-			break;
+			transfer = 1;
 		}
-		transfer = 1;
+
+		if (rfu_polarity)
+			siocnt ^= 4;	// sometimes it's the other way around
+		break;
 	}
 
-	if (rfu_polarity)
-		value ^= 4;	// sometimes it's the other way around
+	UPDATE_REG(COMM_SIOCNT, siocnt);
+}
 
+static void StartCableIPC(u16 value)
+{
+	switch (GetSIOMode(value, READ16LE(&ioMem[COMM_RCNT]))) {
+	case MULTIPLAYER: {
+		bool start = (value & 0x80) && !linkid && !transfer;
+		// clear start, seqno, si (RO on slave, start = pulse on master)
+		value &= 0xff4b;
+		// get current si.  This way, on slaves, it is low during xfer
+		if(linkid) {
+			if(!transfer)
+				value |= 4;
+			else
+				value |= READ16LE(&ioMem[COMM_SIOCNT]) & 4;
+		}
+		if (start) {
+			if (linkmem->numgbas > 1)
+			{
+				// find first active attached GBA
+				// doing this first reduces the potential
+				// race window size for new connections
+				int n = linkmem->numgbas + 1;
+				int f = linkmem->linkflags;
+				int m;
+				do {
+					n--;
+					m = (1 << n) - 1;
+				} while((f & m) != m);
+				linkmem->trgbas = n;
+
+				// before starting xfer, make pathetic attempt
+				// at clearing out any previous stuck xfer
+				// this will fail if a slave was stuck for
+				// too long
+				for(int i = 0; i < 4; i++)
+					while(WaitForSingleObjectEx(linksync[i], 0, false) != WAIT_TIMEOUT);
+
+				// transmit first value
+				linkmem->linkcmd = ('M' << 8) + (value & 3);
+				linkmem->linkdata[0] = READ16LE(&ioMem[COMM_SIODATA8]);
+
+				// start up slaves & sync clocks
+				numtransfers = linkmem->numtransfers;
+				if (numtransfers != 0)
+					linkmem->lastlinktime = linktime;
+				else
+					linkmem->lastlinktime = 0;
+
+				if ((++numtransfers) == 0)
+					linkmem->numtransfers = 2;
+				else
+					linkmem->numtransfers = numtransfers;
+
+				transfer = 1;
+				linktime = 0;
+				tspeed = value & 3;
+				WRITE32LE(&ioMem[COMM_SIOMULTI0], 0xffffffff);
+				WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
+				value &= ~0x40;
+			} else {
+				value |= 0x40; // comm error
+			}
+		}
+		value |= (transfer != 0) << 7;
+		value |= (linkid && !transfer ? 0xc : 8); // set SD (high), SI (low on master)
+		value |= linkid << 4; // set seq
+		UPDATE_REG(COMM_SIOCNT, value);
+		if (linkid)
+			// SC low -> transfer in progress
+			// not sure why SO is low
+			UPDATE_REG(COMM_RCNT, transfer ? 6 : 7);
+		else
+			// SI is always low on master
+			// SO, SC always low during transfer
+			// not sure why SO low otherwise
+			UPDATE_REG(COMM_RCNT, transfer ? 2 : 3);
+		break;
+	}
+	case NORMAL8:
+	case NORMAL32:
+	case UART:
 	default:
-		return value;
+		UPDATE_REG(COMM_SIOCNT, value);
+		break;
+	}
+}
+
+void StartCableSocket(u16 value)
+{
+	switch (GetSIOMode(value, READ16LE(&ioMem[COMM_RCNT]))) {
+	case MULTIPLAYER: {
+		bool start = (value & 0x80) && !linkid && !transfer;  //only master can have start == true, the 9th bit: 0 = inactive, 1=start/busy (gbaktek document is wrong on this?)
+		// clear start, seqno, si (RO on slave, start = pulse on master)
+		value &= 0xff4b;
+		// get current si.  This way, on slaves, it is low during xfer
+		if(linkid) 
+		{
+			if(!transfer)
+				value |= 4;
+			else
+				value |= READ16LE(&ioMem[COMM_SIOCNT]) & 4;
+		}
+		if (start ) //&& !endLANthread) //this got called on the host after the player has started linking in the game (after save game in pokemon)
+		{
+			linkdata[0] = READ16LE(&ioMem[COMM_SIODATA8]);
+			savedlinktime = linktime; //linktime is sent to salves later
+			tspeed = value & 3;
+			
+			//SetEvent(startSendEvent);
+			//newMasterCycle = true; //signal start of a new send-receive cycle
+
+			ls.Send(); //server send data from all clients back to each client. when slave is busy, this keeps executing. Also ls.Recv() keep executing too
+			transfer = 1;
+			linktime = 0;
+			UPDATE_REG(COMM_SIOMULTI0, linkdata[0]);
+			UPDATE_REG(COMM_SIOMULTI1, 0xffff);
+			WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
+			if (lanlink.speed && oncewait == false)
+				ls.howmanytimes++;
+			after = false;
+			value &= ~0x40;
+		}
+		value |= (transfer != 0) << 7;
+		value |= (linkid && !transfer ? 0xc : 8); // set SD (high), SI (low on master)
+		value |= linkid << 4; // set seq
+		UPDATE_REG(COMM_SIOCNT, value);
+		if (linkid)
+			// SC low -> transfer in progress
+			// not sure why SO is low
+			UPDATE_REG(COMM_RCNT, transfer ? 6 : 7);
+		else
+			// SI is always low on master
+			// SO, SC always low during transfer
+			// not sure why SO low otherwise
+			UPDATE_REG(COMM_RCNT, transfer ? 2 : 3);
+		break;
+	}
+	case NORMAL8:
+	case NORMAL32:
+	case UART:
+	default:
+		UPDATE_REG(COMM_SIOCNT, value);
+		break;
+	}
+}
+
+void StartLink(u16 siocnt)
+{
+	if (!linkDriver || !linkDriver->start) {
+		return;
+	}
+
+	linkDriver->start(siocnt);
+}
+
+void StartGPLink(u16 value)
+{
+	UPDATE_REG(COMM_RCNT, value);
+
+	if (!value)
+		return;
+
+	switch (GetSIOMode(READ16LE(&ioMem[COMM_SIOCNT]), value)) {
+	case MULTIPLAYER:
+		value &= 0xc0f0;
+		value |= 3;
+		if (linkid)
+			value |= 4;
+		UPDATE_REG(COMM_SIOCNT, ((READ16LE(&ioMem[COMM_SIOCNT])&0xff8b)|(linkid ? 0xc : 8)|(linkid<<4)));
+		break;
+
+	case GP:
+		if (GetLinkMode() == LINK_RFU_IPC)
+			rfu_state = RFU_INIT;
+		break;
+	}
+}
+
+static ConnectionState JoyBusConnect()
+{
+	delete dol;
+	dol = NULL;
+
+	dol = new GBASockClient();
+	bool connected = dol->Connect(joybusHostAddr);
+
+	if (connected) {
+		return LINK_OK;
+	} else {
+		systemMessage(0, N_("Error, could not connect to Dolphin"));
+		return LINK_ERROR;
+	}
+}
+
+static void JoyBusShutdown()
+{
+	delete dol;
+	dol = NULL;
+}
+
+static void JoyBusUpdate(int ticks)
+{
+	static int lastjoybusupdate = 0;
+
+	// Kinda ugly hack to update joybus stuff intermittently
+	if (linktime > lastjoybusupdate + 0x3000)
+	{
+		lastjoybusupdate = linktime;
+
+		char data[5] = {0x10, 0, 0, 0, 0}; // init with invalid cmd
+		std::vector<char> resp;
+
+		if (!dol)
+			JoyBusConnect();
+
+		u8 cmd = dol->ReceiveCmd(data);
+		switch (cmd) {
+		case JOY_CMD_RESET:
+			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_RESET);
+
+		case JOY_CMD_STATUS:
+			resp.push_back(0x00); // GBA device ID
+			resp.push_back(0x04);
+			break;
+		
+		case JOY_CMD_READ:
+			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_L]) & 0xff));
+			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_L]) >> 8));
+			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_H]) & 0xff));
+			resp.push_back((u8)(READ16LE(&ioMem[COMM_JOY_TRANS_H]) >> 8));
+			UPDATE_REG(COMM_JOYSTAT, READ16LE(&ioMem[COMM_JOYSTAT]) & ~JOYSTAT_SEND);
+			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_SEND_COMPLETE);
+			break;
+
+		case JOY_CMD_WRITE:
+			UPDATE_REG(COMM_JOY_RECV_L, (u16)((u16)data[2] << 8) | (u8)data[1]);
+			UPDATE_REG(COMM_JOY_RECV_H, (u16)((u16)data[4] << 8) | (u8)data[3]);
+			UPDATE_REG(COMM_JOYSTAT, READ16LE(&ioMem[COMM_JOYSTAT]) | JOYSTAT_RECV);
+			UPDATE_REG(COMM_JOYCNT, READ16LE(&ioMem[COMM_JOYCNT]) | JOYCNT_RECV_COMPLETE);
+			break;
+
+		default:
+			return; // ignore
+		}
+
+		resp.push_back((u8)READ16LE(&ioMem[COMM_JOYSTAT]));
+		dol->Send(resp);
+
+		// Generate SIO interrupt if we can
+		if ( ((cmd == JOY_CMD_RESET) || (cmd == JOY_CMD_READ) || (cmd == JOY_CMD_WRITE))
+			&& (READ16LE(&ioMem[COMM_JOYCNT]) & JOYCNT_INT_ENABLE) )
+		{
+			IF |= 0x80;
+			UPDATE_REG(0x202, IF);
+		}
+	}
+}
+
+static void ReInitLink();
+
+static void UpdateCableIPC(int ticks)
+{
+	// slave startup depends on detecting change in numtransfers
+	// and syncing clock with master (after first transfer)
+	// this will fail if > ~2 minutes have passed since last transfer due
+	// to integer overflow
+	if(!transfer && numtransfers && linktime < 0) {
+		linktime = 0;
+		// there is a very, very, small chance that this will abort
+		// a transfer that was just started
+		linkmem->numtransfers = numtransfers = 0;
+	}
+	if (linkid && !transfer && linktime >= linkmem->lastlinktime &&
+	    linkmem->numtransfers != numtransfers)
+	{
+		numtransfers = linkmem->numtransfers;
+		if(!numtransfers)
+			return;
+
+		// if this or any previous machine was dropped, no transfer
+		// can take place
+		if(linkmem->trgbas <= linkid) {
+			transfer = 0;
+			numtransfers = 0;
+			// if this is the one that was dropped, reconnect
+			if(!(linkmem->linkflags & (1 << linkid)))
+				ReInitLink();
+			return;
+		}
+
+		// sync clock
+		if (numtransfers == 1)
+			linktime = 0;
+		else
+			linktime -= linkmem->lastlinktime;
+
+		// there's really no point to this switch; 'M' is the only
+		// possible command.
+#if 0
+		switch ((linkmem->linkcmd) >> 8)
+		{
+		case 'M':
+#endif
+			tspeed = linkmem->linkcmd & 3;
+			transfer = 1;
+			WRITE32LE(&ioMem[COMM_SIOMULTI0], 0xffffffff);
+			WRITE32LE(&ioMem[COMM_SIOMULTI2], 0xffffffff);
+			UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & ~0x40 | 0x80);
+#if 0
+			break;
+		}
+#endif
+	}
+
+	if (!transfer)
+		return;
+
+	if (transfer <= linkmem->trgbas && linktime >= trtimedata[transfer-1][tspeed])
+	{
+		// transfer #n -> wait for value n - 1
+		if(transfer > 1 && linkid != transfer - 1) {
+			if(WaitForSingleObjectEx(linksync[transfer - 1], linktimeout, false) == WAIT_TIMEOUT) {
+				// assume slave has dropped off if timed out
+				if(!linkid) {
+					linkmem->trgbas = transfer - 1;
+					int f = linkmem->linkflags;
+					f &= ~(1 << (transfer - 1));
+					linkmem->linkflags = f;
+					if(f < (1 << transfer) - 1)
+						linkmem->numgbas = transfer - 1;
+					char message[30];
+					sprintf(message, _("Player %d disconnected."), transfer - 1);
+					systemScreenMessage(message);
+				}
+				transfer = linkmem->trgbas + 1;
+				// next cycle, transfer will finish up
+				return;
+			}
+		}
+		// now that value is available, store it
+		UPDATE_REG((COMM_SIOMULTI0 - 2) + (transfer<<1), linkmem->linkdata[transfer-1]);
+
+		// transfer machine's value at start of its transfer cycle
+		if(linkid == transfer) {
+			// skip if dropped
+			if(linkmem->trgbas <= linkid) {
+				transfer = 0;
+				numtransfers = 0;
+				// if this is the one that was dropped, reconnect
+				if(!(linkmem->linkflags & (1 << linkid)))
+					ReInitLink();
+				return;
+			}
+			// SI becomes low
+			UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & ~4);
+			UPDATE_REG(COMM_RCNT, 10);
+			linkmem->linkdata[linkid] = READ16LE(&ioMem[COMM_SIODATA8]);
+			ReleaseSemaphore(linksync[linkid], linkmem->numgbas-1, NULL);
+		}
+		if(linkid == transfer - 1) {
+			// SO becomes low to begin next trasnfer
+			// may need to set DDR as well
+			UPDATE_REG(COMM_RCNT, 0x22);
+		}
+
+		// next cycle
+		transfer++;
+	}
+
+	if (transfer > linkmem->trgbas && linktime >= trtimeend[transfer-3][tspeed])
+	{
+		// wait for slaves to finish
+		// this keeps unfinished slaves from screwing up last xfer
+		// not strictly necessary; may just slow things down
+		if(!linkid) {
+			for(int i = 2; i < transfer; i++)
+				if(WaitForSingleObjectEx(linksync[0], linktimeout, false) == WAIT_TIMEOUT) {
+					// impossible to determine which slave died
+					// so leave them alone for now
+					systemScreenMessage(_("Unknown slave timed out; resetting comm"));
+					linkmem->numtransfers = numtransfers = 0;
+					break;
+				}
+		} else if(linkmem->trgbas > linkid)
+			// signal master that this slave is finished
+			ReleaseSemaphore(linksync[0], 1, NULL);
+		linktime -= trtimeend[transfer - 3][tspeed];
+		transfer = 0;
+		u16 value = READ16LE(&ioMem[COMM_SIOCNT]);
+		if(!linkid)
+			value |= 4; // SI becomes high on slaves after xfer
+		UPDATE_REG(COMM_SIOCNT, (value & 0xff0f) | (linkid << 4));
+		// SC/SI high after transfer
+		UPDATE_REG(COMM_RCNT, linkid ? 15 : 11);
+		if (value & 0x4000)
+		{
+			IF |= 0x80;
+			UPDATE_REG(0x202, IF);
+		}
+	}
+}
+
+static void UpdateRFUIPC(int ticks)
+{
+	rfu_transfer_end -= ticks;
+
+	if (transfer && rfu_transfer_end <= 0)
+	{
+		transfer = 0;
+		if (READ16LE(&ioMem[COMM_SIOCNT]) & 0x4000)
+		{
+			IF |= 0x80;
+			UPDATE_REG(0x202, IF);
+		}
+		UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) & 0xff7f);
+	}
+}
+
+static void UpdateSocket(int ticks)
+{
+	if (after)
+	{
+		if (linkid && linktime > 6044) {
+			lc.Recv();
+			oncewait = true;
+		}
+		else
+			return;
+	}
+
+if (linkid && !transfer && lc.numtransfers > 0 && linktime >= savedlinktime)
+	{
+		linkdata[linkid] = READ16LE(&ioMem[COMM_SIODATA8]);
+
+		//SetEvent(startSendEvent);
+		lc.Send();
+
+		UPDATE_REG(COMM_SIODATA32_L, linkdata[0]);
+		UPDATE_REG(COMM_SIOCNT, READ16LE(&ioMem[COMM_SIOCNT]) | 0x80);
+		transfer = 1;
+		if (lc.numtransfers==1)
+			linktime = 0;
+		else
+			linktime -= savedlinktime;
+	}
+	//else if (linkid == 0 && transfer && newMasterCycle ) //master
+	//{
+	//	WaitForSingleObjectEx(finishReceiveEvent, INFINITE, false);
+	//	ResetEvent(finishReceiveEvent);
+	//	newMasterCycle = false; //set to false so code does not go in here until master sends new data
+	//}
+
+	if (transfer && linktime >= trtimeend[lanlink.numslaves-1][tspeed]) //only start receive data after transfer is done
+	{
+		if (READ16LE(&ioMem[COMM_SIOCNT]) & 0x4000)
+		{
+			IF |= 0x80;
+			UPDATE_REG(0x202, IF);
+		}
+
+		UPDATE_REG(COMM_SIOCNT, (READ16LE(&ioMem[COMM_SIOCNT]) & 0xff0f) | (linkid << 4));
+		transfer = 0;
+		linktime -= trtimeend[lanlink.numslaves-1][tspeed];
+		oncewait = false;
+
+		if (!lanlink.speed)
+		{
+			if (linkid)
+			{
+				//WaitForSingleObjectEx(finishReceiveEvent, INFINITE, false);
+				//ResetEvent(finishReceiveEvent);
+				lc.Recv(); //slave tries to receive data from master, have to wait for master to receive data and resent data, quite slow
+			}
+			else
+			{
+				ls.Recv(); // server tries receive data from slaves, should move this one up
+			}
+			UPDATE_REG(COMM_SIOMULTI1, linkdata[1]);
+			UPDATE_REG(COMM_SIOMULTI2, linkdata[2]);
+			UPDATE_REG(COMM_SIOMULTI3, linkdata[3]);
+			oncewait = true;
+			
+
+		} else {
+
+			after = true;
+			if (lanlink.numslaves == 1)
+			{
+				UPDATE_REG(COMM_SIOMULTI1, linkdata[1]);
+				UPDATE_REG(COMM_SIOMULTI2, linkdata[2]);
+				UPDATE_REG(COMM_SIOMULTI3, linkdata[3]);
+			}
+		}
+	}
+}
+
+
+void LinkUpdate(int ticks)
+{
+	if (!linkDriver) {
+		return;
+	}
+
+	// this actually gets called every single instruction, so keep default
+	// path as short as possible
+
+	linktime += ticks;
+
+	linkDriver->update(ticks);
+}
+
+inline static int GetSIOMode(u16 siocnt, u16 rcnt)
+{
+	if (!(rcnt & 0x8000))
+	{
+		switch (siocnt & 0x3000) {
+		case 0x0000: return NORMAL8;
+		case 0x1000: return NORMAL32;
+		case 0x2000: return MULTIPLAYER;
+		case 0x3000: return UART;
+		}
+	}
+
+	if (rcnt & 0x4000)
+		return JOYBUS;
+
+	return GP;
+}
+
+static ConnectionState InitIPC() {
+//	linkid = 0;
+//
+//#if (defined __WIN32__ || defined _WIN32)
+//	if((mmf=CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(LINKDATA), LOCAL_LINK_NAME))==NULL){
+//		systemMessage(0, N_("Error creating file mapping"));
+//		return LINK_ERROR;
+//	}
+//
+//	if(GetLastError() == ERROR_ALREADY_EXISTS)
+//		vbaid = 1;
+//	else
+//		vbaid = 0;
+//
+//
+//	if((linkmem=(LINKDATA *)MapViewOfFile(mmf, FILE_MAP_WRITE, 0, 0, sizeof(LINKDATA)))==NULL){
+//		CloseHandle(mmf);
+//		systemMessage(0, N_("Error mapping file"));
+//		return LINK_ERROR;
+//	}
+//#else
+//	if((mmf = shm_open("/" LOCAL_LINK_NAME, O_RDWR|O_CREAT|O_EXCL, 0777)) < 0) {
+//		vbaid = 1;
+//		mmf = shm_open("/" LOCAL_LINK_NAME, O_RDWR, 0);
+//	} else
+//		vbaid = 0;
+//	if(mmf < 0 || ftruncate(mmf, sizeof(LINKDATA)) < 0 ||
+//	   !(linkmem = (LINKDATA *)mmap(NULL, sizeof(LINKDATA),
+//					PROT_READ|PROT_WRITE, MAP_SHARED,
+//					mmf, 0))) {
+//		systemMessage(0, N_("Error creating file mapping"));
+//		if(mmf) {
+//			if(!vbaid)
+//				shm_unlink("/" LOCAL_LINK_NAME);
+//			close(mmf);
+//		}
+//	}
+//#endif
+//
+//	// get lowest-numbered available machine slot
+//	bool firstone = !vbaid;
+//	if(firstone) {
+//		linkmem->linkflags = 1;
+//		linkmem->numgbas = 1;
+//		linkmem->numtransfers=0;
+//		for(i=0;i<4;i++)
+//			linkmem->linkdata[i] = 0xffff;
+//	} else {
+//		// FIXME: this should be done while linkmem is locked
+//		// (no xfer in progress, no other vba trying to connect)
+//		int n = linkmem->numgbas;
+//		int f = linkmem->linkflags;
+//		for(int i = 0; i <= n; i++)
+//			if(!(f & (1 << i))) {
+//				vbaid = i;
+//				break;
+//			}
+//		if(vbaid == 4){
+//#if (defined __WIN32__ || defined _WIN32)
+//			UnmapViewOfFile(linkmem);
+//			CloseHandle(mmf);
+//#else
+//			munmap(linkmem, sizeof(LINKDATA));
+//			if(!vbaid)
+//				shm_unlink("/" LOCAL_LINK_NAME);
+//			close(mmf);
+//#endif
+//			systemMessage(0, N_("5 or more GBAs not supported."));
+//			return LINK_ERROR;
+//		}
+//		if(vbaid == n)
+//			linkmem->numgbas = n + 1;
+//		linkmem->linkflags = f | (1 << vbaid);
+//	}
+//	linkid = vbaid;
+//
+//	for(i=0;i<4;i++){
+//		linkevent[sizeof(linkevent)-2]=(char)i+'1';
+//#if (defined __WIN32__ || defined _WIN32)
+//		linksync[i] = firstone ?
+//			CreateSemaphoreEx(NULL, 0, 4, linkevent, 0, SEMAPHORE_ALL_ACCESS ) :
+//			OpenSemaphore(SEMAPHORE_ALL_ACCESS, false, linkevent);
+//		if(linksync[i] == NULL) {
+//			UnmapViewOfFile(linkmem);
+//			CloseHandle(mmf);
+//			for(j=0;j<i;j++){
+//				CloseHandle(linksync[j]);
+//			}
+//			systemMessage(0, N_("Error opening event"));
+//			return LINK_ERROR;
+//		}
+//#else
+//		if((linksync[i] = sem_open(linkevent,
+//					   firstone ? O_CREAT|O_EXCL : 0,
+//					   0777, 0)) == SEM_FAILED) {
+//			if(firstone)
+//				shm_unlink("/" LOCAL_LINK_NAME);
+//			munmap(linkmem, sizeof(LINKDATA));
+//			close(mmf);
+//			for(j=0;j<i;j++){
+//				sem_close(linksync[i]);
+//				if(firstone) {
+//					linkevent[sizeof(linkevent)-2]=(char)i+'1';
+//					sem_unlink(linkevent);
+//				}
+//			}
+//			systemMessage(0, N_("Error opening event"));
+//			return LINK_ERROR;
+//		}
+//#endif
+//	}
+//
+//	return LINK_OK;
+	return LINK_OK;
+}
+
+static ConnectionState InitSocket() {
+	linkid = 0;
+
+	for(int i = 0; i < 4; i++)
+		linkdata[i] = 0xffff;
+
+	if (lanlink.server) {
+		lanlink.connectedSlaves = 0;
+		// should probably use GetPublicAddress()
+		//sid->ShowServerIP(sf::IPAddress::GetLocalAddress());
+
+		// too bad Listen() doesn't take an address as well
+		// then again, old code used INADDR_ANY anyway
+		if (!lanlink.tcpsocket.Listen(IP_LINK_PORT))
+			// Note: old code closed socket & retried once on bind failure
+			return LINK_ERROR; // FIXME: error code?
+		else
+			return LINK_NEEDS_UPDATE;
+	} else {
+		lc.serverport = IP_LINK_PORT;
+
+		if (!lc.serveraddr.IsValid()) {
+			return  LINK_ERROR;
+		} else {
+			lanlink.tcpsocket.SetBlocking(false);
+			sf::Socket::Status status = lanlink.tcpsocket.Connect(lc.serverport, lc.serveraddr);
+
+			if (status == sf::Socket::Error || status == sf::Socket::Disconnected)
+				return  LINK_ERROR;
+			else
+				return  LINK_NEEDS_UPDATE;
+		}
 	}
 }
 
@@ -967,121 +1336,205 @@ u16 StartRFU(u16 value)
 // Probably from here down needs to be replaced with SFML goodness :)
 // tjm: what SFML goodness?  SFML for network, yes, but not for IPC
 
-bool InitLink()
+ConnectionState InitLink(LinkMode mode)
 {
-	linkid = 0;
-
-#if (defined __WIN32__ || defined _WIN32)
-	if((mmf=CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(LINKDATA), LOCAL_LINK_NAME))==NULL){
-		systemMessage(0, N_("Error creating file mapping"));
-		return false;
+	// Do nothing if we are already connected
+	if (GetLinkMode() != LINK_DISCONNECTED) {
+		systemMessage(0, N_("Link already connected"));
+		return LINK_OK;
 	}
 
-	if(GetLastError() == ERROR_ALREADY_EXISTS)
-		vbaid = 1;
-	else
-		vbaid = 0;
-
-
-	if((linkmem=(LINKDATA *)MapViewOfFile(mmf, FILE_MAP_WRITE, 0, 0, sizeof(LINKDATA)))==NULL){
-		CloseHandle(mmf);
-		systemMessage(0, N_("Error mapping file"));
-		return false;
-	}
-#else
-	if((mmf = shm_open("/" LOCAL_LINK_NAME, O_RDWR|O_CREAT|O_EXCL, 0777)) < 0) {
-		vbaid = 1;
-		mmf = shm_open("/" LOCAL_LINK_NAME, O_RDWR, 0);
-	} else
-		vbaid = 0;
-	if(mmf < 0 || ftruncate(mmf, sizeof(LINKDATA)) < 0 ||
-	   !(linkmem = (LINKDATA *)mmap(NULL, sizeof(LINKDATA),
-					PROT_READ|PROT_WRITE, MAP_SHARED,
-					mmf, 0))) {
-		systemMessage(0, N_("Error creating file mapping"));
-		if(mmf) {
-			if(!vbaid)
-				shm_unlink("/" LOCAL_LINK_NAME);
-			close(mmf);
+	// Find the link driver
+	linkDriver = NULL;
+	for (u8 i = 0; i < sizeof(linkDrivers) / sizeof(linkDrivers[0]); i++) {
+		if (linkDrivers[i].mode == mode) {
+			linkDriver = &linkDrivers[i];
+			break;
 		}
 	}
-#endif
 
-	// get lowest-numbered available machine slot
-	bool firstone = !vbaid;
-	if(firstone) {
-		linkmem->linkflags = 1;
-		linkmem->numgbas = 1;
-		linkmem->numtransfers=0;
-		for(i=0;i<4;i++)
-			linkmem->linkdata[i] = 0xffff;
+	if (linkDriver == NULL) {
+		systemMessage(0, N_("Unable to find link driver"));
+		return LINK_ERROR;
+	}
+
+	// Connect the link
+	gba_connection_state = linkDriver->connect();
+
+	//create event
+	//startSendEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
+	//finishSendEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
+	//startReceiveEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
+	//finishReceiveEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
+
+	if (gba_connection_state == LINK_ERROR) {
+		CloseLink();
+	}
+		
+	return gba_connection_state;
+}
+
+static ConnectionState ConnectUpdateSocket(char * const message, size_t size) {
+	ConnectionState newState = LINK_NEEDS_UPDATE;
+
+	if (lanlink.server) {
+		sf::Selector<sf::SocketTCP> fdset;
+		fdset.Add(lanlink.tcpsocket);
+
+		if (fdset.Wait(0.1) == 1) {
+			int nextSlave = lanlink.connectedSlaves + 1;
+
+			sf::Socket::Status st = lanlink.tcpsocket.Accept(ls.tcpsocket[nextSlave]);
+
+			if (st == sf::Socket::Error) {
+				for (int j = 1; j < nextSlave; j++)
+					ls.tcpsocket[j].Close();
+
+				snprintf(message, size, N_("Network error."));
+				newState = LINK_ERROR;
+			} else {
+				sf::Packet packet;
+				packet 	<< static_cast<sf::Uint16>(nextSlave)
+						<< static_cast<sf::Uint16>(lanlink.numslaves);
+
+				ls.tcpsocket[nextSlave].Send(packet);
+
+				snprintf(message, size, N_("Player %d connected"), nextSlave);
+
+				lanlink.connectedSlaves++;
+			}
+		}
+
+		if (lanlink.numslaves == lanlink.connectedSlaves) {
+			for (int i = 1; i <= lanlink.numslaves; i++) {
+				sf::Packet packet;
+				packet 	<< true;
+
+				ls.tcpsocket[i].Send(packet);
+			}
+
+			snprintf(message, size, N_("All players connected"));
+			newState = LINK_OK;
+
+			//create thread
+			//endLANThread = false;
+
+			//lanlink.linkthread = ThreadPool::RunAsync(ref new WorkItemHandler([](Windows::Foundation::IAsyncAction ^action)
+			//{
+			//	LANLinkThread();
+			//}), WorkItemPriority::Normal, WorkItemOptions::None);
+
+		}
 	} else {
-		// FIXME: this should be done while linkmem is locked
-		// (no xfer in progress, no other vba trying to connect)
-		int n = linkmem->numgbas;
-		int f = linkmem->linkflags;
-		for(int i = 0; i <= n; i++)
-			if(!(f & (1 << i))) {
-				vbaid = i;
-				break;
-			}
-		if(vbaid == 4){
-#if (defined __WIN32__ || defined _WIN32)
-			UnmapViewOfFile(linkmem);
-			CloseHandle(mmf);
-#else
-			munmap(linkmem, sizeof(LINKDATA));
-			if(!vbaid)
-				shm_unlink("/" LOCAL_LINK_NAME);
-			close(mmf);
-#endif
-			systemMessage(0, N_("5 or more GBAs not supported."));
-			return false;
-		}
-		if(vbaid == n)
-			linkmem->numgbas = n + 1;
-		linkmem->linkflags = f | (1 << vbaid);
-	}
-	linkid = vbaid;
 
-	for(i=0;i<4;i++){
-		linkevent[sizeof(linkevent)-2]=(char)i+'1';
-#if (defined __WIN32__ || defined _WIN32)
-		linksync[i] = firstone ?
-			CreateSemaphore(NULL, 0, 4, linkevent) :
-			OpenSemaphore(SEMAPHORE_ALL_ACCESS, false, linkevent);
-		if(linksync[i] == NULL) {
-			UnmapViewOfFile(linkmem);
-			CloseHandle(mmf);
-			for(j=0;j<i;j++){
-				CloseHandle(linksync[j]);
-			}
-			systemMessage(0, N_("Error opening event"));
-			return false;
-		}
-#else
-		if((linksync[i] = sem_open(linkevent,
-					   firstone ? O_CREAT|O_EXCL : 0,
-					   0777, 0)) == SEM_FAILED) {
-			if(firstone)
-				shm_unlink("/" LOCAL_LINK_NAME);
-			munmap(linkmem, sizeof(LINKDATA));
-			close(mmf);
-			for(j=0;j<i;j++){
-				sem_close(linksync[i]);
-				if(firstone) {
-					linkevent[sizeof(linkevent)-2]=(char)i+'1';
-					sem_unlink(linkevent);
+		sf::Packet packet;
+		
+		sf::Socket::Status status = lanlink.tcpsocket.Receive(packet);
+
+		if (status == sf::Socket::Error || status == sf::Socket::Disconnected) {
+			snprintf(message, size, N_("Network error."));
+			newState = LINK_ERROR;
+		} else if (status == sf::Socket::Done) {
+
+			if (linkid == 0) {
+				sf::Uint16 receivedId, receivedSlaves;
+				packet >> receivedId >> receivedSlaves;
+
+				if (packet) {
+					linkid = receivedId;
+					lanlink.numslaves = receivedSlaves;
+
+					snprintf(message, size, N_("Connected as #%d, Waiting for %d players to join"),
+							linkid + 1, lanlink.numslaves - linkid);
+				}
+			} else {
+				bool gameReady;
+				packet >> gameReady;
+
+				if (packet && gameReady) 
+				{
+					newState = LINK_OK;
+					snprintf(message, size, N_("All players joined."));
+
+					//create thread
+					//endLANThread = false;
+
+					//lanlink.linkthread = ThreadPool::RunAsync(ref new WorkItemHandler([](Windows::Foundation::IAsyncAction ^action)
+					//{
+					//	LANLinkThread();
+					//}), WorkItemPriority::Normal, WorkItemOptions::None);
 				}
 			}
-			systemMessage(0, N_("Error opening event"));
-			return false;
+
+			sf::Selector<sf::SocketTCP> fdset;
+			fdset.Add(lanlink.tcpsocket);
+			fdset.Wait(0.1);
 		}
-#endif
 	}
-	for(i=0;i<4;i++)
-		linkdata[i] = 0xffff;
-	return true;
+
+	return newState;
+}
+
+ConnectionState ConnectLinkUpdate(char * const message, size_t size)
+{
+	message[0] = '\0';
+
+	if (!linkDriver || gba_connection_state != LINK_NEEDS_UPDATE) {
+		gba_connection_state = LINK_ERROR;
+		snprintf(message, size, N_("Link connection does not need updates."));
+
+		return LINK_ERROR;
+	}
+
+	gba_connection_state = linkDriver->connectUpdate(message, size);
+
+	return gba_connection_state;
+}
+
+void EnableLinkServer(bool enable, int numSlaves) {
+	lanlink.server = enable;
+	lanlink.numslaves = numSlaves;
+}
+
+void EnableSpeedHacks(bool enable) {
+	lanlink.speed = enable;
+}
+
+bool SetLinkServerHost(const char *host) {
+	sf::IPAddress addr = sf::IPAddress(host);
+
+	lc.serveraddr = addr;
+	joybusHostAddr = addr;
+
+	return addr.IsValid();
+}
+
+void GetLinkServerHost(char * const host, size_t size) {
+	if (host == NULL || size == 0)
+		return;
+
+	host[0] = '\0';
+
+	if (linkDriver && linkDriver->mode == LINK_GAMECUBE_DOLPHIN)
+		strncpy(host, joybusHostAddr.ToString().c_str(), size);
+	else if (lanlink.server)
+		strncpy(host, sf::IPAddress::GetLocalAddress().ToString().c_str(), size);
+	else
+		strncpy(host, lc.serveraddr.ToString().c_str(), size);
+}
+
+void SetLinkTimeout(int value) {
+	linktimeout = value;
+}
+
+int GetLinkPlayerId() {
+	if (GetLinkMode() == LINK_DISCONNECTED) {
+		return -1;
+	} else if (linkid > 0) {
+		return linkid;
+	} else {
+		return vbaid;
+	}
 }
 
 static void ReInitLink()
@@ -1099,66 +1552,82 @@ static void ReInitLink()
 	systemScreenMessage(_("Lost link; reconnected"));
 }
 
+static void CloseIPC() {
+//	int f = linkmem->linkflags;
+//	f &= ~(1 << linkid);
+//	if(f & 0xf) {
+//		linkmem->linkflags = f;
+//		int n = linkmem->numgbas;
+//		for(int i = 0; i < n; i--)
+//			if(f <= (1 << (i + 1)) - 1) {
+//				linkmem->numgbas = i + 1;
+//				break;
+//			}
+//	}
+//
+//	for(i=0;i<4;i++){
+//		if(linksync[i]!=NULL){
+//#if (defined __WIN32__ || defined _WIN32)
+//			ReleaseSemaphore(linksync[i], 1, NULL);
+//			CloseHandle(linksync[i]);
+//#else
+//			sem_close(linksync[i]);
+//			if(!(f & 0xf)) {
+//				linkevent[sizeof(linkevent)-2]=(char)i+'1';
+//				sem_unlink(linkevent);
+//			}
+//#endif
+//		}
+//	}
+//#if (defined __WIN32__ || defined _WIN32)
+//	CloseHandle(mmf);
+//	UnmapViewOfFile(linkmem);
+//
+//	// FIXME: move to caller
+//	// (but there are no callers, so why bother?)
+//	//regSetDwordValue("LAN", lanlink.active);
+//#else
+//	if(!(f & 0xf))
+//		shm_unlink("/" LOCAL_LINK_NAME);
+//	munmap(linkmem, sizeof(LINKDATA));
+//	close(mmf);
+//#endif
+}
+
+static void CloseSocket() {
+	if(linkid){
+		char outbuffer[4];
+		outbuffer[0] = 4;
+		outbuffer[1] = -32;
+		if(lanlink.type==0) lanlink.tcpsocket.Send(outbuffer, 4);
+	} else {
+		char outbuffer[12];
+		int i;
+		outbuffer[0] = 12;
+		outbuffer[1] = -32;
+		for(i=1;i<=lanlink.numslaves;i++){
+			if(lanlink.type==0){
+				ls.tcpsocket[i].Send(outbuffer, 12);
+			}
+			ls.tcpsocket[i].Close();
+		}
+	}
+	lanlink.tcpsocket.Close();
+}
+
 void CloseLink(void){
-	if(lanlink.connected){
-		if(linkid){
-			char outbuffer[4];
-			outbuffer[0] = 4;
-			outbuffer[1] = -32;
-			if(lanlink.type==0) lanlink.tcpsocket.Send(outbuffer, 4);
-		} else {
-			char outbuffer[12];
-			int i;
-			outbuffer[0] = 12;
-			outbuffer[1] = -32;
-			for(i=1;i<=lanlink.numslaves;i++){
-				if(lanlink.type==0){
-					ls.tcpsocket[i].Send(outbuffer, 12);
-				}
-				ls.tcpsocket[i].Close();
-			}
-		}
-	}
-	int f = linkmem->linkflags;
-	f &= ~(1 << linkid);
-	if(f & 0xf) {
-		linkmem->linkflags = f;
-		int n = linkmem->numgbas;
-		for(int i = 0; i < n; i--)
-			if(f <= (1 << (i + 1)) - 1) {
-				linkmem->numgbas = i + 1;
-				break;
-			}
+	if (!linkDriver) {
+		return; // Nothing to do
 	}
 
-	for(i=0;i<4;i++){
-		if(linksync[i]!=NULL){
-#if (defined __WIN32__ || defined _WIN32)
-			ReleaseSemaphore(linksync[i], 1, NULL);
-			CloseHandle(linksync[i]);
-#else
-			sem_close(linksync[i]);
-			if(!(f & 0xf)) {
-				linkevent[sizeof(linkevent)-2]=(char)i+'1';
-				sem_unlink(linkevent);
-			}
-#endif
-		}
-	}
-#if (defined __WIN32__ || defined _WIN32)
-	CloseHandle(mmf);
-	UnmapViewOfFile(linkmem);
+	linkDriver->close();
+	linkDriver = NULL;
 
-	// FIXME: move to caller
-	// (but there are no callers, so why bother?)
-	//regSetDwordValue("LAN", lanlink.active);
-#else
-	if(!(f & 0xf))
-		shm_unlink("/" LOCAL_LINK_NAME);
-	munmap(linkmem, sizeof(LINKDATA));
-	close(mmf);
-#endif
+	endLANThread = true; //so that LanLinkThread knows to terminate
+
 	return;
+
+	
 }
 
 // call this to clean up crashed program's shared state
@@ -1175,6 +1644,63 @@ void CleanLocalLink()
 #endif
 }
 
+
+void LANLinkThread()
+{
+	while (!endLANThread)
+	{
+		if (linkid == 0) //master
+		{
+			WaitForSingleObjectEx(startSendEvent, INFINITE, false);  
+			ResetEvent(startSendEvent);
+			ls.Send(); //send data to slaves
+
+			ls.Recv(); //start receive data from slave right away
+
+			SetEvent(finishReceiveEvent); //signal receive is complete
+
+
+			//WaitForSingleObjectEx(startReceiveEvent, INFINITE, false); 
+			//ResetEvent(startReceiveEvent);
+			//ls.Recv();  //wait for data from slave
+
+			//ls.Send(); //send data back to slaves right away
+
+			//SetEvent(finishSendEvent); //signal sending is complete
+
+		}
+		else //slave
+		{
+			WaitForSingleObjectEx(startSendEvent, INFINITE, false);  
+			ResetEvent(startSendEvent);
+			lc.Send();  //send to master
+			
+
+			lc.Recv(); //start receive back from master right away
+
+			SetEvent(finishReceiveEvent); //signal receive is complete
+		}
+
+
+	}
+
+	//	//set all events to prevent deadlock
+	//SetEvent(startSendEvent);
+	//SetEvent(startReceiveEvent);
+	//SetEvent(finishSendEvent);
+	//SetEvent(finishReceiveEvent);
+
+	CloseHandle(startSendEvent);
+	CloseHandle(finishSendEvent);
+	CloseHandle(startReceiveEvent);
+	CloseHandle(finishReceiveEvent);
+
+
+	return;
+
+
+}
+
 // Server
 lserver::lserver(void){
 	intinbuffer = (s32*)inbuffer;
@@ -1184,84 +1710,10 @@ lserver::lserver(void){
 	oncewait = false;
 }
 
-bool lserver::Init(ServerInfoDisplay *sid){
-	// too bad Listen() doesn't take an address as well
-	// then again, old code used INADDR_ANY anyway
-	if(!lanlink.tcpsocket.Listen(IP_LINK_PORT))
-		// Note: old code closed socket & retried once on bind failure
-		return false; // FIXME: error code?
-
-	if(lanlink.thread!=NULL){
-		lanlink.terminate = true;
-		WaitForSingleObject(linksync[vbaid], 500);
-		lanlink.thread = NULL;
-	}
-	lanlink.terminate = false;
-	linkid = 0;
-
-	// should probably use GetPublicAddress()
-	sid->ShowServerIP(sf::IPAddress::GetLocalAddress());
-
-	lanlink.thread = new sf::Thread(LinkServerThread, sid);
-	lanlink.thread->Launch();
-
-	return true;
-
-}
-
-void LinkServerThread(void *_sid){
-	ServerInfoDisplay *sid = (ServerInfoDisplay *)_sid;
-	sf::Selector<sf::SocketTCP> fdset;
-	char inbuffer[256], outbuffer[256];
-	s32 *intinbuffer = (s32*)inbuffer;
-	u16 *u16inbuffer = (u16*)inbuffer;
-	s32 *intoutbuffer = (s32*)outbuffer;
-	u16 *u16outbuffer = (u16*)outbuffer;
-
-	i = 0;
-
-	while(i<lanlink.numslaves){
-		fdset.Clear();
-		fdset.Add(lanlink.tcpsocket);
-		if(lanlink.terminate){
-			ReleaseSemaphore(linksync[vbaid], 1, NULL);
-			goto CloseInfoDisplay;
-		}
-		if(fdset.Wait(0.1)==1){
-			sf::Socket::Status st =
-				lanlink.tcpsocket.Accept(ls.tcpsocket[i+1]);
-			if(st == sf::Socket::Error) {
-				for(int j=1;j<i;j++) ls.tcpsocket[j].Close();
-				systemMessage(0, N_("Network error."));
-				lanlink.terminate = true;
-			} else {
-				i++;
-				WRITE16LE(&u16outbuffer[0], i);
-				WRITE16LE(&u16outbuffer[1], lanlink.numslaves);
-				ls.tcpsocket[i].Send(outbuffer, 4);
-				sid->ShowConnect(i);
-			}
-		}
-		sid->Ping();
-	}
-
-	lanlink.connected = true;
-
-	sid->Connected();
-
-	for(i=1;i<=lanlink.numslaves;i++){
-		outbuffer[0] = 4;
-		ls.tcpsocket[i].Send(outbuffer, 4);
-	}
-
-CloseInfoDisplay:
-	delete sid;
-	return;
-}
-
 void lserver::Send(void){
 	if(lanlink.type==0){	// TCP
-		if(savedlinktime==-1){
+		if(savedlinktime==-1)
+		{
 			outbuffer[0] = 4;
 			outbuffer[1] = -32;	//0xe0
 			for(i=1;i<=lanlink.numslaves;i++){
@@ -1305,37 +1757,54 @@ void lserver::Send(void){
 
 void lserver::Recv(void){
 	int numbytes;
-	if(lanlink.type==0){	// TCP
+	if(lanlink.type==0) // TCP
+	{	
 		fdset.Clear();
-		for(i=0;i<lanlink.numslaves;i++) fdset.Add(tcpsocket[i+1]);
+		for(i=0;i<lanlink.numslaves;i++) 
+			fdset.Add(tcpsocket[i+1]);
+
 		// was linktimeout/1000 (i.e., drop ms part), but that's wrong
-		if (fdset.Wait((float)(linktimeout / 1000.)) == 0)
+		if (fdset.Wait((float)(linktimeout / 1000.)) == 0)  //this keeps executing even when slave is down
+															//this function wait for data sent from sleep
+															//when slave is slow, this slows down emulation a lot
 		{
 			return;
 		}
-		howmanytimes++;
+		howmanytimes++; //this returns 1 without speed hack
 		for(i=0;i<lanlink.numslaves;i++){
 			numbytes = 0;
 			inbuffer[0] = 1;
-			while(numbytes<howmanytimes*inbuffer[0]) {
+
+			sf::Socket::Status status;
+			while(numbytes<howmanytimes*inbuffer[0]) {  //read all data from a client
 				size_t nr;
-				tcpsocket[i+1].Receive(inbuffer+numbytes, howmanytimes*inbuffer[0]-numbytes, nr);
+				status = tcpsocket[i+1].Receive(inbuffer+numbytes, howmanytimes*inbuffer[0]-numbytes, nr);
 				numbytes += nr;
+
+				if (status == sf::Socket::Disconnected)
+				{
+					CloseLink();
+					return;
+				}
 			}
-			if(howmanytimes>1) memmove(inbuffer, inbuffer+inbuffer[0]*(howmanytimes-1), inbuffer[0]);
-			if(inbuffer[1]==-32){
+			if(howmanytimes>1)
+				memmove(inbuffer, inbuffer+inbuffer[0]*(howmanytimes-1), inbuffer[0]); //speed hack?
+
+			if(inbuffer[1]==-32)
+			{
 				char message[30];
-				lanlink.connected = false;
 				sprintf(message, _("Player %d disconnected."), i+2);
 				systemScreenMessage(message);
 				outbuffer[0] = 4;
 				outbuffer[1] = -32;
-				for(i=1;i<lanlink.numslaves;i++){
+				for(i=1;i<lanlink.numslaves;i++)
+				{
 					tcpsocket[i].Send(outbuffer, 12);
 					size_t nr;
 					tcpsocket[i].Receive(inbuffer, 256, nr);
 					tcpsocket[i].Close();
 				}
+				CloseLink();
 				return;
 			}
 			linkdata[i+1] = READ16LE(&u16inbuffer[1]);
@@ -1346,6 +1815,13 @@ void lserver::Recv(void){
 	return;
 }
 
+void CheckLinkConnection() {
+	if (GetLinkMode() == LINK_CABLE_SOCKET) {
+		if (linkid && lc.numtransfers == 0) {
+			lc.CheckConn();
+		}
+	}
+}
 
 // Client
 lclient::lclient(void){
@@ -1357,106 +1833,28 @@ lclient::lclient(void){
 	return;
 }
 
-bool lclient::Init(sf::IPAddress addr, ClientInfoDisplay *cid){
-	serveraddr = addr;
-	serverport = IP_LINK_PORT;
-	lanlink.tcpsocket.SetBlocking(false);
-
-	if(lanlink.thread!=NULL){
-		lanlink.terminate = true;
-		WaitForSingleObject(linksync[vbaid], 500);
-		lanlink.thread = NULL;
-	}
-
-	cid->ConnectStart(addr);
-	lanlink.terminate = false;
-	lanlink.thread = new sf::Thread(LinkClientThread, cid);
-	lanlink.thread->Launch();
-	return true;
-}
-
-void LinkClientThread(void *_cid){
-	ClientInfoDisplay *cid = (ClientInfoDisplay *)_cid;
-	sf::Selector<sf::SocketTCP> fdset;
-	int numbytes;
-	char inbuffer[16];
-	u16 *u16inbuffer = (u16*)inbuffer;
-	unsigned long block = 0;
-
-	while(lanlink.tcpsocket.Connect(lc.serverport, lc.serveraddr) != sf::Socket::Done) {
-		// stupid SFML has no way of giving what sort of error occurred
-		// so we'll just have to do a retry loop, I guess.
-		cid->Ping();
-		if(lanlink.terminate)
-			goto CloseInfoDisplay;
-		// old code had broken sleep on socket, which isn't
-		// even connected yet
-		// corrected sleep on socket worked, but this is more sane
-		// and probably less portable... works with mingw32 at least
-#if (defined __WIN32__ || defined _WIN32)
-		Sleep(100); // in milliseconds
-#else
-		usleep(100000); // in microseconds
-#endif
-	}
-
-	numbytes = 0;
-	size_t got;
-	while(numbytes<4) {
-		lanlink.tcpsocket.Receive(inbuffer+numbytes, 4 - numbytes, got);
-		numbytes += got;
-		fdset.Clear();
-		fdset.Add(lanlink.tcpsocket);
-		fdset.Wait(0.1);
-		cid->Ping();
-		if(lanlink.terminate) {
-			lanlink.tcpsocket.Close();
-			goto CloseInfoDisplay;
-		}
-	}
-	linkid = (int)READ16LE(&u16inbuffer[0]);
-	lanlink.numslaves = (int)READ16LE(&u16inbuffer[1]);
-
-	cid->ShowConnect(linkid + 1, lanlink.numslaves - linkid);
-
-	numbytes = 0;
-	inbuffer[0] = 1;
-	while(numbytes<inbuffer[0]) {
-		lanlink.tcpsocket.Receive(inbuffer+numbytes, inbuffer[0] - got, got);
-		numbytes += got;
-		fdset.Clear();
-		fdset.Add(lanlink.tcpsocket);
-		fdset.Wait(0.1);
-		cid->Ping();
-		if(lanlink.terminate) {
-			lanlink.tcpsocket.Close();
-			goto CloseInfoDisplay;
-		}
-	}
-
-	lanlink.connected = true;
-
-	cid->Connected();
-
-CloseInfoDisplay:
-	delete cid;
-	return;
-}
-
+//this function runs on slave to periodically check for available data from master
 void lclient::CheckConn(void){
 	size_t nr;
-	lanlink.tcpsocket.Receive(inbuffer, 1, nr);
+	lanlink.tcpsocket.Receive(inbuffer, 1, nr); //read 1 byte, whose content is number of bytes to read after that
 	numbytes = nr;
 	if(numbytes>0){
+		sf::Socket::Status status;
 		while(numbytes<inbuffer[0]) {
-			lanlink.tcpsocket.Receive(inbuffer+numbytes, inbuffer[0] - numbytes, nr);
+			status = lanlink.tcpsocket.Receive(inbuffer+numbytes, inbuffer[0] - numbytes, nr);
 			numbytes += nr;
+
+			if (status == sf::Socket::Disconnected)
+			{
+				CloseLink();
+				return;
+			}
 		}
 		if(inbuffer[1]==-32){
 			outbuffer[0] = 4;
 			lanlink.tcpsocket.Send(outbuffer, 4);
-			lanlink.connected = false;
 			systemScreenMessage(_("Server disconnected."));
+			CloseLink();
 			return;
 		}
 		numtransfers = 1;
@@ -1479,7 +1877,9 @@ void lclient::Recv(void){
 	// old code used socket # instead of mask again
 	fdset.Add(lanlink.tcpsocket);
 	// old code stripped off ms again
-	if (fdset.Wait((float)(linktimeout / 1000.)) == 0)
+	if (fdset.Wait((float)(linktimeout / 1000.)) == 0)  //afer a period of no data from master, set numtransfer to 0 to stop trying to receive data
+														//then periodically check for data from master by CheckConn
+														//when connection is slow, waiting for data slow down emulation a lot
 	{
 		numtransfers = 0;
 		return;
@@ -1487,19 +1887,35 @@ void lclient::Recv(void){
 	numbytes = 0;
 	inbuffer[0] = 1;
 	size_t nr;
+
+	//retrieve data from host after host has received data from all clients
+	//first loop read only 1 byte, store in inbuffer[0], which is the total number of bytes to receive
+	//subsequence loop read the remaining data
+
+	sf::Socket::Status status;
 	while(numbytes<inbuffer[0]) {
-		lanlink.tcpsocket.Receive(inbuffer+numbytes, inbuffer[0] - numbytes, nr);
+		status = lanlink.tcpsocket.Receive(inbuffer+numbytes, inbuffer[0] - numbytes, nr);
+		if (status == sf::Socket::Disconnected)
+		{
+			CloseLink();
+			return;
+		}
 		numbytes += nr;
+
 	}
+
+	//check inbuffer[1] for error code
 	if(inbuffer[1]==-32){
 		outbuffer[0] = 4;
 		lanlink.tcpsocket.Send(outbuffer, 4);
-		lanlink.connected = false;
 		systemScreenMessage(_("Server disconnected."));
+		CloseLink();
 		return;
 	}
+
+	//adjust speed
 	tspeed = inbuffer[1] & 3;
-	linkdata[0] = READ16LE(&u16inbuffer[1]);
+	linkdata[0] = READ16LE(&u16inbuffer[1]);  //u16inbuffer is mapped to inbuffer at the beginning
 	savedlinktime = (s32)READ32LE(&intinbuffer[1]);
 	for(i=1, numbytes=4;i<lanlink.numslaves+1;i++)
 		if(i!=linkid) {
@@ -1515,7 +1931,7 @@ void lclient::Send(){
 	outbuffer[0] = 4;
 	outbuffer[1] = linkid<<2;
 	WRITE16LE(&u16outbuffer[1], linkdata[linkid]);
-	lanlink.tcpsocket.Send(outbuffer, 4);
+	lanlink.tcpsocket.Send(outbuffer, 4);  //send data to host
 	return;
 }
 #endif
