@@ -21,6 +21,7 @@ extern gbRegister AF, BC, DE, HL, SP, PC;
 extern u16 IFF;
 int gbDis(char *, u16);
 
+
 bool gbLoadRom(const char *);
 bool gbUpdateSizes();
 void gbEmulate(int);
@@ -44,6 +45,8 @@ bool gbWriteBMPFile(const char *);
 bool gbReadGSASnapshot(const char *);
 
 extern int gbHardware;
+
+extern bool gbexecute;
 
 extern struct EmulatedSystem GBSystem;
 

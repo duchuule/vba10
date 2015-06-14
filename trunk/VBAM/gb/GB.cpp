@@ -21,6 +21,9 @@
 
 extern u8 *pix;
 extern bool speedup;
+
+
+
 bool gbUpdateSizes();
 bool inBios = false;
 
@@ -110,6 +113,8 @@ int clockTicks = 0;
 bool gbSystemMessage = false;
 int gbGBCColorType = 0;
 int gbHardware = 0;
+bool gbexecute = false;
+
 int gbRomType = 0;
 int gbRemainingClockTicks = 0;
 int gbOldClockTicks = 0;
@@ -1651,7 +1656,7 @@ u8 gbReadOpcode(register u16 address)
         return register_SCX;
       case 0x44:
       if (((gbHardware & 7) && ((gbLcdMode == 1) && (gbLcdTicks == 0x71))) ||
-          (!(register_LCDC && 0x80)))
+          (!(register_LCDC & 0x80)))
         return 0;
       else
         return register_LY;
@@ -1931,7 +1936,7 @@ u8 gbReadMemory(register u16 address)
       return register_SCX;
     case 0x44:
       if (((gbHardware & 7) && ((gbLcdMode == 1) && (gbLcdTicks == 0x71))) ||
-          (!(register_LCDC && 0x80)))
+          (!(register_LCDC & 0x80)))
         return (0);
       else
         return register_LY;
@@ -2244,10 +2249,10 @@ void gbReset()
 
   // clean LineBuffer
   if (gbLineBuffer != NULL)
-    memset(gbLineBuffer, 0, sizeof(gbLineBuffer));
+    memset(gbLineBuffer, 0, sizeof(*gbLineBuffer));
   // clean Pix
   if (pix != NULL)
-    memset(pix, 0, sizeof(pix));
+    memset(pix, 0, sizeof(*pix));
   // clean Vram
   if (gbVram != NULL)
     memset(gbVram, 0, 0x4000);
@@ -4512,9 +4517,10 @@ void gbEmulate(int ticksToStop)
 
   int opcode1 = 0;
   int opcode2 = 0;
-  bool execute = false;
+  gbexecute = false;
 
-  while(1) {
+  //while(1) 
+  {
 #ifndef FINAL_VERSION
     if(systemDebug) {
       if(!(IFF & 0x80)) {
@@ -4565,7 +4571,7 @@ void gbEmulate(int ticksToStop)
       // First we apply the clockTicks, then we execute the opcodes.
       opcode1 = 0;
       opcode2 = 0;
-      execute = true;
+      gbexecute = true;
 
       opcode2 = opcode1 = opcode = gbReadOpcode(PC.W++);
 
@@ -4595,7 +4601,7 @@ void gbEmulate(int ticksToStop)
       return;
 
     // For 'breakpoint' support (opcode 0xFC is considered as a breakpoint)
-    if ((clockTicks==0) && execute)
+    if ((clockTicks==0) && gbexecute)
     {
       PC.W = oldPCW;
       return;
@@ -5319,11 +5325,11 @@ void gbEmulate(int ticksToStop)
     {
       gbIntBreak = 0;
       if ((register_IE & register_IF & gbInterruptLaunched & 0x3) &&
-         ((IFF & 0x81) == 1) && (!gbInterruptWait) && (execute))
+         ((IFF & 0x81) == 1) && (!gbInterruptWait) && (gbexecute))
       {
         gbIntBreak = 2;
         PC.W = oldPCW;
-        execute = false;
+        gbexecute = false;
         gbOldClockTicks = 0;
       }
       if (gbOldClockTicks)
@@ -5335,7 +5341,7 @@ void gbEmulate(int ticksToStop)
     }
 
     // Executes the opcode(s), and apply the instruction's remaining clockTicks (if any).
-    if (execute)
+    if (gbexecute)
     {
       switch(opcode1) {
       case 0xCB:
@@ -5346,7 +5352,7 @@ void gbEmulate(int ticksToStop)
         break;
 #include "gbCodes.h"
       }
-      execute = false;
+      gbexecute = false;
 
       if (clockTicks)
       {

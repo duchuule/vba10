@@ -74,4 +74,5 @@ extern void gbDrawSprites(bool);
 
 extern u8 (*gbSerialFunction)(u8);
 
+
 #endif // GBGLOBALS_H

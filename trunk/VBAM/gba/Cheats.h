@@ -36,4 +36,5 @@ int cheatsCheckKeys(u32 keys, u32 extended);
 extern int cheatsNumber;
 extern CheatsData cheatsList[100];
 
+
 #endif // CHEATS_H

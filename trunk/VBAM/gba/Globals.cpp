@@ -20,7 +20,7 @@ u32 stop = 0x08000568;
 int saveType = 0;
 bool useBios = false;
 bool skipBios = false;
-int frameSkip = 0;
+int frameSkip = 1;
 bool speedup = false;
 bool synchronize = true;
 bool cpuDisableSfx = false;
@@ -39,6 +39,8 @@ bool skipSaveGameCheats = false;
 // -1: disabled
 // 0x0000 to 0x7FFF: set custom 15 bit color
 int customBackdropColor = -1;
+
+//DEVICEMEMORY deviceMemory[2];
 
 u8 *bios = 0;
 u8 *rom = 0;
