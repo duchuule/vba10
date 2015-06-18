@@ -2542,7 +2542,8 @@ namespace VBA10
 			try
 			{
 				t.get();
-			}catch(Platform::Exception ^e)
+			}
+			catch(Platform::Exception ^e)
 			{ 
 #if _DEBUG
 				String ^msg = e->Message;

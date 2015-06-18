@@ -181,22 +181,20 @@ DirectXPage::DirectXPage():
 			settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
 
 			//copy DEMO ROm then open menu
-			CopyDemoROM();
+			return CopyDemoROM();
 		}
-	}).then([this]
-	{
+		else
+			return create_task([] {});
+	//}).then([this]
+	//{
 		//test insert ROM
 		//ROMDBEntry^ entry = ref new ROMDBEntry(0, "Test game", "testgame.gba", "D:\\ROM");
 		//return App::ROMDB->Add(entry);
 
 		//test obtain ROM
-		auto entry = App::ROMDB->AllROMDBEntries->GetAt(0);
+		//auto entry = App::ROMDB->AllROMDBEntries->GetAt(1);
 
-#if _DEBUG
-		Platform::String ^message = entry->DisplayName;
-		wstring wstr(message->Begin(), message->End());
-		OutputDebugStringW(wstr.c_str());
-#endif
+
 
 	}).then([this]
 	{
@@ -217,20 +215,22 @@ task<void> DirectXPage::CopyDemoROM(void)
 
 	}).then([](StorageFile ^file)
 	{
+		//copy rom from installed dir to local folder
+		return file->CopyAsync(ApplicationData::Current->LocalFolder);
 
-		file->CopyAsync(ApplicationData::Current->LocalFolder);
+	}).then([](StorageFile ^file)
+	{
+		//add entry to database
+		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path);
+		return App::ROMDB->Add(entry);
 
-#if _DEBUG
-		wstring wstr((ApplicationData::Current->LocalFolder->Path->Data()));
-		OutputDebugStringW((wstr + L"\n").c_str());
-#endif
 	}).then([](task<void> t)
 	{
 		try
 		{
 			t.get();
-			// .get() didn't throw, so we succeeded.
-			OutputDebugStringW(L"File copied\n");
+			// .get() didn't throw, so we succeeded, 
+
 		}
 		catch (Platform::Exception ^ex)
 		{

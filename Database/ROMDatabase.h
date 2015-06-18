@@ -32,9 +32,9 @@ namespace VBA10
 		task<void> Initialize(void);
 		task<void> Add(ROMDBEntry^ entry);
 		task<Vector<ROMDBEntry^>^> RetrieveQuerry();
-		property WFC::IObservableVector<ROMDBEntry^>^ AllROMDBEntries
+		property PC::Vector<ROMDBEntry^>^ AllROMDBEntries
 		{
-			WFC::IObservableVector<ROMDBEntry^>^ get()
+			PC::Vector<ROMDBEntry^>^ get()
 			{
 				return _allROMDBEntries;
 			}
@@ -46,7 +46,7 @@ namespace VBA10
 		SQLiteWinRT::Database^ db;
 		SQLiteWinRT::Statement^ statement; //temporary pointer to store statement
 
-		WFC::IObservableVector<ROMDBEntry^>^ _allROMDBEntries;
+		PC::Vector<ROMDBEntry^>^ _allROMDBEntries;
 		
 	};
 

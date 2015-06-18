@@ -10,8 +10,8 @@ using namespace Platform::Collections;
 
 namespace VBA10
 {
-	ROMDBEntry::ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ folderpath)
-		:_locationType(locationtype), _displayName(displayname), _fileName(filename), _folderPath(folderpath)
+	ROMDBEntry::ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath)
+		:_locationType(locationtype), _displayName(displayname), _fileName(filename), _filePath(filepath)
 	{
 		_lastPlayed = DateTime{ 0 };
 		_autoSaveIndex = 0;
@@ -19,9 +19,9 @@ namespace VBA10
 		
 	}
 
-	ROMDBEntry::ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ folderpath,
+	ROMDBEntry::ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath,
 		DateTime lastplayed, int autosaveindex, Platform::String^ snapshoturi)
-		:_locationType(locationtype), _displayName(displayname), _fileName(filename), _folderPath(folderpath),
+		:_locationType(locationtype), _displayName(displayname), _fileName(filename), _filePath(filepath),
 		_lastPlayed(lastplayed), _autoSaveIndex(autosaveindex), _snapshotUri(snapshoturi)
 	{
 

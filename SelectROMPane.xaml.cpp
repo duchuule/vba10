@@ -10,6 +10,7 @@
 #include "EmulatorSettings.h";
 #include "EmulatorFileHandler.h"
 #include "SelectStatePane.xaml.h"
+#include "Database\ROMDBEntry.h"
 
 using namespace VBA10;
 
@@ -42,12 +43,21 @@ StorageFileModel::StorageFileModel(StorageFile ^file, StorageFolder ^folder)
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 SelectROMPane::SelectROMPane()
 {
+	initdone = false;
 
 	this->InitializeComponent();
-	this->InitializeStorageLists();
+	//this->InitializeStorageLists();
+
+	//bind list of ROM to display
+	AllROMEntries->Source = App::ROMDB->AllROMDBEntries;
+	romList->SelectedItem = nullptr;
+	
+	
 
 	//disable the command bar if no rom is loaded
 	topbar->IsEnabled = IsROMLoaded();
+
+	initdone = true;
 }
 
 void SelectROMPane::InitializeStorageLists(void)
@@ -317,10 +327,37 @@ void SelectROMPane::RefreshROMList(void)
 
 void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
-	StorageFileModel ^model =	safe_cast<StorageFileModel ^>(this->romList->SelectedValue);
+	//StorageFileModel ^model =	safe_cast<StorageFileModel ^>(this->romList->SelectedValue);
 
 
-	DirectXPage::Current->LoadROM(model->File, model->Folder);
+	//DirectXPage::Current->LoadROM(model->File, model->Folder);
+	if (initdone && this->romList->SelectedItem)
+	{
+		ROMDBEntry^ entry = safe_cast<ROMDBEntry^> (this->romList->SelectedValue);
+
+		if (entry->LocationType == 0) //local folder
+		{
+			StorageFolder^ folder = ApplicationData::Current->LocalFolder;
+
+			create_task([folder, entry]
+			{
+				return folder->GetFileAsync(entry->FileName);
+
+			}).then([folder](StorageFile^ file) 
+			{
+				return DirectXPage::Current->LoadROM(file, folder);
+			});
+			
+		}
+
+		//DirectXPage::Current->LoadROM(entry->File, model->Folder);
+
+#if _DEBUG
+		Platform::String ^message = entry->FileName;
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+	}
 }
 
 
