@@ -7,6 +7,7 @@
 
 #include "App.g.h"
 #include "DirectXPage.xaml.h"
+#include "Database\ROMDatabase.h"
 
 namespace VBA10
 {
@@ -19,9 +20,14 @@ namespace VBA10
 		App();
 		virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e) override;
 
+	internal:
+		static ROMDatabase^ ROMDB;
+
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
 		void OnResuming(Platform::Object ^sender, Platform::Object ^args);
 		DirectXPage^ m_directXPage;
+
+
 	};
 }

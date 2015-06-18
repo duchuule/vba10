@@ -8,6 +8,7 @@
 #include <ppltasks.h>
 #include "EmulatorFileHandler.h"
 #include "SelectROMPane.xaml.h"
+#include "Database\ROMDatabase.h"
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
@@ -15,10 +16,9 @@
 #include "SettingsPage.xaml.h"
 #include "HelpPage.xaml.h"
 #include "CheatPane.xaml.h"
+#include "ExportPage.xaml.h"
 
-using namespace std;
-using namespace VBA10;
-using namespace VBA10::Controls;
+
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -40,6 +40,10 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
+
+using namespace std;
+using namespace VBA10;
+using namespace VBA10::Controls;
 
 
 
@@ -140,6 +144,12 @@ DirectXPage::DirectXPage():
 
 	navlist->Append(
 		ref new NavMenuItem(
+			"Export",
+			Symbol::Upload,
+			TypeName(ExportPage::typeid)));
+
+	navlist->Append(
+		ref new NavMenuItem(
 			"Settings",
 			Symbol::Setting,
 			TypeName(SettingsPage::typeid)));
@@ -163,23 +173,38 @@ DirectXPage::DirectXPage():
 	//DL: modified to not do it autmatically
 	//m_main->StartRenderLoop();
 
-	
-	if (!settings->HasKey("FIRSTSTART"))
+	//open the database
+	App::ROMDB->Initialize().then([this, settings]
 	{
-		settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
-
-		//copy DEMO ROm then open menu
-		CopyDemoROM().then([this]
+		if (!settings->HasKey("FIRSTSTART"))
 		{
-			//open menu
-			RootSplitView->IsPaneOpen = true;
-		});
-	}
-	else
+			settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
+
+			//copy DEMO ROm then open menu
+			CopyDemoROM();
+		}
+	}).then([this]
 	{
-		//just open menu
+		//test insert ROM
+		//ROMDBEntry^ entry = ref new ROMDBEntry(0, "Test game", "testgame.gba", "D:\\ROM");
+		//return App::ROMDB->Add(entry);
+
+		//test obtain ROM
+		auto entry = App::ROMDB->AllROMDBEntries->GetAt(0);
+
+#if _DEBUG
+		Platform::String ^message = entry->DisplayName;
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+
+	}).then([this]
+	{
+		//open menu
 		RootSplitView->IsPaneOpen = true;
-	}
+	});
+	
+
 }
 
 task<void> DirectXPage::CopyDemoROM(void)

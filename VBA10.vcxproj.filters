@@ -56,6 +56,9 @@
     <Filter Include="Controls">
       <UniqueIdentifier>{5aa54788-306c-4329-9343-78e0af927d51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{e127113f-af0f-4a5b-ba6a-b82e7a446ca4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -259,11 +262,27 @@
     <ClCompile Include="NavMenuListView.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="NavMenuItem.cpp" />
     <ClCompile Include="PageHeader.xaml.cpp" />
     <ClCompile Include="SettingsPage.xaml.cpp" />
     <ClCompile Include="HelpPage.xaml.cpp" />
     <ClCompile Include="SelectStatePane.xaml.cpp" />
+    <ClCompile Include="CheatPane.xaml.cpp" />
+    <ClCompile Include="ExportPage.xaml.cpp" />
+    <ClCompile Include="NavMenuItem.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\ROMDatabase.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Statement.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Database.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\ROMDBEntry.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -491,11 +510,31 @@
     <ClInclude Include="NavMenuListView.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClInclude Include="NavMenuItem.h" />
     <ClInclude Include="PageHeader.xaml.h" />
     <ClInclude Include="SettingsPage.xaml.h" />
     <ClInclude Include="HelpPage.xaml.h" />
     <ClInclude Include="SelectStatePane.xaml.h" />
+    <ClInclude Include="CheatPane.xaml.h" />
+    <ClInclude Include="ExportPage.xaml.h" />
+    <ClInclude Include="NavMenuItem.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\ROMDatabase.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\ROMDBEntry.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Statement.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Database.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\NativeBuffer.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ppltasks_extra.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -523,6 +562,7 @@
     <Page Include="HelpPage.xaml" />
     <Page Include="SelectStatePane.xaml" />
     <Page Include="CheatPane.xaml" />
+    <Page Include="ExportPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
