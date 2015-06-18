@@ -39,6 +39,8 @@ CheatPane::CheatPane()
 	if (IsROMLoaded())
 	{
 		addButton->IsEnabled = true;
+		descLabel->Text = "You can enter Gameshark and CodeBreaker codes. Using cheat codes can make your game unstable.";
+
 		create_task([this]()
 		{
 			return LoadCheats();
@@ -68,7 +70,10 @@ CheatPane::CheatPane()
 		});
 	}
 	else
+	{
 		addButton->IsEnabled = false;
+		descLabel->Text = "You need to load a ROM first before you can enter cheats.";
+	}
 }
 
 

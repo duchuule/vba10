@@ -22,15 +22,21 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+
+ROMDatabase^ VBA10::App::ROMDB = nullptr;
+
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code
 /// executed, and as such is the logical equivalent of main() or WinMain().
 /// </summary>
+
 App::App()
 {
 	InitializeComponent();
 	Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 	Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
+
+	ROMDB = ref new ROMDatabase();
 }
 
 /// <summary>
@@ -56,6 +62,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	{
 		m_directXPage = ref new DirectXPage();
 	}
+
 
 
 	// Create a AppShell to act as the navigation context and navigate to the first page

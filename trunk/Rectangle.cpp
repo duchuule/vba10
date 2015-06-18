@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Rectangle.h"
 
 namespace Engine
