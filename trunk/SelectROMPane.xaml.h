@@ -71,6 +71,8 @@ namespace VBA10
 		SelectROMPane();
 
 	private:
+		bool initdone;
+
 		Platform::Collections::Vector<StorageFolderModel ^> ^storageFolderVector;
 		Platform::Collections::Vector<StorageFileModel ^> ^storageFileVector;
 

@@ -45,7 +45,7 @@ namespace VBA10
 				"LOCATIONTYPE           INT    NOT NULL,"\
 				"DISPLAYNAME           TEXT    NOT NULL,"\
 				"FILENAME            INT     NOT NULL,"\
-				"FOLDERPATH            INT     NOT NULL,"\
+				"FILEPATH            INT     NOT NULL,"\
 				"LASTPLAY         INT  NOT NULL,"\
 				"AUTOSAVEINDEX    INT  NOT NULL, "\
 				"SNAPSHOTURI      TEXT NOT NULL );");
@@ -84,11 +84,15 @@ namespace VBA10
 	{
 		return create_task([this, entry]
 		{
-			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FOLDERPATH, LASTPLAY, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+			//first add this rom to the list 
+			_allROMDBEntries->Append(entry);
+
+			//prepare statement to add to rom table
+			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAY, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
 			cmd += entry->LocationType + ",";
 			cmd += "'" + entry->DisplayName + "',";
 			cmd += "'" + entry->FileName + "',";
-			cmd += "'" + entry->FolderPath + "',";
+			cmd += "'" + entry->FilePath + "',";
 			cmd += entry->LastPlay.UniversalTime + ",";
 			cmd += entry->AutoSaveIndex + ",";
 			cmd += "'" + entry->SnapshotUri + "')";
@@ -117,6 +121,7 @@ namespace VBA10
 		}).then([this, items](bool ret)
 		{
 			if (ret)
+			{
 				return create_iterative_task([this, items]
 				{
 					return create_task([this, items]
@@ -130,7 +135,9 @@ namespace VBA10
 						return statement->StepAsync();
 					});
 				});;
-
+			}
+			else
+				return create_task([] {});
 		}).then([items](task<void> t)
 		{
 			return items; //t.get();
