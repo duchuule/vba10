@@ -227,9 +227,10 @@ task<void> DirectXPage::CopyDemoROM(void)
 
 	}).then([](StorageFile ^file)
 	{
-		//add entry to database
+		//add entry to database and rom list
 		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path);
-		return App::ROMDB->Add(entry);
+		App::ROMDB->AllROMDBEntries->Append(entry);
+		return App::ROMDB->AddAsync(entry);
 
 	}).then([](task<void> t)
 	{

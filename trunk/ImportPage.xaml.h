@@ -17,5 +17,10 @@ namespace VBA10
 	{
 	public:
 		ImportPage();
+		void ImportFile(StorageFile^ file);
+
+	private:
+		void chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		
 	};
 }

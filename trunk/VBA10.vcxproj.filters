@@ -283,6 +283,7 @@
     <ClCompile Include="Database\ROMDBEntry.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="ImportPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -535,6 +536,7 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ppltasks_extra.h" />
+    <ClInclude Include="ImportPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -565,6 +567,7 @@
     <Page Include="ExportPage.xaml" />
     <Page Include="ImportPage.xaml" />
     <Page Include="StandardStyles.xaml" />
+    <Page Include="SelectFilePane.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
