@@ -42,6 +42,7 @@ namespace VBA10
 		{
 			Windows::UI::Xaml::Controls::Frame^ get();
 		}
+		void GoToPage(int pageindex);
 
 		void LoadROM(StorageFile ^file, StorageFolder ^folder);
 		void SaveState();

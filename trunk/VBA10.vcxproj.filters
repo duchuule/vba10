@@ -563,6 +563,8 @@
     <Page Include="SelectStatePane.xaml" />
     <Page Include="CheatPane.xaml" />
     <Page Include="ExportPage.xaml" />
+    <Page Include="ImportPage.xaml" />
+    <Page Include="StandardStyles.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
