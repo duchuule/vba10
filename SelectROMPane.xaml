@@ -260,7 +260,7 @@
                 <AppBarButton Label="Menu Item 2"/>
                 <AppBarButton Label="Menu Item 3"/>
             </CommandBar.SecondaryCommands>-->
-            <CommandBar.Content>
+            <!--<CommandBar.Content>
 
                 <ctl:PageHeader>
                     <ctl:PageHeader.HeaderContent>
@@ -268,7 +268,7 @@
                            Text=""/>
                     </ctl:PageHeader.HeaderContent>
                 </ctl:PageHeader>
-            </CommandBar.Content>
+            </CommandBar.Content>-->
         </CommandBar>
         
         <StackPanel Grid.Row="1">
@@ -312,6 +312,12 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <Button x:Name="addROMbtn" HorizontalAlignment="Center" 
+                    Content="Add ROM"
+                    Width="120" Height="40"
+                    Margin="0,12,0,0"
+                    Click="addROMbtn_Click"/>
         </StackPanel>
 
         <!--<Grid Grid.Row="1" >            

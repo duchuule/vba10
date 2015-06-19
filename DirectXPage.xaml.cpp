@@ -17,6 +17,7 @@
 #include "HelpPage.xaml.h"
 #include "CheatPane.xaml.h"
 #include "ExportPage.xaml.h"
+#include "ImportPage.xaml.h"
 
 
 
@@ -141,6 +142,12 @@ DirectXPage::DirectXPage():
 			"Cheats",
 			Symbol::Admin,
 			TypeName(CheatPane::typeid)));
+
+	navlist->Append(
+		ref new NavMenuItem(
+			"Import",
+			Symbol::Download,
+			TypeName(ImportPage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
@@ -468,6 +475,12 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
 	NavMenuList->InvokeItem(item);
 
+}
+
+void DirectXPage::GoToPage(int pageindex)
+{
+	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(pageindex));
+	NavMenuList->InvokeItem(item);
 }
 
 

@@ -241,6 +241,9 @@
     <ClInclude Include="EmulatorRenderer.h" />
     <ClInclude Include="EmulatorSettings.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="ImportPage.xaml.h">
+      <DependentUpon>ImportPage.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Input.h" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="NavMenuItem.h" />
@@ -391,6 +394,9 @@
     <ClCompile Include="GameTime.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ImportPage.xaml.cpp">
+      <DependentUpon>ImportPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="KeyboardInput.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -673,12 +679,16 @@
     <Page Include="DirectXPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ImportPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PageHeader.xaml" />
     <Page Include="SelectROMPane.xaml" />
     <Page Include="SelectStatePane.xaml" />
     <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="StandardStyles.xaml" />
     <Page Include="Styles.xaml" />
   </ItemGroup>
   <ItemGroup>

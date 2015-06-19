@@ -492,3 +492,9 @@ void SelectROMPane::selectStateBtn_Click(Platform::Object^ sender, Windows::UI::
 
 	statePopup->IsOpen = true;
 }
+
+
+void SelectROMPane::addROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	DirectXPage::Current->GoToPage(2);
+}
