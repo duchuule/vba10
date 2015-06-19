@@ -30,7 +30,7 @@ namespace VBA10
 		ROMDatabase();
 	internal:
 		task<void> Initialize(void);
-		task<void> Add(ROMDBEntry^ entry);
+		task<void> AddAsync(ROMDBEntry^ entry);
 		task<Vector<ROMDBEntry^>^> RetrieveQuerry();
 		property PC::Vector<ROMDBEntry^>^ AllROMDBEntries
 		{

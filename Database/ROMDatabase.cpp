@@ -8,6 +8,7 @@ using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage;
+using namespace Windows::UI::Xaml;
 
 using namespace Concurrency;
 using namespace Concurrency::extras;
@@ -80,12 +81,12 @@ namespace VBA10
 	}
 
 
-	task<void> ROMDatabase::Add(ROMDBEntry^ entry)
+	task<void> ROMDatabase::AddAsync(ROMDBEntry^ entry)
 	{
 		return create_task([this, entry]
 		{
-			//first add this rom to the list 
-			_allROMDBEntries->Append(entry);
+			
+			
 
 			//prepare statement to add to rom table
 			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAY, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
