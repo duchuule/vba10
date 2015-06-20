@@ -11,6 +11,8 @@
 #include "EmulatorFileHandler.h"
 #include "SelectStatePane.xaml.h"
 #include "Database\ROMDBEntry.h"
+#include "Converter.h"
+
 
 using namespace VBA10;
 

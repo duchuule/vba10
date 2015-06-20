@@ -198,6 +198,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.scale-100.png" />
+    <Image Include="Assets\no_snapshot.png" />
     <Image Include="Assets\pad_buttons.dds" />
     <Image Include="Assets\pad_cross.dds" />
     <Image Include="Assets\pad_l_button.dds" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Database\ROMDatabase.h" />
     <ClInclude Include="Database\ROMDBEntry.h" />
     <ClInclude Include="Database\Statement.h" />
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="ExportPage.xaml.h">
       <DependentUpon>ExportPage.xaml</DependentUpon>
     </ClInclude>
@@ -245,6 +247,7 @@
       <DependentUpon>ImportPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Converter.h" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="NavMenuItem.h" />
     <ClInclude Include="NavMenuListView.h" />
@@ -401,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="ImportPage.xaml.cpp">
       <DependentUpon>ImportPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Converter.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="KeyboardInput.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

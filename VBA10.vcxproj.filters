@@ -284,6 +284,8 @@
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ImportPage.xaml.cpp" />
+    <ClCompile Include="SelectFilePane.xaml.cpp" />
+    <ClCompile Include="Converter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -537,6 +539,9 @@
     </ClInclude>
     <ClInclude Include="ppltasks_extra.h" />
     <ClInclude Include="ImportPage.xaml.h" />
+    <ClInclude Include="SelectFilePane.xaml.h" />
+    <ClInclude Include="Definitions.h" />
+    <ClInclude Include="Converter.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -597,6 +602,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\ThumbStickCenter.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\no_snapshot.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
