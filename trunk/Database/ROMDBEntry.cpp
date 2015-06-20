@@ -1,7 +1,7 @@
 #include "Database\ROMDBEntry.h"
+#include "Definitions.h";
 
 
-#define DEFAULT_SNAPSHOT  "Assets/no_snapshot.png";
 
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;

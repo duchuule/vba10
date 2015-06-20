@@ -6,6 +6,7 @@
 #pragma once
 
 #include "SelectROMPane.g.h"
+#include "Converter.h"
 
 namespace VBA10
 {

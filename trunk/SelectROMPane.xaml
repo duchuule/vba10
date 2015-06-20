@@ -278,6 +278,7 @@
             <StackPanel >
                 <StackPanel.Resources>
                     <CollectionViewSource x:Name="AllROMEntries"/>
+                    <local:IsoImageConverter x:Key="SnapshotConverter" />
                 </StackPanel.Resources>
 
                 <ListBox Name="romList"
@@ -286,10 +287,60 @@
                     >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Left">
+                            <Grid Height="48">
+
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="72"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" 
+                                              VerticalAlignment="Stretch" 
+                                              HorizontalAlignment="Stretch"
+                                              >
+                                    <Image Source="{Binding SnapshotUri, Mode=OneWay, Converter={StaticResource SnapshotConverter}}"
+                                           Stretch="UniformToFill"  
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    />
+                                </Grid>
+                                
+                                <StackPanel Orientation="Vertical"
+                                                    VerticalAlignment="Center"
+                                                    Grid.Column="1" 
+                                            Margin="4,0,0,0">
+                                    <TextBlock 
+                                                   Text="{Binding DisplayName}" 
+                                                   TextWrapping="NoWrap" 
+                                                   FontSize="18" />
+                                    <!--<StackPanel Orientation="Horizontal"
+                                                        >
+                                        <TextBlock 
+                                                       Text="Last played:" 
+                                                       FontSize="14" 
+                                                          />
+                                        --><!--<TextBlock Margin="14,0,0,0"  
+                                                       Text="{Binding LastPlayed}" 
+                                                       FontSize="14"
+                                                           />--><!--
+                                        
+                                    </StackPanel>-->
+                                    <TextBlock 
+                                                       Text="{Binding FilePath}" 
+                                                       FontSize="14"
+                                                           />
+                                </StackPanel>
+
+
+
+
+
+                            </Grid>
+                            <!--<StackPanel HorizontalAlignment="Left">
                                 <TextBlock Text="{Binding DisplayName}" FontSize="24"/>
                                 <TextBlock  Text="{Binding FilePath}"  FontSize="13" />
-                            </StackPanel>
+                            </StackPanel>-->
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
