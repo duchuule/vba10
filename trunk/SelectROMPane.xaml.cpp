@@ -335,7 +335,7 @@ void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::
 	{
 		ROMDBEntry^ entry = safe_cast<ROMDBEntry^> (this->romList->SelectedValue);
 
-		if (entry->LocationType == 0) //local folder
+		if (entry->LocationType == 0) //app's private storage
 		{
 			StorageFolder^ folder = ApplicationData::Current->LocalFolder;
 
@@ -348,6 +348,35 @@ void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::
 				return DirectXPage::Current->LoadROM(file, folder);
 			});
 			
+		}
+		else //local storage
+		{
+			//create token from file path
+			Platform::String ^ptoken = entry->FilePath;
+			wstring token(ptoken->Begin(), ptoken->End());
+
+			//get rid of the file name, keep only the folder path
+			size_t found = token.find_last_of(L"/\\");
+			token = token.substr(0, found);
+
+			replace(token.begin(), token.end(), ':', '_');
+			replace(token.begin(), token.end(), '/', '_');
+			replace(token.begin(), token.end(), '\\', '_');
+			ptoken = ref new Platform::String(token.c_str());
+
+			create_task([this, entry, ptoken]
+			{
+				return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
+			}).then([this, entry](StorageFolder^ folder)
+			{
+				tmpFolder = folder;
+				return folder->GetFileAsync(entry->FileName);
+
+			}).then([this]( StorageFile^ file)
+			{
+				return DirectXPage::Current->LoadROM(file, tmpFolder);
+			});
+
 		}
 
 		//DirectXPage::Current->LoadROM(entry->File, model->Folder);
