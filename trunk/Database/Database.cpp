@@ -7,16 +7,16 @@ using namespace concurrency;
 using namespace Windows::Storage;
 using namespace std;
 
-std::unique_ptr<char[]> PlatformStringToCharArray(Platform::String^ string)
-{
-  auto wideData = string->Data();
-  int bufferSize = string->Length() + 1;
-  std::unique_ptr<char[]> ansi(new char[bufferSize]);
-  if (0 == WideCharToMultiByte(CP_UTF8, 0, wideData, -1, ansi.get(), bufferSize, NULL, NULL))
-    throw ref new FailureException(L"Can't convert string to UTF8");
-
-  return ansi;
-}
+//std::unique_ptr<char[]> PlatformStringToCharArray(Platform::String^ string)
+//{
+//  auto wideData = string->Data();
+//  int bufferSize = string->Length() + 1;
+//  std::unique_ptr<char[]> ansi(new char[bufferSize]);
+//  if (0 == WideCharToMultiByte(CP_UTF8, 0, wideData, -1, ansi.get(), bufferSize, NULL, NULL))
+//    throw ref new FailureException(L"Can't convert string to UTF8");
+//
+//  return ansi;
+//}
 
 IAsyncAction^ Database::OpenAsync()
 {

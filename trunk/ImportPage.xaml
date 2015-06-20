@@ -39,7 +39,7 @@
                                   />
                 <TextBlock TextWrapping="Wrap" Text="Instruction: use this option to select a ROM already present on your phone or PC."                                
                                   />
-                <Button x:Name="chooseFolderbtn" Content="Select folder" 
+                <Button x:Name="chooseFolderbtn" Content="Select ROM folder" 
                         Click="chooseFolderbtn_Click"/>
                 
             </StackPanel>

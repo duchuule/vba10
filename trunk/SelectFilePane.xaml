@@ -9,25 +9,40 @@
     d:DesignHeight="300"
     d:DesignWidth="346">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Border BorderThickness="2,2,2,2" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}">
-            <Border.Resources>
-                <CollectionViewSource x:Name="FileListvs"/>
-            </Border.Resources>
-            <ListBox Name="fileList" 
-                     Background="Transparent" 
-                     SelectionChanged="fileList_SelectionChanged"
-                     ItemsSource="{Binding Source={StaticResource FileListvs}}"
-                      >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock Text="{Binding Name}" 
-                                       FontSize="20"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          BorderThickness="2,2,2,2" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Grid.Resources>
+            <CollectionViewSource x:Name="FileListvs"/>
+        </Grid.Resources>
+
+        <StackPanel Background="{ThemeResource ListBoxBorderThemeBrush}"
+                    VerticalAlignment="Stretch">
+            <TextBlock Text="Select file to import" FontSize="24" 
+                       Margin="8,4,0,4"
+                       />
+        </StackPanel>
+
+        <ListBox Name="fileList" 
+            Background="Transparent" 
+            SelectionChanged="fileList_SelectionChanged"
+            ItemsSource="{Binding Source={StaticResource FileListvs}}"
+                    Grid.Row="1"
+            >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Name}" 
+                            FontSize="20"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+            
+
     </Grid>
 </UserControl>
