@@ -18,10 +18,25 @@ using namespace Microsoft::WRL;
 
 std::unique_ptr<char []> SQLiteWinRT::PlatformStringToCharArray(Platform::String^ string)
 {
+	//copy from msdn, need this to get correct buffer size
+	https://social.msdn.microsoft.com/forums/windowsapps/en-US/ce2ecbe8-f009-41c0-bbf4-e6f20eca9eb5/winrt-to-win32-string-converstions
+	auto requiredBufferSize = WideCharToMultiByte(
+		CP_UTF8,
+		WC_ERR_INVALID_CHARS,
+		string->Data(),
+		static_cast<int>(string->Length()),
+		nullptr,
+		0,
+		nullptr,
+		nullptr
+		);
+
+	requiredBufferSize++;
+
 	auto wideData = string->Data();
-	int bufferSize = string->Length() + 1;
-	std::unique_ptr<char []> ansi(new char[bufferSize]);
-	if (0 == WideCharToMultiByte(CP_UTF8, 0, wideData, -1, ansi.get(), bufferSize, NULL, NULL))
+
+	std::unique_ptr<char []> ansi(new char[requiredBufferSize]);
+	if (0 == WideCharToMultiByte(CP_UTF8, 0, wideData, -1, ansi.get(), requiredBufferSize, NULL, NULL))
 		throw ref new FailureException(L"Can't convert string to UTF8");
 
 	return ansi;
