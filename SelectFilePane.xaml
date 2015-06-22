@@ -20,6 +20,7 @@
             <CollectionViewSource x:Name="FileListvs"/>
         </Grid.Resources>
 
+
         <StackPanel Background="{ThemeResource ListBoxBorderThemeBrush}"
                     VerticalAlignment="Stretch">
             <TextBlock Text="Select file to import" FontSize="24" 

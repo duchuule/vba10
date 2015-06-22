@@ -30,6 +30,7 @@ namespace VBA10
 
 		GameTime ^GetGameTime(void);
 
+		void GetBackbufferData(uint8 **backbufferPtr, size_t *pitch, int *imageWidth, int *imageHeight);
 	private:
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
