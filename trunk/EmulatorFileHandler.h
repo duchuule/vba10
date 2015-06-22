@@ -17,6 +17,8 @@ namespace VBA10
 	extern StorageFolder ^ROMFolder;
 	extern int SavestateSlot;
 
+	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight);
+
 	task<void> ParseVBAIniAsync();
 	bool IsROMLoaded(void);
 	task<void> SaveStateAsync(void);

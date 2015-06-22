@@ -35,12 +35,14 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace concurrency;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::Graphics::Imaging;
 
 using namespace std;
 using namespace VBA10;
@@ -222,13 +224,23 @@ task<void> DirectXPage::CopyDemoROM(void)
 
 	}).then([](StorageFile ^file)
 	{
+		//this file->DisplayName has extension
+
 		//copy rom from installed dir to local folder
 		return file->CopyAsync(ApplicationData::Current->LocalFolder);
 
 	}).then([](StorageFile ^file)
 	{
 		//add entry to database and rom list
-		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path);
+		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path); //this file->DisplayName has no extension
+
+#if _DEBUG
+		Platform::String ^message = file->DisplayName;
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+
+
 		App::ROMDB->AllROMDBEntries->Append(entry);
 		return App::ROMDB->AddAsync(entry);
 
@@ -263,6 +275,8 @@ void DirectXPage::SaveInternalState(IPropertySet^ state)
 {
 	critical_section::scoped_lock lock(m_main->GetCriticalSection());
 	m_deviceResources->Trim();
+
+	create_task(TakeSnapshot());
 
 	// Stop rendering when the app is suspended.
 	//m_main->StopRenderLoop();
@@ -472,6 +486,9 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	//change width to 100%, NAN means auto
 	AppFrame->Width = NAN;
 
+	//create screenshot
+	TakeSnapshot();
+
 	//navigate to the first item
 	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
 	NavMenuList->InvokeItem(item);
@@ -542,4 +559,45 @@ void DirectXPage::Reset()
 void DirectXPage::SelectSaveState(int slot)
 {
 	SelectSavestateSlot(slot);
+}
+
+task<void> DirectXPage::TakeSnapshot()
+{
+	if (IsROMLoaded())
+	{
+		//get the pixel information from buffer
+		unsigned char *backbuffer;
+		size_t pitch;
+		int width, height;
+		this->m_main->renderer->GetBackbufferData(&backbuffer, &pitch, &width, &height);
+		Platform::Array<unsigned char> ^pixels = GetSnapshotBuffer(backbuffer, pitch, width, height);
+
+
+		return create_task(ROMFolder->CreateFileAsync(ROMFile->DisplayName + ".jpg", CreationCollisionOption::OpenIfExists)
+			).then([width, height, pixels](StorageFile ^file)
+		{
+			return file->OpenAsync(FileAccessMode::ReadWrite);
+		}).then([width, height, pixels](IRandomAccessStream^ stream)
+		{
+			return BitmapEncoder::CreateAsync(BitmapEncoder::JpegEncoderId, stream);
+		}).then([width, height, pixels](BitmapEncoder^ encoder)
+		{
+			encoder->SetPixelData(BitmapPixelFormat::Rgba8, BitmapAlphaMode::Ignore, width, height, 72.0f, 72.0f, pixels);
+			return encoder->FlushAsync();
+		}).then([](task<void> t)
+		{
+			try
+			{
+				t.get();
+			}
+			catch (COMException ^ex)
+			{
+			}
+		});
+	}
+	else
+	{
+		return create_task([] {});
+	}
+
 }

@@ -23,13 +23,13 @@ Object^ IsoImageConverter::Convert(Object^ value, TypeName targetType, Object^ p
 
 		if (!path->IsEmpty())
 		{
-			/*using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-			{
-				using (IsolatedStorageFileStream fs = isoStore.OpenFile(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-				{
-					bitmap.SetSource(fs);
-				}
-			}*/
+			//using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+			//{
+			//	using (IsolatedStorageFileStream fs = isoStore.OpenFile(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+			//	{
+			//		bitmap.SetSource(fs);
+			//	}
+			//}
 		}
 		return bitmap;
 	}

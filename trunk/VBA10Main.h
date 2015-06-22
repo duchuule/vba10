@@ -16,6 +16,11 @@ namespace VBA10
 		~VBA10Main();
 		void CreateWindowSizeDependentResources();
 
+		// TODO: Replace with your own content renderers.
+
+		std::unique_ptr<EmulatorRenderer> renderer;
+		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+
 		//void StartRenderLoop();
 		//void StopRenderLoop();
 		Concurrency::critical_section& GetCriticalSection() { return m_criticalSection; }
@@ -31,6 +36,7 @@ namespace VBA10
 		void Update();
 		bool Render();
 		void Present();
+
 	private:
 
 		
@@ -38,10 +44,7 @@ namespace VBA10
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		// TODO: Replace with your own content renderers.
 		
-		std::unique_ptr<EmulatorRenderer> renderer;
-		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
 		Windows::Foundation::IAsyncAction^ m_renderLoopWorker;
 		Concurrency::critical_section m_criticalSection;

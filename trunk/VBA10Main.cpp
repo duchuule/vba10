@@ -1,4 +1,6 @@
-﻿#include "pch.h"
+﻿
+
+#include "pch.h"
 #include "VBA10Main.h"
 #include "Common\DirectXHelper.h"
 #include "EmulatorSettings.h"
@@ -159,3 +161,4 @@ void VBA10Main::OnDeviceRestored()
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }
+

@@ -49,6 +49,7 @@ namespace VBA10
 		void LoadState();
 		void Reset();
 		void SelectSaveState(int slot);
+		
 
 	//from AppShell
 	internal:
@@ -80,6 +81,7 @@ namespace VBA10
 
 		//function
 		task<void> CopyDemoROM(void);
+		task<void> TakeSnapshot();
 
 		// XAML low-level rendering event handler.
 		void OnRendering(Platform::Object^ sender, Platform::Object^ args);

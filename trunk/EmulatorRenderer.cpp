@@ -611,6 +611,22 @@ namespace VBA10
 		return map.pData;
 	}
 
+	void EmulatorRenderer::GetBackbufferData(uint8 **backbufferPtr, size_t *pitch, int *imageWidth, int *imageHeight)
+	{
+		*backbufferPtr = this->backbufferPtr + this->pitch;
+		*pitch = this->pitch;
+		if (gbaROMLoaded)
+		{
+			*imageWidth = 240;
+			*imageHeight = 160;
+		}
+		else
+		{
+			*imageWidth = 160;
+			*imageHeight = 144;
+		}
+	}
+
 
 
 }

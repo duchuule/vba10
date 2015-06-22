@@ -114,6 +114,40 @@ namespace VBA10
 		return true;
 	}
 
+	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight)
+	{
+		Platform::Array<unsigned char> ^buffer = ref new Platform::Array<unsigned char>(imageWidth * imageHeight * 4);
+
+		/*Microsoft::WRL::ComPtr<IBufferByteAccess> byteAccess;
+		reinterpret_cast<IUnknown*>(buffer)->QueryInterface(IID_PPV_ARGS(&byteAccess));
+		byte *buf;
+		byteAccess->Buffer(&buf);
+		uint16 *targetBuffer = (uint16 *) buf;*/
+		int dstPitch = imageWidth * 4;
+		for (int i = 0; i < imageHeight; i++)
+		{
+			for (int j = 0; j < imageWidth * 4; j += 4)
+			{
+				// red
+				buffer[dstPitch * i + j] = *(backbuffer + pitch * i + j + 2);
+
+				// green
+				buffer[dstPitch * i + j + 1] = *(backbuffer + pitch * i + j + 1);
+
+				// blue
+				buffer[dstPitch * i + j + 2] = *(backbuffer + pitch * i + j + 0);
+
+				// alpha
+				buffer[dstPitch * i + j + 3] = 0xff;
+
+
+				//*(targetBuffer + imageWidth * i + j) = *(backbuffer + (pitch / 2) * i + j) ;
+			}
+		}
+
+		return buffer;
+	}
+
 	task<void> ParseVBAIniAsync()
 	{
 		//if(iniParsed)
@@ -1352,7 +1386,7 @@ namespace VBA10
 
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
 		emulator->Pause();
-		//gbexecute = false; //TODO: need to uncomment when we update the VBA-M engine
+		gbexecute = false; //TODO: need to uncomment when we update the VBA-M engine
 
 		EmulatorGame::emulator.emuReset();
 		emulator->Unpause();
@@ -2708,7 +2742,7 @@ namespace VBA10
 		{
 			IOutputStream ^outputStream = stream->GetOutputStreamAt(0L);;
 			DataWriter ^writer = ref new DataWriter(outputStream);
-
+			
 			Platform::Array<unsigned char> ^array = ref new Array<unsigned char>(length);
 			memcpy(array->Data, bytes, length);
 
@@ -2778,4 +2812,6 @@ namespace VBA10
 			return data;
 		});
 	}
+
+
 }
