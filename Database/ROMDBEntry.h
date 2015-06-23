@@ -147,13 +147,13 @@ namespace VBA10
 		}
 
 		//this is just to hold the snapshot image while the app is running
-		property BitmapImage^ Snapshot
+		property BitmapSource^ Snapshot
 		{
-			BitmapImage^ get()
+			BitmapSource^ get()
 			{
 				return _snapshot;
 			}
-			void set(BitmapImage^ value)
+			void set(BitmapSource^ value)
 			{
 				_snapshot = value;
 			}
@@ -168,7 +168,7 @@ namespace VBA10
 		Windows::Foundation::DateTime _lastPlayed;
 		int _autoSaveIndex;
 		Platform::String^ _snapshotUri;
-		BitmapImage^ _snapshot;
+		BitmapSource^ _snapshot;
 		StorageFolder^ _folder;
 		StorageFile^ _file;
 

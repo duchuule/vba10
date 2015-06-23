@@ -4,6 +4,7 @@
 //
 
 #include "pch.h"
+#include <robuffer.h>
 #include "DirectXPage.xaml.h"
 #include <ppltasks.h>
 #include "EmulatorFileHandler.h"
@@ -11,6 +12,7 @@
 #include "Database\ROMDatabase.h"
 #include "Definitions.h"
 #include "stringhelper.h"
+
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
@@ -305,7 +307,7 @@ task<void> DirectXPage::SaveInternalState(IPropertySet^ state)
 	m_deviceResources->Trim();
 
 	if (IsROMLoaded())
-		return create_task(TakeSnapshot());
+		return create_task(SaveSnapshot());
 	else
 		return create_task([] {});
 	// Stop rendering when the app is suspended.
@@ -542,12 +544,9 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 		Platform::String^ psnapshotname = ref new Platform::String(snapshotpath.c_str());
 
 
-		// set rom to snapshot
-		entry->SnapshotUri = psnapshotname;
+		// new snapshot
+		entry->Snapshot = TakeSnapshot();
 
-
-		//create screenshot
-		//TakeSnapshot();
 	}
 	//enable app frame
 	AppFrame->IsEnabled = true;
@@ -632,7 +631,47 @@ void DirectXPage::SelectSaveState(int slot)
 	SelectSavestateSlot(slot);
 }
 
-task<void> DirectXPage::TakeSnapshot()
+
+BitmapSource^ DirectXPage::TakeSnapshot()
+{
+	//get the pixel information from buffer
+	unsigned char *backbuffer;
+	size_t pitch;
+	int width, height;
+	this->m_main->renderer->GetBackbufferData(&backbuffer, &pitch, &width, &height);
+	Platform::Array<unsigned char> ^pixels = GetSnapshotBuffer(backbuffer, pitch, width, height);
+
+	WriteableBitmap^ bitmap = ref new WriteableBitmap(width, height);
+
+	// Cast to Object^, then to its underlying IInspectable interface.
+	Object^ obj = bitmap->PixelBuffer;
+	ComPtr<IInspectable> insp(reinterpret_cast<IInspectable*>(obj));
+
+	// Query the IBufferByteAccess interface.
+	ComPtr<IBufferByteAccess> bufferByteAccess;
+	insp.As(&bufferByteAccess);
+
+	// Retrieve the buffer data.
+	byte* pPixels = nullptr;
+	bufferByteAccess->Buffer(&pPixels);
+
+	//not pixels store image in RGBA format while pPixels store image in BGRA format
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			pPixels[(x + y * width) * 4] = pixels[(x + y * width) * 4 + 2]; // B
+			pPixels[(x + y * width) * 4 + 1] = pixels[(x + y * width) * 4 + 1]; // G
+			pPixels[(x + y * width) * 4 + 2] = pixels[(x + y * width) * 4 ]; // R
+			pPixels[(x + y * width) * 4 + 3] = pixels[(x + y * width) * 4 + 3]; // A
+		}
+	}
+
+	return bitmap;
+
+}
+
+task<void> DirectXPage::SaveSnapshot()
 {
 
 	//get the pixel information from buffer
@@ -669,39 +708,7 @@ task<void> DirectXPage::TakeSnapshot()
 	{
 		encoder->SetPixelData(BitmapPixelFormat::Rgba8, BitmapAlphaMode::Ignore, width, height, 72.0f, 72.0f, pixels);
 		return encoder->FlushAsync();
-	}).then([this]
-	{
-		//====check to see if we need to change to uri in database
 
-		//first find the rom entry
-		ROMDBEntry^ entry = nullptr;
-		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
-		{
-			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
-			if (entry->FilePath == ROMFile->Path)
-			{
-				break;
-			}
-		}
-			
-		if (!entry || entry->SnapshotUri != DEFAULT_SNAPSHOT)
-			return create_task([] {});
-
-		//if at this point, we have to database
-			
-
-#if _DEBUG
-		Platform::String ^message = tmpfile->Path;
-		wstring wstr(message->Begin(), message->End());
-		OutputDebugStringW(wstr.c_str());
-#endif
-			
-
-		return create_task([] {});
-
-
-
-			
 	}).then([](task<void> t)
 	{
 		try
