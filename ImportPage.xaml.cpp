@@ -8,6 +8,7 @@
 #include "Database\ROMDBEntry.h"
 #include "Database\ROMDatabase.h"
 #include "SelectFilePane.xaml.h"
+#include "stringhelper.h"
 
 
 using namespace VBA10;
@@ -57,6 +58,9 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 	{
 		if (folder)
 		{
+			//store folder
+			tmpfolder = folder;
+
 			//remove special char in path so that we can use path as token
 			Platform::String ^ptoken = folder->Path;
 
@@ -91,9 +95,52 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 
 				pane->FileSelectedCallback = ref new FileSelectedDelegate([=](StorageFile ^file)
 				{
-					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, file->Path);
+					//calculate snapshot name
+					Platform::String ^file_path = file->Path;
+					wstring wfilepath(file_path->Begin(), file_path->End());
+
+					wstring folderpath;
+					wstring filename;
+					wstring filenamenoext;
+					wstring ext;
+					splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+					wstring snapshotname = filenamenoext + L".jpg";
+					Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+
+					//create rom entry
+					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, file->Path, 
+						DateTime{ 0 }, 0, psnapshotname);
+
+					entry->Folder = tmpfolder;
+
 					App::ROMDB->AllROMDBEntries->Append(entry);
-					create_task(App::ROMDB->AddAsync(entry)).then([](task<void> t)
+
+					create_task(App::ROMDB->AddAsync(entry)).then([entry] {
+						//copy the default snapshot file over
+						StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+						return installDir->GetFolderAsync("Assets/");
+
+					}).then([entry](StorageFolder^ assetFolder)
+					{
+						return assetFolder->GetFileAsync("no_snapshot.png");
+					}).then([entry](StorageFile ^file)
+					{
+						//copy snapshot file to would be location
+						return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
+
+					}).then([entry](StorageFile ^file)
+					{
+						//open file
+						return file->OpenAsync(FileAccessMode::Read);
+					}).then([entry](IRandomAccessStream^ stream)
+					{
+						//load bitmap image for snapshot
+						entry->Snapshot = ref new BitmapImage();
+						return entry->Snapshot->SetSourceAsync(stream);
+
+
+					}).then([](task<void> t)
 					{
 						try
 						{

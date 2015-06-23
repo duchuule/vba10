@@ -9,6 +9,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
+using namespace Windows::Storage::AccessCache;
 using namespace Windows::UI::Xaml;
 
 using namespace Concurrency;
@@ -162,21 +163,41 @@ namespace VBA10
 			
 			tasks.emplace_back(create_task([entry]
 			{
-				//if (entry->LocationType == 0) //app storage
-				//{
-					entry->Folder = ApplicationData::Current->LocalFolder;
+				if (entry->LocationType == 0) //app storage
+				{
+					
 
 					return create_task([entry]()->StorageFolder^
 					{
-						return entry->Folder;
+						return ApplicationData::Current->LocalFolder;
 					});
-				//}
-				//else // external storage
-				//{
+				}
+				else // external storage
+				{
+					//find the folder in futureaccesslist
+					//create token from file path
+					Platform::String ^ptoken = entry->FilePath;
+					wstring token(ptoken->Begin(), ptoken->End());
 
-				//}
+					//get rid of the file name, keep only the folder path
+					size_t found = token.find_last_of(L"/\\");
+					token = token.substr(0, found);
+
+					replace(token.begin(), token.end(), ':', '_');
+					replace(token.begin(), token.end(), '/', '_');
+					replace(token.begin(), token.end(), '\\', '_');
+					ptoken = ref new Platform::String(token.c_str());
+
+					return create_task([entry, ptoken]
+					{
+						return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
+					});
+				}
 			}).then([entry](StorageFolder^ folder)
 			{
+
+				entry->Folder = folder;
+
 				//get the snapshot file
 				return folder->GetFileAsync(entry->SnapshotUri);
 

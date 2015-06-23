@@ -240,7 +240,7 @@ task<void> DirectXPage::CopyDemoROM(void)
 	{
 		//add entry to database and rom list
 		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path, 
-			DateTime{ 0 }, 0, "Bunny Advance (Demo).png"); //snapshot just need the file name
+			DateTime{ 0 }, 0, "Bunny Advance (Demo).jpg"); //snapshot just need the file name
 
 #if _DEBUG
 		Platform::String ^message = file->DisplayName;
@@ -259,7 +259,7 @@ task<void> DirectXPage::CopyDemoROM(void)
 	}).then([this](StorageFile ^file)
 	{
 		//copy snapshot file to would be rom location
-		return file->CopyAsync(ApplicationData::Current->LocalFolder, "Bunny Advance (Demo).png");
+		return file->CopyAsync(ApplicationData::Current->LocalFolder, "Bunny Advance (Demo).jpg");
 
 	}).then([this](StorageFile ^file)
 	{
