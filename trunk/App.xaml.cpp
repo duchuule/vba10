@@ -96,9 +96,13 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
 {
 	(void) sender;	// Unused parameter
-	(void) e;	// Unused parameter
+	
+	auto deferral = e->SuspendingOperation->GetDeferral();
 
-	m_directXPage->SaveInternalState(ApplicationData::Current->LocalSettings->Values);
+	create_task(m_directXPage->SaveInternalState(ApplicationData::Current->LocalSettings->Values)).then([deferral]
+	{
+		deferral->Complete();
+	});
 }
 
 /// <summary>

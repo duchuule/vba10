@@ -14,4 +14,7 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
 
 void StrToUpper(string &input);
 
+void splitFilePath(wstring &filepath, wstring &folderpath, wstring &filename, wstring &filenamenoext, wstring &ext);
+
+
 #endif

@@ -34,7 +34,7 @@ namespace VBA10
 		DirectXPage();
 		virtual ~DirectXPage();
 
-		void SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
+		
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 
 		//from AppShell
@@ -73,15 +73,18 @@ namespace VBA10
 			}
 		}
 
+		task<void> SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
+		task<void> TakeSnapshot();
 
 	private:
 		//variables
 		bool loadingDialogOpen;
-
+		StorageFile^ tmpfile;
+		StorageFolder^ tmpfolder;
 
 		//function
 		task<void> CopyDemoROM(void);
-		task<void> TakeSnapshot();
+		
 
 		// XAML low-level rendering event handler.
 		void OnRendering(Platform::Object^ sender, Platform::Object^ args);

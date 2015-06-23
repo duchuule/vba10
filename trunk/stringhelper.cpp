@@ -48,3 +48,15 @@ void StrToUpper(string &input)
 		input.replace(i, 1, 1, toupper(input.at(i)));
 	}
 }
+
+void splitFilePath(wstring &filepath, wstring &folderpath, wstring &filename, wstring &filenamenoext, wstring &ext)
+{
+	size_t index = filepath.find_last_of(L"/\\");
+	folderpath = filepath.substr(0, index);
+	filename = filepath.substr(index + 1);
+
+	index = filename.find_last_of('.');
+	filenamenoext = filename.substr(0, index);
+	ext = filename.substr(index + 1);
+
+}

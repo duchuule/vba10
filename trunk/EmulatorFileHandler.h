@@ -55,4 +55,5 @@ namespace VBA10
 
 	void SelectSavestateSlot(int slot);
 	int GetSavestateSlot(void);
+
 }
