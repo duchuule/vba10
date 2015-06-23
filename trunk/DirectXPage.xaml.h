@@ -21,6 +21,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Xaml::Media::Imaging;
 
 
 namespace VBA10
@@ -74,8 +75,8 @@ namespace VBA10
 		}
 
 		task<void> SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
-		task<void> TakeSnapshot();
-
+		BitmapSource^ TakeSnapshot();
+		task<void> SaveSnapshot();
 	private:
 		//variables
 		bool loadingDialogOpen;

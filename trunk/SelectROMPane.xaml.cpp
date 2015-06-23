@@ -337,49 +337,59 @@ void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::
 	{
 		ROMDBEntry^ entry = safe_cast<ROMDBEntry^> (this->romList->SelectedValue);
 
-		if (entry->LocationType == 0) //app's private storage
+		create_task([ entry]
 		{
-			StorageFolder^ folder = ApplicationData::Current->LocalFolder;
+			return entry->Folder->GetFileAsync(entry->FileName);
 
-			create_task([folder, entry]
-			{
-				return folder->GetFileAsync(entry->FileName);
-
-			}).then([folder](StorageFile^ file) 
-			{
-				return DirectXPage::Current->LoadROM(file, folder);
-			});
-			
-		}
-		else //local storage
+		}).then([entry](StorageFile^ file)
 		{
-			//create token from file path
-			Platform::String ^ptoken = entry->FilePath;
-			wstring token(ptoken->Begin(), ptoken->End());
+			return DirectXPage::Current->LoadROM(file, entry->Folder);
+		});
 
-			//get rid of the file name, keep only the folder path
-			size_t found = token.find_last_of(L"/\\");
-			token = token.substr(0, found);
 
-			replace(token.begin(), token.end(), ':', '_');
-			replace(token.begin(), token.end(), '/', '_');
-			replace(token.begin(), token.end(), '\\', '_');
-			ptoken = ref new Platform::String(token.c_str());
+		//if (entry->LocationType == 0) //app's private storage
+		//{
+		//	StorageFolder^ folder = ApplicationData::Current->LocalFolder;
 
-			create_task([this, entry, ptoken]
-			{
-				return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
-			}).then([this, entry](StorageFolder^ folder)
-			{
-				tmpFolder = folder;
-				return folder->GetFileAsync(entry->FileName);
+		//	create_task([folder, entry]
+		//	{
+		//		return folder->GetFileAsync(entry->FileName);
 
-			}).then([this]( StorageFile^ file)
-			{
-				return DirectXPage::Current->LoadROM(file, tmpFolder);
-			});
+		//	}).then([folder](StorageFile^ file) 
+		//	{
+		//		return DirectXPage::Current->LoadROM(file, folder);
+		//	});
+		//	
+		//}
+		//else //local storage
+		//{
+		//	//create token from file path
+		//	Platform::String ^ptoken = entry->FilePath;
+		//	wstring token(ptoken->Begin(), ptoken->End());
 
-		}
+		//	//get rid of the file name, keep only the folder path
+		//	size_t found = token.find_last_of(L"/\\");
+		//	token = token.substr(0, found);
+
+		//	replace(token.begin(), token.end(), ':', '_');
+		//	replace(token.begin(), token.end(), '/', '_');
+		//	replace(token.begin(), token.end(), '\\', '_');
+		//	ptoken = ref new Platform::String(token.c_str());
+
+		//	create_task([this, entry, ptoken]
+		//	{
+		//		return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
+		//	}).then([this, entry](StorageFolder^ folder)
+		//	{
+		//		tmpFolder = folder;
+		//		return folder->GetFileAsync(entry->FileName);
+
+		//	}).then([this]( StorageFile^ file)
+		//	{
+		//		return DirectXPage::Current->LoadROM(file, tmpFolder);
+		//	});
+
+		//}
 
 		//DirectXPage::Current->LoadROM(entry->File, model->Folder);
 
