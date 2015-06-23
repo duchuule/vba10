@@ -592,8 +592,26 @@ void DirectXPage::CloseMenu()
 void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 {
 	CloseMenu();
-	LoadROMAsync(file, folder);
+	create_task([this, file, folder] {
+		//move saving stuff from StopROMAsync over here + add save snapshot
+		if (IsROMLoaded())
+		{
+			m_main->emulator->Pause();
 
+			SaveSRAMAsync().wait();
+
+			int oldstate = SavestateSlot;
+			SavestateSlot = AUTOSAVESTATE_SLOT;
+			SaveStateAsync().wait();
+			SavestateSlot = oldstate;
+
+			SaveSnapshot().wait();
+			
+		}
+
+	}).then([file, folder]{
+		LoadROMAsync(file, folder);
+	});
 	//this is OK after we fixed the ParseVBAiniAsync so that it does not branch to another thread but it makes the UI unreponsive
 	//LoadROMAsync(file, folder).then([this]
 	//{

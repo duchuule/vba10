@@ -211,12 +211,7 @@ namespace VBA10
 		{
 			if(IsROMLoaded())
 			{
-				this->Pause();
-				SaveSRAMAsync().wait();
-				int oldstate = SavestateSlot;
-				SavestateSlot = AUTOSAVESTATE_SLOT;
-				SaveStateAsync().wait();
-				SavestateSlot = oldstate;
+
 				this->Pause();
 				//this->InitSound();
 				ROMFile = nullptr;
