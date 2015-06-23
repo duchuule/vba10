@@ -95,7 +95,7 @@
             <StackPanel >
                 <StackPanel.Resources>
                     <CollectionViewSource x:Name="AllROMEntries"/>
-                    <local:IsoImageConverter x:Key="SnapshotConverter" />
+                    <!--<local:IsoImageConverter x:Key="SnapshotConverter" />-->
                 </StackPanel.Resources>
 
                 <ListBox Name="romList"
@@ -119,7 +119,7 @@
                                               VerticalAlignment="Stretch" 
                                               HorizontalAlignment="Stretch"
                                               >
-                                    <Image Source="{Binding SnapshotUri, Mode=OneWay, Converter={StaticResource SnapshotConverter}}"
+                                    <Image Source="{Binding Snapshot}"
                                            Stretch="UniformToFill"  
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
@@ -127,13 +127,13 @@
                                 </Grid>
                                 
                                 <StackPanel Orientation="Vertical"
-                                                    VerticalAlignment="Center"
-                                                    Grid.Column="1" 
+                                            VerticalAlignment="Center"
+                                            Grid.Column="1" 
                                             Margin="4,0,0,0">
                                     <TextBlock 
-                                                   Text="{Binding DisplayName}" 
-                                                   TextWrapping="NoWrap" 
-                                                   FontSize="18" />
+                                        Text="{Binding DisplayName}" 
+                                        TextWrapping="NoWrap" 
+                                        FontSize="18" />
                                     <!--<StackPanel Orientation="Horizontal"
                                                         >
                                         <TextBlock 
@@ -147,20 +147,12 @@
                                         
                                     </StackPanel>-->
                                     <TextBlock 
-                                                       Text="{Binding FilePath}" 
-                                                       FontSize="13"
-                                                           />
+                                            Text="{Binding FilePath}" 
+                                            FontSize="13"
+                                                />
                                 </StackPanel>
-
-
-
-
-
                             </Grid>
-                            <!--<StackPanel HorizontalAlignment="Left">
-                                <TextBlock Text="{Binding DisplayName}" FontSize="24"/>
-                                <TextBlock  Text="{Binding FilePath}"  FontSize="13" />
-                            </StackPanel>-->
+          
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

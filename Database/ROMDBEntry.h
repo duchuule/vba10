@@ -7,7 +7,8 @@ using namespace Windows::Foundation::Collections;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace concurrency;
-
+using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::Storage;
 
 
 namespace VBA10
@@ -32,6 +33,7 @@ namespace VBA10
 		//		_id = value;
 		//	}
 		//}
+		
 
 		property int LocationType  //0: local folder, 1: external
 		{
@@ -119,6 +121,44 @@ namespace VBA10
 			}
 		}
 
+		//this is to hold temporary information about ROM folder when the app is running (for convenience)
+		property StorageFolder^ Folder
+		{
+			StorageFolder^ get()
+			{
+				return _folder;
+			}
+			void set(StorageFolder^ value)
+			{
+				_folder = value;
+			}
+		}
+
+		property StorageFile^ File
+		{
+			StorageFile^ get()
+			{
+				return _file;
+			}
+			void set(StorageFile^ value)
+			{
+				_file = value;
+			}
+		}
+
+		//this is just to hold the snapshot image while the app is running
+		property BitmapImage^ Snapshot
+		{
+			BitmapImage^ get()
+			{
+				return _snapshot;
+			}
+			void set(BitmapImage^ value)
+			{
+				_snapshot = value;
+			}
+		}
+
 	private:
 		int _id;
 		int _locationType;
@@ -128,6 +168,9 @@ namespace VBA10
 		Windows::Foundation::DateTime _lastPlayed;
 		int _autoSaveIndex;
 		Platform::String^ _snapshotUri;
+		BitmapImage^ _snapshot;
+		StorageFolder^ _folder;
+		StorageFile^ _file;
 
 
 	};

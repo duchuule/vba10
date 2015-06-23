@@ -16,6 +16,7 @@ namespace VBA10
 		_lastPlayed = DateTime{ 0 };
 		_autoSaveIndex = 0;
 		_snapshotUri = DEFAULT_SNAPSHOT;
+		_snapshot = nullptr;
 		
 	}
 
@@ -24,7 +25,7 @@ namespace VBA10
 		:_locationType(locationtype), _displayName(displayname), _fileName(filename), _filePath(filepath),
 		_lastPlayed(lastplayed), _autoSaveIndex(autosaveindex), _snapshotUri(snapshoturi)
 	{
-
+		_snapshot = nullptr;
 	}
 
 

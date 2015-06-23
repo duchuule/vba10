@@ -9,6 +9,8 @@
 #include "EmulatorFileHandler.h"
 #include "SelectROMPane.xaml.h"
 #include "Database\ROMDatabase.h"
+#include "Definitions.h"
+#include "stringhelper.h"
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
@@ -216,23 +218,29 @@ DirectXPage::DirectXPage():
 
 task<void> DirectXPage::CopyDemoROM(void)
 {
-	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
-	return create_task(installDir->GetFolderAsync("Assets/")).then([](task<StorageFolder ^> t)
-	{
-		StorageFolder ^assetsFolder = t.get();
-		return assetsFolder->GetFileAsync("Bunny Advance (Demo).gba");
 
-	}).then([](StorageFile ^file)
+	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+	return create_task(installDir->GetFolderAsync("Assets/"))
+		.then([this](StorageFolder^ folder)
+	{
+		
+		tmpfolder = folder;
+
+		//get the rom file
+		return tmpfolder->GetFileAsync("Bunny Advance (Demo).gba");
+
+	}).then([this](StorageFile ^file)
 	{
 		//this file->DisplayName has extension
 
 		//copy rom from installed dir to local folder
 		return file->CopyAsync(ApplicationData::Current->LocalFolder);
 
-	}).then([](StorageFile ^file)
+	}).then([this](StorageFile ^file)
 	{
 		//add entry to database and rom list
-		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path); //this file->DisplayName has no extension
+		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path, 
+			DateTime{ 0 }, 0, "Bunny Advance (Demo).png"); //snapshot just need the file name
 
 #if _DEBUG
 		Platform::String ^message = file->DisplayName;
@@ -243,6 +251,26 @@ task<void> DirectXPage::CopyDemoROM(void)
 
 		App::ROMDB->AllROMDBEntries->Append(entry);
 		return App::ROMDB->AddAsync(entry);
+	}).then([this]
+	{
+		//get the snapshot file
+		return tmpfolder->GetFileAsync("no_snapshot.png");
+
+	}).then([this](StorageFile ^file)
+	{
+		//copy snapshot file to would be rom location
+		return file->CopyAsync(ApplicationData::Current->LocalFolder, "Bunny Advance (Demo).png");
+
+	}).then([this](StorageFile ^file)
+	{
+		//open file
+		return file->OpenAsync(FileAccessMode::Read);
+	}).then([this](IRandomAccessStream^ stream)
+	{	
+		//load bitmap image for snapshot
+		auto entry = App::ROMDB->AllROMDBEntries->GetAt(0);
+		entry->Snapshot = ref new BitmapImage();
+		return entry->Snapshot->SetSourceAsync(stream);
 
 	}).then([](task<void> t)
 	{
@@ -271,13 +299,15 @@ DirectXPage::~DirectXPage()
 }
 
 // Saves the current state of the app for suspend and terminate events.
-void DirectXPage::SaveInternalState(IPropertySet^ state)
+task<void> DirectXPage::SaveInternalState(IPropertySet^ state)
 {
 	critical_section::scoped_lock lock(m_main->GetCriticalSection());
 	m_deviceResources->Trim();
 
-	create_task(TakeSnapshot());
-
+	if (IsROMLoaded())
+		return create_task(TakeSnapshot());
+	else
+		return create_task([] {});
 	// Stop rendering when the app is suspended.
 	//m_main->StopRenderLoop();
 
@@ -302,10 +332,12 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	{
 		//need code to pause game here
 		//m_main->StartRenderLoop();
+		m_main->emulator->Unpause();
 	}
 	else
 	{
 		//m_main->StopRenderLoop();
+		m_main->emulator->Pause();
 	}
 }
 
@@ -480,18 +512,57 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	//RootSplitView->DisplayMode = SplitViewDisplayMode::CompactOverlay;
 	//RootSplitView->IsPaneOpen = true;
 
+
+	
+
+	if (IsROMLoaded())
+	{
+		//first find the rom entry
+		ROMDBEntry^ entry = nullptr;
+		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
+		{
+			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
+			if (entry->FilePath == ROMFile->Path)
+			{
+				break;
+			}
+		}
+
+		//calculate snapshot name
+		Platform::String ^file_path = ROMFile->Path;
+		wstring wfilepath(file_path->Begin(), file_path->End());
+
+		wstring folderpath;
+		wstring filename;
+		wstring filenamenoext;
+		wstring ext;
+		splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+		wstring snapshotpath = folderpath + L"\\" + filenamenoext + L".jpg";
+		Platform::String^ psnapshotname = ref new Platform::String(snapshotpath.c_str());
+
+
+		// set rom to snapshot
+		entry->SnapshotUri = psnapshotname;
+
+
+		//create screenshot
+		//TakeSnapshot();
+	}
 	//enable app frame
 	AppFrame->IsEnabled = true;
 
 	//change width to 100%, NAN means auto
 	AppFrame->Width = NAN;
 
-	//create screenshot
-	TakeSnapshot();
+
 
 	//navigate to the first item
 	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
 	NavMenuList->InvokeItem(item);
+
+
+	
 
 }
 
@@ -563,41 +634,85 @@ void DirectXPage::SelectSaveState(int slot)
 
 task<void> DirectXPage::TakeSnapshot()
 {
-	if (IsROMLoaded())
-	{
-		//get the pixel information from buffer
-		unsigned char *backbuffer;
-		size_t pitch;
-		int width, height;
-		this->m_main->renderer->GetBackbufferData(&backbuffer, &pitch, &width, &height);
-		Platform::Array<unsigned char> ^pixels = GetSnapshotBuffer(backbuffer, pitch, width, height);
 
+	//get the pixel information from buffer
+	unsigned char *backbuffer;
+	size_t pitch;
+	int width, height;
+	this->m_main->renderer->GetBackbufferData(&backbuffer, &pitch, &width, &height);
+	Platform::Array<unsigned char> ^pixels = GetSnapshotBuffer(backbuffer, pitch, width, height);
 
-		return create_task(ROMFolder->CreateFileAsync(ROMFile->DisplayName + ".jpg", CreationCollisionOption::OpenIfExists)
-			).then([width, height, pixels](StorageFile ^file)
-		{
-			return file->OpenAsync(FileAccessMode::ReadWrite);
-		}).then([width, height, pixels](IRandomAccessStream^ stream)
-		{
-			return BitmapEncoder::CreateAsync(BitmapEncoder::JpegEncoderId, stream);
-		}).then([width, height, pixels](BitmapEncoder^ encoder)
-		{
-			encoder->SetPixelData(BitmapPixelFormat::Rgba8, BitmapAlphaMode::Ignore, width, height, 72.0f, 72.0f, pixels);
-			return encoder->FlushAsync();
-		}).then([](task<void> t)
-		{
-			try
-			{
-				t.get();
-			}
-			catch (COMException ^ex)
-			{
-			}
-		});
-	}
-	else
+	//calculate snapshot name
+	Platform::String ^file_path = ROMFile->Path;
+	wstring wfilepath(file_path->Begin(), file_path->End());
+
+	wstring folderpath;
+	wstring filename;
+	wstring filenamenoext;
+	wstring ext;
+	splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+	
+	wstring snapshotname = filenamenoext + L".jpg";
+	Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+
+	
+
+	return create_task(ROMFolder->CreateFileAsync(psnapshotname, CreationCollisionOption::OpenIfExists)
+		).then([this, width, height, pixels](StorageFile ^file)
 	{
+		tmpfile = file;
+		return file->OpenAsync(FileAccessMode::ReadWrite);
+	}).then([this, width, height, pixels](IRandomAccessStream^ stream)
+	{
+		return BitmapEncoder::CreateAsync(BitmapEncoder::JpegEncoderId, stream);
+	}).then([this, width, height, pixels](BitmapEncoder^ encoder)
+	{
+		encoder->SetPixelData(BitmapPixelFormat::Rgba8, BitmapAlphaMode::Ignore, width, height, 72.0f, 72.0f, pixels);
+		return encoder->FlushAsync();
+	}).then([this]
+	{
+		//====check to see if we need to change to uri in database
+
+		//first find the rom entry
+		ROMDBEntry^ entry = nullptr;
+		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
+		{
+			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
+			if (entry->FilePath == ROMFile->Path)
+			{
+				break;
+			}
+		}
+			
+		if (!entry || entry->SnapshotUri != DEFAULT_SNAPSHOT)
+			return create_task([] {});
+
+		//if at this point, we have to database
+			
+
+#if _DEBUG
+		Platform::String ^message = tmpfile->Path;
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+			
+
 		return create_task([] {});
-	}
+
+
+
+			
+	}).then([](task<void> t)
+	{
+		try
+		{
+			t.get();
+		}
+		catch (COMException ^ex)
+		{
+		}
+	});
+
+
 
 }

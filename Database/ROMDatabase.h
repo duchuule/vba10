@@ -32,6 +32,7 @@ namespace VBA10
 		task<void> Initialize(void);
 		task<void> AddAsync(ROMDBEntry^ entry);
 		task<Vector<ROMDBEntry^>^> RetrieveQuerry();
+		
 		property PC::Vector<ROMDBEntry^>^ AllROMDBEntries
 		{
 			PC::Vector<ROMDBEntry^>^ get()
@@ -47,6 +48,7 @@ namespace VBA10
 		SQLiteWinRT::Statement^ statement; //temporary pointer to store statement
 
 		PC::Vector<ROMDBEntry^>^ _allROMDBEntries;
+		task<void> LoadSnapshotImage();
 		
 	};
 

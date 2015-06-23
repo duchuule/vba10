@@ -1,8 +1,18 @@
+#include "pch.h"
 #include "Converter.h"
 #include "Definitions.h"
+#include "stringhelper.h"
+#include "EmulatorFileHandler.h"
+#include "DirectXPage.xaml.h"
 
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace VBA10;
+using namespace Concurrency;
+using namespace Platform;
+using namespace std;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Windows::Storage::AccessCache;
 
 IsoImageConverter::IsoImageConverter()
 {
@@ -30,6 +40,19 @@ Object^ IsoImageConverter::Convert(Object^ value, TypeName targetType, Object^ p
 			//		bitmap.SetSource(fs);
 			//	}
 			//}
+			//create_task([this, bitmap, path] 
+			//{
+			//	if (IsROMLoaded()) //create snapshot
+			//		return DirectXPage::Current->TakeSnapshot();
+			//	else
+			//		return create_task([] {});
+			//		
+			//}).then([this, bitmap, path] {
+				LoadImageFromPath(bitmap, path);
+			//});
+			
+
+			
 		}
 		return bitmap;
 	}
@@ -38,26 +61,41 @@ Object^ IsoImageConverter::Convert(Object^ value, TypeName targetType, Object^ p
 		return nullptr;
 	}
 
+}
 
-	//String^ _grade = "";
-	//String^ _valueString = "";
-	////try parsing the value to int
-	//int _value = ((Windows::Foundation::IPropertyValue^)value)->GetInt32();
-	//if (_value < 50)
-	//	_grade = "F";
-	//else if (_value < 60)
-	//	_grade = "D";
-	//else if (_value < 70)
-	//	_grade = "C";
-	//else if (_value < 80)
-	//	_grade = "B";
-	//else if (_value < 90)
-	//	_grade = "A";
-	//else if (_value < 100)
-	//	_grade = "A+";
-	//else if (_value == 100)
-	//	_grade = "SUPER STAR!";
-	//return _grade;
+task<void> IsoImageConverter::LoadImageFromPath(BitmapImage^ bitmap, String^ filepath)
+{
+
+		Platform::String ^file_path = filepath;
+
+		wstring wfilepath(file_path->Begin(), file_path->End());
+
+		wstring folderpath;
+		wstring filename;
+		wstring filenamenoext;
+		wstring ext;
+		splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+		replace(folderpath.begin(), folderpath.end(), ':', '_');
+		replace(folderpath.begin(), folderpath.end(), '/', '_');
+		replace(folderpath.begin(), folderpath.end(), '\\', '_');
+		Platform::String^ ptoken = ref new Platform::String(folderpath.c_str());
+		Platform::String^ pfilename = ref new Platform::String(filename.c_str());
+
+		return create_task(StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken))
+			.then([bitmap, pfilename](StorageFolder^ folder)
+		{
+			return folder->GetFileAsync(pfilename);
+		}).then([bitmap](StorageFile^ file)
+		{
+			return file->OpenAsync(FileAccessMode::Read);
+		}).then([bitmap](IRandomAccessStream^ stream)
+		{
+			return bitmap->SetSourceAsync(stream);
+		});
+
+
+
 }
 
 Object^ IsoImageConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)

@@ -8,6 +8,7 @@ using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml;
 
 using namespace Concurrency;
@@ -63,6 +64,8 @@ namespace VBA10
 		{
 			_allROMDBEntries = ret;
 
+			//load rom entry
+			return LoadSnapshotImage();
 		}).then([](task<void> t)
 		{
 			return t.get();
@@ -144,7 +147,71 @@ namespace VBA10
 			return items; //t.get();
 		});
 
-
-
 	}
+
+
+
+	task<void> ROMDatabase::LoadSnapshotImage()
+	{
+		vector<task<void>> tasks;
+
+		for (int i= 0; i < _allROMDBEntries->Size; i++)
+		{
+			auto entry = _allROMDBEntries->GetAt(i);
+
+			
+			tasks.emplace_back(create_task([entry]
+			{
+				//if (entry->LocationType == 0) //app storage
+				//{
+					entry->Folder = ApplicationData::Current->LocalFolder;
+
+					return create_task([entry]()->StorageFolder^
+					{
+						return entry->Folder;
+					});
+				//}
+				//else // external storage
+				//{
+
+				//}
+			}).then([entry](StorageFolder^ folder)
+			{
+				//get the snapshot file
+				return folder->GetFileAsync(entry->SnapshotUri);
+
+			}).then([entry](StorageFile ^file)
+			{
+				//open file
+				return file->OpenAsync(FileAccessMode::Read);
+			}).then([entry](IRandomAccessStream^ stream)
+			{
+				//load bitmap image for snapshot
+				entry->Snapshot = ref new BitmapImage();
+				return entry->Snapshot->SetSourceAsync(stream);
+			}));
+		}
+
+
+		// When all tasks finish, create a continuation task that observes any exceptions that occurred. 
+		return when_all(begin(tasks), end(tasks)).then([tasks](task<void> t)
+		{
+			try
+			{
+				t.get();
+			}
+			catch (COMException^ e)
+			{
+				// We'll handle the specific errors below.
+			}
+
+		});
+	}
+
+
+
+
+
+
+
 }
