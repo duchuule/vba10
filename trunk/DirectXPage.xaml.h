@@ -82,6 +82,7 @@ namespace VBA10
 		BitmapSource^ TakeSnapshot();
 		task<void> SaveSnapshot();
 		task<void> UpdateDBEntry();
+		task<void> SaveBeforeStop();
 		
 	private:
 		//variables
