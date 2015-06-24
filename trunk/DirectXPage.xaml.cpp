@@ -543,26 +543,26 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	if (IsROMLoaded())
 	{
 		//first find the rom entry
-		ROMDBEntry^ entry = nullptr;
-		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
-		{
-			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
-
-#if _DEBUG
-			Platform::String ^message = entry->FilePath;
-			wstring wstr(message->Begin(), message->End());
-			OutputDebugStringW(wstr.c_str());
-
-			message = ROMFile->Path;
-			wstring wstr2(message->Begin(), message->End());
-			OutputDebugStringW(wstr2.c_str());
-#endif
-
-			if (entry->FilePath == ROMFile->Path)
-			{
-				break;
-			}
-		}
+//		ROMDBEntry^ entry = nullptr;
+//		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
+//		{
+//			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
+//
+//#if _DEBUG
+//			Platform::String ^message = entry->FilePath;
+//			wstring wstr(message->Begin(), message->End());
+//			OutputDebugStringW(wstr.c_str());
+//
+//			message = ROMFile->Path;
+//			wstring wstr2(message->Begin(), message->End());
+//			OutputDebugStringW(wstr2.c_str());
+//#endif
+//
+//			if (entry->FilePath == ROMFile->Path)
+//			{
+//				break;
+//			}
+//		}
 
 		//calculate snapshot name
 		Platform::String ^file_path = ROMFile->Path;
@@ -579,7 +579,7 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 
 		// new snapshot
-		entry->Snapshot = TakeSnapshot();
+		loadedEntry->Snapshot = TakeSnapshot();
 
 	}
 	//enable app frame
@@ -623,15 +623,16 @@ void DirectXPage::CloseMenu()
 	m_main->emulator->GetVirtualController()->Reset();
 }
 
-void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
+void DirectXPage::LoadROM(ROMDBEntry^ entry)
 {
 	CloseMenu();
+	loadedEntry = entry; //store loaded entry for later use
 
-	if (IsROMLoaded() && file->Path == ROMFile->Path) //don't have to do anything
+	if (IsROMLoaded() && entry->FilePath == ROMFile->Path) //don't have to do anything
 		return;
 	
-	create_task([this, file, folder] {
-		if (IsROMLoaded() && file->Path != ROMFile->Path)  //different rom, save old rom state
+	create_task([this, entry] {
+		if (IsROMLoaded() && entry->FilePath != ROMFile->Path)  //different rom, save old rom state
 		{
 			m_main->emulator->Pause();
 
@@ -646,8 +647,12 @@ void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 			
 		}
 
-	}).then([file, folder]{
-		return LoadROMAsync(file, folder);
+	}).then([entry] {
+		return entry->Folder->GetFileAsync(entry->FileName);
+
+	}).then([entry] (StorageFile^ file){ 
+		return LoadROMAsync(file, entry->Folder);
+
 	}).then([] {
 		return LoadStateAsync(AUTOSAVESTATE_SLOT);
 	});
@@ -660,11 +665,7 @@ void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 
 }
 
-task<void> LoadLastState()
-{
-	//querry the rom foler to find the save file
-	return create_task([] {});
-}
+
 
 void DirectXPage::SaveState()
 {
@@ -782,7 +783,11 @@ task<void> DirectXPage::SaveSnapshot()
 		{
 		}
 	});
-
-
-
 }
+
+
+task<void> DirectXPage::UpdateDBEntry()
+{
+	return create_task([] {});
+}
+

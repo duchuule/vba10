@@ -336,62 +336,17 @@ void SelectROMPane::romList_SelectionChanged(Platform::Object^ sender, Windows::
 	if (initdone && this->romList->SelectedItem)
 	{
 		ROMDBEntry^ entry = safe_cast<ROMDBEntry^> (this->romList->SelectedValue);
+		DirectXPage::Current->LoadROM(entry);
 
-		create_task([ entry]
-		{
-			return entry->Folder->GetFileAsync(entry->FileName);
-
-		}).then([entry](StorageFile^ file)
-		{
-			return DirectXPage::Current->LoadROM(file, entry->Folder);
-		});
-
-
-		//if (entry->LocationType == 0) //app's private storage
+		//create_task([ entry]
 		//{
-		//	StorageFolder^ folder = ApplicationData::Current->LocalFolder;
+		//	return entry->Folder->GetFileAsync(entry->FileName);
 
-		//	create_task([folder, entry]
-		//	{
-		//		return folder->GetFileAsync(entry->FileName);
-
-		//	}).then([folder](StorageFile^ file) 
-		//	{
-		//		return DirectXPage::Current->LoadROM(file, folder);
-		//	});
-		//	
-		//}
-		//else //local storage
+		//}).then([entry](StorageFile^ file)
 		//{
-		//	//create token from file path
-		//	Platform::String ^ptoken = entry->FilePath;
-		//	wstring token(ptoken->Begin(), ptoken->End());
+		//	return DirectXPage::Current->LoadROM(entry);
+		//});
 
-		//	//get rid of the file name, keep only the folder path
-		//	size_t found = token.find_last_of(L"/\\");
-		//	token = token.substr(0, found);
-
-		//	replace(token.begin(), token.end(), ':', '_');
-		//	replace(token.begin(), token.end(), '/', '_');
-		//	replace(token.begin(), token.end(), '\\', '_');
-		//	ptoken = ref new Platform::String(token.c_str());
-
-		//	create_task([this, entry, ptoken]
-		//	{
-		//		return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
-		//	}).then([this, entry](StorageFolder^ folder)
-		//	{
-		//		tmpFolder = folder;
-		//		return folder->GetFileAsync(entry->FileName);
-
-		//	}).then([this]( StorageFile^ file)
-		//	{
-		//		return DirectXPage::Current->LoadROM(file, tmpFolder);
-		//	});
-
-		//}
-
-		//DirectXPage::Current->LoadROM(entry->File, model->Folder);
 
 #if _DEBUG
 		Platform::String ^message = entry->FileName;
