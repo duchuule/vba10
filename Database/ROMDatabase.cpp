@@ -232,7 +232,28 @@ namespace VBA10
 	}
 
 
+	task<void> ROMDatabase::UpdateAsync(ROMDBEntry^ entry)
+	{
+		return create_task([this, entry]
+		{
 
+			//prepare statement to update entry
+			Platform::String^ cmd = "UPDATE ROMTABLE SET DISPLAYNAME = "; //, FILENAME, FILEPATH, LASTPLAY, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+			cmd += "'" + entry->DisplayName + "',";
+			cmd += " LASTPLAY = " + entry->LastPlay.UniversalTime + ",";
+
+			cmd += " LASTSAVEINDEX = " + entry->LastSaveIndex + ",";
+			cmd += " AUTOSAVEINDEX = " + entry->AutoSaveIndex ;
+			cmd += " WHERE FILEPATH = " + entry->FilePath + ";";
+
+#if _DEBUG
+			Platform::String ^message = cmd;
+			wstring wstr(message->Begin(), message->End());
+			OutputDebugStringW(wstr.c_str());
+#endif
+			return db->ExecuteStatementAsync(cmd);
+		});
+	}
 
 
 

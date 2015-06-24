@@ -32,6 +32,7 @@ namespace VBA10
 		task<void> Initialize(void);
 		task<void> AddAsync(ROMDBEntry^ entry);
 		task<Vector<ROMDBEntry^>^> RetrieveQuerry();
+		task<void> UpdateAsync(ROMDBEntry^ entry);
 		
 		property PC::Vector<ROMDBEntry^>^ AllROMDBEntries
 		{

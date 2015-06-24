@@ -9,6 +9,7 @@
 
 #include "Common\DeviceResources.h"
 #include "VBA10Main.h"
+#include "Database\ROMDBEntry.h"
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
@@ -45,7 +46,7 @@ namespace VBA10
 		}
 		void GoToPage(int pageindex);
 
-		void LoadROM(StorageFile ^file, StorageFolder ^folder);
+		void LoadROM(ROMDBEntry^ entry);
 		void SaveState();
 		void LoadState();
 		void Reset();
@@ -75,10 +76,12 @@ namespace VBA10
 			}
 		}
 
+		ROMDBEntry^ loadedEntry;
+
 		task<void> SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 		BitmapSource^ TakeSnapshot();
 		task<void> SaveSnapshot();
-		task<void> LoadLastState();
+		task<void> UpdateDBEntry();
 		
 	private:
 		//variables
@@ -135,6 +138,7 @@ namespace VBA10
 		Rect _togglePaneButtonRect;
 
 		static DirectXPage^ _current;
+		
 	
 		void TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
