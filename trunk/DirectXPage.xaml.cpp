@@ -306,14 +306,33 @@ task<void> DirectXPage::SaveInternalState(IPropertySet^ state)
 	critical_section::scoped_lock lock(m_main->GetCriticalSection());
 	m_deviceResources->Trim();
 
-	if (IsROMLoaded())
-		return create_task(SaveSnapshot());
-	else
-		return create_task([] {});
+	
 	// Stop rendering when the app is suspended.
 	//m_main->StopRenderLoop();
 
 	// Put code to save app state here.
+	if (IsROMLoaded())
+	{
+		return create_task([this] {
+			//move saving stuff from StopROMAsync over here + add save snapshot
+			if (IsROMLoaded())
+			{
+				m_main->emulator->Pause();
+
+				SaveSRAMAsync().wait();
+
+				int oldstate = SavestateSlot;
+				SavestateSlot = AUTOSAVESTATE_SLOT;
+				SaveStateAsync().wait();
+				SavestateSlot = oldstate;
+
+				SaveSnapshot().wait();
+
+			}
+		});
+	}
+	else
+		return create_task([] {});
 }
 
 // Loads the current state of the app for resume events.
@@ -592,9 +611,12 @@ void DirectXPage::CloseMenu()
 void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 {
 	CloseMenu();
+
+	if (IsROMLoaded() && file->Path == ROMFile->Path) //don't have to do anything
+		return;
+	
 	create_task([this, file, folder] {
-		//move saving stuff from StopROMAsync over here + add save snapshot
-		if (IsROMLoaded())
+		if (IsROMLoaded() && file->Path != ROMFile->Path)  //different rom, save old rom state
 		{
 			m_main->emulator->Pause();
 
@@ -610,7 +632,9 @@ void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 		}
 
 	}).then([file, folder]{
-		LoadROMAsync(file, folder);
+		return LoadROMAsync(file, folder);
+	}).then([] {
+		return LoadStateAsync(AUTOSAVESTATE_SLOT);
 	});
 	//this is OK after we fixed the ParseVBAiniAsync so that it does not branch to another thread but it makes the UI unreponsive
 	//LoadROMAsync(file, folder).then([this]
@@ -619,6 +643,12 @@ void DirectXPage::LoadROM(StorageFile ^file, StorageFolder ^folder)
 	//});
 
 
+}
+
+task<void> LoadLastState()
+{
+	//querry the rom foler to find the save file
+	return create_task([] {});
 }
 
 void DirectXPage::SaveState()
@@ -632,7 +662,7 @@ void DirectXPage::SaveState()
 void DirectXPage::LoadState()
 {
 
-	LoadStateAsync().then([this]
+	LoadStateAsync(SavestateSlot).then([this]
 	{
 		CloseMenu();
 	});
