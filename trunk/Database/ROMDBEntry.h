@@ -17,10 +17,11 @@ namespace VBA10
 	public ref class ROMDBEntry sealed
 	{
 	public:
-		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath);
+		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath,
+			Platform::String^ snapshoturi);
 
 		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath,
-			DateTime lastplayed, int autosaveindex, Platform::String^ snapshoturi);
+			DateTime lastplayed, int lastsaveindex, int autosaveindex, Platform::String^ snapshoturi);
 
 		//property int ID
 		//{
@@ -97,6 +98,18 @@ namespace VBA10
 			}
 		}
 
+		property int LastSaveIndex
+		{
+			int get()
+			{
+				return _lastSaveIndex;
+			}
+			void set(int value)
+			{
+				_lastSaveIndex = value;
+			}
+		}
+
 		property int AutoSaveIndex
 		{
 			int get()
@@ -166,7 +179,8 @@ namespace VBA10
 		Platform::String^ _fileName;
 		Platform::String^ _filePath;
 		Windows::Foundation::DateTime _lastPlayed;
-		int _autoSaveIndex;
+		int _lastSaveIndex;
+		int _autoSaveIndex;  //use to hold what save state to upload automatically
 		Platform::String^ _snapshotUri;
 		BitmapSource^ _snapshot;
 		StorageFolder^ _folder;

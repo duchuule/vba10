@@ -50,6 +50,7 @@ namespace VBA10
 				"FILENAME            INT     NOT NULL,"\
 				"FILEPATH            INT     NOT NULL,"\
 				"LASTPLAY         INT  NOT NULL,"\
+				"LASTSAVEINDEX    INT  NOT NULL, "\
 				"AUTOSAVEINDEX    INT  NOT NULL, "\
 				"SNAPSHOTURI      TEXT NOT NULL );");
 		}).then([this]
@@ -93,12 +94,13 @@ namespace VBA10
 			
 
 			//prepare statement to add to rom table
-			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAY, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAY, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
 			cmd += entry->LocationType + ",";
 			cmd += "'" + entry->DisplayName + "',";
 			cmd += "'" + entry->FileName + "',";
 			cmd += "'" + entry->FilePath + "',";
 			cmd += entry->LastPlay.UniversalTime + ",";
+			cmd += entry->LastSaveIndex + ",";
 			cmd += entry->AutoSaveIndex + ",";
 			cmd += "'" + entry->SnapshotUri + "')";
 
@@ -133,7 +135,7 @@ namespace VBA10
 					{
 						ROMDBEntry^ entry = ref new ROMDBEntry(
 							statement->GetIntAt(0), statement->GetTextAt(1), statement->GetTextAt(2), statement->GetTextAt(3),
-							DateTime{ statement->GetIntAt(4) }, statement->GetIntAt(5), statement->GetTextAt(6)
+							DateTime{ statement->GetIntAt(4) }, statement->GetIntAt(5), statement->GetIntAt(6), statement->GetTextAt(7)
 							);
 						items->Append(entry);
 

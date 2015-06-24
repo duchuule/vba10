@@ -111,7 +111,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 
 					//create rom entry
 					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, file->Path, 
-						DateTime{ 0 }, 0, psnapshotname);
+						psnapshotname);
 
 					entry->Folder = tmpfolder;
 

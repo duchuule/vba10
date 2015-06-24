@@ -240,15 +240,19 @@ task<void> DirectXPage::CopyDemoROM(void)
 
 	}).then([this](StorageFile ^file)
 	{
-		//add entry to database and rom list
-		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path, 
-			DateTime{ 0 }, 0, "Bunny Advance (Demo).jpg"); //snapshot just need the file name
 
 #if _DEBUG
-		Platform::String ^message = file->DisplayName;
+		Platform::String ^message = file->Path;
 		wstring wstr(message->Begin(), message->End());
 		OutputDebugStringW(wstr.c_str());
 #endif
+		//add entry to database and rom list
+		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path, 
+			"Bunny Advance (Demo).jpg"); //snapshot just need the file name
+
+		entry->Folder = ApplicationData::Current->LocalFolder; //store pointer to folder
+
+
 
 
 		App::ROMDB->AllROMDBEntries->Append(entry);
@@ -543,6 +547,17 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
 		{
 			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
+
+#if _DEBUG
+			Platform::String ^message = entry->FilePath;
+			wstring wstr(message->Begin(), message->End());
+			OutputDebugStringW(wstr.c_str());
+
+			message = ROMFile->Path;
+			wstring wstr2(message->Begin(), message->End());
+			OutputDebugStringW(wstr2.c_str());
+#endif
+
 			if (entry->FilePath == ROMFile->Path)
 			{
 				break;

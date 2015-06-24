@@ -298,7 +298,11 @@ namespace VBA10
 
 	task<void> LoadGBROMAsync(StorageFile ^file, StorageFolder ^folder)
 	{
+		
+
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
+
+		gbexecute = false; //added by Duc Le
 
 		return create_task([emulator]()
 		{
