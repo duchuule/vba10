@@ -317,26 +317,36 @@ task<void> DirectXPage::SaveInternalState(IPropertySet^ state)
 	// Put code to save app state here.
 	if (IsROMLoaded())
 	{
-		return create_task([this] {
-			//move saving stuff from StopROMAsync over here + add save snapshot
-			if (IsROMLoaded())
-			{
-				m_main->emulator->Pause();
-
-				SaveSRAMAsync().wait();
-
-				int oldstate = SavestateSlot;
-				SavestateSlot = AUTOSAVESTATE_SLOT;
-				SaveStateAsync().wait();
-				SavestateSlot = oldstate;
-
-				SaveSnapshot().wait();
-
-			}
-		});
+		
+		return SaveBeforeStop();
 	}
 	else
 		return create_task([] {});
+}
+
+
+task<void> DirectXPage::SaveBeforeStop()
+{
+	return create_task([this] {
+		//move saving stuff from StopROMAsync over here + add save snapshot
+		if (IsROMLoaded())
+		{
+			m_main->emulator->Pause();
+			SaveSnapshot().wait();
+			UpdateDBEntry().wait();
+			SaveSRAMAsync().wait();
+
+			int oldstate = SavestateSlot;
+			SavestateSlot = AUTOSAVESTATE_SLOT;
+			SaveStateAsync().wait();
+			SavestateSlot = oldstate;
+
+			
+
+
+
+		}
+	});
 }
 
 // Loads the current state of the app for resume events.
@@ -627,6 +637,7 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 {
 	CloseMenu();
 	loadedEntry = entry; //store loaded entry for later use
+	SavestateSlot = entry->LastSaveIndex;
 
 	if (IsROMLoaded() && entry->FilePath == ROMFile->Path) //don't have to do anything
 		return;
@@ -634,16 +645,7 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	create_task([this, entry] {
 		if (IsROMLoaded() && entry->FilePath != ROMFile->Path)  //different rom, save old rom state
 		{
-			m_main->emulator->Pause();
-
-			SaveSRAMAsync().wait();
-
-			int oldstate = SavestateSlot;
-			SavestateSlot = AUTOSAVESTATE_SLOT;
-			SaveStateAsync().wait();
-			SavestateSlot = oldstate;
-
-			SaveSnapshot().wait();
+			SaveBeforeStop().wait();
 			
 		}
 
@@ -692,6 +694,7 @@ void DirectXPage::Reset()
 
 void DirectXPage::SelectSaveState(int slot)
 {
+	loadedEntry->LastSaveIndex = slot;
 	SelectSavestateSlot(slot);
 }
 
@@ -788,6 +791,7 @@ task<void> DirectXPage::SaveSnapshot()
 
 task<void> DirectXPage::UpdateDBEntry()
 {
-	return create_task([] {});
+	return 	App::ROMDB->UpdateAsync(loadedEntry);
+
 }
 

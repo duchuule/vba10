@@ -244,7 +244,7 @@ namespace VBA10
 
 			cmd += " LASTSAVEINDEX = " + entry->LastSaveIndex + ",";
 			cmd += " AUTOSAVEINDEX = " + entry->AutoSaveIndex ;
-			cmd += " WHERE FILEPATH = " + entry->FilePath + ";";
+			cmd += " WHERE FILEPATH = '" + entry->FilePath + "';";
 
 #if _DEBUG
 			Platform::String ^message = cmd;
