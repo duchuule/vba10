@@ -27,6 +27,7 @@ using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
+using namespace Windows::Storage::Search;
 using namespace Concurrency;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238

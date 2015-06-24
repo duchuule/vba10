@@ -1801,21 +1801,28 @@ namespace VBA10
 		});
 	}
 
-	task<void> LoadStateAsync(void)
+	task<void> LoadStateAsync(int slot)
 	{
 		if(gbaROMLoaded)
 		{
-			return LoadGBAStateAsync();
+			return LoadGBAStateAsync(slot);
 		}else
 		{
-			return LoadGBStateAsync();
+			return LoadGBStateAsync(slot);
 		}
 	}
 
-	task<void> LoadGBStateAsync(void)
+	task<void> LoadGBStateAsync(int slot)
 	{
+		int whichslot;
+		if (slot <0)
+			whichslot = SavestateSlot;
+		else
+			whichslot = slot;
+
+
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
-		return create_task([emulator]()
+		return create_task([emulator, whichslot]()
 		{
 			if(!ROMFile || !ROMFolder)
 			{
@@ -1823,7 +1830,7 @@ namespace VBA10
 			}
 			emulator->Pause();
 			wstringstream extension;
-			extension << SavestateSlot << L".sgm";
+			extension << whichslot << L".sgm";
 
 			Platform::String ^tmp = ROMFile->Name;
 			const wchar_t *end = tmp->End();
@@ -2218,10 +2225,16 @@ namespace VBA10
 		});
 	}
 
-	task<void> LoadGBAStateAsync(void)
+	task<void> LoadGBAStateAsync(int slot)
 	{
+		int whichslot;
+		if (slot <0)
+			whichslot = SavestateSlot;
+		else
+			whichslot = slot;
+
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
-		return create_task([emulator]()
+		return create_task([emulator, whichslot]()
 		{
 			if(!ROMFile || !ROMFolder)
 			{
@@ -2229,7 +2242,7 @@ namespace VBA10
 			}
 			emulator->Pause();
 			wstringstream extension;
-			extension << SavestateSlot << L".sgm";
+			extension << whichslot << L".sgm";
 			Platform::String ^nameWithoutExtension = ref new Platform::String(ROMFile->Path->Data(), ROMFile->Path->Length() - 4);			
 			Platform::String ^statePath = nameWithoutExtension + ref new Platform::String(extension.str().c_str());
 			return StorageFile::GetFileFromPathAsync(statePath);
@@ -2478,9 +2491,8 @@ namespace VBA10
 			}).wait();
 
 			LoadROMAsync(romfile, romfolder).wait();
-			SelectSavestateSlot(AUTOSAVESTATE_SLOT);
-			LoadStateAsync().wait();
-			SelectSavestateSlot(savestateSlot);
+			LoadStateAsync(AUTOSAVESTATE_SLOT).wait();
+
 			RestoreSettings();
 		}).then([](task<void> t)
 		{

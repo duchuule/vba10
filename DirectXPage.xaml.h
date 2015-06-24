@@ -51,6 +51,7 @@ namespace VBA10
 		void Reset();
 		void SelectSaveState(int slot);
 		
+		
 
 	//from AppShell
 	internal:
@@ -77,6 +78,8 @@ namespace VBA10
 		task<void> SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 		BitmapSource^ TakeSnapshot();
 		task<void> SaveSnapshot();
+		task<void> LoadLastState();
+		
 	private:
 		//variables
 		bool loadingDialogOpen;

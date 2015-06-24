@@ -24,9 +24,9 @@ namespace VBA10
 	task<void> SaveStateAsync(void);
 	task<void> SaveGBAStateAsync(void);
 	task<void> SaveGBStateAsync(void);
-	task<void> LoadStateAsync(void);
-	task<void> LoadGBAStateAsync(void);
-	task<void> LoadGBStateAsync(void);
+	task<void> LoadStateAsync(int slot);
+	task<void> LoadGBAStateAsync(int slot);
+	task<void> LoadGBStateAsync(int slot);
 	task<void> LoadGBROMAsync(StorageFile ^file, StorageFolder ^folder);
 	task<void> LoadGBAROMAsync(StorageFile ^file, StorageFolder ^folder);
 	task<void> LoadROMAsync(StorageFile ^file, StorageFolder ^folder);
