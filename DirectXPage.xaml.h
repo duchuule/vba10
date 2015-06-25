@@ -91,7 +91,7 @@ namespace VBA10
 		StorageFolder^ tmpfolder;
 
 		//function
-		task<void> CopyDemoROM(void);
+		task<void> CopyDemoROMAsync(void);
 		
 
 		// XAML low-level rendering event handler.

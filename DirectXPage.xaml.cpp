@@ -187,40 +187,33 @@ DirectXPage::DirectXPage():
 	//DL: modified to not do it autmatically
 	//m_main->StartRenderLoop();
 
-	//open the database
-	App::ROMDB->Initialize().then([this, settings]
+
+	// create_task([this] {return CopyDemoROMAsync();}).then([this] //NOTE: this will make CopyDemoROM to run on background thread
+	//and cause exception at entry->Snapshot->SetSourceAsync(stream);
+	
+	CopyDemoROMAsync().then([this]   //NOTE: this let CopyDemonROM to run on UI thread
 	{
-		if (!settings->HasKey("FIRSTSTART"))
+		//open menu, need dispatcher to move it to UI thread, otherwise exception
+		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
 		{
-			settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
-
-			//copy DEMO ROm then open menu
-			return CopyDemoROM();
-		}
-		else
-			return create_task([] {});
-	//}).then([this]
-	//{
-		//test insert ROM
-		//ROMDBEntry^ entry = ref new ROMDBEntry(0, "Test game", "testgame.gba", "D:\\ROM");
-		//return App::ROMDB->Add(entry);
-
-		//test obtain ROM
-		//auto entry = App::ROMDB->AllROMDBEntries->GetAt(1);
-
-
-
-	}).then([this]
-	{
-		//open menu
-		RootSplitView->IsPaneOpen = true;
+			RootSplitView->IsPaneOpen = true;
+		}));
+		
 	});
 	
 
 }
 
-task<void> DirectXPage::CopyDemoROM(void)
+task<void> DirectXPage::CopyDemoROMAsync(void)
 {
+	auto settings = ApplicationData::Current->LocalSettings->Values;
+
+	if (settings->HasKey("FIRSTSTART"))
+		return create_task([] {});
+		
+
+
+	settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
 
 	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
 	return create_task(installDir->GetFolderAsync("Assets/"))
