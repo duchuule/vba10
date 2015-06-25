@@ -607,5 +607,8 @@
     <Image Include="Assets\no_snapshot.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\play.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

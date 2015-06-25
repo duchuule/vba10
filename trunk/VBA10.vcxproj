@@ -204,6 +204,7 @@
     <Image Include="Assets\pad_l_button.dds" />
     <Image Include="Assets\pad_r_button.dds" />
     <Image Include="Assets\pad_start_select.dds" />
+    <Image Include="Assets\play.png" />
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png" />

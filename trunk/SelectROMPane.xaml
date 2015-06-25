@@ -98,6 +98,48 @@
                     <!--<local:IsoImageConverter x:Key="SnapshotConverter" />-->
                 </StackPanel.Resources>
 
+                <!--<Grid x:Name="lastRomGrid"
+                      VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Left"
+                        Height="272" 
+                      >
+
+                        <Image Source="{Binding Snapshot}" 
+                                Stretch="UniformToFill"  
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                    x:Name="lastRomImage"
+                                        />
+
+
+
+
+                        <Grid>
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Offset="0.6"/>
+                                    <GradientStop Color="#B2000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <TextBlock Text="{Binding DisplayName}" 
+                                                   d:DataContext="{Binding DesignROMDBEntry[0]}"
+                                               VerticalAlignment="Bottom"
+                                               TextWrapping="Wrap"
+                                               FontSize="30"
+                                         
+                                               LineHeight="38"
+                                               LineStackingStrategy="BaselineToBaseline"
+                                               Margin="20, 0, 20, 12"
+                                               Foreground="White"
+                                           
+                                               />
+                        </Grid>
+
+                        <Image Source="/Assets/play.png" 
+                                           Width="100"
+                                           Opacity="0.7"/>
+                </Grid>-->
+
                 <ListBox Name="romList"
                      SelectionChanged="romList_SelectionChanged"
                      ItemsSource="{Binding Source={StaticResource AllROMEntries}}"

@@ -47,6 +47,7 @@ using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::Graphics::Imaging;
+using namespace Windows::Globalization; //to get date time
 
 using namespace std;
 using namespace VBA10;
@@ -331,7 +332,15 @@ task<void> DirectXPage::SaveBeforeStop()
 		//move saving stuff from StopROMAsync over here + add save snapshot
 		if (IsROMLoaded())
 		{
+			
 			m_main->emulator->Pause();
+
+			//update last played time
+			Calendar^ calendar = ref new Calendar();
+			calendar->SetToNow();
+			loadedEntry->LastPlayed = calendar->GetDateTime();
+
+			//save stuff
 			SaveSnapshot().wait();
 			UpdateDBEntry().wait();
 			SaveSRAMAsync().wait();
