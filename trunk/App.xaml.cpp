@@ -58,32 +58,36 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
 	Windows::UI::ViewManagement::ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
 
-	if (m_directXPage == nullptr)
-	{
-		m_directXPage = ref new DirectXPage();
-	}
+	App::ROMDB->Initialize().then([this, e] {
+		if (m_directXPage == nullptr)
+		{
+			m_directXPage = ref new DirectXPage();
+		}
 
 
 
-	// Create a AppShell to act as the navigation context and navigate to the first page
-	//auto shell = ref new AppShell();
+		// Create a AppShell to act as the navigation context and navigate to the first page
+		//auto shell = ref new AppShell();
 
-	//if (shell->AppFrame->Content == nullptr)
-	//{
-	//	// When the navigation stack isn't restored navigate to the first page,
-	//	// suppressing the initial entrance animation and configuring the new 
-	//	// page by passing required information as a navigation parameter
-	//	//shell->AppFrame->Navigate(TypeName(Views::LandingPage::typeid), e->Arguments, ref new Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
-	//}
+		//if (shell->AppFrame->Content == nullptr)
+		//{
+		//	// When the navigation stack isn't restored navigate to the first page,
+		//	// suppressing the initial entrance animation and configuring the new 
+		//	// page by passing required information as a navigation parameter
+		//	//shell->AppFrame->Navigate(TypeName(Views::LandingPage::typeid), e->Arguments, ref new Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+		//}
 
-	if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
-	{
-		m_directXPage->LoadInternalState(ApplicationData::Current->LocalSettings->Values);
-	}
+		if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
+		{
+			m_directXPage->LoadInternalState(ApplicationData::Current->LocalSettings->Values);
+		}
 
-	// Place the page in the current window and ensure that it is active.
-	Window::Current->Content = m_directXPage;
-	Window::Current->Activate();
+		// Place the page in the current window and ensure that it is active.
+	
+		Window::Current->Content = m_directXPage;
+		Window::Current->Activate();
+	});
+	
 }
 
 /// <summary>
