@@ -49,7 +49,7 @@ namespace VBA10
 				"DISPLAYNAME           TEXT    NOT NULL,"\
 				"FILENAME            INT     NOT NULL,"\
 				"FILEPATH            INT     NOT NULL,"\
-				"LASTPLAY         INT  NOT NULL,"\
+				"LASTPLAYED         INT  NOT NULL,"\
 				"LASTSAVEINDEX    INT  NOT NULL, "\
 				"AUTOSAVEINDEX    INT  NOT NULL, "\
 				"SNAPSHOTURI      TEXT NOT NULL );");
@@ -94,12 +94,12 @@ namespace VBA10
 			
 
 			//prepare statement to add to rom table
-			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAY, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+			Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAYED, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
 			cmd += entry->LocationType + ",";
 			cmd += "'" + entry->DisplayName + "',";
 			cmd += "'" + entry->FileName + "',";
 			cmd += "'" + entry->FilePath + "',";
-			cmd += entry->LastPlay.UniversalTime + ",";
+			cmd += entry->LastPlayed.UniversalTime + ",";
 			cmd += entry->LastSaveIndex + ",";
 			cmd += entry->AutoSaveIndex + ",";
 			cmd += "'" + entry->SnapshotUri + "')";
@@ -238,10 +238,9 @@ namespace VBA10
 		{
 
 			//prepare statement to update entry
-			Platform::String^ cmd = "UPDATE ROMTABLE SET DISPLAYNAME = "; //, FILENAME, FILEPATH, LASTPLAY, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+			Platform::String^ cmd = "UPDATE ROMTABLE SET DISPLAYNAME = "; 
 			cmd += "'" + entry->DisplayName + "',";
-			cmd += " LASTPLAY = " + entry->LastPlay.UniversalTime + ",";
-
+			cmd += " LASTPLAYED = " + entry->LastPlayed.UniversalTime + ",";
 			cmd += " LASTSAVEINDEX = " + entry->LastSaveIndex + ",";
 			cmd += " AUTOSAVEINDEX = " + entry->AutoSaveIndex ;
 			cmd += " WHERE FILEPATH = '" + entry->FilePath + "';";

@@ -86,7 +86,7 @@ namespace VBA10
 			}
 		}
 
-		property Windows::Foundation::DateTime LastPlay
+		property Windows::Foundation::DateTime LastPlayed
 		{
 			Windows::Foundation::DateTime get()
 			{
