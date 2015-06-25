@@ -55,7 +55,7 @@ namespace VBA10
 				"SNAPSHOTURI      TEXT NOT NULL );");
 		}).then([this]
 		{
-			return db->PrepareStatementAsync("SELECT * FROM ROMTABLE;");
+			return db->PrepareStatementAsync("SELECT * FROM ROMTABLE ORDER BY DISPLAYNAME ASC;");
 			
 		}).then([this](SQLiteWinRT::Statement^ stmt)
 		{
@@ -135,7 +135,7 @@ namespace VBA10
 					{
 						ROMDBEntry^ entry = ref new ROMDBEntry(
 							statement->GetIntAt(0), statement->GetTextAt(1), statement->GetTextAt(2), statement->GetTextAt(3),
-							DateTime{ statement->GetIntAt(4) }, statement->GetIntAt(5), statement->GetIntAt(6), statement->GetTextAt(7)
+							DateTime{ statement->GetInt64At(4) }, statement->GetIntAt(5), statement->GetIntAt(6), statement->GetTextAt(7)
 							);
 						items->Append(entry);
 

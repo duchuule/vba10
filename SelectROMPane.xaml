@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignWidth="320"
+    d:DesignWidth="600"
     Name="page"
     >
  
@@ -23,13 +23,14 @@
             <VisualStateGroup>
                 <VisualState x:Name="wideView">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1000" />
+                        <AdaptiveTrigger MinWindowWidth="1000"  />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="saveBtn.Width" Value="88"/>
                         <Setter Target="selectStateBtn.Width" Value="88"/>
                         <Setter Target="resetBtn.Width" Value="88"/>
                         <Setter Target="loadBtn.Width" Value="88"/>
+                        <Setter Target="lastRomGrid.Height" Value="250" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="mediumView">
@@ -41,6 +42,7 @@
                         <Setter Target="selectStateBtn.Width" Value="68"/>
                         <Setter Target="resetBtn.Width" Value="68"/>
                         <Setter Target="loadBtn.Width" Value="68"/>
+                        <Setter Target="lastRomGrid.Height" Value="300" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -92,57 +94,63 @@
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       >
-            <StackPanel >
+            <StackPanel x:Name="Container"
+                         >
                 <StackPanel.Resources>
-                    <CollectionViewSource x:Name="AllROMEntries"/>
+                    <CollectionViewSource x:Name="cvsAllROMEntries"/>
+                    <CollectionViewSource x:Name="cvsLastROMEntry"/>
                     <!--<local:IsoImageConverter x:Key="SnapshotConverter" />-->
                 </StackPanel.Resources>
 
-                <!--<Grid x:Name="lastRomGrid"
-                      VerticalAlignment="Stretch" 
-                        HorizontalAlignment="Left"
-                        Height="272" 
-                      >
+                <Button x:Name="lastRomGrid"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch"
+                      Tapped="lastRomImage_Tapped"
+                        Background="Transparent"
+                        Margin="0" Padding="0" 
+                        Style="{StaticResource ImageButtonStyle}"
 
-                        <Image Source="{Binding Snapshot}" 
-                                Stretch="UniformToFill"  
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                    x:Name="lastRomImage"
-                                        />
-
-
-
-
+                    >
+                    <Button.Content>
                         <Grid>
-                            <Grid.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Offset="0.6"/>
-                                    <GradientStop Color="#B2000000" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            <TextBlock Text="{Binding DisplayName}" 
-                                                   d:DataContext="{Binding DesignROMDBEntry[0]}"
-                                               VerticalAlignment="Bottom"
-                                               TextWrapping="Wrap"
-                                               FontSize="30"
-                                         
-                                               LineHeight="38"
-                                               LineStackingStrategy="BaselineToBaseline"
-                                               Margin="20, 0, 20, 12"
-                                               Foreground="White"
-                                           
-                                               />
-                        </Grid>
+                            <Image Source="{Binding Snapshot}" 
+                                    Stretch="UniformToFill"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                        x:Name="lastRomImage"
+                                
+                                            />
 
-                        <Image Source="/Assets/play.png" 
-                                           Width="100"
-                                           Opacity="0.7"/>
-                </Grid>-->
+                            <Grid>
+                                <Grid.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Offset="0.6"/>
+                                        <GradientStop Color="#B2000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                                <TextBlock Text="{Binding DisplayName}" 
+                                                    VerticalAlignment="Bottom"
+                                                    TextWrapping="Wrap"
+                                                    FontSize="30"
+                                         
+                                                    LineHeight="38"
+                                                    LineStackingStrategy="BaselineToBaseline"
+                                                    Margin="20, 0, 20, 12"
+                                                    Foreground="White"
+                                           
+                                                    />
+                            </Grid>
+
+                                <Image Source="/Assets/play.png" 
+                                                Width="100"
+                                                Opacity="0.7"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
 
                 <ListBox Name="romList"
                      SelectionChanged="romList_SelectionChanged"
-                     ItemsSource="{Binding Source={StaticResource AllROMEntries}}"
+                     ItemsSource="{Binding Source={StaticResource cvsAllROMEntries}}"
                          Margin="-4,0,0,0"
                          
                          Padding="0"
@@ -225,7 +233,7 @@
                 <Button x:Name="addROMbtn" HorizontalAlignment="Center" 
                     Content="Add ROM"
                     Width="120" Height="40"
-                    Margin="0,12,0,0"
+                    Margin="0,12,0,12"
                     Click="addROMbtn_Click"/>
             </StackPanel>
         </ScrollViewer>

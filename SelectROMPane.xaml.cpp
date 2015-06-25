@@ -51,9 +51,34 @@ SelectROMPane::SelectROMPane()
 	//this->InitializeStorageLists();
 
 	//bind list of ROM to display
-	AllROMEntries->Source = App::ROMDB->AllROMDBEntries;
+	cvsAllROMEntries->Source = App::ROMDB->AllROMDBEntries;
 	romList->SelectedItem = nullptr;
 	
+	//find the most recently play game
+	if (App::ROMDB->AllROMDBEntries->Size == 0) //no rom in list
+		lastRomGrid->Visibility = Windows::UI::Xaml::Visibility::Collapsed;  //collapse
+
+	int index = 0;
+	for (int i = 1; i < App::ROMDB->AllROMDBEntries->Size; i++)
+	{
+#if _DEBUG
+		int64 test = App::ROMDB->AllROMDBEntries->GetAt(i)->LastPlayed.UniversalTime;
+		Platform::String ^message = test + "\n";
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+
+		if (App::ROMDB->AllROMDBEntries->GetAt(i)->LastPlayed.UniversalTime > App::ROMDB->AllROMDBEntries->GetAt(index)->LastPlayed.UniversalTime)
+			index = i;
+	}
+
+
+
+
+	if (App::ROMDB->AllROMDBEntries->GetAt(index)->LastPlayed.UniversalTime > 0) // have been played
+		lastRomGrid->DataContext = App::ROMDB->AllROMDBEntries->GetAt(index);
+	else
+		lastRomGrid->Visibility = Windows::UI::Xaml::Visibility::Collapsed;  //collapse
 	
 
 	//disable the command bar if no rom is loaded
@@ -494,3 +519,12 @@ void SelectROMPane::addROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 {
 	DirectXPage::Current->GoToPage(2);
 }
+
+
+void SelectROMPane::lastRomImage_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+	ROMDBEntry^ entry = (ROMDBEntry^)this->lastRomImage->DataContext;
+	DirectXPage::Current->LoadROM(entry);
+}
+
+
