@@ -561,27 +561,6 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 	if (IsROMLoaded())
 	{
-		//first find the rom entry
-//		ROMDBEntry^ entry = nullptr;
-//		for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
-//		{
-//			entry = App::ROMDB->AllROMDBEntries->GetAt(i);
-//
-//#if _DEBUG
-//			Platform::String ^message = entry->FilePath;
-//			wstring wstr(message->Begin(), message->End());
-//			OutputDebugStringW(wstr.c_str());
-//
-//			message = ROMFile->Path;
-//			wstring wstr2(message->Begin(), message->End());
-//			OutputDebugStringW(wstr2.c_str());
-//#endif
-//
-//			if (entry->FilePath == ROMFile->Path)
-//			{
-//				break;
-//			}
-//		}
 
 		//calculate snapshot name
 		Platform::String ^file_path = ROMFile->Path;
@@ -599,6 +578,11 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 		// new snapshot
 		loadedEntry->Snapshot = TakeSnapshot();
+
+		//update last played time
+		Calendar^ calendar = ref new Calendar();
+		calendar->SetToNow();
+		loadedEntry->LastPlayed = calendar->GetDateTime();
 
 	}
 	//enable app frame

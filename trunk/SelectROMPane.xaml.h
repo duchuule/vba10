@@ -92,5 +92,7 @@ namespace VBA10
 		void addROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
 		StorageFolder^ tmpFolder;
+		void lastRomImage_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
+
 	};
 }
