@@ -33,14 +33,16 @@
                       Grid.Row="1">
             <StackPanel >
                 <TextBlock Text="Local storage"
-                                 FontWeight="Bold"
                                 VerticalAlignment="Center"
-                           FontSize="20"
+                           FontSize="23"
+                           Margin="0,8,0,4"
                                   />
-                <TextBlock TextWrapping="Wrap" Text="Instruction: use this option to select a ROM already present on your phone or PC."                                
-                                  />
-                <Button x:Name="chooseFolderbtn" Content="Select ROM folder" 
-                        Click="chooseFolderbtn_Click"/>
+                <TextBlock TextWrapping="Wrap"
+                           Text="Use this option to select a ROM already present on your phone or PC."                                
+                                 Margin=" 0, 4, 0, 4" />
+                <Button x:Name="chooseFolderbtn" Content="Select Folder" 
+                        Click="chooseFolderbtn_Click"
+                        Margin =" 0, 4, 0, 4"/>
                 
             </StackPanel>
         </ScrollViewer>

@@ -198,7 +198,7 @@
                                     </StackPanel>-->
                                     <TextBlock 
                                             Text="{Binding FilePath}" 
-                                            FontSize="13"
+                                            FontSize="12"
                                                 />
                                 </StackPanel>
                             </Grid>
