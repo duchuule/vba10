@@ -31,23 +31,11 @@ namespace VBA10
 		GameTime ^GetGameTime(void);
 
 		void GetBackbufferData(uint8 **backbufferPtr, size_t *pitch, int *imageWidth, int *imageHeight);
+		void CreateTransformMatrix();
 	private:
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		// Direct3D Objects, no longer defined here, we moved it out to Common/DeviceResources.h
-		//Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
-		//Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
-		//Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
-		//Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-		//Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
-
-		// Cached renderer properties, no longer defined here, we moved it to Common/DeviceResources.h
-		//D3D_FEATURE_LEVEL m_featureLevel;
-		//Windows::Foundation::Size m_renderTargetSize;
-		//Windows::Foundation::Rect m_windowBounds;
-		//Windows::UI::Core::CoreWindow ^m_window;
-		//Windows::Graphics::Display::DisplayOrientations m_orientation;
 
 		HANDLE waitEvent;
 
@@ -94,13 +82,15 @@ namespace VBA10
 		ComPtr<ID3D11ShaderResourceView>	lButtonSRV;
 		ComPtr<ID3D11Resource>				rButtonResource;
 		ComPtr<ID3D11ShaderResourceView>	rButtonSRV;
+
+		XMMATRIX							outputTransform;
 		
 		void AutosaveAsync(void);
 		void *MapBuffer(int index, size_t *rowPitch);
 		void FPSCounter(void);
 		//void MeasureTime(void);
 		void Autosave(void);
-
+		
 
 
 

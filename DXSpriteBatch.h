@@ -51,6 +51,7 @@ namespace Engine
 		ComPtr<ID3D11PixelShader> customPS;
 		ComPtr<ID3D11VertexShader> vs;
 		ComPtr<ID3D11InputLayout> inputLayout;
+		ComPtr<ID3D11Buffer> onFrameBuffer;
 		ComPtr<ID3D11Buffer> onResizeBuffer;
 		ComPtr<ID3D11Buffer> vertexBuffer;
 		ComPtr<ID3D11Buffer> indexBuffer;
@@ -80,7 +81,7 @@ namespace Engine
 		void OnResize(float width, float height);
 		void SetCustomPixelShader(void *customPS);
 
-		void Begin(void);
+		void Begin(XMMATRIX &world);
 		void Draw(const Rectangle &targetArea, const Rectangle *sourceArea, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, float rotation, Color &color);
 		void Draw(const Rectangle &target, const Rectangle *source, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, Color &color);
 		void Draw(const Rectangle &target, const Rectangle *source, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, Color &color);

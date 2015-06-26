@@ -20,6 +20,7 @@
 #define AUTOSAVE_INTERVAL				10.0f
 
 using namespace Windows::Foundation;
+using namespace Windows::Graphics::Display;
 
 HANDLE swapEvent = NULL;
 HANDLE updateEvent = NULL;
@@ -438,16 +439,21 @@ namespace VBA10
 			}
 		}
 
-		int height = this->height; // *(GetImageScale() / 100.0f);
+		int height;
 		int width;
-		switch(GetAspectRatio())
+		RECT rect;
+
+
+		height = this->height; // *(GetImageScale() / 100.0f);
+		switch (GetAspectRatio())
 		{
 		default:
 		case AspectRatioMode::Original:
-			if(gbaROMLoaded)
+			if (gbaROMLoaded)
 			{
 				width = (int)(height * (240.0f / 160.0f));
-			}else
+			}
+			else
 			{
 				width = (int)(height * (160.0f / 144.0f));
 			}
@@ -473,11 +479,11 @@ namespace VBA10
 		}
 
 		int leftOffset = (this->width - width) / 2;
-		RECT rect;
 		rect.left = leftOffset;
 		rect.right = width + leftOffset;
 		rect.top = 0;
 		rect.bottom = height;
+
 
 		RECT source;
 		if(gbaROMLoaded)
@@ -512,7 +518,7 @@ namespace VBA10
 		
 
 		// Render last frame to screen
-		this->dxSpriteBatch->Begin();
+		this->dxSpriteBatch->Begin(this->outputTransform);
 
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
@@ -627,6 +633,27 @@ namespace VBA10
 		}
 	}
 
+	void EmulatorRenderer::CreateTransformMatrix(void)
+	{
+		//this->outputTransform = XMMatrixIdentity();
+		this->outputTransform = { 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			10.0f, 10.0f, 0.0f, 1.0f };
+
+		//if (m_deviceResources->GetOrientation() == DisplayOrientations::Landscape)
+		//{
+		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
+		//	//this->outputTransform = XMMatrixMultiply(XMMatrixTranslation(-this->width / 2, -this->height / 2, 0.0f), XMMatrixRotationZ(XM_PI));
+		//	//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->width / 2, this->height / 2, 0.0f));
+
+		//}
+		//else if (m_deviceResources->GetOrientation() == DisplayOrientations::LandscapeFlipped)
+		//{
+		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
+		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->height, 0.0f, 0.0f));
+		//}
+	}
 
 
 }
