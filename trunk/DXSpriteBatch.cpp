@@ -135,6 +135,18 @@ namespace Engine
 
 		}
 
+		CD3D11_BUFFER_DESC onFrameDesc(
+			sizeof(OnFrameBuffer), 
+			D3D11_BIND_CONSTANT_BUFFER,
+			D3D11_USAGE_DYNAMIC,
+			D3D11_CPU_ACCESS_WRITE);
+		ComPtr<ID3D11Buffer> tmpOnFrameBuffer;
+		if(FAILED(this->device->CreateBuffer(&onFrameDesc, nullptr, tmpOnFrameBuffer.GetAddressOf())))
+		{
+
+		}
+
+		this->onFrameBuffer = tmpOnFrameBuffer;
 		this->vertexBuffer = tmpVertexBuffer;
 		this->indexBuffer = tmpIndexBuffer;
 		this->onResizeBuffer = tmpOnResizeBuffer;
@@ -254,7 +266,7 @@ namespace Engine
 		this->customPS = (ID3D11PixelShader *) customPS;
 	}
 
-	void DXSpriteBatch::Begin(void)
+	void DXSpriteBatch::Begin(XMMATRIX &world)
 	{
 		if(beginCalled)
 		{
@@ -265,6 +277,17 @@ namespace Engine
 		this->batchedSprites = 0;
 
 		this->heapSort = HeapCompareBackToFront;
+
+		OnFrameBuffer onFrame;
+		onFrame.world = world;
+
+		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
+		if(FAILED(this->context->Map(this->onFrameBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubresource)))
+		{ 
+		}
+
+		*(OnFrameBuffer *)mappedSubresource.pData = onFrame;
+		this->context->Unmap(this->onFrameBuffer.Get(), 0);
 	}
 
 	void DXSpriteBatch::Draw(const Rectangle &targetArea, const Rectangle *sourceArea, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, float rotation, Color &color)
@@ -583,6 +606,7 @@ namespace Engine
 		this->context->IASetVertexBuffers(0, 1, this->vertexBuffer.GetAddressOf(), &stride, &offset);
 		this->context->IASetIndexBuffer(this->indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 		this->context->VSSetConstantBuffers(0, 1, this->onResizeBuffer.GetAddressOf());
+		this->context->VSSetConstantBuffers(1, 1, this->onFrameBuffer.GetAddressOf());
 
 		// Draw
 		this->context->DrawIndexed(

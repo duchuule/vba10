@@ -5,6 +5,12 @@ cbuffer OnResize : register(b0)
 	row_major float4x4 Projection;
 }
 
+cbuffer OnResize : register(b1)
+{
+	row_major float4x4 World;
+}
+
+
 struct VSIn
 {
 	float4 position				:	POSITION;
@@ -14,9 +20,9 @@ struct VSIn
 
 PSIn SpriteBatch_VS(VSIn input)
 {
-	PSIn result = (PSIn) 0;
+	PSIn result = (PSIn)0;
 	result.color = input.color;
-	result.position = mul(input.position, Projection);
+	result.position = mul(input.position, mul(World, Projection));
 	result.texcoord = input.texcoord;
 
 	return result;

@@ -690,3 +690,9 @@ DXGI_MODE_ROTATION DX::DeviceResources::ComputeDisplayRotation()
 	}
 	return rotation;
 }
+
+//output the orientation
+DisplayOrientations DX::DeviceResources::GetOrientation()
+{
+	return m_currentOrientation;
+}

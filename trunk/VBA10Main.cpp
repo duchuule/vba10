@@ -54,6 +54,7 @@ void VBA10Main::CreateWindowSizeDependentResources()
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
 	renderer->CreateWindowSizeDependentResources();
+	renderer->CreateTransformMatrix();
 }
 
 //void VBA10Main::StartRenderLoop()
