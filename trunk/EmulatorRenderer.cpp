@@ -635,6 +635,7 @@ namespace VBA10
 
 	void EmulatorRenderer::CreateTransformMatrix(void)
 	{
+
 		//this->outputTransform = XMMatrixIdentity();
 		this->outputTransform = { 1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
