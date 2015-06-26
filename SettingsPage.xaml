@@ -22,7 +22,7 @@
 
         
         <Pivot Grid.Row="1" >
-            <PivotItem Header="Input">
+            <PivotItem  Header="Input">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
