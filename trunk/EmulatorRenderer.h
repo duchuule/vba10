@@ -61,6 +61,7 @@ namespace VBA10
 
 		int									frontbuffer;
 		int									width, height;
+		//int									renderWidth, renderHeight;
 		DXSpriteBatch						*dxSpriteBatch;
 		EmulatorGame						*emulator;
 		

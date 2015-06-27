@@ -249,17 +249,21 @@ namespace VBA10
 	void EmulatorRenderer::CreateWindowSizeDependentResources()
 	{
 		//float scale = ((int)Windows::Graphics::Display::DisplayProperties::ResolutionScale) / 100.0f;
-		this->width = m_deviceResources->GetOutputSize().Width;// width * scale;
-		this->height = m_deviceResources->GetOutputSize().Height;//height * scale;
+		//this->width = m_deviceResources->GetOutputSize().Width;// width * scale;
+		//this->height = m_deviceResources->GetOutputSize().Height;//height * scale;
+
+		this->width = m_deviceResources->GetRenderTargetSize().Height;
+		this->height = m_deviceResources->GetRenderTargetSize().Width;  
 
 		if(!this->dxSpriteBatch)
 		{
-			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->width, this->height);
+			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->height, this->width);
 		}else
 		{
-			this->dxSpriteBatch->OnResize(this->width, this->height);
+			this->dxSpriteBatch->OnResize(this->height, this->width);
 		}
 
+		//resize buffers take the render width and height, regardless of orientation
 		this->emulator->ResizeBuffer(this->width, this->height);
 	}
 
@@ -443,47 +447,85 @@ namespace VBA10
 		int width;
 		RECT rect;
 
+		if (this->m_deviceResources->GetOrientation() == DisplayOrientations::Landscape)
+		{
+			height = this->height; // *(GetImageScale() / 100.0f);
+			switch (GetAspectRatio())
+			{
+			default:
+			case AspectRatioMode::Original:
+				if (gbaROMLoaded)
+				{
+					width = (int)(height * (240.0f / 160.0f));
+				}
+				else
+				{
+					width = (int)(height * (160.0f / 144.0f));
+				}
+				break;
+			case AspectRatioMode::Stretch:
+				width = this->width; //* (GetImageScale() / 100.0f);
+				break;
+			case AspectRatioMode::FourToThree:
+				width = (int)(height * (4.0f / 3.0f));
+				break;
+			case AspectRatioMode::FiveToFour:
+				width = (int)(height * (5.0f / 4.0f));
+				break;
+			case AspectRatioMode::One:
+				width = height;
+				break;
+			}
 
-		height = this->height; // *(GetImageScale() / 100.0f);
+			if (width > this->width) //fix the position of the image
+			{
+				height = height * 1.0f / width * this->width;
+				width = this->width;
+			}
+
+			int leftOffset = (this->width - width) / 2;
+			rect.left = leftOffset;
+			rect.right = width + leftOffset;
+			rect.top = 0;
+			rect.bottom = height;
+		}
+
+	else
+	{
+		width = this->height;
+
 		switch (GetAspectRatio())
 		{
 		default:
 		case AspectRatioMode::Original:
+		case AspectRatioMode::Stretch:
 			if (gbaROMLoaded)
 			{
-				width = (int)(height * (240.0f / 160.0f));
+				height = (int)(width * (160.0f / 240.0f));
 			}
 			else
 			{
-				width = (int)(height * (160.0f / 144.0f));
+				height = (int)(width * (144.0f / 160.0f));
 			}
 			break;
-		case AspectRatioMode::Stretch:
-			width = this->width; //* (GetImageScale() / 100.0f);
-			break;
 		case AspectRatioMode::FourToThree:
-			width = (int)(height * (4.0f / 3.0f));
+			height = (int)(width * (3.0f / 4.0f));
 			break;
 		case AspectRatioMode::FiveToFour:
-			width = (int)(height * (5.0f / 4.0f));
+			height = (int)(width * (4.0f / 5.0f));
 			break;
 		case AspectRatioMode::One:
-			width = height;
+			height = (int)width;
 			break;
 		}
 
-		if (width > this->width) //fix the position of the image
-		{
-			height = height * 1.0f / width * this->width;
-			width = this->width;
-		}
 
-		int leftOffset = (this->width - width) / 2;
-		rect.left = leftOffset;
-		rect.right = width + leftOffset;
+		rect.left = 0;
+		rect.right = width;
 		rect.top = 0;
 		rect.bottom = height;
-
+	}
+		
 
 		RECT source;
 		if(gbaROMLoaded)
@@ -635,25 +677,28 @@ namespace VBA10
 
 	void EmulatorRenderer::CreateTransformMatrix(void)
 	{
+		if (m_deviceResources->GetOrientation() == DisplayOrientations::Portrait)
+		{
+			this->outputTransform = XMMatrixIdentity();
+		}
+		else if (m_deviceResources->GetOrientation() == DisplayOrientations::PortraitFlipped)
+		{
+			this->outputTransform = XMMatrixIdentity();
+		}
+		else if (m_deviceResources->GetOrientation() == DisplayOrientations::Landscape)
+		{
 
-		//this->outputTransform = XMMatrixIdentity();
-		this->outputTransform = { 1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			10.0f, 10.0f, 0.0f, 1.0f };
+			//this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(XM_PIDIV2), XMMatrixTranslation(this->width, 0.0f, 0.0f));
 
-		//if (m_deviceResources->GetOrientation() == DisplayOrientations::Landscape)
-		//{
-		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
-		//	//this->outputTransform = XMMatrixMultiply(XMMatrixTranslation(-this->width / 2, -this->height / 2, 0.0f), XMMatrixRotationZ(XM_PI));
-		//	//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->width / 2, this->height / 2, 0.0f));
+			XMMATRIX tmp = XMMatrixMultiply(XMMatrixIdentity(), XMMatrixRotationZ(XM_PIDIV2));
+			this->outputTransform = XMMatrixMultiply(tmp, XMMatrixTranslation(this->height, 0.0f, 0.0f));
 
-		//}
-		//else if (m_deviceResources->GetOrientation() == DisplayOrientations::LandscapeFlipped)
-		//{
-		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
-		//	this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->height, 0.0f, 0.0f));
-		//}
+		}
+		else if (m_deviceResources->GetOrientation() == DisplayOrientations::LandscapeFlipped)
+		{
+			//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
+			//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->height, 0.0f, 0.0f));
+		}
 	}
 
 
