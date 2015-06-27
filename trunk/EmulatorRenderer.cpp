@@ -263,11 +263,11 @@ namespace VBA10
 			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->renderwidth, this->renderheight);
 		}else
 		{
-			this->dxSpriteBatch->OnResize(this->renderwidth, this->height);
+			this->dxSpriteBatch->OnResize(this->renderwidth, this->renderheight);
 		}
 
 		//resize buffers take the render width and height, regardless of orientation
-		this->emulator->ResizeBuffer(this->width, this->height);
+		this->emulator->ResizeBuffer(this->renderwidth, this->renderheight);
 	}
 
 	void EmulatorRenderer::ReleaseDeviceDependentResources()
@@ -529,47 +529,89 @@ namespace VBA10
 	//	rect.bottom = height;
 	//}
 
-
-		height = this->height; // *(GetImageScale() / 100.0f);
-		switch (GetAspectRatio())
+		if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_IDENTITY)
 		{
-		default:
-		case AspectRatioMode::Original:
-			if (gbaROMLoaded)
+			height = this->height; // *(GetImageScale() / 100.0f);
+			switch (GetAspectRatio())
 			{
-				width = (int)(height * (240.0f / 160.0f));
+			default:
+			case AspectRatioMode::Original:
+				if (gbaROMLoaded)
+				{
+					width = (int)(height * (240.0f / 160.0f));
+				}
+				else
+				{
+					width = (int)(height * (160.0f / 144.0f));
+				}
+				break;
+			case AspectRatioMode::Stretch:
+				width = this->width; //* (GetImageScale() / 100.0f);
+				break;
+			case AspectRatioMode::FourToThree:
+				width = (int)(height * (4.0f / 3.0f));
+				break;
+			case AspectRatioMode::FiveToFour:
+				width = (int)(height * (5.0f / 4.0f));
+				break;
+			case AspectRatioMode::One:
+				width = height;
+				break;
 			}
-			else
-			{
-				width = (int)(height * (160.0f / 144.0f));
-			}
-			break;
-		case AspectRatioMode::Stretch:
-			width = this->width; //* (GetImageScale() / 100.0f);
-			break;
-		case AspectRatioMode::FourToThree:
-			width = (int)(height * (4.0f / 3.0f));
-			break;
-		case AspectRatioMode::FiveToFour:
-			width = (int)(height * (5.0f / 4.0f));
-			break;
-		case AspectRatioMode::One:
-			width = height;
-			break;
-		}
 
-		if (width > this->width) //fix the position of the image
+			if (width > this->width) //fix the position of the image
+			{
+				height = height * 1.0f / width * this->width;
+				width = this->width;
+			}
+
+			int leftOffset = (this->width - width) / 2;
+			rect.left = leftOffset;
+			rect.right = width + leftOffset;
+			rect.top = 0;
+			rect.bottom = height;
+		}
+		else
 		{
-			height = height * 1.0f / width * this->width;
-			width = this->width;
-		}
+				width = this->width;
 
-		int leftOffset = (this->width - width) / 2;
-		rect.left = leftOffset;
-		rect.right = width + leftOffset;
-		rect.top = 0;
-		rect.bottom = height;
-		
+				switch (GetAspectRatio())
+				{
+				default:
+				case AspectRatioMode::Original:
+				case AspectRatioMode::Stretch:
+					if (gbaROMLoaded)
+					{
+						height = (int)(width * (160.0f / 240.0f));
+					}
+					else
+					{
+						height = (int)(width * (144.0f / 160.0f));
+					}
+					break;
+				case AspectRatioMode::FourToThree:
+					height = (int)(width * (3.0f / 4.0f));
+					break;
+				case AspectRatioMode::FiveToFour:
+					height = (int)(width * (4.0f / 5.0f));
+					break;
+				case AspectRatioMode::One:
+					height = (int)width;
+					break;
+				}
+
+
+				rect.left = 0;
+				rect.right = width;
+				rect.top = 0;
+				rect.bottom = height;
+
+				if (height > this->height) //fix the position of the image
+				{
+					width = width * 1.0f / height * this->height;
+					height = this->height;
+				}
+		}
 
 		RECT source;
 		if(gbaROMLoaded)
@@ -731,15 +773,17 @@ namespace VBA10
 		}
 		else if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_ROTATE90)
 		{
+			this->outputTransform = XMMatrixIdentity();
 
-			//this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(XM_PIDIV2), XMMatrixTranslation(this->width, 0.0f, 0.0f));
+			this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(XM_PIDIV2), XMMatrixTranslation(this->height, 0.0f, 0.0f));
 
-			XMMATRIX tmp = XMMatrixMultiply(XMMatrixIdentity(), XMMatrixRotationZ(XM_PIDIV2));
-			this->outputTransform = XMMatrixMultiply(tmp, XMMatrixTranslation(this->renderheight, 0.0f, 0.0f));
+			//XMMATRIX tmp = XMMatrixMultiply(XMMatrixIdentity(), XMMatrixRotationZ(XM_PIDIV2));
+			//this->outputTransform = XMMatrixMultiply(tmp, XMMatrixTranslation(this->height, 0.0f, 0.0f));
 
 		}
 		else if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_ROTATE270)
 		{
+			this->outputTransform = XMMatrixIdentity();
 			//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixRotationZ(XM_PIDIV2));
 			//this->outputTransform = XMMatrixMultiply(this->outputTransform, XMMatrixTranslation(this->height, 0.0f, 0.0f));
 		}
