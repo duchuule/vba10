@@ -191,7 +191,8 @@ DirectXPage::DirectXPage():
 	// create_task([this] {return CopyDemoROMAsync();}).then([this] //NOTE: this will make CopyDemoROM to run on background thread
 	//and cause exception at entry->Snapshot->SetSourceAsync(stream);
 	
-	CopyDemoROMAsync().then([this]   //NOTE: this let CopyDemonROM to run on UI thread
+	CopyDemoROMAsync()
+		.then([this]   //NOTE: this let CopyDemonROM to run on UI thread
 	{
 		//open menu, need dispatcher to move it to UI thread, otherwise exception
 		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
