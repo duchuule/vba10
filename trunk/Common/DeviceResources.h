@@ -53,7 +53,7 @@ namespace DX
 		IWICImagingFactory2*	GetWicImagingFactory() const { return m_wicFactory.Get(); }
 		D2D1::Matrix3x2F		GetOrientationTransform2D() const			 { return m_orientationTransform2D; }
 
-		Windows::Graphics::Display::DisplayOrientations GetOrientation();
+		DXGI_MODE_ROTATION GetRotation();
 
 	private:
 		void CreateDeviceIndependentResources();
@@ -101,5 +101,6 @@ namespace DX
 
 		// The IDeviceNotify can be held directly as it owns the DeviceResources.
 		IDeviceNotify* m_deviceNotify;
+		DXGI_MODE_ROTATION m_displayRotation;
 	};
 }

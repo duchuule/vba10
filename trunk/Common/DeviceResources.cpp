@@ -226,9 +226,9 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	// The width and height of the swap chain must be based on the window's
 	// natively-oriented width and height. If the window is not in the native
 	// orientation, the dimensions must be reversed.
-	DXGI_MODE_ROTATION displayRotation = ComputeDisplayRotation();
+	m_displayRotation = ComputeDisplayRotation();
 
-	bool swapDimensions = displayRotation == DXGI_MODE_ROTATION_ROTATE90 || displayRotation == DXGI_MODE_ROTATION_ROTATE270;
+	bool swapDimensions = m_displayRotation == DXGI_MODE_ROTATION_ROTATE90 || m_displayRotation == DXGI_MODE_ROTATION_ROTATE270;
 	m_d3dRenderTargetSize.Width = swapDimensions ? m_outputSize.Height : m_outputSize.Width;
 	m_d3dRenderTargetSize.Height = swapDimensions ? m_outputSize.Width : m_outputSize.Height;
 
@@ -329,7 +329,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	// This is due to the difference in coordinate spaces.  Additionally,
 	// the 3D matrix is specified explicitly to avoid rounding errors.
 
-	switch (displayRotation)
+	switch (m_displayRotation)
 	{
 	case DXGI_MODE_ROTATION_IDENTITY:
 		m_orientationTransform2D = Matrix3x2F::Identity();
@@ -362,7 +362,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	}
 
 	DX::ThrowIfFailed(
-		m_swapChain->SetRotation(displayRotation)
+		m_swapChain->SetRotation(m_displayRotation)
 		);
 
 	// Setup inverse scale on the swap chain
@@ -692,7 +692,7 @@ DXGI_MODE_ROTATION DX::DeviceResources::ComputeDisplayRotation()
 }
 
 //output the orientation
-DisplayOrientations DX::DeviceResources::GetOrientation()
+DXGI_MODE_ROTATION DX::DeviceResources::GetRotation()
 {
-	return m_currentOrientation;
+	return m_displayRotation;
 }
