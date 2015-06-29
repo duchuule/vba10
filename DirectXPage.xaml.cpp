@@ -588,8 +588,7 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 
 	//navigate to the first item
-	auto item = NavMenuList->ContainerFromItem(NavMenuList->Items->GetAt(0));
-	NavMenuList->InvokeItem(item);
+	GoToPage(0);
 
 
 	

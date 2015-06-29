@@ -258,6 +258,7 @@ namespace VBA10
 		this->renderwidth = m_deviceResources->GetRenderTargetSize().Width;
 		this->renderheight = m_deviceResources->GetRenderTargetSize().Height;  
 
+		//resize buffers take the render width and height, regardless of orientation
 		if(!this->dxSpriteBatch)
 		{
 			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->renderwidth, this->renderheight);
@@ -266,8 +267,8 @@ namespace VBA10
 			this->dxSpriteBatch->OnResize(this->renderwidth, this->renderheight);
 		}
 
-		//resize buffers take the render width and height, regardless of orientation
-		this->emulator->ResizeBuffer(this->renderwidth, this->renderheight);
+		
+		this->emulator->ResizeBuffer(this->width, this->height);
 	}
 
 	void EmulatorRenderer::ReleaseDeviceDependentResources()
