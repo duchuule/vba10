@@ -37,7 +37,14 @@
         Square44x44Logo="Assets\SmallLogo.png"
         Description="VBA10"
         BackgroundColor="transparent">
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" 
+                Square71x71Logo="Assets\SmallTile.png"> 
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#4D3A89"/>
       </uap:VisualElements>
     </Application>
   </Applications>
