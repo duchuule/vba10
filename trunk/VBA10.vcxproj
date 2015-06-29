@@ -220,6 +220,7 @@
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\SmallLogo.scale-140.png" />
     <Image Include="Assets\SmallLogo.scale-240.png" />
+    <Image Include="Assets\SmallTile.scale-100.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png" />
     <Image Include="Assets\ThumbStick.dds" />
