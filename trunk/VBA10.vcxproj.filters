@@ -610,5 +610,11 @@
     <Image Include="Assets\play.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\SmallLogo.scale-140.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.scale-240.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>
