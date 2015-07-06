@@ -21,6 +21,7 @@ namespace VBA10
 
 	task<void> ParseVBAIniAsync();
 	bool IsROMLoaded(void);
+	bool IsGBAROMLoaded(void);
 	task<void> SaveStateAsync(void);
 	task<void> SaveGBAStateAsync(void);
 	task<void> SaveGBStateAsync(void);
@@ -48,7 +49,9 @@ namespace VBA10
 	task<Windows::Foundation::Collections::IVector<CheatData ^> ^> LoadCheats(void);
 	task<bool> SaveCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
 
-	task<void> ApplyCheats(void);
+	void ApplyCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
+	void ApplyCheatsGB(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
+	void ApplyCheatsGBA(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
 
 	task<void> SaveBytesToFileAsync(StorageFile ^file, unsigned char *bytes, size_t length);
 	task<ROMData> GetBytesFromFileAsync(StorageFile ^file);

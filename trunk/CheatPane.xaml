@@ -28,6 +28,10 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            
+            <Grid.Resources>
+                <CollectionViewSource x:Name="cvsAllCheats"/>
+            </Grid.Resources>
 
             <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="Black" />
             <Border Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="Black" />
@@ -92,7 +96,8 @@
 
 
             <ListBox Grid.Column="1" Name="cheatList" Margin="0,70,0,0"
-                        Background="Transparent" >
+                        Background="Transparent"
+                     ItemsSource="{Binding Source={StaticResource cvsAllCheats}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalAlignment="Stretch">
