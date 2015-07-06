@@ -186,12 +186,11 @@ void SelectROMPane::AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::
 {
 	FolderPicker ^picker = ref new FolderPicker();
 	
-#ifndef GBC
 	picker->FileTypeFilter->Append(".gba");
-#else
+
 	picker->FileTypeFilter->Append(".gbc");
 	picker->FileTypeFilter->Append(".gb");
-#endif
+
 	picker->SuggestedStartLocation = PickerLocationId::ComputerFolder;
 	picker->ViewMode = PickerViewMode::List;
 	picker->CommitButtonText = "Select ROM Directory";
@@ -249,11 +248,9 @@ void SelectROMPane::RefreshROMList(void)
 		StorageFolder ^localfolder = ApplicationData::Current->LocalFolder;
 		create_task([localfolder]()
 		{
-#ifndef GBC
-			return localfolder->GetFileAsync("Bunny Advance (Demo).gba");
-#else
-			return localfolder->GetFileAsync("Pong.gb");
-#endif
+
+		return localfolder->GetFileAsync("Bunny Advance (Demo).gba");
+
 		}).then([this, localfolder](StorageFile ^file)
 		{
 			StorageFileModel ^model = ref new StorageFileModel(file, localfolder);
@@ -280,12 +277,11 @@ void SelectROMPane::RefreshROMList(void)
 	}
 
 	Search::QueryOptions ^options = ref new Search::QueryOptions();
-#ifndef GBC
+
 	options->FileTypeFilter->Append(".gba");
-#else
 	options->FileTypeFilter->Append(".gbc");
 	options->FileTypeFilter->Append(".gb");
-#endif
+
 	
 	
 	StorageFolder ^folder = this->storageFolderVector->GetAt(0)->Folder;
@@ -320,11 +316,9 @@ void SelectROMPane::RefreshROMList(void)
 	StorageFolder ^localfolder = ApplicationData::Current->LocalFolder;
 	t = t.then([localfolder]()
 	{
-#ifndef GBC
+
 		return localfolder->GetFileAsync("Bunny Advance (Demo).gba");
-#else
-		return localfolder->GetFileAsync("Pong.gb");
-#endif
+
 	}).then([this, localfolder](StorageFile ^file)
 	{
 		StorageFileModel ^model = ref new StorageFileModel(file, localfolder);
