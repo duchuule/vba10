@@ -16,8 +16,10 @@ namespace VBA10
 	extern StorageFile ^ROMFile;
 	extern StorageFolder ^ROMFolder;
 	extern int SavestateSlot;
+	extern Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats;
 
 	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight);
+
 
 	task<void> ParseVBAIniAsync();
 	bool IsROMLoaded(void);
@@ -47,7 +49,7 @@ namespace VBA10
 	task<void> SuspendAsync(void);
 
 	task<Windows::Foundation::Collections::IVector<CheatData ^> ^> LoadCheats(void);
-	task<bool> SaveCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
+	task<bool> SaveCheats();
 
 	void ApplyCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
 	void ApplyCheatsGB(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats);
