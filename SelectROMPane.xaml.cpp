@@ -61,12 +61,6 @@ SelectROMPane::SelectROMPane()
 	int index = 0;
 	for (int i = 1; i < App::ROMDB->AllROMDBEntries->Size; i++)
 	{
-#if _DEBUG
-		int64 test = App::ROMDB->AllROMDBEntries->GetAt(i)->LastPlayed.UniversalTime;
-		Platform::String ^message = test + "\n";
-		wstring wstr(message->Begin(), message->End());
-		OutputDebugStringW(wstr.c_str());
-#endif
 
 		if (App::ROMDB->AllROMDBEntries->GetAt(i)->LastPlayed.UniversalTime > App::ROMDB->AllROMDBEntries->GetAt(index)->LastPlayed.UniversalTime)
 			index = i;

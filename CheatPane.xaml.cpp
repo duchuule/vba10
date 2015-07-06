@@ -81,6 +81,7 @@ void CheatPane::RefreshCheatList(void)
 {
 	this->cheatList->ItemsSource = nullptr;
 	this->cheatList->ItemsSource = this->cheatCodes;
+	//cvsAllCheats->Source = this->cheatCodes;
 }
 
 
@@ -249,8 +250,7 @@ Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 	bool continuedFromLast = false;
 	stringstream ss;
 
-	if (continuedFromLast == false) //reset the string builder if not continued from last time
-		ss.str("");  //clear the stringstream
+	
 
 	for (int i = 0; i < codeParts.size(); i++)
 	{
@@ -258,6 +258,9 @@ Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 		StrToUpper(line);
 		replaceAll(line, "\t", "");
 		replaceAll(line, "-", "");
+
+		if (continuedFromLast == false) //reset the string builder if not continued from last time
+			ss.str("");  //clear the stringstream
 
 		if (line.size() == 6)
 		{
