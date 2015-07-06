@@ -2614,12 +2614,12 @@ namespace VBA10
 		});
 	}
 
-	task<bool> SaveCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
+	task<bool> SaveCheats()
 	{
 		if(!ROMFile || !ROMFolder)
 			return task<bool>(([](){ return false;}));
 
-		ROMCheats = cheats;
+		//ROMCheats = cheats;
 
 		Platform::String ^name = ROMFile->Name;
 		const wchar_t *end = name->End();
@@ -2635,7 +2635,7 @@ namespace VBA10
 		}).then([](StorageFile ^file)
 		{
 			return file->OpenAsync(FileAccessMode::ReadWrite);
-		}).then([cheats](IRandomAccessStream ^stream)
+		}).then([](IRandomAccessStream ^stream)
 		{
 			IOutputStream ^outStream = stream->GetOutputStreamAt(0);
 			DataWriter ^writer = ref new DataWriter(outStream);
@@ -2643,17 +2643,17 @@ namespace VBA10
 			writer->UnicodeEncoding = UnicodeEncoding::Utf8;
 			writer->ByteOrder = ByteOrder::LittleEndian;
 
-			for (int i = 0; i < cheats->Size; i++)
+			for (int i = 0; i < ROMCheats->Size; i++)
 			{
 				if(i > 0)
 				{
 					writer->WriteString("\n");
 				}
-				writer->WriteString(cheats->GetAt(i)->Description);
+				writer->WriteString(ROMCheats->GetAt(i)->Description);
 				writer->WriteString("\n");
-				writer->WriteString(cheats->GetAt(i)->CheatCode);
+				writer->WriteString(ROMCheats->GetAt(i)->CheatCode);
 				writer->WriteString("\n");
-				writer->WriteString(cheats->GetAt(i)->Enabled ? "1" : "0");
+				writer->WriteString(ROMCheats->GetAt(i)->Enabled ? "1" : "0");
 			}
 			return create_task([writer]()
 			{

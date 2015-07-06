@@ -36,40 +36,42 @@ CheatPane::CheatPane()
 {
 	InitializeComponent();
 
-	cvsAllCheats->Source = this->cheatCodes;
 
 	if (IsROMLoaded())
 	{
+
+		this->RefreshCheatList();
+
 		addButton->IsEnabled = true;
 		descLabel->Text = "This emulator supports Gameshark, CodeBreaker and GameGenie codes.";
 
-		create_task([this]()
-		{
-			return LoadCheats();  //we actually don't have to do this, we can just get the saved list
-		}).then([this](IVector<CheatData ^> ^cheats)
-		{
-			this->cheatCodes = (IObservableVector<CheatData ^> ^) cheats;
-
-			return this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-			{
-				this->RefreshCheatList();
-			}));
-		}).then([this](task<void> t)
-		{
-			try
-			{
-				t.get();
-			}
-			catch (Platform::Exception ^ex)
-			{
-#if _DEBUG
-				String ^str = ex->Message;
-				wstring wstr(str->Begin(), str->End());
-
-				OutputDebugStringW(wstr.c_str());
-#endif
-			}
-		});
+//		create_task([this]()
+//		{
+//			return LoadCheats();  //we actually don't have to do this, we can just get the saved list
+//		}).then([this](IVector<CheatData ^> ^cheats)
+//		{
+//			this->cheatCodes = (IObservableVector<CheatData ^> ^) cheats;
+//
+//			return this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
+//			{
+//				this->RefreshCheatList();
+//			}));
+//		}).then([this](task<void> t)
+//		{
+//			try
+//			{
+//				t.get();
+//			}
+//			catch (Platform::Exception ^ex)
+//			{
+//#if _DEBUG
+//				String ^str = ex->Message;
+//				wstring wstr(str->Begin(), str->End());
+//
+//				OutputDebugStringW(wstr.c_str());
+//#endif
+//			}
+//		});
 	}
 	else
 	{
@@ -83,7 +85,7 @@ void CheatPane::RefreshCheatList(void)
 {
 	//this->cheatList->ItemsSource = nullptr;
 	//this->cheatList->ItemsSource = this->cheatCodes;
-	cvsAllCheats->Source = this->cheatCodes;
+	cvsAllCheats->Source = ROMCheats;
 }
 
 
@@ -92,16 +94,16 @@ void CheatPane::DeleteCheatButton_Click(Platform::Object^ sender, Windows::UI::X
 	Button ^button = safe_cast<Button ^>(sender);
 	CheatData ^data = safe_cast<CheatData ^>(button->DataContext);
 
-	for (int i = 0; i < this->cheatCodes->Size; i++)
+	for (int i = 0; i < ROMCheats->Size; i++)
 	{
-		if(this->cheatCodes->GetAt(i) == data)
+		if(ROMCheats->GetAt(i) == data)
 		{
-			this->cheatCodes->RemoveAt(i);
+			ROMCheats->RemoveAt(i);
 
 			//save cheats
 			try
 			{
-				SaveCheats(this->cheatCodes);
+				SaveCheats();
 			}
 			catch (InvalidCastException ^ex)
 			{
@@ -139,12 +141,12 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 		data->Description = this->descBox->Text;
 		data->Enabled = true;
 
-		this->cheatCodes->Append(data);
+		ROMCheats->Append(data);
 	}
 
 	try
 	{
-		SaveCheats(this->cheatCodes);
+		SaveCheats();
 	}
 	catch (InvalidCastException ^ex)
 	{

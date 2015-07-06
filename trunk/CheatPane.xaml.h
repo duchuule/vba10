@@ -16,7 +16,7 @@ namespace VBA10
 	public:
 		property bool Cancelled;
 
-		property IObservableVector<CheatData ^> ^ cheatCodes;
+		//property IObservableVector<CheatData ^> ^ cheatCodes;
 
 		CheatPane();
 	private:
