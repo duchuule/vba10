@@ -39,7 +39,7 @@ CheatPane::CheatPane()
 	if (IsROMLoaded())
 	{
 		addButton->IsEnabled = true;
-		descLabel->Text = "You can enter Gameshark and CodeBreaker codes. Using cheat codes can make your game unstable.";
+		descLabel->Text = "This emulator supports Gameshark, CodeBreaker and GameGenie codes.";
 
 		create_task([this]()
 		{
@@ -179,10 +179,9 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 	this->descBox->Text = "";
 }
 
-#ifdef GBC
-bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void (*messageCallback)(Platform::String ^))
+bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void(*messageCallback)(Platform::String ^))
 {
-	if(codeText == nullptr || codeText->IsEmpty())
+	if (codeText == nullptr || codeText->IsEmpty())
 	{
 		messageCallback("You must enter a cheat code first.");
 		return false;
@@ -200,27 +199,46 @@ bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void (*messageCallba
 		StrToUpper(line);
 		replaceAll(line, "\t", "");
 		replaceAll(line, " ", "");
-		replaceAll(line, "-", "");
 		for (int i = 0; i < line.length(); i++)
 		{
-			if(!IS_HEX(line.at(i)))
+			if (!IS_HEX(line.at(i)))
 			{
 				messageCallback("Invalid code format.");
 				return false;
 			}
 		}
-		if(line.length() != 6 && line.length() != 9 && line.length() != 8)
+		if (line.length() != 6 && line.length() != 9 && line.length() != 8 && line.length() != 12 && line.length() != 16)
 		{
 			messageCallback("Invalid code format.");
-            return false;
+			return false;
 		}
 	}
 
 	return true;
 }
 
+
+
+
 Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 {
+	//determine if gameboy or gameboy advance
+	bool isGBA = false; //false if gameboy, true if gameboy advance
+	
+	Platform::String ^file_path = ROMFile->Path;
+	wstring wfilepath(file_path->Begin(), file_path->End());
+
+	wstring folderpath;
+	wstring filename;
+	wstring filenamenoext;
+	wstring ext;
+	splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+	if (ext == L"gba")
+		isGBA = true;
+
+
+
 	vector<string> codeParts;
 	string code(codeText->Begin(), codeText->End());
 
@@ -228,112 +246,78 @@ Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 	strSplitLines(code, codeParts);
 
 	Vector<Platform::String ^> ^codes = ref new Vector<Platform::String ^>();
+	bool continuedFromLast = false;
+	stringstream ss;
+
+	if (continuedFromLast == false) //reset the string builder if not continued from last time
+		ss.str("");  //clear the stringstream
+
 	for (int i = 0; i < codeParts.size(); i++)
 	{
 		string line = codeParts.at(i);
 		StrToUpper(line);
 		replaceAll(line, "\t", "");
-		replaceAll(line, " ", "");
 		replaceAll(line, "-", "");
 
-		stringstream ss;
-		if(line.size() == 6)
+		if (line.size() == 6)
 		{
 			ss << line.substr(0, 3);
 			ss << '-';
 			ss << line.substr(3, 3);
-		}else if(line.size() == 9)
+		}
+		else if (line.size() == 9)
 		{
 			ss << line.substr(0, 3);
 			ss << '-';
 			ss << line.substr(3, 3);
 			ss << '-';
 			ss << line.substr(6, 3);
-		}else if(line.size() == 8)
-		{
-			ss << line;
 		}
-		string finalCode = ss.str();
-		wstring wstr (finalCode.begin(), finalCode.end());
-		codes->Append(ref new Platform::String(wstr.c_str()));
-	}
-
-	return codes;
-}
-
-#else
-bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void (*messageCallback)(Platform::String ^))
-{
-	if(codeText == nullptr || codeText->IsEmpty())
-	{
-		messageCallback("You must enter a cheat code first.");
-		return false;
-	}
-
-	vector<string> codeParts;
-	string code(codeText->Begin(), codeText->End());
-
-	strreplace(code, '\n', '\r');
-	strSplitLines(code, codeParts);
-
-	for (int i = 0; i < codeParts.size(); i++)
-	{
-		string line = codeParts.at(i);
-		StrToUpper(line);
-		replaceAll(line, "\t", "");
-		replaceAll(line, " ", "");
-		for (int i = 0; i < line.length(); i++)
+		else if (line.size() == 8) // 12345678
 		{
-			if(!IS_HEX(line.at(i)))
+			if (isGBA)  //convert to 12345678 12345678 format for gameboy advance game
 			{
-				messageCallback("Invalid code format.");
-				return false;
+				if (continuedFromLast) //this is the second part
+				{
+					ss << ' ';
+					ss << line;
+					continuedFromLast = false;
+				}
+				else
+				{
+					ss << line;
+					continuedFromLast = true;
+				}
 			}
+			else
+				ss << line;
+			
 		}
-		if(line.length() != 12 && line.length() != 16)
-		{
-			messageCallback("Invalid code format.");
-            return false;
-		}
-	}
-
-	return true;
-}
-
-Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
-{
-	vector<string> codeParts;
-	string code(codeText->Begin(), codeText->End());
-
-	strreplace(code, '\n', '\r');
-	strSplitLines(code, codeParts);
-
-	Vector<Platform::String ^> ^codes = ref new Vector<Platform::String ^>();
-	for (int i = 0; i < codeParts.size(); i++)
-	{
-		string line = codeParts.at(i);
-		StrToUpper(line);
-		replaceAll(line, "\t", "");
-		replaceAll(line, " ", "");
-
-		stringstream ss;
-		if(line.size() == 12)
+		else if(line.size() == 12)  //123456781234
 		{
 			ss << line.substr(0, 8);
 			ss << ' ';
 			ss << line.substr(8, 4);
-		}else if(line.size() == 16)
+		}
+		else if (line.size() == 13)  //12345678 1234
 		{
 			ss << line;
 		}
-		string finalCode = ss.str();
-		wstring wstr (finalCode.begin(), finalCode.end());
-		codes->Append(ref new Platform::String(wstr.c_str()));
+		else if(line.size() == 16 || line.size() == 17)  //two version of gameshark codes for GBA, 1234567812345678 OR 12345678 12345678
+		{
+			ss << line;
+		}
+
+		if (continuedFromLast == false)
+		{
+			string finalCode = ss.str();
+			wstring wstr(finalCode.begin(), finalCode.end());
+			codes->Append(ref new Platform::String(wstr.c_str()));
+		}
 	}
 
 	return codes;
 }
-#endif
 
 
 

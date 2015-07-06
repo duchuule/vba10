@@ -70,11 +70,8 @@ namespace VBA10
 	StorageFolder ^ROMFolder = nullptr;
 	int SavestateSlot = 0;
 	bool iniParsed = false;
-#ifndef GBC
 	bool gbaROMLoaded = true;
-#else
-	bool gbaROMLoaded = false;
-#endif
+
 
 	int firstIndexOf(string &s, char c) 
 	{
