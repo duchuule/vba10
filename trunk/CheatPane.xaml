@@ -17,114 +17,150 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Adaptive triggers -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"  />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="panelCheatList.(RelativePanel.RightOf)" Value="panelAddCode"/>
+                        <Setter Target="rowCode.Height" Value="200"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="mediumView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="panelCheatList.(RelativePanel.Below)" Value="panelAddCode"/>
+                        <Setter Target="rowCode.Height" Value="100"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="panelCheatList.(RelativePanel.Below)" Value="panelAddCode"/>
+                        <Setter Target="rowCode.Height" Value="100"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <!--<ctl:PageHeader>
             <ctl:PageHeader.HeaderContent>
                 <TextBlock x:Name="title" 
                            Style="{ThemeResource PageTitleTextBlockStyle}" Text="CHEATS"/>
             </ctl:PageHeader.HeaderContent>
         </ctl:PageHeader>-->
-        <Grid Grid.Row="1" Margin="8,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <Grid.Resources>
-                <CollectionViewSource x:Name="cvsAllCheats"/>
-            </Grid.Resources>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1">
+            <RelativePanel >
 
-            <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="Black" />
-            <Border Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="Black" />
-            <TextBlock Grid.Column="1" 
-                       Text="Cheat codes" 
-                       FontSize="23" 
-                       Margin="8,8,0,4"
-                       />
 
-            <Grid Grid.Column="0" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*"  MaxHeight="280"/>
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Add new code" 
+                <StackPanel x:Name="panelAddCode"
+                        Padding="8,0,8,0"
+                        BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
+                        >
+
+                    <TextBlock Grid.Row="0" Text="Add new code" 
+                               FontSize="23" 
+                               Margin="0,8,0,4"
+                               />
+
+                    <TextBlock TextWrapping="Wrap" 
+                           Margin="0,4,0,4" MaxWidth="400"
+                           x:Name="descLabel"
+                               HorizontalAlignment="Left"
+                                Text="seecpp" />
+
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="100" x:Name="rowCode" />
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" MinWidth="90"/>
+                            <ColumnDefinition Width="*" MaxWidth="400"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" 
+                                    Text="Description:"
+                                   VerticalAlignment="Center"
+                                    />
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Name="descBox" Margin="0,4,0,4" />
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                    Text="Code:" VerticalAlignment="Top"
+                                   Margin="0,4,0,0"/>
+
+                        <TextBox 
+                                    Name="codeBox" AcceptsReturn="True" 
+                                Grid.Row="1" Grid.Column="1" 
+                                    Margin="0,4,0,4"
+                                    />
+
+
+                        <Button Grid.Row="3" Content="Add" 
+                                HorizontalAlignment="Stretch" 
+                                Margin="0,4,0,4" Name="addButton"
+                                Click="addButton_Click" />
+                    </Grid>
+
+
+
+                </StackPanel>
+
+                <StackPanel x:Name="panelCheatList"
+                        Padding="8,0,8,0"
+                        BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
+                        >
+                    <StackPanel.Resources>
+                        <CollectionViewSource x:Name="cvsAllCheats"/>
+                    </StackPanel.Resources>
+
+                    <TextBlock Text="Cheat codes" 
                            FontSize="23" 
                            Margin="0,8,0,4"
                            />
 
-                <TextBlock Grid.Row="1" TextWrapping="Wrap" 
-                       Margin="0,4,0,4" MaxWidth="400"
-                       x:Name="descLabel"
-                            Text="seecpp" />
-
-                <Grid Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="160" />
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" MinWidth="110"/>
-                        <ColumnDefinition Width="*" MaxWidth="300"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" 
-                                Text="Description:"
-                               VerticalAlignment="Center"
-                                />
-                    <TextBox Grid.Row="0" Grid.Column="1"
-                             Name="descBox" Margin="0,4,0,4" />
-                    <TextBlock Grid.Row="1" Grid.Column="0"
-                                Text="Code:" VerticalAlignment="Top"
-                               Margin="0,4,0,0"/>
-
-                    <TextBox 
-                                Name="codeBox" AcceptsReturn="True" 
-                            Grid.Row="1" Grid.Column="1" 
-                                Margin="0,4,0,4"
-                                />
-
-
-                    <Button Grid.Row="3" Content="Add" 
-                            HorizontalAlignment="Stretch" 
-                            Margin="0,4,0,4" Name="addButton"
-                            Click="addButton_Click" />
-                </Grid>
-
-            </Grid>
-
-
-            <ListBox Grid.Column="1" Name="cheatList" Margin="0,70,0,0"
-                        Background="Transparent"
-                     ItemsSource="{Binding Source={StaticResource cvsAllCheats}}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="84" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="enableCheatBox" 
-                                          IsChecked="{Binding Enabled}" 
-                                          Margin="0,0,15,0" 
-                                          Checked="enableCheatBox_Checked"
-                                          Unchecked="enableCheatBox_Checked" />
-                                <StackPanel Grid.Column="0" Orientation="Vertical" 
-                                            HorizontalAlignment="Left">
-                                    <TextBlock  Text="{Binding CheatCode}"  FontSize="26"/>
-                                    <TextBlock  Text="{Binding Description}" FontSize="14" />
+                    <ListBox Grid.Column="1" Name="cheatList" 
+                            Background="Transparent"
+                         ItemsSource="{Binding Source={StaticResource cvsAllCheats}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                    
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Name="enableCheatBox" 
+                                              IsChecked="{Binding Enabled}" 
+                                              Checked="enableCheatBox_Checked"
+                                              Unchecked="enableCheatBox_Checked" />
+                                        <StackPanel Orientation="Vertical" 
+                                                HorizontalAlignment="Left">
+                                            <TextBlock  Text="{Binding CheatCode}" FontSize="16" />
+                                            <TextBlock  Text="{Binding Description}" FontSize="12" />
+                                        </StackPanel>
+                                        
+                                    <Button Grid.Column="1"   Click="DeleteCheatButton_Click" 
+                                            Name="DeleteCheatButton"
+                                            Content="&#xE108;"
+                                            Tag="Delete"
+                		             Style="{StaticResource AppBarButtonStyleSmall}"
+                		             />
                                 </StackPanel>
-                            </StackPanel>
-                            <Button Grid.Column="1"  
-                		        Tag="Delete" Click="DeleteCheatButton_Click" Name="DeleteCheatButton"
-                		        AutomationProperties.AutomationId="DeleteFolderAppBarButton" Content="&#xE107;"
-                		        RenderTransformOrigin="1.23,0.758" HorizontalAlignment="Right" Width="84" Height="66" VerticalAlignment="Top"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
+                                    
+                               
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
 </Page>
