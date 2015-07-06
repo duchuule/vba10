@@ -101,10 +101,15 @@
                                 <ColumnDefinition Width="84" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="enableCheatBox" IsChecked="{Binding Enabled}" Margin="0,0,15,0" Checked="enableCheatBox_Checked" Unchecked="enableCheatBox_Checked" />
-                                <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
-                                    <TextBlock Foreground="White" Text="{Binding CheatCode}" Width="auto" Height="auto" FontSize="26"/>
-                                    <TextBlock Foreground="White" Text="{Binding Description}" Width="auto" Height="auto" FontSize="14" />
+                                <CheckBox Name="enableCheatBox" 
+                                          IsChecked="{Binding Enabled}" 
+                                          Margin="0,0,15,0" 
+                                          Checked="enableCheatBox_Checked"
+                                          Unchecked="enableCheatBox_Checked" />
+                                <StackPanel Grid.Column="0" Orientation="Vertical" 
+                                            HorizontalAlignment="Left">
+                                    <TextBlock  Text="{Binding CheatCode}"  FontSize="26"/>
+                                    <TextBlock  Text="{Binding Description}" FontSize="14" />
                                 </StackPanel>
                             </StackPanel>
                             <Button Grid.Column="1"  
