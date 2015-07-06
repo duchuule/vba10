@@ -16,9 +16,11 @@ namespace VBA10
 	public:
 		property bool Cancelled;
 
+		property IObservableVector<CheatData ^> ^ cheatCodes;
+
 		CheatPane();
 	private:
-		Vector<CheatData ^> ^cheatCodes;
+		
 
 		void DeleteCheatButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		//void backbutton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

@@ -72,6 +72,7 @@ namespace VBA10
 	bool iniParsed = false;
 	bool gbaROMLoaded = true;
 
+	Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats = nullptr;
 
 	int firstIndexOf(string &s, char c) 
 	{
@@ -269,6 +270,11 @@ namespace VBA10
 		return (ROMFile && ROMFolder && ROMLoaded);
 	}
 
+	bool IsGBAROMLoaded(void)
+	{
+		return (ROMFile && ROMFolder && ROMLoaded && gbaROMLoaded);
+	}
+
 	task<void> LoadROMAsync(StorageFile ^file, StorageFolder ^folder)
 	{
 		bool gba = false;
@@ -382,13 +388,16 @@ namespace VBA10
 			emulating = true;
 		}).then([]()
 		{
-			return ApplyCheats();
-		}).then([](task<void> t)
+			return LoadCheats();
+		}).then([] (task<Windows::Foundation::Collections::IVector<CheatData ^> ^> tcheats)
 		{
 			try
 			{
-				t.get();
-			}catch(COMException ^ex)
+				ROMCheats = tcheats.get();
+				ApplyCheats(ROMCheats);
+
+			}
+			catch (COMException ^ex)
 			{
 #if _DEBUG
 				Platform::String ^str = ex->Message;
@@ -572,13 +581,16 @@ namespace VBA10
 			emulating = true;
 		}).then([]()
 		{
-			return ApplyCheats();
-		}).then([](task<void> t)
+			return LoadCheats();
+		}).then([](task<Windows::Foundation::Collections::IVector<CheatData ^>^ > tcheats)
 		{
 			try
-			{
-				t.get();
-			}catch(COMException ^ex)
+			{ 
+				ROMCheats = tcheats.get();
+				ApplyCheats(ROMCheats);
+
+			}
+			catch(COMException ^ex)
 			{
 #if _DEBUG
 				Platform::String ^str = ex->Message;
@@ -2208,7 +2220,7 @@ namespace VBA10
 			return file->DeleteAsync();
 		}).then([]()
 		{
-			return ApplyCheats();
+			return ApplyCheats(ROMCheats);
 		}).then([](){}).then([emulator](task<void> t)
 		{
 			try
@@ -2408,7 +2420,7 @@ namespace VBA10
 			return file->DeleteAsync();
 		}).then([]()
 		{
-			return ApplyCheats();
+			return ApplyCheats(ROMCheats);
 		}).then([](){}).then([emulator](task<void> t)
 		{
 			try
@@ -2607,6 +2619,8 @@ namespace VBA10
 		if(!ROMFile || !ROMFolder)
 			return task<bool>(([](){ return false;}));
 
+		ROMCheats = cheats;
+
 		Platform::String ^name = ROMFile->Name;
 		const wchar_t *end = name->End();
 		while(*end != '.') end--;
@@ -2650,7 +2664,7 @@ namespace VBA10
 			
 		}).then([]()
 		{
-			return ApplyCheats();
+			return ApplyCheats(ROMCheats);
 		}).then([](task<void> t)
 		{
 			try
@@ -2664,85 +2678,89 @@ namespace VBA10
 		});
 	}
 
-#ifdef GBC
-	task<void> ApplyCheats(void)
+	void ApplyCheats(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
 	{
-		if(!ROMFile || !ROMFolder)
-			return task<void>([](){});
-
-		return create_task([]()
-		{
-			return LoadCheats();
-		}).then([](Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
-		{
-			cheatsDeleteAll(false);
-
-			cheatsEnabled = (cheats->Size > 0);
-
-			for (int i = 0; i < cheats->Size; i++)
-			{
-				auto data = cheats->GetAt(i);
-				if(!data->Enabled)
-					continue;
-
-				Platform::String ^code = data->CheatCode;
-				Platform::String ^desc = data->Description;
-
-				string codeString(code->Begin(), code->End());
-				string descString(desc->Begin(), desc->End());
-
-				if(code->Length() == 11 || code->Length() == 7)
-				{
-					// GameGenie
-					gbAddGgCheat(codeString.c_str(), descString.c_str());
-				}else if(code->Length() == 8)
-				{
-					// Gameshark
-					gbAddGsCheat(codeString.c_str(), descString.c_str());
-				}
-			}
-		});
+		if (gbaROMLoaded)
+			ApplyCheatsGBA(cheats);
+		else
+			ApplyCheatsGB(cheats);
 	}
-#else
-	task<void> ApplyCheats(void)
+
+
+
+	void ApplyCheatsGBA(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
 	{
-		if(!ROMFile || !ROMFolder)
-			return task<void>([](){});
 
-		return create_task([]()
+		cheatsDeleteAll(false);
+
+		cheatsEnabled = (cheats->Size > 0);
+
+		for (int i = 0; i < cheats->Size; i++)
 		{
-			return LoadCheats();
-		}).then([](Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
-		{
-			cheatsDeleteAll(false);
+			auto data = cheats->GetAt(i);
+			if (!data->Enabled)
+				continue;
 
-			cheatsEnabled = (cheats->Size > 0);
+			Platform::String ^code = data->CheatCode;
+			Platform::String ^desc = data->Description;
 
-			for (int i = 0; i < cheats->Size; i++)
+			string codeString(code->Begin(), code->End());
+			string descString(desc->Begin(), desc->End());
+
+			if (code->Length() == 13)
 			{
-				auto data = cheats->GetAt(i);
-				if(!data->Enabled)
-					continue;
-
-				Platform::String ^code = data->CheatCode;
-				Platform::String ^desc = data->Description;
-
-				string codeString(code->Begin(), code->End());
-				string descString(desc->Begin(), desc->End());
-
-				if(code->Length() == 13)
-				{
-					// Code Breaker
-					cheatsAddCBACode(codeString.c_str(), descString.c_str());
-				}else if(code->Length() == 16)
-				{
-					// Gameshark
-					cheatsAddGSACode(codeString.c_str(), descString.c_str(), true);
-				}
+				// Code Breaker
+				cheatsAddCBACode(codeString.c_str(), descString.c_str());
 			}
-		});
+			else if (code->Length() == 16)
+			{
+				//gameshark v1, 2
+				cheatsAddGSACode(codeString.c_str(), descString.c_str(), false);
+			}
+			else if (code->Length() == 17)
+			{
+				//gameshark v3
+				//remove space				
+				codeString = codeString.substr(0, 8) + codeString.substr(9, 8);
+
+				cheatsAddGSACode(codeString.c_str(), descString.c_str(), true);
+			}
+		}
 	}
-#endif
+
+
+	void ApplyCheatsGB(Windows::Foundation::Collections::IVector<CheatData ^> ^cheats)
+	{
+
+		gbCheatRemoveAll();
+
+		cheatsEnabled = (cheats->Size > 0);
+
+		for (int i = 0; i < cheats->Size; i++)
+		{
+			auto data = cheats->GetAt(i);
+			if (!data->Enabled)
+				continue;
+
+			Platform::String ^code = data->CheatCode;
+			Platform::String ^desc = data->Description;
+
+			string codeString(code->Begin(), code->End());
+			string descString(desc->Begin(), desc->End());
+
+			if (code->Length() == 11 || code->Length() == 7)
+			{
+				// GameGenie
+				gbAddGgCheat(codeString.c_str(), descString.c_str());
+			}
+			else if (code->Length() == 8)
+			{
+				// Gameshark
+				gbAddGsCheat(codeString.c_str(), descString.c_str());
+			}
+		}
+	}
+
 
 	task<void> SaveBytesToFileAsync(StorageFile ^file, unsigned char *bytes, size_t length)
 	{

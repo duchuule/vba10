@@ -36,6 +36,8 @@ CheatPane::CheatPane()
 {
 	InitializeComponent();
 
+	cvsAllCheats->Source = this->cheatCodes;
+
 	if (IsROMLoaded())
 	{
 		addButton->IsEnabled = true;
@@ -43,10 +45,10 @@ CheatPane::CheatPane()
 
 		create_task([this]()
 		{
-			return LoadCheats();
+			return LoadCheats();  //we actually don't have to do this, we can just get the saved list
 		}).then([this](IVector<CheatData ^> ^cheats)
 		{
-			this->cheatCodes = (Vector<CheatData ^> ^) cheats;
+			this->cheatCodes = (IObservableVector<CheatData ^> ^) cheats;
 
 			return this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
 			{
@@ -79,9 +81,9 @@ CheatPane::CheatPane()
 
 void CheatPane::RefreshCheatList(void)
 {
-	this->cheatList->ItemsSource = nullptr;
-	this->cheatList->ItemsSource = this->cheatCodes;
-	//cvsAllCheats->Source = this->cheatCodes;
+	//this->cheatList->ItemsSource = nullptr;
+	//this->cheatList->ItemsSource = this->cheatCodes;
+	cvsAllCheats->Source = this->cheatCodes;
 }
 
 
@@ -117,27 +119,6 @@ void CheatPane::DeleteCheatButton_Click(Platform::Object^ sender, Windows::UI::X
 }
 
 
-//void CheatPane::backbutton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-//{
-//	this->Cancelled = true;
-//	this->Close();
-//}
-
-//void CheatPane::Close()
-//{
-//	try
-//	{
-//		SaveCheats(this->cheatCodes);
-//		(safe_cast<Popup ^>(this->Parent))->IsOpen = false;
-//	}catch(InvalidCastException ^ex)
-//	{
-//#if _DEBUG
-//		Platform::String ^message = ex->Message;
-//		wstring wstr(message->Begin(), message->End());
-//		OutputDebugStringW(L"InvalidCastException");
-//#endif
-//	}
-//}
 
 
 void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -223,21 +204,6 @@ bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void(*messageCallbac
 
 Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 {
-	//determine if gameboy or gameboy advance
-	bool isGBA = false; //false if gameboy, true if gameboy advance
-	
-	Platform::String ^file_path = ROMFile->Path;
-	wstring wfilepath(file_path->Begin(), file_path->End());
-
-	wstring folderpath;
-	wstring filename;
-	wstring filenamenoext;
-	wstring ext;
-	splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
-
-	if (ext == L"gba")
-		isGBA = true;
-
 
 
 	vector<string> codeParts;
@@ -258,6 +224,7 @@ Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 		StrToUpper(line);
 		replaceAll(line, "\t", "");
 		replaceAll(line, "-", "");
+		line = trim(line);
 
 		if (continuedFromLast == false) //reset the string builder if not continued from last time
 			ss.str("");  //clear the stringstream
@@ -278,7 +245,7 @@ Vector<Platform::String ^>^ CheatPane::GetCodes(Platform::String ^codeText)
 		}
 		else if (line.size() == 8) // 12345678
 		{
-			if (isGBA)  //convert to 12345678 12345678 format for gameboy advance game
+			if (IsGBAROMLoaded())  //convert to 12345678 12345678 format for gameboy advance game
 			{
 				if (continuedFromLast) //this is the second part
 				{

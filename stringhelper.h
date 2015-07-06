@@ -16,5 +16,8 @@ void StrToUpper(string &input);
 
 void splitFilePath(wstring &filepath, wstring &folderpath, wstring &filename, wstring &filenamenoext, wstring &ext);
 
+string trim(const std::string& str, const std::string& whitespace = " \t");
+
+string reduce(const std::string& str, const std::string& fill = " ", const std::string& whitespace = " \t");
 
 #endif
