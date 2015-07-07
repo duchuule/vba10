@@ -51,12 +51,12 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <!--<ctl:PageHeader>
+        <ctl:PageHeader>
             <ctl:PageHeader.HeaderContent>
                 <TextBlock x:Name="title" 
                            Style="{ThemeResource PageTitleTextBlockStyle}" Text="CHEATS"/>
             </ctl:PageHeader.HeaderContent>
-        </ctl:PageHeader>-->
+        </ctl:PageHeader>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1">
@@ -73,6 +73,10 @@
                     <TextBlock Grid.Row="0" Text="Add new code" 
                                FontSize="23" 
                                Margin="0,8,0,4"
+                               />
+                    <TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
+                               Margin="0,8,0,4"
+                               Height="0"
                                />
 
                     <TextBlock TextWrapping="Wrap" 
