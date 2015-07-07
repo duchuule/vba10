@@ -15,6 +15,18 @@ string &strreplace(string &input, char oldChar, char newChar)
 	return input;
 }
 
+wstring &strreplace(wstring &input, char oldChar, char newChar)
+{
+	for (int i = 0; i < input.length(); i++)
+	{
+		if (input.at(i) == oldChar)
+		{
+			input.replace(i, 1, 1, newChar);
+		}
+	}
+	return input;
+}
+
 vector<string> &strSplitLines(string &input, vector<string> &v)
 {
 	string line;

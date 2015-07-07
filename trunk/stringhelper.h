@@ -7,6 +7,7 @@
 using namespace std;
 
 string &strreplace(string &input, char oldChar, char newChar);
+wstring &strreplace(wstring &input, char oldChar, char newChar);
 
 vector<string> &strSplitLines(string &input, vector<string> &v);
 

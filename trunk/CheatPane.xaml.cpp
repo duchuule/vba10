@@ -134,15 +134,21 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 		return;
 	}
 	Vector<Platform::String ^> ^codes = this->GetCodes(this->codeBox->Text);
-	for (int i = 0; i < codes->Size; i++)
-	{
-		CheatData ^data = ref new CheatData();
-		data->CheatCode = codes->GetAt(i);
-		data->Description = this->descBox->Text;
-		data->Enabled = true;
+	
+	CheatData ^data = ref new CheatData();
+	data->Description = this->descBox->Text;
+	data->Enabled = true;
 
-		ROMCheats->Append(data);
+	if (codes->Size > 0)
+		data->CheatCode = codes->GetAt(0);
+
+
+	for (int i = 1; i < codes->Size; i++)
+	{
+		data->CheatCode += "\n" + codes->GetAt(i);
 	}
+
+	ROMCheats->Append(data);
 
 	try
 	{
