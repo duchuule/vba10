@@ -2585,7 +2585,9 @@ namespace VBA10
 						data->Description = ref new String(wtmp.c_str());
 
 						tmp = v.at(i + 1);
+						strreplace(tmp, '$', '\n');  //replace $ by \n
 						wtmp = wstring(tmp.begin(), tmp.end());
+
 						data->CheatCode = ref new String(wtmp.c_str());
 
 						tmp = v.at(i + 2);
@@ -2651,7 +2653,15 @@ namespace VBA10
 				}
 				writer->WriteString(ROMCheats->GetAt(i)->Description);
 				writer->WriteString("\n");
-				writer->WriteString(ROMCheats->GetAt(i)->CheatCode);
+
+				//replace \n in cheat code by $
+				wstring code( ROMCheats->GetAt(i)->CheatCode->Begin(), ROMCheats->GetAt(i)->CheatCode->End() );
+
+				strreplace(code, '\n', '$');
+
+				Platform::String^ pcode = ref new Platform::String(code.c_str());
+
+				writer->WriteString(pcode);
 				writer->WriteString("\n");
 				writer->WriteString(ROMCheats->GetAt(i)->Enabled ? "1" : "0");
 			}
@@ -2707,23 +2717,33 @@ namespace VBA10
 			string codeString(code->Begin(), code->End());
 			string descString(desc->Begin(), desc->End());
 
-			if (code->Length() == 13)
-			{
-				// Code Breaker
-				cheatsAddCBACode(codeString.c_str(), descString.c_str());
-			}
-			else if (code->Length() == 16)
-			{
-				//gameshark v1, 2
-				cheatsAddGSACode(codeString.c_str(), descString.c_str(), false);
-			}
-			else if (code->Length() == 17)
-			{
-				//gameshark v3
-				//remove space				
-				codeString = codeString.substr(0, 8) + codeString.substr(9, 8);
+			//split the compound code into multiple part
+			vector<string> codeParts;
+			strreplace(codeString, '\n', '\r');
+			strSplitLines(codeString, codeParts);
 
-				cheatsAddGSACode(codeString.c_str(), descString.c_str(), true);
+			for (int j = 0; j < codeParts.size(); j++)
+			{
+				string code = codeParts.at(j);
+
+				if (code.length() == 13)
+				{
+					// Code Breaker
+					cheatsAddCBACode(code.c_str(), descString.c_str());
+				}
+				else if (code.length() == 16)
+				{
+					//gameshark v1, 2
+					cheatsAddGSACode(code.c_str(), descString.c_str(), false);
+				}
+				else if (code.length() == 17)
+				{
+					//gameshark v3
+					//remove space				
+					code = code.substr(0, 8) + code.substr(9, 8);
+
+					cheatsAddGSACode(code.c_str(), descString.c_str(), true);
+				}
 			}
 		}
 	}
@@ -2748,15 +2768,25 @@ namespace VBA10
 			string codeString(code->Begin(), code->End());
 			string descString(desc->Begin(), desc->End());
 
-			if (code->Length() == 11 || code->Length() == 7)
+			//split the compound code into multiple part
+			vector<string> codeParts;
+			strreplace(codeString, '\n', '\r');
+			strSplitLines(codeString, codeParts);
+
+			for (int j = 0; j < codeParts.size(); j++)
 			{
-				// GameGenie
-				gbAddGgCheat(codeString.c_str(), descString.c_str());
-			}
-			else if (code->Length() == 8)
-			{
-				// Gameshark
-				gbAddGsCheat(codeString.c_str(), descString.c_str());
+				string code = codeParts.at(j);
+
+				if (code.length() == 11 || code.length() == 7)
+				{
+					// GameGenie
+					gbAddGgCheat(code.c_str(), descString.c_str());
+				}
+				else if (code.length() == 8)
+				{
+					// Gameshark
+					gbAddGsCheat(code.c_str(), descString.c_str());
+				}
 			}
 		}
 	}

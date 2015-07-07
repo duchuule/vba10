@@ -61,50 +61,14 @@
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1">
             <RelativePanel >
-                <!--<Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="40" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Name="enableCheatBox" 
-                                            IsChecked="{Binding Enabled}" 
-                                            Checked="enableCheatBox_Checked"
-                                            Unchecked="enableCheatBox_Checked"
-                                                Content="test"
-                                              Grid.Row="0"
-                                              Grid.Column="0"/>
-                    <Button Grid.Column="1"  
-                                            Name="EditCheatButton"
-                                            Content="&#xE104;"
-                		                Style="{StaticResource AppBarButtonStyleSmall}"
-                		             />
-                    <Button Grid.Column="2"   Click="DeleteCheatButton_Click" 
-                                            Name="DeleteCheatButton"
-                                            Content="&#xE107;"
-                		                Style="{StaticResource AppBarButtonStyleSmall}"
-                		             />
-
-                    <TextBlock  Text="{Binding CheatCode}" FontSize="16"
-                                                   Grid.Row="1"
-                                                   Grid.RowSpan="3"/>
-
-
-
-                </Grid>-->
+               
 
                 <StackPanel x:Name="panelAddCode"
                         Padding="8,0,8,0"
                         BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
                             MaxWidth="400"
-                            
                         >
+
 
                     <TextBlock Grid.Row="0" Text="Add new code" 
                                FontSize="23" 
@@ -202,11 +166,11 @@
                                                 Content="{Binding Description}"
                                               Grid.Row="0"
                                               Grid.Column="0"/>
-                                    <Button Grid.Column="1"  
+                                    <!--<Button Grid.Column="1"  
                                             Name="EditCheatButton"
                                             Content="&#xE104;"
                 		                Style="{StaticResource AppBarButtonStyleSmall}"
-                		             />
+                		             />-->
                                     <Button Grid.Column="2"   Click="DeleteCheatButton_Click" 
                                             Name="DeleteCheatButton"
                                             Content="&#xE107;"
@@ -215,7 +179,8 @@
                                     
                                        <TextBlock  Text="{Binding CheatCode}" FontSize="16"
                                                    Grid.Row="1"
-                                                   Grid.RowSpan="3"/>
+                                                   Grid.ColumnSpan="3"
+                                                   />
                                            
                                         
                                     
