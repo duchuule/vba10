@@ -20,7 +20,7 @@ namespace VBA10
 		FiveToFour,
 	};
 
-	ref class EmulatorSettings sealed
+	ref  class EmulatorSettings sealed
 	{
 	public:
 		EmulatorSettings();

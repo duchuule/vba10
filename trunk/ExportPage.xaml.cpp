@@ -2,7 +2,7 @@
 // ExportPage.xaml.cpp
 // Implementation of the ExportPage class
 //
-
+#include "pch.h"
 #include "ExportPage.xaml.h"
 
 using namespace VBA10;

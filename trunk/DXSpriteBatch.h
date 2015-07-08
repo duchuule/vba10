@@ -70,12 +70,12 @@ namespace Engine
 		void LoadShaders(void);
 		void UpdateProjectionMatrix(float width, float height);
 		void InitializeBuffers(void);
-		void CreateStates(void);
+		void CreateStates(bool useFilter);
 		void FlushBatch(void);
 		void RenderBatch(UINT start, UINT end, SpriteInfo &spriteInfo);
 		void QueueSprite(SpriteInfo &info);
 	public:
-		DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, float width, float height);
+		DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, bool useFilter, float width, float height);
 		~DXSpriteBatch(void);
 
 		void OnResize(float width, float height);
