@@ -7,6 +7,7 @@
 
 #include "DirectXPage.g.h"
 
+
 #include "Common\DeviceResources.h"
 #include "VBA10Main.h"
 #include "Database\ROMDBEntry.h"

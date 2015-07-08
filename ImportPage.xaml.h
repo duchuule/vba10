@@ -7,6 +7,8 @@
 
 #include "ImportPage.g.h"
 
+using namespace Windows::Storage;
+
 namespace VBA10
 {
 	/// <summary>

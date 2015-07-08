@@ -3,8 +3,9 @@
 // Implementation of the HelpPage class
 //
 
-#include "pch.h"
+
 #include "HelpPage.xaml.h"
+#include <ppltasks.h>
 
 using namespace VBA10;
 

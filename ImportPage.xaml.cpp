@@ -8,6 +8,7 @@
 #include "Database\ROMDBEntry.h"
 #include "Database\ROMDatabase.h"
 #include "SelectFilePane.xaml.h"
+
 #include "stringhelper.h"
 
 
@@ -28,6 +29,7 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
 using namespace Windows::Storage::Search;
+using namespace Windows::Storage::Streams;
 using namespace Concurrency;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
