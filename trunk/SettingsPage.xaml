@@ -242,7 +242,7 @@
                             <ComboBoxItem>1:1</ComboBoxItem>
                         </ComboBox>
 
-                        <ToggleSwitch Header="Use bilinear filter (app restart required)" 
+                        <ToggleSwitch Header="Use bilinear filter" 
                                       Name="linearFilterToggle" 
                                       IsOn="True" Toggled="linearFilterToggle_Toggled"
                                       />

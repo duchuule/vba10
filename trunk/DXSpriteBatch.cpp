@@ -23,15 +23,15 @@ namespace Engine
 	#define DEFAULT_DEPTH			1.0f
 
 
-	DXSpriteBatch::DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, bool useFilter, float width, float height)
+	DXSpriteBatch::DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, float width, float height)
 		: device(device), context(context),
 		batchedSprites(0), beginCalled(false), 
-		customPS(nullptr)
+		customPS(nullptr), _useFilter(false)
 	{ 
 		this->queuedSprites.reserve(MAX_BATCH_SIZE);
 		this->LoadShaders();
 		this->InitializeBuffers();
-		this->CreateStates(useFilter);
+		this->CreateStates();
 
 		this->UpdateProjectionMatrix(width, height);
 	}
@@ -152,7 +152,7 @@ namespace Engine
 		this->onResizeBuffer = tmpOnResizeBuffer;
 	}
 
-	void DXSpriteBatch::CreateStates(bool useFilter)
+	void DXSpriteBatch::CreateStates()
 	{
 		// Blend state
 		D3D11_BLEND_DESC blendDesc;
@@ -217,10 +217,8 @@ namespace Engine
 		D3D11_SAMPLER_DESC samplerDesc;
 		ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
 
-		if (useFilter)
-			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		else
-			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; 
+
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; 
 
 		//D3D11_FILTER_ANISOTROPIC; //D3D11_FILTER_MIN_MAG_MIP_POINT; //D3D11_FILTER_MIN_MAG_MIP_LINEAR
 
@@ -271,8 +269,42 @@ namespace Engine
 		this->customPS = (ID3D11PixelShader *) customPS;
 	}
 
-	void DXSpriteBatch::Begin(XMMATRIX &world)
+	void DXSpriteBatch::Begin(XMMATRIX &world, bool useFilter)
 	{
+		if (_useFilter != useFilter)
+		{
+			//update filter value
+			_useFilter = useFilter;
+
+			//create sampler state
+			D3D11_SAMPLER_DESC samplerDesc;
+			ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+			if (_useFilter)
+				samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+			else
+				samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+
+			//D3D11_FILTER_ANISOTROPIC; //D3D11_FILTER_MIN_MAG_MIP_POINT; //D3D11_FILTER_MIN_MAG_MIP_LINEAR
+
+			samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+			samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+			samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+			samplerDesc.MaxLOD = FLT_MAX;
+			samplerDesc.MaxAnisotropy = 1;
+			samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+
+			ComPtr<ID3D11SamplerState> tmpSampler;
+			if (FAILED(this->device->CreateSamplerState(&samplerDesc, tmpSampler.GetAddressOf())))
+			{
+
+			}
+
+			this->samplerState = tmpSampler;
+		}
+
+
 		if(beginCalled)
 		{
 			return;

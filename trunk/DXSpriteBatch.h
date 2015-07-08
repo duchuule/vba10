@@ -70,18 +70,20 @@ namespace Engine
 		void LoadShaders(void);
 		void UpdateProjectionMatrix(float width, float height);
 		void InitializeBuffers(void);
-		void CreateStates(bool useFilter);
+		void CreateStates();
 		void FlushBatch(void);
 		void RenderBatch(UINT start, UINT end, SpriteInfo &spriteInfo);
 		void QueueSprite(SpriteInfo &info);
+
+		bool _useFilter;
 	public:
-		DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, bool useFilter, float width, float height);
+		DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, float width, float height);
 		~DXSpriteBatch(void);
 
 		void OnResize(float width, float height);
 		void SetCustomPixelShader(void *customPS);
 
-		void Begin(XMMATRIX &world);
+		void Begin(XMMATRIX &world, bool filter);
 		void Draw(const Rectangle &targetArea, const Rectangle *sourceArea, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, float rotation, Color &color);
 		void Draw(const Rectangle &target, const Rectangle *source, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, Color &color);
 		void Draw(const Rectangle &target, const Rectangle *source, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, Color &color);
