@@ -17,6 +17,7 @@ namespace VBA10
 	extern StorageFolder ^ROMFolder;
 	extern int SavestateSlot;
 	extern Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats;
+	extern bool ShouldApplyNewCheats;
 
 	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight);
 
