@@ -57,9 +57,15 @@
                            Style="{ThemeResource PageTitleTextBlockStyle}" Text="CHEATS"/>
             </ctl:PageHeader.HeaderContent>
         </ctl:PageHeader>
+        <TextBlock x:Name="txtNoROM" Visibility="Collapsed"
+                   Grid.Row="1"
+                   Margin="8,8,8,4"
+                 Text="Please start a rom first." />
+        
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      Grid.Row="1">
+                      Grid.Row="1"
+                      x:Name="svMain">
             <RelativePanel >
                
 
@@ -70,12 +76,11 @@
                         >
 
 
-                    <TextBlock Grid.Row="0" Text="Add new code" 
+                    <TextBlock Grid.Row="0" Text="Add" 
                                FontSize="23" 
                                Margin="0,8,0,4"
                                />
                     <TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
-                               Margin="0,8,0,4"
                                Height="0"
                                />
 
@@ -83,7 +88,7 @@
                            Margin="0,4,0,4" 
                            x:Name="descLabel"
                                HorizontalAlignment="Left"
-                                Text="seecpp" />
+                                Text="This emulator supports Gameshark, CodeBreaker and GameGenie codes." />
 
                     <Grid>
                         <Grid.RowDefinitions>
@@ -133,14 +138,19 @@
                         <CollectionViewSource x:Name="cvsAllCheats"/>
                     </StackPanel.Resources>
 
-                    <TextBlock Text="Cheat codes" 
+                    <TextBlock Text="List" 
                            FontSize="23" 
                            Margin="0,8,0,4"
                            />
+                    
+                    <TextBlock x:Name="txtNoCheat" Text="No cheat code has been entered." 
+                               Visibility="Collapsed" 
+                               Margin="0,4,0,4" />
 
-                    <ListBox Grid.Column="1" Name="cheatList" 
+                    <ListBox  Name="cheatList" 
                             Background="Transparent"
-                         ItemsSource="{Binding Source={StaticResource cvsAllCheats}}">
+                         ItemsSource="{Binding Source={StaticResource cvsAllCheats}}"
+                              Margin="0,4,0,4" >
                         
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">

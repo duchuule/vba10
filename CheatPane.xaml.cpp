@@ -40,43 +40,21 @@ CheatPane::CheatPane()
 	if (IsROMLoaded())
 	{
 
+		
+
+		svMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		txtNoROM->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+
+		
+
 		this->RefreshCheatList();
 
-		addButton->IsEnabled = true;
-		descLabel->Text = "This emulator supports Gameshark, CodeBreaker and GameGenie codes.";
 
-//		create_task([this]()
-//		{
-//			return LoadCheats();  //we actually don't have to do this, we can just get the saved list
-//		}).then([this](IVector<CheatData ^> ^cheats)
-//		{
-//			this->cheatCodes = (IObservableVector<CheatData ^> ^) cheats;
-//
-//			return this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-//			{
-//				this->RefreshCheatList();
-//			}));
-//		}).then([this](task<void> t)
-//		{
-//			try
-//			{
-//				t.get();
-//			}
-//			catch (Platform::Exception ^ex)
-//			{
-//#if _DEBUG
-//				String ^str = ex->Message;
-//				wstring wstr(str->Begin(), str->End());
-//
-//				OutputDebugStringW(wstr.c_str());
-//#endif
-//			}
-//		});
 	}
 	else
 	{
-		addButton->IsEnabled = false;
-		descLabel->Text = "You need to load a ROM first before you can enter cheats.";
+		svMain->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		txtNoROM->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 }
 
@@ -86,6 +64,18 @@ void CheatPane::RefreshCheatList(void)
 	//this->cheatList->ItemsSource = nullptr;
 	//this->cheatList->ItemsSource = this->cheatCodes;
 	cvsAllCheats->Source = ROMCheats;
+
+	if (ROMCheats->Size > 0)
+	{
+		cheatList->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		txtNoCheat->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+
+	}
+	else
+	{
+		cheatList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		txtNoCheat->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	}
 }
 
 
@@ -101,20 +91,21 @@ void CheatPane::DeleteCheatButton_Click(Platform::Object^ sender, Windows::UI::X
 			ROMCheats->RemoveAt(i);
 
 			//save cheats
-			try
-			{
-				SaveCheats();
-			}
-			catch (InvalidCastException ^ex)
-			{
-#if _DEBUG
-				Platform::String ^message = ex->Message;
-				wstring wstr(message->Begin(), message->End());
-				OutputDebugStringW(L"InvalidCastException");
-#endif
-			}
+//			try
+//			{
+//				SaveCheats();
+//			}
+//			catch (InvalidCastException ^ex)
+//			{
+//#if _DEBUG
+//				Platform::String ^message = ex->Message;
+//				wstring wstr(message->Begin(), message->End());
+//				OutputDebugStringW(L"InvalidCastException");
+//#endif
+//			}
 
 			this->RefreshCheatList();
+			ShouldApplyNewCheats = true;
 			break;
 		}
 	}
@@ -150,19 +141,20 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 
 	ROMCheats->Append(data);
 
-	try
-	{
-		SaveCheats();
-	}
-	catch (InvalidCastException ^ex)
-	{
-#if _DEBUG
-		Platform::String ^message = ex->Message;
-		wstring wstr(message->Begin(), message->End());
-		OutputDebugStringW(L"InvalidCastException");
-#endif
-	}
+//	try
+//	{
+//		SaveCheats();
+//	}
+//	catch (InvalidCastException ^ex)
+//	{
+//#if _DEBUG
+//		Platform::String ^message = ex->Message;
+//		wstring wstr(message->Begin(), message->End());
+//		OutputDebugStringW(L"InvalidCastException");
+//#endif
+//	}
 
+	ShouldApplyNewCheats = true;
 	this->RefreshCheatList();
 	
 	this->codeBox->Text = "";
@@ -305,4 +297,6 @@ void CheatPane::enableCheatBox_Checked(Platform::Object^ sender, Windows::UI::Xa
 	CheatData ^data = safe_cast<CheatData ^>(box->DataContext);
 
 	data->Enabled = box->IsChecked->Value;
+
+	ShouldApplyNewCheats = true;
 }

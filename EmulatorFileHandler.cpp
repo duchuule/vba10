@@ -73,6 +73,7 @@ namespace VBA10
 	bool gbaROMLoaded = true;
 
 	Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats = nullptr;
+	bool ShouldApplyNewCheats = false;
 
 	int firstIndexOf(string &s, char c) 
 	{

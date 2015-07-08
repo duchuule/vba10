@@ -535,6 +535,13 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	//unselect item
 	NavMenuList->SetSelectedItem(nullptr);
 
+	//save and apply cheats if needed
+	if (ShouldApplyNewCheats)
+	{
+		ApplyCheats(ROMCheats);
+		SaveCheats();
+	}
+
 	CheckTogglePaneButtonSizeChanged();
 
 	//unpause emulator
