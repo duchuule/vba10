@@ -222,9 +222,6 @@
     <ClCompile Include="EmulatorRenderer.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
-    <ClCompile Include="EmulatorSettings.cpp">
-      <Filter>Emulator</Filter>
-    </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
@@ -286,6 +283,7 @@
     <ClCompile Include="ImportPage.xaml.cpp" />
     <ClCompile Include="SelectFilePane.xaml.cpp" />
     <ClCompile Include="Converter.cpp" />
+    <ClCompile Include="EmulatorSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -461,9 +459,6 @@
     <ClInclude Include="EmulatorRenderer.h">
       <Filter>Emulator</Filter>
     </ClInclude>
-    <ClInclude Include="EmulatorSettings.h">
-      <Filter>Emulator</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Emulator</Filter>
     </ClInclude>
@@ -542,6 +537,7 @@
     <ClInclude Include="SelectFilePane.xaml.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="Converter.h" />
+    <ClInclude Include="EmulatorSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
