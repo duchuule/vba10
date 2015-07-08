@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "NavMenuListView.h"
 
 using namespace Platform;

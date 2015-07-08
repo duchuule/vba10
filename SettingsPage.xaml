@@ -186,15 +186,7 @@
                                 MaxWidth="440">
                         <!--<ToggleSwitch Toggled="hzToggle_Toggled" Header="30 Hz mode for displays with 30 Hz" Name="hzToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
-                        <ComboBox Name="monitorComboBox" HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Top" 
-                                   SelectedIndex="1" 
-                                  SelectionChanged="monitorComboBox_SelectionChanged_1"
-                                  Header="Display Type">
-                            <ComboBoxItem>30 Hz</ComboBoxItem>
-                            <ComboBoxItem>60 Hz (default)</ComboBoxItem>
-                            <ComboBoxItem>120 Hz</ComboBoxItem>
-                        </ComboBox>
+                        
 
                         <!--<ToggleSwitch Toggled="fpsToggle_Toggled" Header="Show Frames per Second" x:Name="fpsToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
@@ -226,6 +218,16 @@
                             <ComboBoxItem>6</ComboBoxItem>
                         </ComboBox>
 
+                        <ComboBox Name="monitorComboBox" HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                   SelectedIndex="1" 
+                                  SelectionChanged="monitorComboBox_SelectionChanged_1"
+                                  Header="Display Type">
+                            <ComboBoxItem>30 Hz</ComboBoxItem>
+                            <ComboBoxItem>60 Hz (default)</ComboBoxItem>
+                            <ComboBoxItem>120 Hz</ComboBoxItem>
+                        </ComboBox>
+
                         <ComboBox Name="aspectComboBox" 
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top"
@@ -240,10 +242,19 @@
                             <ComboBoxItem>1:1</ComboBoxItem>
                         </ComboBox>
 
+                        <ToggleSwitch Header="Use bilinear filter (app restart required)" 
+                                      Name="linearFilterToggle" 
+                                      IsOn="True" Toggled="linearFilterToggle_Toggled"
+                                      />
+
+                        
+
                         <ToggleSwitch Header="Show FPS" 
                                       Name="fpsToggle" 
                                       IsOn="True"
                                       Toggled="fpsToggle_Toggled"/>
+
+                        
 
                     </StackPanel>
                 </ScrollViewer>

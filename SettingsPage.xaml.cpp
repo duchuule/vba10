@@ -3,6 +3,7 @@
 // Implementation of the SettingsPage class
 //
 
+#include "pch.h"
 #include "SettingsPage.xaml.h"
 #include "EmulatorSettings.h"
 #include <string>
@@ -73,6 +74,7 @@ SettingsPage::SettingsPage()
 		this->aspectComboBox->SelectedIndex = 4;
 		break;
 	}
+	this->linearFilterToggle->IsOn = App::Settings->LinearFilterEnabled;
 
 	//general
 	this->loadConfirmationToggle->IsOn = IsLoadConfirmationDisabled();
@@ -365,3 +367,12 @@ void SettingsPage::soundSyncToggle_Toggled_1(Platform::Object^ sender, Windows::
 }
 
 
+
+
+void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		App::Settings->LinearFilterEnabled = this->linearFilterToggle->IsOn;
+	}
+}

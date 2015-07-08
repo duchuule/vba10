@@ -261,7 +261,7 @@ namespace VBA10
 		//resize buffers take the render width and height, regardless of orientation
 		if(!this->dxSpriteBatch)
 		{
-			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), this->renderwidth, this->renderheight);
+			this->dxSpriteBatch = new DXSpriteBatch(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext(), App::Settings->LinearFilterEnabled, this->renderwidth, this->renderheight);
 		}else
 		{
 			this->dxSpriteBatch->OnResize(this->renderwidth, this->renderheight);
