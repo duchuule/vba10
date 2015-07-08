@@ -23,6 +23,7 @@ using namespace Windows::Foundation;
 #define DEFAULT_MONITOR_TYPE	MONITOR_60HZ
 #define DEFAULT_SAVE_CONFIRM	false
 #define DEFAULT_LOAD_CONFIRM	false
+#define DEFAULT_LINEAR_FILTER	true
 
 #define DEFAULT_LEFT_KEY	65
 #define DEFAULT_RIGHT_KEY	68
@@ -43,6 +44,37 @@ extern bool synchronize;
 
 namespace VBA10
 {
+	EmulatorSettings::EmulatorSettings()
+	{
+
+		localSettings = ApplicationData::Current->LocalSettings;
+	}
+
+	void EmulatorSettings::AddOrUpdateValue( Platform::String^ key, Platform::Object^ value)
+	{
+		localSettings->Values->Insert(key, value);
+
+	}
+
+	bool EmulatorSettings::GetValueOrDefault(Platform::String^ key, bool defaultValue)
+	{
+		//auto entry = safe_cast<IPropertyValue^>(localSettings->Values->Lookup(key));
+
+		if (localSettings->Values->HasKey(key))
+		{
+			return (bool)localSettings->Values->Lookup(key);
+		}
+		else
+		{
+			return defaultValue;
+		}
+	}
+
+
+
+	
+
+
 	//bool timeMeasured = false;
 	bool showFPS = false;
 
@@ -63,6 +95,7 @@ namespace VBA10
 	int monitorType = 1;
 	bool saveConfirmDisabled = false;
 	bool loadConfirmDisabled = false;
+	bool linearFilterEnabled = true;
 
 	VirtualKey leftKey;
 	VirtualKey upKey;
@@ -105,6 +138,8 @@ namespace VBA10
 	void setImageScale(int scale);
 	void disableSaveConfirmation(bool disable);
 	void disableLoadConfirmation(bool disable);
+	void enableLinearFilter(bool enable);
+	
 	
 	void setMonitorType(int type)
 	{
@@ -567,19 +602,27 @@ namespace VBA10
 		saveConfirmDisabled = disable;
 	}
 
-	void disableLoadConfirmation(bool disable)
+	void DisableSaveConfirmation(bool disable)
 	{
-		loadConfirmDisabled = disable;
-	}	
+		disableSaveConfirmation(disable);
+		StoreSettings();
+	}
 
 	bool IsSaveConfirmationDisabled(void)
 	{
 		return saveConfirmDisabled;
 	}
 
-	void DisableSaveConfirmation(bool disable)
+	
+
+	void disableLoadConfirmation(bool disable)
 	{
-		disableSaveConfirmation(disable);
+		loadConfirmDisabled = disable;
+	}	
+
+	void DisableLoadConfirmation(bool disable)
+	{
+		disableLoadConfirmation(disable);
 		StoreSettings();
 	}
 
@@ -587,12 +630,27 @@ namespace VBA10
 	{
 		return loadConfirmDisabled;
 	}
-
-	void DisableLoadConfirmation(bool disable)
+	
+	void enableLinearFilter(bool enable)
 	{
-		disableLoadConfirmation(disable);
+		linearFilterEnabled = enable;
+	}
+
+	void EnableLinearFilter(bool enable)
+	{
+		enableLinearFilter(enable);
 		StoreSettings();
 	}
+
+	bool IsLinearFilterEnabled(void)
+	{
+		return linearFilterEnabled;
+	}
+
+
+	
+
+	
 
 	void StoreSettings(void)
 	{
@@ -628,6 +686,7 @@ namespace VBA10
 		values->Insert("MonitorType", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(monitorType)));
 		values->Insert("LoadConfirmation", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(loadConfirmDisabled)));
 		values->Insert("SaveConfirmation", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(saveConfirmDisabled)));
+		values->Insert("LinearFilter", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(linearFilterEnabled)));
 	}
 
 
@@ -671,6 +730,8 @@ namespace VBA10
 		auto xKeyEntry = safe_cast<IPropertyValue^>(values->Lookup("XKeyMapping"));
 		auto yKeyEntry = safe_cast<IPropertyValue^>(values->Lookup("YKeyMapping"));
 		auto turboKeyEntry = safe_cast<IPropertyValue^>(values->Lookup("TurboKeyMapping"));
+
+		auto linearFilterEntry = safe_cast<IPropertyValue^>(values->Lookup("LinearFilter"));
 		
 		if(loadConfirmEntry)
 		{
@@ -880,6 +941,15 @@ namespace VBA10
 		}else
 		{
 			setRKeyBinding((VirtualKey) DEFAULT_R_KEY);
+		}
+
+		if (linearFilterEntry)
+		{
+			enableLinearFilter(linearFilterEntry->GetBoolean());
+		}
+		else
+		{
+			enableLinearFilter(DEFAULT_LINEAR_FILTER);
 		}
 
 		StoreSettings();

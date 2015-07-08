@@ -3,6 +3,7 @@
 #include "Emulator.h"
 
 using namespace Windows::System;
+using namespace Windows::Storage;
 
 #define MONITOR_30HZ	0
 #define MONITOR_60HZ	1
@@ -13,10 +14,48 @@ namespace VBA10
 	public enum class AspectRatioMode : int
 	{
 		Original,
-        Stretch,
-        One,
-        FourToThree,
-        FiveToFour,
+		Stretch,
+		One,
+		FourToThree,
+		FiveToFour,
+	};
+
+	ref class EmulatorSettings sealed
+	{
+	public:
+		EmulatorSettings();
+		
+		property bool LinearFilterEnabled
+		{
+			bool get()
+			{
+				return GetValueOrDefault(LinearFilterKey, LinearFilterDefault);
+			}
+			void set (bool value)
+			{
+				AddOrUpdateValue(LinearFilterKey, value);
+			}
+		}
+
+	private:
+		void AddOrUpdateValue(Platform::String^ key, Platform::Object^ value);
+		bool GetValueOrDefault(Platform::String^ key, bool defaultValue);
+		
+
+		
+	
+
+		// Our isolated storage settings
+		ApplicationDataContainer^ localSettings;
+
+		// The isolated storage key names of our settings
+		Platform::String^ LinearFilterKey = "LinearFilter1";
+
+		// The default value of our settings
+		const bool LinearFilterDefault = true;
+
+		
+
 	};
 
 
@@ -87,4 +126,9 @@ namespace VBA10
 
 	bool IsLoadConfirmationDisabled(void);
 	void DisableLoadConfirmation(bool disable);
+
+	void EnableLinearFilter(bool enable);
+	bool IsLinearFilterEnabled(void);
+
+	
 }

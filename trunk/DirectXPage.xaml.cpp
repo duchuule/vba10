@@ -130,7 +130,9 @@ DirectXPage::DirectXPage():
 	//	m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
 	//});
 
-
+	App::ESettings->LinearFilterEnabled = false;
+	bool test = App::ESettings->LinearFilterEnabled;
+	
 
 	//// Run task on a dedicated high priority background thread.
 	//m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);

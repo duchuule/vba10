@@ -8,6 +8,7 @@
 #include "App.g.h"
 #include "DirectXPage.xaml.h"
 #include "Database\ROMDatabase.h"
+#include "EmulatorSettings.h"
 
 namespace VBA10
 {
@@ -22,6 +23,8 @@ namespace VBA10
 
 	internal:
 		static ROMDatabase^ ROMDB;
+		static EmulatorSettings^ ESettings;
+		
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);

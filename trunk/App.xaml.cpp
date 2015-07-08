@@ -24,6 +24,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 ROMDatabase^ VBA10::App::ROMDB = nullptr;
+EmulatorSettings^ VBA10::App::ESettings = nullptr;
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code
@@ -37,6 +38,7 @@ App::App()
 	Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
 
 	ROMDB = ref new ROMDatabase();
+	ESettings = ref new EmulatorSettings();
 }
 
 /// <summary>
