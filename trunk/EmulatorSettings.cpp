@@ -56,19 +56,7 @@ namespace VBA10
 
 	}
 
-	bool EmulatorSettings::GetValueOrDefault(Platform::String^ key, bool defaultValue)
-	{
-		//auto entry = safe_cast<IPropertyValue^>(localSettings->Values->Lookup(key));
-
-		if (localSettings->Values->HasKey(key))
-		{
-			return (bool)localSettings->Values->Lookup(key);
-		}
-		else
-		{
-			return defaultValue;
-		}
-	}
+	
 
 
 

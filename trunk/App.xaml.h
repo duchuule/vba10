@@ -23,7 +23,7 @@ namespace VBA10
 
 	internal:
 		static ROMDatabase^ ROMDB;
-		static EmulatorSettings^ ESettings;
+		static EmulatorSettings^ Settings;
 		
 
 	private:

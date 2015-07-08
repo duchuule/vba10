@@ -3,11 +3,11 @@
 // Implementation of the SettingsPage class
 //
 
-#include "pch.h"
 #include "SettingsPage.xaml.h"
 #include "EmulatorSettings.h"
 #include <string>
 #include <sstream>
+#include <ppltasks.h>
 
 using namespace VBA10;
 

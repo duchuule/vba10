@@ -29,7 +29,7 @@ namespace VBA10
 		{
 			bool get()
 			{
-				return GetValueOrDefault(LinearFilterKey, LinearFilterDefault);
+				return GetValueOrDefault<bool> (LinearFilterKey, LinearFilterDefault);
 			}
 			void set (bool value)
 			{
@@ -41,7 +41,19 @@ namespace VBA10
 		void AddOrUpdateValue(Platform::String^ key, Platform::Object^ value);
 		bool GetValueOrDefault(Platform::String^ key, bool defaultValue);
 		
+		template<typename T>
+		T GetValueOrDefault(Platform::String^ key, T defaultValue)
+		{
 
+			if (localSettings->Values->HasKey(key))
+			{
+				return (T)localSettings->Values->Lookup(key);
+			}
+			else
+			{
+				return defaultValue;
+			}
+		}
 		
 	
 

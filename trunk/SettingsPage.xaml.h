@@ -6,6 +6,8 @@
 #pragma once
 
 #include "SettingsPage.g.h"
+#include "Emulator.h"
+
 
 namespace VBA10
 {
@@ -15,14 +17,13 @@ namespace VBA10
 	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class SettingsPage sealed
 	{
-	private:
-		EmulatorGame *emulator;
-		bool initdone;
-
 	public:
 		SettingsPage();
 
 	private:
+		EmulatorGame *emulator;
+		bool initdone;
+
 		//input
 		void UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, VirtualKey vk);
 		void touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

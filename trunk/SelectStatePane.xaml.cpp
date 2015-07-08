@@ -5,7 +5,7 @@
 
 #include "pch.h"
 #include "SelectStatePane.xaml.h"
-#include "DirectXPage.xaml.h";
+#include "DirectXPage.xaml.h"
 
 using namespace VBA10;
 
