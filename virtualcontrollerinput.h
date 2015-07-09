@@ -61,8 +61,12 @@ namespace VBA10
 		ControllerState state;
 
 		RECT padCrossRectangle;
-		RECT startSelectRectangle;
-		RECT buttonsRectangle;
+		RECT startRectangle;
+		RECT selectRectangle;
+		RECT turboRectangle;
+		RECT comboRectangle;
+		RECT aRectangle;
+		RECT bRectangle;
 		RECT lRectangle;
 		RECT rRectangle;
 
@@ -72,12 +76,34 @@ namespace VBA10
 		Windows::Foundation::Rect downRect;
 		Windows::Foundation::Rect startRect;
 		Windows::Foundation::Rect selectRect;
+		Windows::Foundation::Rect turboRect;
+		Windows::Foundation::Rect comboRect;
 		Windows::Foundation::Rect lRect;
 		Windows::Foundation::Rect rRect;
 		Windows::Foundation::Rect aRect;
 		Windows::Foundation::Rect bRect;
-		/*Windows::Foundation::Rect xRect;
-		Windows::Foundation::Rect yRect;*/
+		
+
+		int padCenterX;
+		int padCenterY;
+		int aLeft;
+		int aTop;
+		int bLeft;
+		int bTop;
+		int startLeft;
+		int startTop;
+		int selectRight;
+		int selectTop;
+		int turboLeft;
+		int turboTop;
+		int comboLeft;
+		int comboTop;
+		int lLeft;
+		int lTop;
+		int rRight;
+		int rTop;
+
+		float hscale;
 
 		void CreateRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 		void CreateRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
@@ -85,5 +111,9 @@ namespace VBA10
 		void CreateTouchRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 		void CreateTouchRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
 		void CreateTouchRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
+
+		void CreateRenderRectangles(void);
+		void CreateTouchRectangles(void);
+
 	};
 }

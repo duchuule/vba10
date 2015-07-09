@@ -44,6 +44,8 @@ extern bool synchronize;
 
 namespace VBA10
 {
+	EmulatorSettings ^EmulatorSettings::instance;
+
 	EmulatorSettings::EmulatorSettings()
 	{
 
@@ -74,11 +76,10 @@ namespace VBA10
 	int skipframes = -1;
 	int turboSkip = 5;
 	int powerSkip = 1;
-	int controllerScale = 100;
+
 	int controllerOpacity = 50;
 	AspectRatioMode aspect = AspectRatioMode::Original;
 	int imageScale = 100;
-	int dpadStyle = 1;
 	float deadzone = 10.0f;
 	int monitorType = 1;
 	bool saveConfirmDisabled = false;
@@ -120,7 +121,6 @@ namespace VBA10
 	void enableAutosaving(bool enable);
 	void setFrameSkip(int skip);
 	void setTurboFrameSkip(int skip);
-	void setControllerScaling(int scaling);
 	void setControllerOpacity(int opacity);
 	void setAspectRatio(AspectRatioMode aspect);
 	void setImageScale(int scale);
@@ -518,22 +518,7 @@ namespace VBA10
 		return imageScale;
 	}
 
-	void setControllerScaling(int scaling)
-	{
-		controllerScale = scaling;
-		EmulatorGame::GetInstance()->GetVirtualController()->UpdateVirtualControllerRectangles();
-	}
 
-	int GetControllerScaling(void)
-	{
-		return controllerScale;
-	}
-
-	void SetControllerScaling(int scaling)
-	{
-		setControllerScaling(scaling);
-		StoreSettings();
-	}
 
 	void setControllerOpacity(int opacity)
 	{
@@ -552,22 +537,7 @@ namespace VBA10
 		return controllerOpacity;
 	}
 	
-	void setDPadStyle(int dpad)
-	{
-		dpadStyle = dpad;
-		EmulatorGame::GetInstance()->GetVirtualController()->UpdateVirtualControllerRectangles();
-	}
 
-	void SetDPadStyle(int dpad)
-	{
-		setDPadStyle(dpad);
-		StoreSettings();
-	}
-
-	int GetDPadStyle(void)
-	{
-		return dpadStyle;
-	}
 
 	void setDeadzone(float value)
 	{
@@ -651,10 +621,8 @@ namespace VBA10
 		values->Insert("PowerFrameSkip", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(powerSkip)));
 		values->Insert("AspectRatio", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32((int) aspect)));
 		values->Insert("ImageScale", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(imageScale)));
-		values->Insert("ControllerScaling", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(controllerScale)));
 		values->Insert("ControllerOpacity", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(controllerOpacity)));
 		values->Insert("SynchronizeAudio", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(synchronize)));
-		values->Insert("DPadStyle", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(dpadStyle)));
 		values->Insert("Deadzone", dynamic_cast<PropertyValue^>(PropertyValue::CreateSingle(deadzone)));
 		values->Insert("MonitorType", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(monitorType)));
 		values->Insert("LoadConfirmation", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(loadConfirmDisabled)));
@@ -681,11 +649,9 @@ namespace VBA10
 		auto turboSkipFrames = safe_cast<IPropertyValue^>(values->Lookup("TurboSkipFrames"));
 		auto aspect = safe_cast<IPropertyValue^>(values->Lookup("AspectRatio"));
 		auto imageScale = safe_cast<IPropertyValue^>(values->Lookup("ImageScale"));
-		auto controllerScaling = safe_cast<IPropertyValue^>(values->Lookup("ControllerScaling"));
 		auto controllerOpacity = safe_cast<IPropertyValue^>(values->Lookup("ControllerOpacity"));
 		auto synchronizeAudio = safe_cast<IPropertyValue^>(values->Lookup("SynchronizeAudio"));
 		auto powerSkipEntry = safe_cast<IPropertyValue^>(values->Lookup("PowerFrameSkip"));
-		auto dpadEntry = safe_cast<IPropertyValue^>(values->Lookup("DPadStyle"));
 		auto deadzoneEntry = safe_cast<IPropertyValue^>(values->Lookup("Deadzone"));
 		auto monitorTypeEntry = safe_cast<IPropertyValue^>(values->Lookup("MonitorType"));
 
@@ -733,13 +699,7 @@ namespace VBA10
 		{
 			setDeadzone(DEFAULT_DEADZONE_VALUE);
 		}
-		if(dpadEntry)
-		{
-			setDPadStyle(dpadEntry->GetInt32());
-		}else
-		{
-			setDPadStyle(DEFAULT_DPAD_STYLE);
-		}
+
 		if(powerSkipEntry)
 		{
 			setPowerFrameSkip(powerSkipEntry->GetInt32());
@@ -761,13 +721,7 @@ namespace VBA10
 		{
 			setControllerOpacity(DEFAULT_CONTROLLER_OPACITY);
 		}
-		if(controllerScaling)
-		{
-			setControllerScaling(controllerScaling->GetInt32());
-		}else
-		{
-			setControllerScaling(DEFAULT_CONTROLLER_SCALE);
-		}
+
 		if(skipFrames)
 		{
 			setFrameSkip(skipFrames->GetInt32());

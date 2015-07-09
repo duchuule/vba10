@@ -605,7 +605,7 @@ namespace VBA10
 		
 
 		// Render last frame to screen
-		this->dxSpriteBatch->Begin(this->outputTransform, App::Settings->LinearFilterEnabled);
+		this->dxSpriteBatch->Begin(this->outputTransform, EmulatorSettings::Current->LinearFilterEnabled);
 
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
@@ -620,7 +620,7 @@ namespace VBA10
 			this->buttonsResource.As(&tex);
 			this->dxSpriteBatch->Draw(buttonsRect, this->buttonsSRV.Get(), tex.Get(), color);
 
-			int dpad = GetDPadStyle();
+			int dpad = EmulatorSettings::Current->DPadStyle;
 			if(dpad == 0)
 			{
 				Engine::Rectangle crossRect (this->crossRectangle.left, this->crossRectangle.top, this->crossRectangle.right - this->crossRectangle.left, this->crossRectangle.bottom - this->crossRectangle.top);
