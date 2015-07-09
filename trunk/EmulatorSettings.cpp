@@ -619,21 +619,6 @@ namespace VBA10
 		return loadConfirmDisabled;
 	}
 	
-	void enableLinearFilter(bool enable)
-	{
-		linearFilterEnabled = enable;
-	}
-
-	void EnableLinearFilter(bool enable)
-	{
-		enableLinearFilter(enable);
-		StoreSettings();
-	}
-
-	bool IsLinearFilterEnabled(void)
-	{
-		return linearFilterEnabled;
-	}
 
 
 	
@@ -674,7 +659,6 @@ namespace VBA10
 		values->Insert("MonitorType", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(monitorType)));
 		values->Insert("LoadConfirmation", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(loadConfirmDisabled)));
 		values->Insert("SaveConfirmation", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(saveConfirmDisabled)));
-		values->Insert("LinearFilter", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(linearFilterEnabled)));
 	}
 
 
@@ -931,14 +915,7 @@ namespace VBA10
 			setRKeyBinding((VirtualKey) DEFAULT_R_KEY);
 		}
 
-		if (linearFilterEntry)
-		{
-			enableLinearFilter(linearFilterEntry->GetBoolean());
-		}
-		else
-		{
-			enableLinearFilter(DEFAULT_LINEAR_FILTER);
-		}
+
 
 		StoreSettings();
 	}

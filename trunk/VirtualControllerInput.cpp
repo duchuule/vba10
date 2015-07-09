@@ -232,6 +232,11 @@ namespace VBA10
 
 	void VirtualControllerInput::UpdateVirtualControllerRectangles(void)
 	{
+
+
+
+
+
 		int yOffset = 0;
 		if(IsTouchControllerOnTop())
 		{
