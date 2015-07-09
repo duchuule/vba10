@@ -146,7 +146,7 @@ namespace VBA10
 		LeaveCriticalSection(&this->cs);
 
 
-		int dpad = GetDPadStyle();
+		int dpad = EmulatorSettings::Current->DPadStyle;
 		if(dpad >= 1)
 		{
 			Windows::Foundation::Point p = point->Position;
@@ -186,7 +186,7 @@ namespace VBA10
 		}
 		LeaveCriticalSection(&this->cs);
 
-		int dpad = GetDPadStyle();
+		int dpad = EmulatorSettings::Current->DPadStyle;
 		if(dpad >= 1)
 		{
 			if(this->stickFingerDown && point->PointerId == this->stickFingerID)
@@ -213,7 +213,7 @@ namespace VBA10
 		}
 		LeaveCriticalSection(&this->cs);
 
-		int dpad = GetDPadStyle();
+		int dpad = EmulatorSettings::Current->DPadStyle;
 		if(dpad >= 1)
 		{
 			if(this->stickFingerDown && point->PointerId == this->stickFingerID)
@@ -230,255 +230,214 @@ namespace VBA10
 		}
 	}
 
-	void VirtualControllerInput::UpdateVirtualControllerRectangles(void)
+	void VirtualControllerInput::CreateRenderRectangles(void)
 	{
+		float value = EmulatorSettings::Current->ControllerScale / 100.0f;
+		float value2 = EmulatorSettings::Current->ButtonScale / 100.0f;
 
+		EmulatorSettings ^settings = EmulatorSettings::Current;
 
-
-
-
-		int yOffset = 0;
-		if(IsTouchControllerOnTop())
+		//get setting info
+		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
 		{
-			yOffset = VCONTROLLER_Y_OFFSET;
+			padCenterX = settings->PadCenterXP * this->emulator->GetWidth();
+			padCenterY = settings->PadCenterYP * this->emulator->GetHeight();
+			aLeft = settings->ALeftP * this->emulator->GetWidth();
+			aTop = settings->ATopP * this->emulator->GetHeight();
+			bLeft = settings->BLeftP * this->emulator->GetWidth();
+			bTop = settings->BTopP * this->emulator->GetHeight();
+			startLeft = settings->StartLeftP * this->emulator->GetWidth();
+			startTop = settings->StartTopP * this->emulator->GetHeight();
+			selectRight = settings->SelectRightP * this->emulator->GetWidth();
+			selectTop = settings->SelectTopP * this->emulator->GetHeight();
+			lLeft = settings->LLeftP * this->emulator->GetWidth();
+			lTop = settings->LTopP * this->emulator->GetHeight();
+			rRight = settings->RRightP * this->emulator->GetWidth();
+			rTop = settings->RTopP * this->emulator->GetHeight();
+			turboLeft = settings->TurboLeftP * this->emulator->GetWidth();
+			turboTop = settings->TurboTopP * this->emulator->GetHeight();
+			comboLeft = settings->ComboLeftP * this->emulator->GetWidth();
+			comboTop = settings->ComboTopP * this->emulator->GetHeight();
 		}
-		// 1920x1080 as reference value
-		float resolutionScale = sqrt( this->emulator->GetHeight() / 1080.0f * this->emulator->GetWidth() / 1920.0f);
-
-		yOffset *= resolutionScale;
-		Windows::Foundation::Rect tmp;
-
-		float controllerScale = GetControllerScaling() / 100.0f;
-
-		this->CreateRectangleOnTheLeft(&tmp, CROSS_RECT_X, CROSS_RECT_Y, CROSS_RECT_WIDTH, CROSS_RECT_HEIGHT, resolutionScale);
-		tmp.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
+		else
 		{
-			tmp.Y += (1.0f - controllerScale) * tmp.Height;
-		}
-		tmp.Height *= controllerScale;
-
-		//this->padCrossRectangle = RECT((int)tmp.X, (int)tmp.Y, (int)(tmp.X + tmp.Width), (int)(tmp.Y + tmp.Height));
-		this->padCrossRectangle.left = (int) tmp.X;
-		this->padCrossRectangle.top = (int) tmp.Y;
-		this->padCrossRectangle.right = (int)(tmp.X + tmp.Width);
-		this->padCrossRectangle.bottom = (int)(tmp.Y + tmp.Height);
-		this->padCrossRectangle.top -= yOffset;
-		this->padCrossRectangle.bottom -= yOffset;
-
-		this->CreateRectangleCenter(&tmp, SS_RECT_X, SS_RECT_Y, SS_RECT_WIDTH, SS_RECT_HEIGHT, resolutionScale);
-
-		tmp.Y += (1.0f - controllerScale) * (tmp.Height / 2.0f);
-		tmp.Height *= controllerScale;
-		tmp.X += (1.0f - controllerScale) * (tmp.Width / 2.0f);
-		tmp.Width *= controllerScale;
-
-		//this->startSelectRectangle = Engine::Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height);
-		this->startSelectRectangle.left = (int) (tmp.X);
-		this->startSelectRectangle.top = (int) tmp.Y;
-		this->startSelectRectangle.right = (int)(tmp.X + tmp.Width);
-		this->startSelectRectangle.bottom = (int)(tmp.Y + tmp.Height);
-		//this->startSelectRectangle.Y -= yOffset;
-
-		this->CreateRectangleOnTheRight(&tmp, BUTTONS_RECT_X, BUTTONS_RECT_Y, BUTTONS_RECT_WIDTH, BUTTONS_RECT_HEIGHT, resolutionScale);
-
-		tmp.X += (1.0f - controllerScale) * tmp.Width;
-		tmp.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			tmp.Y += (1.0f - controllerScale) * tmp.Height;
-		}
-		tmp.Height *= controllerScale;
-
-		/*this->buttonsRectangle = Engine::Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height);
-		this->buttonsRectangle.Y -= yOffset;*/
-		this->buttonsRectangle.left = (int) tmp.X;
-		this->buttonsRectangle.top = (int) tmp.Y;
-		this->buttonsRectangle.right = (int)(tmp.X + tmp.Width);
-		this->buttonsRectangle.bottom = (int)(tmp.Y + tmp.Height);
-		this->buttonsRectangle.top -= yOffset;
-		this->buttonsRectangle.bottom -= yOffset;
-
-		this->CreateRectangleOnTheLeft(&tmp, L_RECT_X, L_RECT_Y, L_RECT_WIDTH, L_RECT_HEIGHT, resolutionScale);
-
-		tmp.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			tmp.Y += (1.0f - controllerScale) * tmp.Height;
-		}
-		tmp.Height *= controllerScale;
-
-		/*this->lRectangle = Engine::Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height);
-		this->lRectangle.Y += (int)(yOffset * 0.7f);*/
-		this->lRectangle.left = (int) tmp.X;
-		this->lRectangle.top = (int) tmp.Y;
-		this->lRectangle.right = (int)(tmp.X + tmp.Width);
-		this->lRectangle.bottom = (int)(tmp.Y + tmp.Height);
-		this->lRectangle.top -= yOffset;
-		this->lRectangle.bottom -= yOffset;
-
-		this->CreateRectangleOnTheRight(&tmp, R_RECT_X, R_RECT_Y, R_RECT_WIDTH, R_RECT_HEIGHT, resolutionScale);
-
-		tmp.X += (1.0f - controllerScale) * tmp.Width;
-		tmp.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			tmp.Y += (1.0f - controllerScale) * tmp.Height;
-		}
-		tmp.Height *= controllerScale;
-
-		/*this->rRectangle = Engine::Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height);
-		this->rRectangle.Y += (int)(yOffset * 0.7f);*/
-		this->rRectangle.left = (int) tmp.X;
-		this->rRectangle.top = (int) tmp.Y;
-		this->rRectangle.right = (int)(tmp.X + tmp.Width);
-		this->rRectangle.bottom = (int)(tmp.Y + tmp.Height);
-		this->rRectangle.top -= yOffset;
-		this->rRectangle.bottom -= yOffset;
-
-		float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-
-		yOffset = 0;
-		if(IsTouchControllerOnTop())
-		{
-			yOffset = VCONTROLLER_Y_OFFSET;
-		}
-		// 1920x1080 as reference value
-		resolutionScale = sqrt(this->emulator->GetHeight() / scale / 1080.0f * this->emulator->GetWidth() / scale / 1920.0f);
-
-		yOffset *= resolutionScale;
-
-		this->CreateTouchRectangleOnTheLeft(&this->leftRect, LEFT_RECT_X, LEFT_RECT_Y, LEFT_RECT_WIDTH, LEFT_RECT_HEIGHT, resolutionScale);
-		this->leftRect.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			this->leftRect.Y += (1.0f - controllerScale) * (this->leftRect.Height);
-		}
-		this->leftRect.Height *= controllerScale;
-
-		this->CreateTouchRectangleOnTheLeft(&this->rightRect, RIGHT_RECT_X, RIGHT_RECT_Y, RIGHT_RECT_WIDTH, RIGHT_RECT_HEIGHT, resolutionScale);
-		this->rightRect.X = this->leftRect.X + 2.0f * this->leftRect.Width;
-		this->rightRect.Width = this->leftRect.Width;
-		this->rightRect.Y = this->leftRect.Y;
-		this->rightRect.Height = this->leftRect.Height;
-		
-		this->CreateTouchRectangleOnTheLeft(&this->upRect, UP_RECT_X, UP_RECT_Y, UP_RECT_WIDTH, UP_RECT_HEIGHT, resolutionScale);
-		this->CreateTouchRectangleOnTheLeft(&this->downRect, DOWN_RECT_X, DOWN_RECT_Y, DOWN_RECT_WIDTH, DOWN_RECT_HEIGHT, resolutionScale);
-		if(IsTouchControllerOnTop())
-		{
-			this->upRect.Width *= controllerScale;
-			this->upRect.Height *= controllerScale;
-			this->downRect.Y = this->upRect.Y + 2.0f * this->upRect.Height;
-			this->downRect.Height = this->upRect.Height;
-			this->downRect.Width = this->upRect.Width;
-		}else
-		{
-			this->downRect.Y += (1.0f - controllerScale) * this->downRect.Height;
-			this->downRect.Height *= controllerScale;
-			this->downRect.Width *= controllerScale;
-			this->upRect.Y = this->downRect.Y - 2.0f * this->downRect.Height;
-			this->upRect.Height = this->downRect.Height;
-			this->upRect.Width = this->downRect.Width;
+			padCenterX = settings->PadCenterXL * this->emulator->GetWidth();
+			padCenterY = settings->PadCenterYL * this->emulator->GetHeight();
+			aLeft = settings->ALeftL * this->emulator->GetWidth();
+			aTop = settings->ATopL * this->emulator->GetHeight();
+			bLeft = settings->BLeftL * this->emulator->GetWidth();
+			bTop = settings->BTopL * this->emulator->GetHeight();
+			startLeft = settings->StartLeftL * this->emulator->GetWidth();
+			startTop = settings->StartTopL * this->emulator->GetHeight();
+			selectRight = settings->SelectRightL * this->emulator->GetWidth();
+			selectTop = settings->SelectTopL * this->emulator->GetHeight();
+			lLeft = settings->LLeftL * this->emulator->GetWidth();
+			lTop = settings->LTopL * this->emulator->GetHeight();
+			rRight = settings->RRightL * this->emulator->GetWidth();
+			rTop = settings->RTopL * this->emulator->GetHeight();
+			turboLeft = settings->TurboLeftL * this->emulator->GetWidth();
+			turboTop = settings->TurboTopL * this->emulator->GetHeight();
+			comboLeft = settings->ComboLeftL * this->emulator->GetWidth();
+			comboTop = settings->ComboTopL * this->emulator->GetHeight();
 		}
 
-		this->CreateTouchRectangleCenter(&this->startRect, START_RECT_X, START_RECT_Y, START_RECT_WIDTH, START_RECT_HEIGHT, resolutionScale);
-		this->startRect.Width *= controllerScale;
-		this->startRect.Y += (1.0f - controllerScale) * (this->startRect.Height / 2.0f);
-		this->startRect.Height *= controllerScale;
-		
+		this->hscale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
 
-		this->CreateTouchRectangleCenter(&this->selectRect, SELECT_RECT_X, SELECT_RECT_Y, SELECT_RECT_WIDTH, SELECT_RECT_HEIGHT, resolutionScale);
-		this->selectRect.X += (1.0f - controllerScale) * this->selectRect.Width;
-		this->selectRect.Width *= controllerScale;
-		this->selectRect.Y += (1.0f - controllerScale) * (this->selectRect.Height / 2.0f);
-		this->selectRect.Height *= controllerScale;
+		// Visible Rectangles
+		this->padCrossRectangle.left = padCenterX - 105 * value * this->hscale;
+		this->padCrossRectangle.right = padCenterX + 105 * value * this->hscale;
+		this->padCrossRectangle.top = padCenterY - 105 * value * this->hscale;
+		this->padCrossRectangle.bottom = padCenterY + 105 * value * this->hscale;
 
-		this->CreateTouchRectangleOnTheLeft(&this->lRect, L_RECT_X, L_RECT_Y, L_RECT_WIDTH, L_RECT_HEIGHT, resolutionScale);
-		this->lRect.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			this->lRect.Y += (1.0f - controllerScale) * this->lRect.Height;
-		}
-		this->lRect.Height *= controllerScale;
+		this->aRectangle.left = aLeft;
+		this->aRectangle.right = this->aRectangle.left + 120 * value2 * this->hscale;
+		this->aRectangle.top = aTop;
+		this->aRectangle.bottom = this->aRectangle.top + 120 * value2 * this->hscale;
 
-		this->CreateTouchRectangleOnTheRight(&this->rRect, R_RECT_X, R_RECT_Y, R_RECT_WIDTH, R_RECT_HEIGHT, resolutionScale);
-		this->rRect.X += (1.0f - controllerScale) * this->rRect.Width;
-		this->rRect.Width *= controllerScale;
-		if(!IsTouchControllerOnTop())
-		{
-			this->rRect.Y += (1.0f - controllerScale) * this->rRect.Height;
-		}
-		this->rRect.Height *= controllerScale;
+		this->bRectangle.left = bLeft;
+		this->bRectangle.right = this->bRectangle.left + 120 * value2 * this->hscale;
+		this->bRectangle.top = bTop;
+		this->bRectangle.bottom = this->bRectangle.top + 120 * value2 * this->hscale;
 
-		this->CreateTouchRectangleOnTheRight(&this->aRect, A_RECT_X_I, A_RECT_Y_I, A_RECT_WIDTH_I, A_RECT_HEIGHT_I, resolutionScale);
-		this->CreateTouchRectangleOnTheRight(&this->bRect, B_RECT_X_I, B_RECT_Y_I, B_RECT_WIDTH_I, B_RECT_HEIGHT_I, resolutionScale);
 
-		if(IsTouchControllerOnTop())
-		{
-			this->aRect.X += (1.0f - controllerScale) * this->aRect.Width;
-			this->aRect.Width *= controllerScale;
-			this->aRect.Height *= controllerScale;
+		this->startRectangle.left = startLeft;
+		this->startRectangle.right = this->startRectangle.left + 100 * value2 * this->hscale;
+		this->startRectangle.top = startTop;
+		this->startRectangle.bottom = this->startRectangle.top + 50 * value2 * this->hscale;
 
-			this->bRect.X = this->aRect.X - this->aRect.Width;
-			this->bRect.Width = this->aRect.Width;
-			this->bRect.Y = this->aRect.Y + this->aRect.Height;
-			this->bRect.Height = this->aRect.Height;
-		}else
-		{
-			this->aRect.X += (1.0f - controllerScale) * this->aRect.Width;
-			this->aRect.Width *= controllerScale;
+		this->selectRectangle.right = selectRight;
+		this->selectRectangle.left = this->selectRectangle.right - 100 * value2 * this->hscale;
+		this->selectRectangle.top = selectTop;
+		this->selectRectangle.bottom = this->selectRectangle.top + 50 * value2 * this->hscale;
 
-			this->bRect.X = this->aRect.X - this->aRect.Width;
-			this->bRect.Width = this->aRect.Width;
-			this->bRect.Y += (1.0f - controllerScale) * this->bRect.Height;
-			this->bRect.Height *= controllerScale;
+		this->turboRectangle.left = turboLeft;
+		this->turboRectangle.right = this->turboRectangle.left + 50 * value2 * this->hscale;
+		this->turboRectangle.top = turboTop;
+		this->turboRectangle.bottom = this->turboRectangle.top + 50 * value2 * this->hscale;
 
-			this->aRect.Y = this->bRect.Y - this->bRect.Height;
-			this->aRect.Height = this->bRect.Height;
-		}
+		this->comboRectangle.left = comboLeft;
+		this->comboRectangle.right = this->comboRectangle.left + 50 * value2 * this->hscale;
+		this->comboRectangle.top = comboTop;
+		this->comboRectangle.bottom = this->comboRectangle.top + 50 * value2 * this->hscale;
 
-		this->leftRect.Y -= yOffset;
-		this->rightRect.Y -= yOffset;
-		this->downRect.Y -= yOffset;
-		this->upRect.Y -= yOffset;
-		//this->startRect.Y -= yOffset;
-		//this->selectRect.Y -= yOffset;
-		this->lRect.Y -= yOffset;
-		this->rRect.Y -= yOffset;
-		this->aRect.Y -= yOffset;
-		this->bRect.Y -= yOffset;	
+		this->lRectangle.left = lLeft;
+		this->lRectangle.right = this->lRectangle.left + 90 * value2 * this->hscale;
+		this->lRectangle.top = lTop;
+		this->lRectangle.bottom = this->lRectangle.top + 53 * value2 * this->hscale;
 
-		this->visibleStickPos.x = (LONG) (this->padCrossRectangle.right + this->padCrossRectangle.left) / 2.0f;
-		this->visibleStickPos.y = (LONG) (this->padCrossRectangle.top + this->padCrossRectangle.bottom ) / 2.0f;
+
+		this->rRectangle.right = rRight;
+		this->rRectangle.left = this->rRectangle.right - 90 * value2 * this->hscale;
+		this->rRectangle.top = rTop;
+		this->rRectangle.bottom = this->rRectangle.top + 53 * value2 * this->hscale;
+
+
+
+		this->visibleStickPos.x = (LONG)((this->padCrossRectangle.right + this->padCrossRectangle.left) / 2.0f);
+		this->visibleStickPos.y = (LONG)((this->padCrossRectangle.top + this->padCrossRectangle.bottom) / 2.0f);
 
 		this->visibleStickOffset.x = 0;
 		this->visibleStickOffset.y = 0;
-		
-		int dpad = GetDPadStyle();
-		if(dpad >= 1)
+	}
+
+
+	void VirtualControllerInput::CreateTouchRectangles(void)
+	{
+		//origin at top left corner
+		EmulatorSettings ^settings = EmulatorSettings::Current;
+		float touchVisualQuotient = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
+
+
+		this->lRect.Y = this->lRectangle.top / touchVisualQuotient;
+		this->lRect.X = this->lRectangle.left / touchVisualQuotient;
+		this->lRect.Height = (this->lRectangle.bottom - this->lRectangle.top) / touchVisualQuotient;
+		this->lRect.Width = (this->lRectangle.right - this->lRectangle.left) / touchVisualQuotient;
+
+		this->rRect.Y = this->rRectangle.top / touchVisualQuotient;
+		this->rRect.X = this->rRectangle.left / touchVisualQuotient;
+		this->rRect.Height = (this->rRectangle.bottom - this->rRectangle.top) / touchVisualQuotient;
+		this->rRect.Width = (this->rRectangle.right - this->rRectangle.left) / touchVisualQuotient;
+
+		// Cross		
+		this->leftRect.X = this->padCrossRectangle.left / touchVisualQuotient;
+		this->leftRect.Y = this->padCrossRectangle.top / touchVisualQuotient;
+		this->leftRect.Width = ((this->padCrossRectangle.right - this->padCrossRectangle.left) / 3.0f) / touchVisualQuotient;
+		this->leftRect.Height = (this->padCrossRectangle.bottom - this->padCrossRectangle.top) / touchVisualQuotient;
+
+		this->rightRect.Width = ((this->padCrossRectangle.right - this->padCrossRectangle.left) / 3.0f) / touchVisualQuotient;
+		this->rightRect.Y = this->padCrossRectangle.top / touchVisualQuotient;
+
+		this->rightRect.Height = (this->padCrossRectangle.bottom - this->padCrossRectangle.top) / touchVisualQuotient;
+		this->rightRect.X = (this->padCrossRectangle.left / touchVisualQuotient) + 2.0f * this->rightRect.Width;
+
+
+		this->upRect.Y = this->padCrossRectangle.top / touchVisualQuotient;
+		this->upRect.X = this->padCrossRectangle.left / touchVisualQuotient;
+		this->upRect.Height = ((this->padCrossRectangle.bottom - this->padCrossRectangle.top) / 3.0f) / touchVisualQuotient;
+		this->upRect.Width = (this->padCrossRectangle.right - this->padCrossRectangle.left) / touchVisualQuotient;
+
+		this->downRect.Height = ((this->padCrossRectangle.bottom - this->padCrossRectangle.top) / 3.0f) / touchVisualQuotient;
+		this->downRect.Y = (this->padCrossRectangle.top / touchVisualQuotient) + 2.0f * this->downRect.Height;
+		this->downRect.X = this->padCrossRectangle.left / touchVisualQuotient;
+		this->downRect.Width = (this->padCrossRectangle.right - this->padCrossRectangle.left) / touchVisualQuotient;
+
+		// Buttons
+
+		this->aRect.Y = this->aRectangle.top / touchVisualQuotient;
+		this->aRect.X = this->aRectangle.left / touchVisualQuotient;
+		this->aRect.Height = (this->aRectangle.bottom - this->aRectangle.top) / touchVisualQuotient;
+		this->aRect.Width = (this->aRectangle.right - this->aRectangle.left) / touchVisualQuotient;
+
+		this->bRect.Y = this->bRectangle.top / touchVisualQuotient;
+		this->bRect.X = this->bRectangle.left / touchVisualQuotient;
+		this->bRect.Height = (this->bRectangle.bottom - this->bRectangle.top) / touchVisualQuotient;
+		this->bRect.Width = (this->bRectangle.right - this->bRectangle.left) / touchVisualQuotient;
+
+		this->selectRect.Y = this->selectRectangle.top / touchVisualQuotient;
+		this->selectRect.X = this->selectRectangle.left / touchVisualQuotient;
+		this->selectRect.Height = (this->selectRectangle.bottom - this->selectRectangle.top) / touchVisualQuotient;
+		this->selectRect.Width = (this->selectRectangle.right - this->selectRectangle.left) / touchVisualQuotient;
+
+		this->startRect.Y = this->startRectangle.top / touchVisualQuotient;
+		this->startRect.X = this->startRectangle.left / touchVisualQuotient;
+		this->startRect.Height = (this->startRectangle.bottom - this->startRectangle.top) / touchVisualQuotient;
+		this->startRect.Width = (this->startRectangle.right - this->startRectangle.left) / touchVisualQuotient;
+
+		this->turboRect.Y = this->turboRectangle.top / touchVisualQuotient;
+		this->turboRect.X = this->turboRectangle.left / touchVisualQuotient;
+		this->turboRect.Height = (this->turboRectangle.bottom - this->turboRectangle.top) / touchVisualQuotient;
+		this->turboRect.Width = (this->turboRectangle.right - this->turboRectangle.left) / touchVisualQuotient;
+
+		this->comboRect.Y = this->comboRectangle.top / touchVisualQuotient;
+		this->comboRect.X = this->comboRectangle.left / touchVisualQuotient;
+		this->comboRect.Height = (this->comboRectangle.bottom - this->comboRectangle.top) / touchVisualQuotient;
+		this->comboRect.Width = (this->comboRectangle.right - this->comboRectangle.left) / touchVisualQuotient;
+
+		int dpad = EmulatorSettings::Current->DPadStyle;
+
+		this->stickBoundaries.X = this->padCrossRectangle.left / touchVisualQuotient;
+		this->stickBoundaries.Y = this->padCrossRectangle.top / touchVisualQuotient;
+		this->stickBoundaries.Width = (this->padCrossRectangle.right - this->padCrossRectangle.left) / touchVisualQuotient;
+		this->stickBoundaries.Height = (this->padCrossRectangle.bottom - this->padCrossRectangle.top) / touchVisualQuotient;
+
+		if (dpad >= 2)
 		{
-			int touchOffset = this->leftRect.Width * 0.0f;
-			this->stickPos.X = this->leftRect.X + this->leftRect.Width * 1.5f + touchOffset;
-			this->stickPos.Y = this->leftRect.Y + this->leftRect.Height / 2.0f;
+			this->stickPos.X = this->stickBoundaries.X + this->stickBoundaries.Width / 2.0f;
+			this->stickPos.Y = this->stickBoundaries.Y + this->stickBoundaries.Height / 2.0f;
 
 			this->stickOffset.X = 0.0f;
 			this->stickOffset.Y = 0.0f;
 
-			if(dpad == 1)
-			{
-				float controllerScale = GetControllerScaling() / 100.0f;
-				this->stickBoundaries.X = 0;//this->leftRect.X + touchOffset;
-				this->stickBoundaries.Y = this->leftRect.Y - 50.0f * controllerScale;
-				this->stickBoundaries.Width = this->leftRect.Width * 3 + touchOffset + 75.0f * controllerScale;
-				this->stickBoundaries.Height = this->leftRect.Height + 100.0f * controllerScale;
-			}else
-			{
-				this->stickBoundaries.Y = 0;
-				this->stickBoundaries.X = 0;
-				this->stickBoundaries.Width = this->selectRect.X;
-				this->stickBoundaries.Height = this->emulator->GetHeight();
-			}
 		}
+	}
+
+
+
+	void VirtualControllerInput::UpdateVirtualControllerRectangles(void)
+	{
+
+		CreateRenderRectangles();
+		CreateTouchRectangles();
 	}
 
 	void VirtualControllerInput::GetCrossRectangle(RECT *rect)
@@ -488,12 +447,12 @@ namespace VBA10
 
 	void VirtualControllerInput::GetButtonsRectangle(RECT *rect)
 	{
-		*rect = this->buttonsRectangle;
+		*rect = this->aRectangle;
 	}
 
 	void VirtualControllerInput::GetStartSelectRectangle(RECT *rect)
 	{
-		*rect = this->startSelectRectangle;
+		*rect = this->startRectangle;
 	}
 
 	void VirtualControllerInput::GetLRectangle(RECT *rect)
@@ -593,7 +552,7 @@ namespace VBA10
 	{
 		ZeroMemory(&this->state, sizeof(ControllerState));
 
-		int dpad = GetDPadStyle();
+		int dpad = EmulatorSettings::Current->DPadStyle;
 
 		EnterCriticalSection(&this->cs);
 		for (auto i = this->pointers->First(); i->HasCurrent; i->MoveNext())
@@ -626,7 +585,7 @@ namespace VBA10
 				{
 					stickFinger = true;
 					float deadzone = GetDeadzone();
-					float controllerScale = (GetControllerScaling() / 100.0f);
+					float controllerScale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
 					float length = (float) sqrt(this->stickOffset.X * this->stickOffset.X + this->stickOffset.Y * this->stickOffset.Y);
 					float scale = (int) Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
 					if(length >= deadzone * scale * controllerScale)

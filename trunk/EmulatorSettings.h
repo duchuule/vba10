@@ -17,6 +17,19 @@ namespace VBA10
 	{
 	public:
 		EmulatorSettings();
+
+		static property EmulatorSettings ^Current
+		{
+			EmulatorSettings ^get()
+			{
+				if (!instance)
+				{
+					instance = ref new EmulatorSettings();
+				}
+				return instance;
+			}
+		}
+
 		
 		property bool LinearFilterEnabled
 		{
@@ -29,6 +42,48 @@ namespace VBA10
 				AddOrUpdateValue(LinearFilterKey, value);
 			}
 		}
+
+		property int ControllerScale
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(ControllerScaleKey, ControllerScaleDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(ControllerScaleKey, value);
+				EmulatorGame::GetInstance()->GetVirtualController()->UpdateVirtualControllerRectangles();
+			}
+		}
+
+
+		property int ButtonScale
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(ButtonScaleKey, ButtonScaleDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(ButtonScaleKey, value);
+				EmulatorGame::GetInstance()->GetVirtualController()->UpdateVirtualControllerRectangles();
+			}
+		}
+
+		property int DPadStyle
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(DPadStyleKey, DPadStyleDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(DPadStyleKey, value);
+				EmulatorGame::GetInstance()->GetVirtualController()->UpdateVirtualControllerRectangles();
+			}
+		}
+
+#pragma region Button positions
 
 		property double PadCenterXP
 		{
@@ -428,6 +483,8 @@ namespace VBA10
 			}
 		}
 
+#pragma endregion
+
 	private:
 		void AddOrUpdateValue(Platform::String^ key, Platform::Object^ value);
 		bool GetValueOrDefault(Platform::String^ key, bool defaultValue);
@@ -446,14 +503,20 @@ namespace VBA10
 			}
 		}
 		
-	
+
+		static EmulatorSettings ^instance;
 
 		// Our isolated storage settings
 		ApplicationDataContainer^ localSettings;
+		
 
 		// The isolated storage key names of our settings
 		Platform::String^ LinearFilterKey = "LinearFilterKey";
+		Platform::String^ ControllerScaleKey = "ControllerScaleKey";
+		Platform::String^ ButtonScaleKey = "ButtonScaleKey";
+		Platform::String^ DPadStyleKey = "DPadStyleKey";
 
+#pragma region button positions
 		Platform::String^ PadCenterXPKey = "PadCenterXPKey";
 		Platform::String^ PadCenterYPKey = "PadCenterYPKey";
 		Platform::String^ ALeftPKey = "ALeftPKey";
@@ -491,9 +554,15 @@ namespace VBA10
 		Platform::String^ TurboTopLKey = "TurboTopLKey";
 		Platform::String^ ComboLeftLKey = "ComboLeftLKey";
 		Platform::String^ ComboTopLKey = "ComboTopLKey";
+#pragma endregion
 
 		// The default value of our settings
 		const bool LinearFilterDefault = true;
+		const int ControllerScaleDefault = 100;
+		const int ButtonScaleDefault = 100;
+		const int DPadStyleDefault = 0;
+
+#pragma region button positions
 		const double PadCenterXPDefault = 0.25f;
 		const double PadCenterYPDefault = 0.7f;
 		const double ALeftPDefault = 0.75f;
@@ -531,7 +600,7 @@ namespace VBA10
 		const double TurboTopLDefault = 0.55f;
 		const double ComboLeftLDefault = 0.89f;
 		const double ComboTopLDefault = 0.72f;
-		
+#pragma endregion
 
 	};
 
@@ -580,8 +649,7 @@ namespace VBA10
 	int GetPowerFrameSkip(void);
 	void SetControllerOpacity(int opacity);
 	int GetControllerOpacity(void);
-	int GetControllerScaling(void);
-	void SetControllerScaling(int scaling);
+
 
 	void SetAspectRatio(AspectRatioMode aspect);
 	AspectRatioMode GetAspectRatio(void);
@@ -601,8 +669,6 @@ namespace VBA10
 	void ShowFPS(bool show);
 	bool SynchronizeAudio(void);
 	void SetSynchronizeAudio(bool sync);
-	int GetDPadStyle(void);
-	void SetDPadStyle(int dpad);
 	float GetDeadzone(void);
 	void SetDeadzone(float value);
 	int GetMonitorType(void);

@@ -42,10 +42,10 @@ SettingsPage::SettingsPage()
 	this->UpdateTextBox(this->lKeyBox, GetLKeyBinding());
 	this->UpdateTextBox(this->rKeyBox, GetRKeyBinding());
 	this->UpdateTextBox(this->turboModeBox, GetTurboKeyBinding());
-	this->controllerScaleSlider->Value = (double)GetControllerScaling();
+	this->controllerScaleSlider->Value = (double)EmulatorSettings::Current->ControllerScale;
 	this->controllerOpacitySlider->Value = (double)GetControllerOpacity();
 	this->deadzoneSlider->Value = (double)GetDeadzone();
-	this->dpadComboBox->SelectedIndex = GetDPadStyle();
+	this->dpadComboBox->SelectedIndex = EmulatorSettings::Current->DPadStyle;
 
 	//change the settings that depend on enabletouchcontrol
 	touchToggle_Toggled(nullptr, nullptr);
@@ -74,7 +74,7 @@ SettingsPage::SettingsPage()
 		this->aspectComboBox->SelectedIndex = 4;
 		break;
 	}
-	this->linearFilterToggle->IsOn = App::Settings->LinearFilterEnabled;
+	this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
 
 	//general
 	this->loadConfirmationToggle->IsOn = IsLoadConfirmationDisabled();
@@ -215,7 +215,7 @@ void SettingsPage::controllerScaleSlider_ValueChanged_1(Platform::Object^ sender
 
 		if (initdone)
 		{
-			SetControllerScaling((int)e->NewValue);
+			EmulatorSettings::Current->ControllerScale = (int)e->NewValue;
 		}
 	}
 }
@@ -242,7 +242,7 @@ void SettingsPage::dpadComboBox_SelectionChanged_1(Platform::Object^ sender, Win
 {
 	if (this->initdone)
 	{
-		SetDPadStyle(this->dpadComboBox->SelectedIndex);
+		EmulatorSettings::Current->DPadStyle = this->dpadComboBox->SelectedIndex;
 	}
 }
 
@@ -373,6 +373,6 @@ void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows:
 {
 	if (initdone)
 	{
-		App::Settings->LinearFilterEnabled = this->linearFilterToggle->IsOn;
+		EmulatorSettings::Current->LinearFilterEnabled = this->linearFilterToggle->IsOn;
 	}
 }
