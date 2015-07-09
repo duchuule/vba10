@@ -6,7 +6,7 @@ using namespace Microsoft::WRL;
 void LoadTextureFromFile(ID3D11Device1 *device, const wchar_t *filename, ID3D11Resource **texture, ID3D11ShaderResourceView **textureSRV)
 {
 	FILE *file;
-	if(_wfopen_s(&file, filename, L"r") != 0)
+	if(_wfopen_s(&file, filename, L"rb") != 0)
 	{
 		return;
 	}
