@@ -36,8 +36,10 @@ namespace VBA10
 		void UpdateVirtualControllerRectangles(void);
 
 		void GetCrossRectangle(RECT *rect);
-		void GetButtonsRectangle(RECT *rect);
-		void GetStartSelectRectangle(RECT *rect);
+		void GetARectangle(RECT *rect);
+		void GetBRectangle(RECT *rect);
+		void GetStartRectangle(RECT *rect);
+		void GetSelectRectangle(RECT *rect);
 		void GetLRectangle(RECT *rect);
 		void GetRRectangle(RECT *rect);
 		void Update(void);
@@ -105,12 +107,7 @@ namespace VBA10
 
 		float hscale;
 
-		void CreateRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
-		void CreateRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
-		void CreateRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
-		void CreateTouchRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
-		void CreateTouchRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
-		void CreateTouchRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale);
+
 
 		void CreateRenderRectangles(void);
 		void CreateTouchRectangles(void);

@@ -59,6 +59,9 @@
     <Filter Include="Database">
       <UniqueIdentifier>{e127113f-af0f-4a5b-ba6a-b82e7a446ca4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Direct3D">
+      <UniqueIdentifier>{5714a47e-204a-4cb0-b924-59d08eaefc07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -614,6 +617,105 @@
     </Image>
     <Image Include="Assets\SmallTile.scale-100.png">
       <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\divider.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_a_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_a_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_a_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_b_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_b_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_b_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_combo_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_combo_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_combo_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_cross.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_cross_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_cross_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_l_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_l_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_l_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_r_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_r_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_r_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_select.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_select_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_select_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_start.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_start_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_start_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_turbo_button.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_turbo_button_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\pad_turbo_button_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\resumetext.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\thumbstick.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\thumbstick_color.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\thumbstick_gbasp.dds">
+      <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\Direct3D\thumbstickcenter.dds">
+      <Filter>Assets\Direct3D</Filter>
     </Image>
   </ItemGroup>
 </Project>

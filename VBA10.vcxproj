@@ -211,6 +211,39 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Image Include="Assets\Direct3D\divider.dds" />
+    <Image Include="Assets\Direct3D\pad_a_button.dds" />
+    <Image Include="Assets\Direct3D\pad_a_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_a_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_b_button.dds" />
+    <Image Include="Assets\Direct3D\pad_b_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_b_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_combo_button.dds" />
+    <Image Include="Assets\Direct3D\pad_combo_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_combo_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_cross.dds" />
+    <Image Include="Assets\Direct3D\pad_cross_color.dds" />
+    <Image Include="Assets\Direct3D\pad_cross_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_l_button.dds" />
+    <Image Include="Assets\Direct3D\pad_l_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_l_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_r_button.dds" />
+    <Image Include="Assets\Direct3D\pad_r_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_r_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_select.dds" />
+    <Image Include="Assets\Direct3D\pad_select_color.dds" />
+    <Image Include="Assets\Direct3D\pad_select_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_start.dds" />
+    <Image Include="Assets\Direct3D\pad_start_color.dds" />
+    <Image Include="Assets\Direct3D\pad_start_gbasp.dds" />
+    <Image Include="Assets\Direct3D\pad_turbo_button.dds" />
+    <Image Include="Assets\Direct3D\pad_turbo_button_color.dds" />
+    <Image Include="Assets\Direct3D\pad_turbo_button_gbasp.dds" />
+    <Image Include="Assets\Direct3D\resumetext.dds" />
+    <Image Include="Assets\Direct3D\thumbstick.dds" />
+    <Image Include="Assets\Direct3D\thumbstickcenter.dds" />
+    <Image Include="Assets\Direct3D\thumbstick_color.dds" />
+    <Image Include="Assets\Direct3D\thumbstick_gbasp.dds" />
     <Image Include="Assets\Logo.scale-100.png" />
     <Image Include="Assets\no_snapshot.png" />
     <Image Include="Assets\pad_buttons.dds" />

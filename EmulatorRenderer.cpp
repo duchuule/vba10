@@ -9,13 +9,36 @@
 #include "TextureLoader.h"
 
 
-#define CROSS_TEXTURE_FILE_NAME						L"Assets/pad_cross.dds"
-#define BUTTONS_TEXTURE_FILE_NAME					L"Assets/pad_buttons.dds"
-#define SS_TEXTURE_FILE_NAME						L"Assets/pad_start_select.dds"
-#define L_TEXTURE_FILE_NAME							L"Assets/pad_l_button.dds"
-#define R_TEXTURE_FILE_NAME							L"Assets/pad_r_button.dds"
-#define STICK_TEXTURE_FILE_NAME						L"Assets/ThumbStick.dds"
-#define STICK_CENTER_TEXTURE_FILE_NAME				L"Assets/ThumbStickCenter.dds"
+#define CROSS_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_cross.dds"
+#define START_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_start.dds"
+#define SELECT_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_select.dds"
+#define A_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_a_button.dds"
+#define B_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_b_button.dds"
+#define L_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_l_button.dds"
+#define R_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_r_button.dds"
+#define STICK_TEXTURE_FILE_NAME						L"Assets/Direct3D/thumbstick.dds"
+#define STICK_CENTER_TEXTURE_FILE_NAME				L"Assets/Direct3D/thumbstickcenter.dds"
+
+#define CROSS_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_cross_color.dds"
+#define START_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_start_color.dds"
+#define SELECT_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_select_color.dds"
+#define A_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_a_button_color.dds"
+#define B_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_b_button_color.dds"
+#define L_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_l_button_color.dds"
+#define R_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_r_button_color.dds"
+#define STICK_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/thumbstick_color.dds"
+
+#define CROSS_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_cross_gbasp.dds"
+#define START_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_start_gbasp.dds"
+#define SELECT_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_select_gbasp.dds"
+#define A_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_a_button_gbasp.dds"
+#define B_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_b_button_gbasp.dds"
+#define L_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_l_button_gbasp.dds"
+#define R_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_r_button_gbasp.dds"
+#define STICK_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/thumbstick_gbasp.dds"
+
+#define DIVIDER_TEXTURE_FILE_NAME					L"Assets/Direct3D/divider.dds"
+
 
 #define AUTOSAVE_INTERVAL				10.0f
 
@@ -145,7 +168,7 @@ namespace VBA10
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			STICK_TEXTURE_FILE_NAME,
+			STICK_GBASP_TEXTURE_FILE_NAME,
 			this->stickResource.GetAddressOf(), 
 			this->stickSRV.GetAddressOf()
 			);
@@ -159,24 +182,39 @@ namespace VBA10
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			CROSS_TEXTURE_FILE_NAME,
+			CROSS_GBASP_TEXTURE_FILE_NAME,
 			this->crossResource.GetAddressOf(), 
 			this->crossSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			BUTTONS_TEXTURE_FILE_NAME,
-			this->buttonsResource.GetAddressOf(), 
-			this->buttonsSRV.GetAddressOf()
+			A_GBASP_TEXTURE_FILE_NAME,
+			this->aResource.GetAddressOf(), 
+			this->aSRV.GetAddressOf()
+			);
+
+		LoadTextureFromFile(
+			m_deviceResources->GetD3DDevice(),
+			B_GBASP_TEXTURE_FILE_NAME,
+			this->bResource.GetAddressOf(),
+			this->bSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			SS_TEXTURE_FILE_NAME,
-			this->startSelectResource.GetAddressOf(), 
-			this->startSelectSRV.GetAddressOf()
+			START_GBASP_TEXTURE_FILE_NAME,
+			this->startResource.GetAddressOf(), 
+			this->startSRV.GetAddressOf()
 			);
+
+		LoadTextureFromFile(
+			m_deviceResources->GetD3DDevice(),
+			SELECT_GBASP_TEXTURE_FILE_NAME,
+			this->selectResource.GetAddressOf(),
+			this->selectSRV.GetAddressOf()
+			);
+
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
@@ -587,9 +625,11 @@ namespace VBA10
 			source.bottom = 144;
 		}
 
-		this->controller->GetButtonsRectangle(&buttonsRectangle);
+		this->controller->GetARectangle(&aRectangle);
+		this->controller->GetBRectangle(&bRectangle);
 		this->controller->GetCrossRectangle(&crossRectangle);
-		this->controller->GetStartSelectRectangle(&startSelectRectangle);
+		this->controller->GetStartRectangle(&startRectangle);
+		this->controller->GetSelectRectangle(&selectRectangle);
 		this->controller->GetLRectangle(&lRectangle);
 		this->controller->GetRRectangle(&rRectangle);
 
@@ -614,11 +654,15 @@ namespace VBA10
 
 		if(TouchControlsEnabled())
 		{
-			Engine::Rectangle buttonsRect (this->buttonsRectangle.left, this->buttonsRectangle.top, this->buttonsRectangle.right - this->buttonsRectangle.left, this->buttonsRectangle.bottom - this->buttonsRectangle.top);
-
+			Engine::Rectangle aRect (this->aRectangle.left, this->aRectangle.top, this->aRectangle.right - this->aRectangle.left, this->aRectangle.bottom - this->aRectangle.top);
 			ComPtr<ID3D11Texture2D> tex;
-			this->buttonsResource.As(&tex);
-			this->dxSpriteBatch->Draw(buttonsRect, this->buttonsSRV.Get(), tex.Get(), color);
+			this->aResource.As(&tex);
+			this->dxSpriteBatch->Draw(aRect, this->aSRV.Get(), tex.Get(), color);
+
+			Engine::Rectangle bRect(this->bRectangle.left, this->bRectangle.top, this->bRectangle.right - this->bRectangle.left, this->bRectangle.bottom - this->bRectangle.top);
+			ComPtr<ID3D11Texture2D> tex2;
+			this->bResource.As(&tex2);
+			this->dxSpriteBatch->Draw(bRect, this->bSRV.Get(), tex2.Get(), color);
 
 			int dpad = EmulatorSettings::Current->DPadStyle;
 			if(dpad == 0)
@@ -647,12 +691,15 @@ namespace VBA10
 				this->dxSpriteBatch->Draw(stickRectE, this->stickSRV.Get(), tex.Get(), color);
 			}
 
-			Engine::Rectangle startSelectRectE (startSelectRectangle.left, startSelectRectangle.top, startSelectRectangle.right - startSelectRectangle.left, startSelectRectangle.bottom - startSelectRectangle.top);
+			Engine::Rectangle startRectE (startRectangle.left, startRectangle.top, startRectangle.right - startRectangle.left, startRectangle.bottom - startRectangle.top);
+			ComPtr<ID3D11Texture2D> texStart;
+			this->startResource.As(&texStart);
+			this->dxSpriteBatch->Draw(startRectE, this->startSRV.Get(), texStart.Get(), color);
 
-			ComPtr<ID3D11Texture2D> texSS;
-			this->startSelectResource.As(&texSS);
-
-			this->dxSpriteBatch->Draw(startSelectRectE, this->startSelectSRV.Get(), texSS.Get(), color);
+			Engine::Rectangle selectRectE(selectRectangle.left, selectRectangle.top, selectRectangle.right - selectRectangle.left, selectRectangle.bottom - selectRectangle.top);
+			ComPtr<ID3D11Texture2D> texSelect;
+			this->selectResource.As(&texSelect);
+			this->dxSpriteBatch->Draw(selectRectE, this->selectSRV.Get(), texSelect.Get(), color);
 
 			if(gbaROMLoaded)
 			{

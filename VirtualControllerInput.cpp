@@ -445,14 +445,24 @@ namespace VBA10
 		*rect = this->padCrossRectangle;
 	}
 
-	void VirtualControllerInput::GetButtonsRectangle(RECT *rect)
+	void VirtualControllerInput::GetARectangle(RECT *rect)
 	{
 		*rect = this->aRectangle;
 	}
 
-	void VirtualControllerInput::GetStartSelectRectangle(RECT *rect)
+	void VirtualControllerInput::GetBRectangle(RECT *rect)
+	{
+		*rect = this->bRectangle;
+	}
+
+	void VirtualControllerInput::GetStartRectangle(RECT *rect)
 	{
 		*rect = this->startRectangle;
+	}
+
+	void VirtualControllerInput::GetSelectRectangle(RECT *rect)
+	{
+		*rect = this->selectRectangle;
 	}
 
 	void VirtualControllerInput::GetLRectangle(RECT *rect)
@@ -465,88 +475,7 @@ namespace VBA10
 		*rect = this->rRectangle;
 	}
 
-	void VirtualControllerInput::CreateRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = (x * scale);
-		float scaledY = this->emulator->GetHeight() - scaledHeight - (y * scale);
 
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
-
-	void VirtualControllerInput::CreateRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = this->emulator->GetWidth() /2.0  - scaledWidth / 2.0f + x * scale;
-		float scaledY = this->emulator->GetHeight() - scaledHeight - (y * scale);
-
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
-
-	void VirtualControllerInput::CreateRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = this->emulator->GetWidth() - scaledWidth - (x * scale);
-		float scaledY = this->emulator->GetHeight() - scaledHeight - (y * scale);
-
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
-
-
-
-	void VirtualControllerInput::CreateTouchRectangleOnTheLeft(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float windowscale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = (x * scale);
-		float scaledY = (this->emulator->GetHeight()  / windowscale) - scaledHeight - (y * scale);
-
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
-
-	void VirtualControllerInput::CreateTouchRectangleCenter(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float windowscale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = this->emulator->GetWidth() / windowscale / 2.0 - scaledWidth / 2.0f + x * scale;
-		float scaledY = (this->emulator->GetHeight() / windowscale) - scaledHeight - (y * scale);
-
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
-
-	void VirtualControllerInput::CreateTouchRectangleOnTheRight(Windows::Foundation::Rect *rect, int x, int y, int width, int height, float scale)
-	{
-		float windowscale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-		float scaledWidth = width * scale;
-		float scaledHeight = height * scale;
-		float scaledX = (this->emulator->GetWidth() / windowscale) - scaledWidth - (x * scale);
-		float scaledY = (this->emulator->GetHeight() / windowscale) - scaledHeight - (y * scale);
-
-		rect->X = scaledX;
-		rect->Y = scaledY;
-		rect->Width = scaledWidth;
-		rect->Height = scaledHeight;
-	}
 
 	void VirtualControllerInput::Update(void)
 	{

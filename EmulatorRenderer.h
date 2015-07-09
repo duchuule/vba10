@@ -53,9 +53,11 @@ namespace VBA10
 
 		GameTime ^gameTime;
 		VirtualControllerInput				*controller;
-		RECT buttonsRectangle;
+		RECT aRectangle;
+		RECT bRectangle;
 		RECT crossRectangle;
-		RECT startSelectRectangle;
+		RECT startRectangle;
+		RECT selectRectangle;
 		RECT lRectangle;
 		RECT rRectangle;
 
@@ -75,10 +77,14 @@ namespace VBA10
 		ComPtr<ID3D11ShaderResourceView>	stickSRV;
 		ComPtr<ID3D11Resource>				crossResource;
 		ComPtr<ID3D11ShaderResourceView>	crossSRV;
-		ComPtr<ID3D11Resource>				buttonsResource;
-		ComPtr<ID3D11ShaderResourceView>	buttonsSRV;
-		ComPtr<ID3D11Resource>				startSelectResource;
-		ComPtr<ID3D11ShaderResourceView>	startSelectSRV;
+		ComPtr<ID3D11Resource>				aResource;
+		ComPtr<ID3D11ShaderResourceView>	aSRV;
+		ComPtr<ID3D11Resource>				bResource;
+		ComPtr<ID3D11ShaderResourceView>	bSRV;
+		ComPtr<ID3D11Resource>				startResource;
+		ComPtr<ID3D11ShaderResourceView>	startSRV;
+		ComPtr<ID3D11Resource>				selectResource;
+		ComPtr<ID3D11ShaderResourceView>	selectSRV;
 		ComPtr<ID3D11Resource>				lButtonResource;
 		ComPtr<ID3D11ShaderResourceView>	lButtonSRV;
 		ComPtr<ID3D11Resource>				rButtonResource;
