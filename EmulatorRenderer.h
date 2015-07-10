@@ -90,7 +90,7 @@ namespace VBA10
 		ComPtr<ID3D11Resource>				rButtonResource;
 		ComPtr<ID3D11ShaderResourceView>	rButtonSRV;
 
-		XMMATRIX							outputTransform;
+		XMFLOAT4X4							outputTransform;
 		
 		void AutosaveAsync(void);
 		void *MapBuffer(int index, size_t *rowPitch);

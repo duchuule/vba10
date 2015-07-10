@@ -582,7 +582,7 @@ namespace VBA10
 		const double ComboLeftPDefault = 0.85f;
 		const double ComboTopPDefault = 0.77f;
 
-		const double PadCenterXLDefault = 0.19f;
+		const double PadCenterXLDefault = 0.15f;
 		const double PadCenterYLDefault = 0.75f;
 		const double ALeftLDefault = 0.82f;
 		const double ATopLDefault = 0.45f;
@@ -592,9 +592,9 @@ namespace VBA10
 		const double StartTopLDefault = 0.90f;
 		const double SelectRightLDefault = 0.47f;
 		const double SelectTopLDefault = 0.90f;
-		const double LLeftLDefault = 0.03f;
+		const double LLeftLDefault = 0.0f;
 		const double LTopLDefault = 0.3f;
-		const double RRightLDefault = 0.97f;
+		const double RRightLDefault = 1.0f;
 		const double RTopLDefault = 0.3f;
 		const double TurboLeftLDefault = 0.74f;
 		const double TurboTopLDefault = 0.55f;
