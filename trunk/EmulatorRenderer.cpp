@@ -218,14 +218,14 @@ namespace VBA10
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			L_TEXTURE_FILE_NAME,
+			L_GBASP_TEXTURE_FILE_NAME,
 			this->lButtonResource.GetAddressOf(), 
 			this->lButtonSRV.GetAddressOf()
 			);
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
-			R_TEXTURE_FILE_NAME,
+			R_GBASP_TEXTURE_FILE_NAME,
 			this->rButtonResource.GetAddressOf(), 
 			this->rButtonSRV.GetAddressOf()
 			);
@@ -644,8 +644,11 @@ namespace VBA10
 		Color color2(1.0f, 1.0f, 1.0f, (GetControllerOpacity() / 100.0f) + 0.2f);
 		
 
-		// Render last frame to screen
-		this->dxSpriteBatch->Begin(this->outputTransform, EmulatorSettings::Current->LinearFilterEnabled);
+		
+
+		XMMATRIX x = XMLoadFloat4x4(&this->outputTransform);
+
+		this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
 
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
@@ -769,23 +772,25 @@ namespace VBA10
 
 	void EmulatorRenderer::CreateTransformMatrix(void)
 	{
+
+
 		if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_IDENTITY)
 		{
-			this->outputTransform = XMMatrixIdentity();
+			XMStoreFloat4x4(&this->outputTransform, XMMatrixIdentity());
 		}
 		else if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_ROTATE180)
 		{
-			this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(XM_PI), XMMatrixTranslation(this->renderwidth, this->renderheight, 0.0f));
+			XMStoreFloat4x4(&this->outputTransform, XMMatrixMultiply(XMMatrixRotationZ(XM_PI), XMMatrixTranslation(this->renderwidth, this->renderheight, 0.0f)));
 		}
 		else if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_ROTATE90)
 		{
 
-			this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(XM_PIDIV2), XMMatrixTranslation(this->renderwidth, 0.0f, 0.0f));
+			XMStoreFloat4x4(&this->outputTransform, XMMatrixMultiply(XMMatrixRotationZ(XM_PIDIV2), XMMatrixTranslation(this->renderwidth, 0.0f, 0.0f)));
 
 		}
 		else if (m_deviceResources->GetRotation() == DXGI_MODE_ROTATION_ROTATE270)
 		{
-			this->outputTransform = XMMatrixMultiply(XMMatrixRotationZ(-XM_PIDIV2), XMMatrixTranslation( 0.0f, this->renderheight, 0.0f));
+			XMStoreFloat4x4(&this->outputTransform, XMMatrixMultiply(XMMatrixRotationZ(-XM_PIDIV2), XMMatrixTranslation(0.0f, this->renderheight, 0.0f)));
 		}
 	}
 

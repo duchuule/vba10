@@ -46,6 +46,7 @@ namespace VBA10
 
 	private:
 		static VirtualControllerInput *instance;
+		float physicalWidth, physicalHeight; //in inch
 		
 		Map<unsigned int, Windows::UI::Input::PointerPoint ^> ^pointers;
 

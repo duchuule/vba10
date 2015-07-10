@@ -281,55 +281,67 @@ namespace VBA10
 			comboTop = settings->ComboTopL * this->emulator->GetHeight();
 		}
 
+		//IMPORTANT: hscale used to be 1.0 on 480p device. Now hscale is 1.5 on 480p devices, which makes the device effectively 320p
+		// so now all the number are based on 320p
 		this->hscale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
 
+		float rawDpiX =  Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
+		if (rawDpiX > 0) //if the monitor report dimension
+			this->physicalWidth = this->emulator->GetWidth() / rawDpiX;
+		else
+			this->physicalWidth = 6.0f;
+
+		float test = this->emulator->GetWidth() / Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
+		
+		
+
 		// Visible Rectangles
-		this->padCrossRectangle.left = padCenterX - 105 * value * this->hscale;
-		this->padCrossRectangle.right = padCenterX + 105 * value * this->hscale;
-		this->padCrossRectangle.top = padCenterY - 105 * value * this->hscale;
-		this->padCrossRectangle.bottom = padCenterY + 105 * value * this->hscale;
+		this->padCrossRectangle.left = padCenterX - 70 * value * this->hscale;
+		this->padCrossRectangle.right = padCenterX + 70 * value * this->hscale;
+		this->padCrossRectangle.top = padCenterY - 70 * value * this->hscale;
+		this->padCrossRectangle.bottom = padCenterY + 70 * value * this->hscale;
 
 		this->aRectangle.left = aLeft;
-		this->aRectangle.right = this->aRectangle.left + 120 * value2 * this->hscale;
+		this->aRectangle.right = this->aRectangle.left + 80 * value2 * this->hscale;
 		this->aRectangle.top = aTop;
-		this->aRectangle.bottom = this->aRectangle.top + 120 * value2 * this->hscale;
+		this->aRectangle.bottom = this->aRectangle.top + 80 * value2 * this->hscale;
 
 		this->bRectangle.left = bLeft;
-		this->bRectangle.right = this->bRectangle.left + 120 * value2 * this->hscale;
+		this->bRectangle.right = this->bRectangle.left + 80 * value2 * this->hscale;
 		this->bRectangle.top = bTop;
-		this->bRectangle.bottom = this->bRectangle.top + 120 * value2 * this->hscale;
+		this->bRectangle.bottom = this->bRectangle.top + 80 * value2 * this->hscale;
 
 
 		this->startRectangle.left = startLeft;
-		this->startRectangle.right = this->startRectangle.left + 100 * value2 * this->hscale;
+		this->startRectangle.right = this->startRectangle.left + 70 * value2 * this->hscale;
 		this->startRectangle.top = startTop;
-		this->startRectangle.bottom = this->startRectangle.top + 50 * value2 * this->hscale;
+		this->startRectangle.bottom = this->startRectangle.top + 35 * value2 * this->hscale;
 
 		this->selectRectangle.right = selectRight;
-		this->selectRectangle.left = this->selectRectangle.right - 100 * value2 * this->hscale;
+		this->selectRectangle.left = this->selectRectangle.right - 70 * value2 * this->hscale;
 		this->selectRectangle.top = selectTop;
-		this->selectRectangle.bottom = this->selectRectangle.top + 50 * value2 * this->hscale;
+		this->selectRectangle.bottom = this->selectRectangle.top + 35 * value2 * this->hscale;
 
 		this->turboRectangle.left = turboLeft;
-		this->turboRectangle.right = this->turboRectangle.left + 50 * value2 * this->hscale;
+		this->turboRectangle.right = this->turboRectangle.left + 35 * value2 * this->hscale;
 		this->turboRectangle.top = turboTop;
-		this->turboRectangle.bottom = this->turboRectangle.top + 50 * value2 * this->hscale;
+		this->turboRectangle.bottom = this->turboRectangle.top + 35 * value2 * this->hscale;
 
 		this->comboRectangle.left = comboLeft;
-		this->comboRectangle.right = this->comboRectangle.left + 50 * value2 * this->hscale;
+		this->comboRectangle.right = this->comboRectangle.left + 35 * value2 * this->hscale;
 		this->comboRectangle.top = comboTop;
-		this->comboRectangle.bottom = this->comboRectangle.top + 50 * value2 * this->hscale;
+		this->comboRectangle.bottom = this->comboRectangle.top + 35 * value2 * this->hscale;
 
 		this->lRectangle.left = lLeft;
-		this->lRectangle.right = this->lRectangle.left + 90 * value2 * this->hscale;
+		this->lRectangle.right = this->lRectangle.left + 60 * value2 * this->hscale;
 		this->lRectangle.top = lTop;
-		this->lRectangle.bottom = this->lRectangle.top + 53 * value2 * this->hscale;
+		this->lRectangle.bottom = this->lRectangle.top + 35 * value2 * this->hscale;
 
 
 		this->rRectangle.right = rRight;
-		this->rRectangle.left = this->rRectangle.right - 90 * value2 * this->hscale;
+		this->rRectangle.left = this->rRectangle.right - 60 * value2 * this->hscale;
 		this->rRectangle.top = rTop;
-		this->rRectangle.bottom = this->rRectangle.top + 53 * value2 * this->hscale;
+		this->rRectangle.bottom = this->rRectangle.top + 35 * value2 * this->hscale;
 
 
 

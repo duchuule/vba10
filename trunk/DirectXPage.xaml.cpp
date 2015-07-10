@@ -71,6 +71,13 @@ DirectXPage::DirectXPage():
 
 	DirectXPage::_current = this;
 
+	//hide status bar on phone
+	if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+	{
+		Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
+	}
+
+
 	// Register event handlers for page lifecycle.
 	CoreWindow^ window = Window::Current->CoreWindow;
 
