@@ -85,114 +85,114 @@ namespace VBA10
 
 #pragma region Button positions
 
-		property double PadCenterXP
+		property double PadLeftP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(PadCenterXPKey, PadCenterXPDefault);
+				return GetValueOrDefault<double>(PadLeftPKey, PadLeftPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(PadCenterXPKey, value);
+				AddOrUpdateValue(PadLeftPKey, value);
 			}
 		}
-		property double PadCenterYP
+		property double PadBottomP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(PadCenterYPKey, PadCenterYPDefault);
+				return GetValueOrDefault<double>(PadBottomPKey, PadBottomPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(PadCenterYPKey, value);
+				AddOrUpdateValue(PadBottomPKey, value);
 			}
 		}
-		property double ALeftP
+		property double ACenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ALeftPKey, ALeftPDefault);
+				return GetValueOrDefault<double>(ACenterXPKey, ACenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ALeftPKey, value);
+				AddOrUpdateValue(ACenterXPKey, value);
 			}
 		}
-		property double ATopP
+		property double ACenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ATopPKey, ATopPDefault);
+				return GetValueOrDefault<double>(ACenterYPKey, ACenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ATopPKey, value);
+				AddOrUpdateValue(ACenterYPKey, value);
 			}
 		}
-		property double BLeftP
+		property double BCenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(BLeftPKey, BLeftPDefault);
+				return GetValueOrDefault<double>(BCenterXPKey, BCenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(BLeftPKey, value);
+				AddOrUpdateValue(BCenterXPKey, value);
 			}
 		}
-		property double BTopP
+		property double BCenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(BTopPKey, BTopPDefault);
+				return GetValueOrDefault<double>(BCenterYPKey, BCenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(BTopPKey, value);
+				AddOrUpdateValue(BCenterYPKey, value);
 			}
 		}
-		property double StartLeftP
+		property double startCenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(StartLeftPKey, StartLeftPDefault);
+				return GetValueOrDefault<double>(startCenterXPKey, startCenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(StartLeftPKey, value);
+				AddOrUpdateValue(startCenterXPKey, value);
 			}
 		}
-		property double StartTopP
+		property double startBottomP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(StartTopPKey, StartTopPDefault);
+				return GetValueOrDefault<double>(startBottomPKey, startBottomPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(StartTopPKey, value);
+				AddOrUpdateValue(startBottomPKey, value);
 			}
 		}
-		property double SelectRightP
+		property double selectCenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(SelectRightPKey, SelectRightPDefault);
+				return GetValueOrDefault<double>(selectCenterXPKey, selectCenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(SelectRightPKey, value);
+				AddOrUpdateValue(selectCenterXPKey, value);
 			}
 		}
-		property double SelectTopP
+		property double selectBottomP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(SelectTopPKey, SelectTopPDefault);
+				return GetValueOrDefault<double>(selectBottomPKey, selectBottomPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(SelectTopPKey, value);
+				AddOrUpdateValue(selectBottomPKey, value);
 			}
 		}
 		property double LLeftP
@@ -206,15 +206,15 @@ namespace VBA10
 				AddOrUpdateValue(LLeftPKey, value);
 			}
 		}
-		property double LTopP
+		property double LCenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(LTopPKey, LTopPDefault);
+				return GetValueOrDefault<double>(LCenterYPKey, LCenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(LTopPKey, value);
+				AddOrUpdateValue(LCenterYPKey, value);
 			}
 		}
 		property double RRightP
@@ -228,170 +228,170 @@ namespace VBA10
 				AddOrUpdateValue(RRightPKey, value);
 			}
 		}
-		property double RTopP
+		property double RCenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(RTopPKey, RTopPDefault);
+				return GetValueOrDefault<double>(RCenterYPKey, RCenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(RTopPKey, value);
+				AddOrUpdateValue(RCenterYPKey, value);
 			}
 		}
-		property double TurboLeftP
+		property double TurboCenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(TurboLeftPKey, TurboLeftPDefault);
+				return GetValueOrDefault<double>(TurboCenterXPKey, TurboCenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(TurboLeftPKey, value);
+				AddOrUpdateValue(TurboCenterXPKey, value);
 			}
 		}
-		property double TurboTopP
+		property double TurboCenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(TurboTopPKey, TurboTopPDefault);
+				return GetValueOrDefault<double>(TurboCenterYPKey, TurboCenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(TurboTopPKey, value);
+				AddOrUpdateValue(TurboCenterYPKey, value);
 			}
 		}
-		property double ComboLeftP
+		property double ComboCenterXP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ComboLeftPKey, ComboLeftPDefault);
+				return GetValueOrDefault<double>(ComboCenterXPKey, ComboCenterXPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ComboLeftPKey, value);
+				AddOrUpdateValue(ComboCenterXPKey, value);
 			}
 		}
-		property double ComboTopP
+		property double ComboCenterYP
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ComboTopPKey, ComboTopPDefault);
+				return GetValueOrDefault<double>(ComboCenterYPKey, ComboCenterYPDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ComboTopPKey, value);
+				AddOrUpdateValue(ComboCenterYPKey, value);
 			}
 		}
 
-		property double PadCenterXL
+		property double PadLeftL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(PadCenterXLKey, PadCenterXLDefault);
+				return GetValueOrDefault<double>(PadLeftLKey, PadLeftLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(PadCenterXLKey, value);
+				AddOrUpdateValue(PadLeftLKey, value);
 			}
 		}
-		property double PadCenterYL
+		property double PadBottomL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(PadCenterYLKey, PadCenterYLDefault);
+				return GetValueOrDefault<double>(PadBottomLKey, PadBottomLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(PadCenterYLKey, value);
+				AddOrUpdateValue(PadBottomLKey, value);
 			}
 		}
-		property double ALeftL
+		property double ACenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ALeftLKey, ALeftLDefault);
+				return GetValueOrDefault<double>(ACenterXLKey, ACenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ALeftLKey, value);
+				AddOrUpdateValue(ACenterXLKey, value);
 			}
 		}
-		property double ATopL
+		property double ACenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ATopLKey, ATopLDefault);
+				return GetValueOrDefault<double>(ACenterYLKey, ACenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ATopLKey, value);
+				AddOrUpdateValue(ACenterYLKey, value);
 			}
 		}
-		property double BLeftL
+		property double BCenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(BLeftLKey, BLeftLDefault);
+				return GetValueOrDefault<double>(BCenterXLKey, BCenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(BLeftLKey, value);
+				AddOrUpdateValue(BCenterXLKey, value);
 			}
 		}
-		property double BTopL
+		property double BCenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(BTopLKey, BTopLDefault);
+				return GetValueOrDefault<double>(BCenterYLKey, BCenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(BTopLKey, value);
+				AddOrUpdateValue(BCenterYLKey, value);
 			}
 		}
-		property double StartLeftL
+		property double startCenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(StartLeftLKey, StartLeftLDefault);
+				return GetValueOrDefault<double>(startCenterXLKey, startCenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(StartLeftLKey, value);
+				AddOrUpdateValue(startCenterXLKey, value);
 			}
 		}
-		property double StartTopL
+		property double startBottomL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(StartTopLKey, StartTopLDefault);
+				return GetValueOrDefault<double>(startBottomLKey, startBottomLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(StartTopLKey, value);
+				AddOrUpdateValue(startBottomLKey, value);
 			}
 		}
-		property double SelectRightL
+		property double selectCenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(SelectRightLKey, SelectRightLDefault);
+				return GetValueOrDefault<double>(selectCenterXLKey, selectCenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(SelectRightLKey, value);
+				AddOrUpdateValue(selectCenterXLKey, value);
 			}
 		}
-		property double SelectTopL
+		property double selectBottomL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(SelectTopLKey, SelectTopLDefault);
+				return GetValueOrDefault<double>(selectBottomLKey, selectBottomLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(SelectTopLKey, value);
+				AddOrUpdateValue(selectBottomLKey, value);
 			}
 		}
 		property double LLeftL
@@ -405,15 +405,15 @@ namespace VBA10
 				AddOrUpdateValue(LLeftLKey, value);
 			}
 		}
-		property double LTopL
+		property double LCenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(LTopLKey, LTopLDefault);
+				return GetValueOrDefault<double>(LCenterYLKey, LCenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(LTopLKey, value);
+				AddOrUpdateValue(LCenterYLKey, value);
 			}
 		}
 		property double RRightL
@@ -427,59 +427,59 @@ namespace VBA10
 				AddOrUpdateValue(RRightLKey, value);
 			}
 		}
-		property double RTopL
+		property double RCenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(RTopLKey, RTopLDefault);
+				return GetValueOrDefault<double>(RCenterYLKey, RCenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(RTopLKey, value);
+				AddOrUpdateValue(RCenterYLKey, value);
 			}
 		}
-		property double TurboLeftL
+		property double TurboCenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(TurboLeftLKey, TurboLeftLDefault);
+				return GetValueOrDefault<double>(TurboCenterXLKey, TurboCenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(TurboLeftLKey, value);
+				AddOrUpdateValue(TurboCenterXLKey, value);
 			}
 		}
-		property double TurboTopL
+		property double TurboCenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(TurboTopLKey, TurboTopLDefault);
+				return GetValueOrDefault<double>(TurboCenterYLKey, TurboCenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(TurboTopLKey, value);
+				AddOrUpdateValue(TurboCenterYLKey, value);
 			}
 		}
-		property double ComboLeftL
+		property double ComboCenterXL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ComboLeftLKey, ComboLeftLDefault);
+				return GetValueOrDefault<double>(ComboCenterXLKey, ComboCenterXLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ComboLeftLKey, value);
+				AddOrUpdateValue(ComboCenterXLKey, value);
 			}
 		}
-		property double ComboTopL
+		property double ComboCenterYL
 		{
 			double get()
 			{
-				return GetValueOrDefault<double>(ComboTopLKey, ComboTopLDefault);
+				return GetValueOrDefault<double>(ComboCenterYLKey, ComboCenterYLDefault);
 			}
 			void set(double value)
 			{
-				AddOrUpdateValue(ComboTopLKey, value);
+				AddOrUpdateValue(ComboCenterYLKey, value);
 			}
 		}
 
@@ -517,43 +517,43 @@ namespace VBA10
 		Platform::String^ DPadStyleKey = "DPadStyleKey";
 
 #pragma region button positions
-		Platform::String^ PadCenterXPKey = "PadCenterXPKey";
-		Platform::String^ PadCenterYPKey = "PadCenterYPKey";
-		Platform::String^ ALeftPKey = "ALeftPKey";
-		Platform::String^ ATopPKey = "ATopPKey";
-		Platform::String^ BLeftPKey = "BLeftPKey";
-		Platform::String^ BTopPKey = "BTopPKey";
-		Platform::String^ StartLeftPKey = "StartLeftPKey";
-		Platform::String^ StartTopPKey = "StartTopPKey";
-		Platform::String^ SelectRightPKey = "SelectRightPKey";
-		Platform::String^ SelectTopPKey = "SelectTopPKey";
+		Platform::String^ PadLeftPKey = "PadLeftPKey";
+		Platform::String^ PadBottomPKey = "PadBottomPKey";
+		Platform::String^ ACenterXPKey = "ACenterXPKey";
+		Platform::String^ ACenterYPKey = "ACenterYPKey";
+		Platform::String^ BCenterXPKey = "BCenterXPKey";
+		Platform::String^ BCenterYPKey = "BCenterYPKey";
+		Platform::String^ startCenterXPKey = "startCenterXPKey";
+		Platform::String^ startBottomPKey = "startBottomPKey";
+		Platform::String^ selectCenterXPKey = "selectCenterXPKey";
+		Platform::String^ selectBottomPKey = "selectBottomPKey";
 		Platform::String^ LLeftPKey = "LLeftPKey";
-		Platform::String^ LTopPKey = "LTopPKey";
+		Platform::String^ LCenterYPKey = "LCenterYPKey";
 		Platform::String^ RRightPKey = "RRightPKey";
-		Platform::String^ RTopPKey = "RTopPKey";
-		Platform::String^ TurboLeftPKey = "TurboLeftPKey";
-		Platform::String^ TurboTopPKey = "TurboTopPKey";
-		Platform::String^ ComboLeftPKey = "ComboLeftPKey";
-		Platform::String^ ComboTopPKey = "ComboTopPKey";
+		Platform::String^ RCenterYPKey = "RCenterYPKey";
+		Platform::String^ TurboCenterXPKey = "TurboCenterXPKey";
+		Platform::String^ TurboCenterYPKey = "TurboCenterYPKey";
+		Platform::String^ ComboCenterXPKey = "ComboCenterXPKey";
+		Platform::String^ ComboCenterYPKey = "ComboCenterYPKey";
 
-		Platform::String^ PadCenterXLKey = "PadCenterXLKey";
-		Platform::String^ PadCenterYLKey = "PadCenterYLKey";
-		Platform::String^ ALeftLKey = "ALeftLKey";
-		Platform::String^ ATopLKey = "ATopLKey";
-		Platform::String^ BLeftLKey = "BLeftLKey";
-		Platform::String^ BTopLKey = "BTopLKey";
-		Platform::String^ StartLeftLKey = "StartLeftLKey";
-		Platform::String^ StartTopLKey = "StartTopLKey";
-		Platform::String^ SelectRightLKey = "SelectRightLKey";
-		Platform::String^ SelectTopLKey = "SelectTopLKey";
+		Platform::String^ PadLeftLKey = "PadLeftLKey";
+		Platform::String^ PadBottomLKey = "PadBottomLKey";
+		Platform::String^ ACenterXLKey = "ACenterXLKey";
+		Platform::String^ ACenterYLKey = "ACenterYLKey";
+		Platform::String^ BCenterXLKey = "BCenterXLKey";
+		Platform::String^ BCenterYLKey = "BCenterYLKey";
+		Platform::String^ startCenterXLKey = "startCenterXLKey";
+		Platform::String^ startBottomLKey = "startBottomLKey";
+		Platform::String^ selectCenterXLKey = "selectCenterXLKey";
+		Platform::String^ selectBottomLKey = "selectBottomLKey";
 		Platform::String^ LLeftLKey = "LLeftLKey";
-		Platform::String^ LTopLKey = "LTopLKey";
+		Platform::String^ LCenterYLKey = "LCenterYLKey";
 		Platform::String^ RRightLKey = "RRightLKey";
-		Platform::String^ RTopLKey = "RTopLKey";
-		Platform::String^ TurboLeftLKey = "TurboLeftLKey";
-		Platform::String^ TurboTopLKey = "TurboTopLKey";
-		Platform::String^ ComboLeftLKey = "ComboLeftLKey";
-		Platform::String^ ComboTopLKey = "ComboTopLKey";
+		Platform::String^ RCenterYLKey = "RCenterYLKey";
+		Platform::String^ TurboCenterXLKey = "TurboCenterXLKey";
+		Platform::String^ TurboCenterYLKey = "TurboCenterYLKey";
+		Platform::String^ ComboCenterXLKey = "ComboCenterXLKey";
+		Platform::String^ ComboCenterYLKey = "ComboCenterYLKey";
 #pragma endregion
 
 		// The default value of our settings
@@ -562,44 +562,44 @@ namespace VBA10
 		const int ButtonScaleDefault = 100;
 		const int DPadStyleDefault = 0;
 
-#pragma region button positions
-		const double PadCenterXPDefault = 0.25f;
-		const double PadCenterYPDefault = 0.7f;
-		const double ALeftPDefault = 0.75f;
-		const double ATopPDefault = 0.6f;
-		const double BLeftPDefault = 0.55f;
-		const double BTopPDefault = 0.72f;
-		const double StartLeftPDefault = 0.53f;
-		const double StartTopPDefault = 0.93f;
-		const double SelectRightPDefault = 0.47f;
-		const double SelectTopPDefault = 0.93f;
-		const double LLeftPDefault = 0.0f;
-		const double LTopPDefault = 0.87f;
-		const double RRightPDefault = 1.0f;
-		const double RTopPDefault = 0.87f;
-		const double TurboLeftPDefault = 0.6f;
-		const double TurboTopPDefault = 0.63f;
-		const double ComboLeftPDefault = 0.85f;
-		const double ComboTopPDefault = 0.77f;
+#pragma region button positions (in cm based on 6x10cm phone)
+		const double PadLeftPDefault = 0.1f; //from left
+		const double PadBottomPDefault = 1.5f; //from bottom
+		const double ACenterXPDefault = 0.8f;  //from right
+		const double ACenterYPDefault = 3.1f;  //from bottom
+		const double BCenterXPDefault = 1.8f; //from right
+		const double BCenterYPDefault = 2.0f; //from bottom
+		const double startCenterXPDefault = 0.85f; //from center
+		const double startBottomPDefault = 0.4f;  //from bottom
+		const double selectCenterXPDefault = -0.85f;  //from center
+		const double selectBottomPDefault = 0.4f;  //from bottom
+		const double LLeftPDefault = 0.0f;  //from left
+		const double LCenterYPDefault = 0.9f;  ///from bottom
+		const double RRightPDefault = 0.0f;  //from right
+		const double RCenterYPDefault = 0.87f;  //from bottom
+		const double TurboCenterXPDefault = 2.0f;  //from right
+		const double TurboCenterYPDefault = 3.2f; //from bottom
+		const double ComboCenterXPDefault = 0.6f;  //from right
+		const double ComboCenterYPDefault = 1.8f; //from bottom
 
-		const double PadCenterXLDefault = 0.15f;
-		const double PadCenterYLDefault = 0.75f;
-		const double ALeftLDefault = 0.82f;
-		const double ATopLDefault = 0.45f;
-		const double BLeftLDefault = 0.71f;
-		const double BTopLDefault = 0.69f;
-		const double StartLeftLDefault = 0.53f;
-		const double StartTopLDefault = 0.90f;
-		const double SelectRightLDefault = 0.47f;
-		const double SelectTopLDefault = 0.90f;
+		const double PadLeftLDefault = 0.3f;
+		const double PadBottomLDefault = 0.3f;
+		const double ACenterXLDefault = 1.0f;
+		const double ACenterYLDefault = 2.5f;
+		const double BCenterXLDefault = 2.0f;
+		const double BCenterYLDefault = 1.0f;
+		const double startCenterXLDefault = 1.0f;
+		const double startBottomLDefault = 0.3f;
+		const double selectCenterXLDefault = -1.0f;
+		const double selectBottomLDefault = 0.3f;
 		const double LLeftLDefault = 0.0f;
-		const double LTopLDefault = 0.3f;
-		const double RRightLDefault = 1.0f;
-		const double RTopLDefault = 0.3f;
-		const double TurboLeftLDefault = 0.74f;
-		const double TurboTopLDefault = 0.55f;
-		const double ComboLeftLDefault = 0.89f;
-		const double ComboTopLDefault = 0.72f;
+		const double LCenterYLDefault = 3.8f;
+		const double RRightLDefault = 0.0f;
+		const double RCenterYLDefault = 3.8f;
+		const double TurboCenterXLDefault = 2.2f;
+		const double TurboCenterYLDefault = 2.3f;
+		const double ComboCenterXLDefault = 0.8f;
+		const double ComboCenterYLDefault = 1.3f;
 #pragma endregion
 
 	};

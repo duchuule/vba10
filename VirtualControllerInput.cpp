@@ -237,111 +237,127 @@ namespace VBA10
 
 		EmulatorSettings ^settings = EmulatorSettings::Current;
 
-		//get setting info
-		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
-		{
-			padCenterX = settings->PadCenterXP * this->emulator->GetWidth();
-			padCenterY = settings->PadCenterYP * this->emulator->GetHeight();
-			aLeft = settings->ALeftP * this->emulator->GetWidth();
-			aTop = settings->ATopP * this->emulator->GetHeight();
-			bLeft = settings->BLeftP * this->emulator->GetWidth();
-			bTop = settings->BTopP * this->emulator->GetHeight();
-			startLeft = settings->StartLeftP * this->emulator->GetWidth();
-			startTop = settings->StartTopP * this->emulator->GetHeight();
-			selectRight = settings->SelectRightP * this->emulator->GetWidth();
-			selectTop = settings->SelectTopP * this->emulator->GetHeight();
-			lLeft = settings->LLeftP * this->emulator->GetWidth();
-			lTop = settings->LTopP * this->emulator->GetHeight();
-			rRight = settings->RRightP * this->emulator->GetWidth();
-			rTop = settings->RTopP * this->emulator->GetHeight();
-			turboLeft = settings->TurboLeftP * this->emulator->GetWidth();
-			turboTop = settings->TurboTopP * this->emulator->GetHeight();
-			comboLeft = settings->ComboLeftP * this->emulator->GetWidth();
-			comboTop = settings->ComboTopP * this->emulator->GetHeight();
-		}
-		else
-		{
-			padCenterX = settings->PadCenterXL * this->emulator->GetWidth();
-			padCenterY = settings->PadCenterYL * this->emulator->GetHeight();
-			aLeft = settings->ALeftL * this->emulator->GetWidth();
-			aTop = settings->ATopL * this->emulator->GetHeight();
-			bLeft = settings->BLeftL * this->emulator->GetWidth();
-			bTop = settings->BTopL * this->emulator->GetHeight();
-			startLeft = settings->StartLeftL * this->emulator->GetWidth();
-			startTop = settings->StartTopL * this->emulator->GetHeight();
-			selectRight = settings->SelectRightL * this->emulator->GetWidth();
-			selectTop = settings->SelectTopL * this->emulator->GetHeight();
-			lLeft = settings->LLeftL * this->emulator->GetWidth();
-			lTop = settings->LTopL * this->emulator->GetHeight();
-			rRight = settings->RRightL * this->emulator->GetWidth();
-			rTop = settings->RTopL * this->emulator->GetHeight();
-			turboLeft = settings->TurboLeftL * this->emulator->GetWidth();
-			turboTop = settings->TurboTopL * this->emulator->GetHeight();
-			comboLeft = settings->ComboLeftL * this->emulator->GetWidth();
-			comboTop = settings->ComboTopL * this->emulator->GetHeight();
-		}
+
 
 		//IMPORTANT: hscale used to be 1.0 on 480p device. Now hscale is 1.5 on 480p devices, which makes the device effectively 320p
 		// so now all the number are based on 320p
-		this->hscale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
-
 		float rawDpiX =  Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
-		if (rawDpiX > 0) //if the monitor report dimension
+		if (rawDpiX > 0 && rawDpiX < 1000) //if the monitor reports dimension
 			this->physicalWidth = this->emulator->GetWidth() / rawDpiX;
 		else
-			this->physicalWidth = 6.0f;
+			this->physicalWidth = 8.0f;
 
-		float test = this->emulator->GetWidth() / Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
-		
+		float rawDpiY = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiY;
+		if (rawDpiY > 0 && rawDpiY < 1000) //if the monitor reports dimension
+			this->physicalHeight = this->emulator->GetHeight() / rawDpiY;
+		else
+			this->physicalHeight = 8.0f;
+
 		
 
+		
+		//get setting info
+		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
+		{
+			//scale is the ratio between real physical size and design physical size
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.75f); 
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.75f); 
+
+			PadLeft = settings->PadLeftP * vscale / 2.54f * rawDpiX;
+			PadBottom = settings->PadBottomP * vscale / 2.54f * rawDpiY;
+			ACenterX = settings->ACenterXP * vscale / 2.54f * rawDpiX;
+			ACenterY = settings->ACenterYP * vscale / 2.54f * rawDpiY;
+			BCenterX = settings->BCenterXP * vscale / 2.54f * rawDpiX;
+			BCenterY = settings->BCenterYP * vscale / 2.54f * rawDpiY;
+			startCenterX = settings->startCenterXP * hscale / 2.54f * rawDpiX;
+			startBottom = settings->startBottomP * vscale / 2.54f * rawDpiY;
+			selectCenterX = settings->selectCenterXP * hscale / 2.54f * rawDpiX;
+			selectBottom = settings->selectBottomP * vscale / 2.54f * rawDpiY;
+			lLeft = settings->LLeftP * vscale / 2.54f * rawDpiX;
+			LCenterY = settings->LCenterYP * vscale / 2.54f * rawDpiY;
+			rRight = settings->RRightP * vscale / 2.54f * rawDpiX;
+			RCenterY = settings->RCenterYP * vscale / 2.54f * rawDpiY;
+			TurboCenterX = settings->TurboCenterXP * vscale / 2.54f * rawDpiX;
+			TurboCenterY = settings->TurboCenterYP * vscale / 2.54f * rawDpiY;
+			ComboCenterX = settings->ComboCenterXP * vscale / 2.54f * rawDpiX;
+			ComboCenterY = settings->ComboCenterYP * vscale / 2.54f * rawDpiY;
+		}
+		else
+		{
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.75f);
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.75f);
+
+			PadLeft = settings->PadLeftL * vscale / 2.54f * rawDpiX;
+			PadBottom = settings->PadBottomL * vscale / 2.54f * rawDpiY;
+			ACenterX = settings->ACenterXL * vscale / 2.54f * rawDpiX;
+			ACenterY = settings->ACenterYL * vscale / 2.54f * rawDpiY;
+			BCenterX = settings->BCenterXL * vscale / 2.54f * rawDpiX;
+			BCenterY = settings->BCenterYL * vscale / 2.54f * rawDpiY;
+			startCenterX = settings->startCenterXL * vscale / 2.54f * rawDpiX;
+			startBottom = settings->startBottomL * vscale / 2.54f * rawDpiY;
+			selectCenterX = settings->selectCenterXL * vscale / 2.54f * rawDpiX;
+			selectBottom = settings->selectBottomL * vscale / 2.54f * rawDpiY;
+			lLeft = settings->LLeftL * vscale / 2.54f * rawDpiX;
+			LCenterY = settings->LCenterYL * vscale / 2.54f * rawDpiY;
+			rRight = settings->RRightL * vscale / 2.54f * rawDpiX;
+			RCenterY = settings->RCenterYL * vscale / 2.54f * rawDpiY;
+			TurboCenterX = settings->TurboCenterXL * vscale / 2.54f * rawDpiX;
+			TurboCenterY = settings->TurboCenterYL * vscale / 2.54f * rawDpiY;
+			ComboCenterX = settings->ComboCenterXL * vscale / 2.54f * rawDpiX;
+			ComboCenterY = settings->ComboCenterYL * vscale / 2.54f * rawDpiY;
+		}
+		
+		float pheight = this->emulator->GetHeight();
+		float pwidth = this->emulator->GetWidth();
 		// Visible Rectangles
-		this->padCrossRectangle.left = padCenterX - 70 * value * this->hscale;
-		this->padCrossRectangle.right = padCenterX + 70 * value * this->hscale;
-		this->padCrossRectangle.top = padCenterY - 70 * value * this->hscale;
-		this->padCrossRectangle.bottom = padCenterY + 70 * value * this->hscale;
+		this->padCrossRectangle.left = PadLeft;
+		this->padCrossRectangle.right = PadLeft + 120 * value * this->vscale;
+		this->padCrossRectangle.bottom = pheight - PadBottom;
+		this->padCrossRectangle.top = pheight - PadBottom - 120 * value * this->vscale;
 
-		this->aRectangle.left = aLeft;
-		this->aRectangle.right = this->aRectangle.left + 80 * value2 * this->hscale;
-		this->aRectangle.top = aTop;
-		this->aRectangle.bottom = this->aRectangle.top + 80 * value2 * this->hscale;
+		this->aRectangle.left = pwidth - ACenterX - 30 * value2 * this->vscale;
+		this->aRectangle.right = pwidth - ACenterX + 30 * value2 * this->vscale;
+		this->aRectangle.top = pheight - ACenterY - 30 * value2 * this->vscale;
+		this->aRectangle.bottom = pheight - ACenterY + 30 * value2 * this->vscale;
 
-		this->bRectangle.left = bLeft;
-		this->bRectangle.right = this->bRectangle.left + 80 * value2 * this->hscale;
-		this->bRectangle.top = bTop;
-		this->bRectangle.bottom = this->bRectangle.top + 80 * value2 * this->hscale;
+		this->bRectangle.left = pwidth - BCenterX - 30 * value2 * this->vscale;
+		this->bRectangle.right = pwidth - BCenterX + 30 * value2 * this->vscale;
+		this->bRectangle.top = pheight - BCenterY - 30 * value2 * this->vscale;
+		this->bRectangle.bottom = pheight - BCenterY + 30 * value2 * this->vscale;
 
 
-		this->startRectangle.left = startLeft;
-		this->startRectangle.right = this->startRectangle.left + 70 * value2 * this->hscale;
-		this->startRectangle.top = startTop;
-		this->startRectangle.bottom = this->startRectangle.top + 35 * value2 * this->hscale;
+		this->startRectangle.left = pwidth / 2.0f + startCenterX - 25 * value2 * this->vscale;
+		this->startRectangle.right = pwidth / 2.0f + startCenterX + 25 * value2 * this->vscale;
+		this->startRectangle.top = pheight - startBottom - 25 * value2 * this->vscale;
+		this->startRectangle.bottom = pheight - startBottom;
 
-		this->selectRectangle.right = selectRight;
-		this->selectRectangle.left = this->selectRectangle.right - 70 * value2 * this->hscale;
-		this->selectRectangle.top = selectTop;
-		this->selectRectangle.bottom = this->selectRectangle.top + 35 * value2 * this->hscale;
+		this->selectRectangle.left = pwidth / 2.0f + selectCenterX - 25 * value2 * this->vscale;
+		this->selectRectangle.right = pwidth / 2.0f + selectCenterX + 25 * value2 * this->vscale;
+		this->selectRectangle.top = pheight - selectBottom - 25 * value2 * this->vscale;
+		this->selectRectangle.bottom = pheight - selectBottom;
 
-		this->turboRectangle.left = turboLeft;
-		this->turboRectangle.right = this->turboRectangle.left + 35 * value2 * this->hscale;
-		this->turboRectangle.top = turboTop;
-		this->turboRectangle.bottom = this->turboRectangle.top + 35 * value2 * this->hscale;
 
-		this->comboRectangle.left = comboLeft;
-		this->comboRectangle.right = this->comboRectangle.left + 35 * value2 * this->hscale;
-		this->comboRectangle.top = comboTop;
-		this->comboRectangle.bottom = this->comboRectangle.top + 35 * value2 * this->hscale;
+
+		this->turboRectangle.left = pwidth - TurboCenterX - 12 * value2 * this->vscale;
+		this->turboRectangle.right = pwidth - TurboCenterX + 12 * value2 * this->vscale;
+		this->turboRectangle.top = pheight - TurboCenterY - 12 * value2 * this->vscale;
+		this->turboRectangle.bottom = pheight - TurboCenterY + 12 * value2 * this->vscale;
+
+		this->comboRectangle.left = pwidth - ComboCenterX - 12 * value2 * this->vscale;
+		this->comboRectangle.right = pwidth - ComboCenterX + 12 * value2 * this->vscale;
+		this->comboRectangle.top = pheight - ComboCenterY - 12 * value2 * this->vscale;
+		this->comboRectangle.bottom = pheight - ComboCenterY + 12 * value2 * this->vscale;
 
 		this->lRectangle.left = lLeft;
-		this->lRectangle.right = this->lRectangle.left + 60 * value2 * this->hscale;
-		this->lRectangle.top = lTop;
-		this->lRectangle.bottom = this->lRectangle.top + 35 * value2 * this->hscale;
+		this->lRectangle.right = this->lRectangle.left + 45 * value2 * this->vscale;
+		this->lRectangle.top = pheight - LCenterY - 13 * value2 * this->vscale;
+		this->lRectangle.bottom = pheight - LCenterY + 13 * value2 * this->vscale;
 
 
-		this->rRectangle.right = rRight;
-		this->rRectangle.left = this->rRectangle.right - 60 * value2 * this->hscale;
-		this->rRectangle.top = rTop;
-		this->rRectangle.bottom = this->rRectangle.top + 35 * value2 * this->hscale;
+		this->rRectangle.right = pwidth - rRight;
+		this->rRectangle.left = pwidth - rRight - 45 * value2 * this->vscale;
+		this->rRectangle.top = pheight - RCenterY - 13 * value2 * this->vscale;
+		this->rRectangle.bottom = pheight - RCenterY + 13 * value2 * this->vscale;
 
 
 
@@ -475,6 +491,16 @@ namespace VBA10
 	void VirtualControllerInput::GetSelectRectangle(RECT *rect)
 	{
 		*rect = this->selectRectangle;
+	}
+
+	void VirtualControllerInput::GetTurboRectangle(RECT *rect)
+	{
+		*rect = this->turboRectangle;
+	}
+
+	void VirtualControllerInput::GetComboRectangle(RECT *rect)
+	{
+		*rect = this->comboRectangle;
 	}
 
 	void VirtualControllerInput::GetLRectangle(RECT *rect)

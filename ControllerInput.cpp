@@ -40,7 +40,7 @@ namespace VBA10
 			this->state.LPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
 			this->state.RPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
 
-			this->state.TurboPressed = ((state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) || (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD));
+			this->state.TurboPressed = ((state.Gamepad.BCenterXTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) || (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD));
 			this->state.TurboTogglePressed = this->state.XPressed || this->state.YPressed;
 		}else
 		{

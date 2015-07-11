@@ -641,7 +641,7 @@ namespace VBA10
 		auto touchEnabledEntry = safe_cast<IPropertyValue^>(values->Lookup("TouchEnabled"));
 		//auto lowFrequencyMode = safe_cast<IPropertyValue^>(values->Lookup("LowRefreshMode"));
 		auto touchControllerOnTop = safe_cast<IPropertyValue^>(values->Lookup("TouchControllerOnTop"));
-		auto controlToPlayer2 = safe_cast<IPropertyValue^>(values->Lookup("ControlAssignedToPlayer2"));
+		auto controLCenterYlayer2 = safe_cast<IPropertyValue^>(values->Lookup("ControlAssignedToPlayer2"));
 		auto buttonsIntersecting = safe_cast<IPropertyValue^>(values->Lookup("TouchButtonsIntersecting"));
 		auto autosaving = safe_cast<IPropertyValue^>(values->Lookup("EnableAutosaving"));
 		auto grayButtons = safe_cast<IPropertyValue^>(values->Lookup("GrayButtons"));

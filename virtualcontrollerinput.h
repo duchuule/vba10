@@ -40,6 +40,8 @@ namespace VBA10
 		void GetBRectangle(RECT *rect);
 		void GetStartRectangle(RECT *rect);
 		void GetSelectRectangle(RECT *rect);
+		void GetTurboRectangle(RECT *rect);
+		void GetComboRectangle(RECT *rect);
 		void GetLRectangle(RECT *rect);
 		void GetRRectangle(RECT *rect);
 		void Update(void);
@@ -87,26 +89,26 @@ namespace VBA10
 		Windows::Foundation::Rect bRect;
 		
 
-		int padCenterX;
-		int padCenterY;
-		int aLeft;
-		int aTop;
-		int bLeft;
-		int bTop;
-		int startLeft;
-		int startTop;
-		int selectRight;
-		int selectTop;
-		int turboLeft;
-		int turboTop;
-		int comboLeft;
-		int comboTop;
+		int PadLeft;
+		int PadBottom;
+		int ACenterX;
+		int ACenterY;
+		int BCenterX;
+		int BCenterY;
+		int startCenterX;
+		int startBottom;
+		int selectCenterX;
+		int selectBottom;
+		int TurboCenterX;
+		int TurboCenterY;
+		int ComboCenterX;
+		int ComboCenterY;
 		int lLeft;
-		int lTop;
+		int LCenterY;
 		int rRight;
-		int rTop;
+		int RCenterY;
 
-		float hscale;
+		float hscale, vscale;
 
 
 

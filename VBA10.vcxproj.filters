@@ -582,27 +582,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\pad_buttons.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pad_cross.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pad_l_button.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pad_r_button.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pad_start_select.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\ThumbStick.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\ThumbStickCenter.dds">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\no_snapshot.png">
       <Filter>Assets</Filter>
     </Image>
