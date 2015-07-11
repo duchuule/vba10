@@ -252,11 +252,6 @@
     <Image Include="Assets\Direct3D\thumbstick_gbasp.dds" />
     <Image Include="Assets\Logo.scale-100.png" />
     <Image Include="Assets\no_snapshot.png" />
-    <Image Include="Assets\pad_buttons.dds" />
-    <Image Include="Assets\pad_cross.dds" />
-    <Image Include="Assets\pad_l_button.dds" />
-    <Image Include="Assets\pad_r_button.dds" />
-    <Image Include="Assets\pad_start_select.dds" />
     <Image Include="Assets\play.png" />
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\SmallLogo.scale-140.png" />
@@ -264,8 +259,6 @@
     <Image Include="Assets\SmallTile.scale-100.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png" />
-    <Image Include="Assets\ThumbStick.dds" />
-    <Image Include="Assets\ThumbStickCenter.dds" />
     <Image Include="Assets\WideLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,8 @@
 #define CROSS_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_cross.dds"
 #define START_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_start.dds"
 #define SELECT_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_select.dds"
+#define TURBO_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_turbo_button.dds"
+#define COMBO_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_combo_button.dds"
 #define A_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_a_button.dds"
 #define B_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_b_button.dds"
 #define L_TEXTURE_FILE_NAME							L"Assets/Direct3D/pad_l_button.dds"
@@ -22,6 +24,8 @@
 #define CROSS_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_cross_color.dds"
 #define START_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_start_color.dds"
 #define SELECT_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_select_color.dds"
+#define TURBO_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_turbo_button_color.dds"
+#define COMBO_COLOR_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_combo_button_color.dds"
 #define A_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_a_button_color.dds"
 #define B_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_b_button_color.dds"
 #define L_COLOR_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_l_button_color.dds"
@@ -31,6 +35,8 @@
 #define CROSS_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_cross_gbasp.dds"
 #define START_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_start_gbasp.dds"
 #define SELECT_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_select_gbasp.dds"
+#define TURBO_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_turbo_button_gbasp.dds"
+#define COMBO_GBASP_TEXTURE_FILE_NAME				L"Assets/Direct3D/pad_combo_button_gbasp.dds"
 #define A_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_a_button_gbasp.dds"
 #define B_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_b_button_gbasp.dds"
 #define L_GBASP_TEXTURE_FILE_NAME					L"Assets/Direct3D/pad_l_button_gbasp.dds"
@@ -168,6 +174,13 @@ namespace VBA10
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
+			DIVIDER_TEXTURE_FILE_NAME,
+			this->dividerResource.GetAddressOf(),
+			this->dividerSRV.GetAddressOf()
+			);
+
+		LoadTextureFromFile(
+			m_deviceResources->GetD3DDevice(),
 			STICK_GBASP_TEXTURE_FILE_NAME,
 			this->stickResource.GetAddressOf(), 
 			this->stickSRV.GetAddressOf()
@@ -215,6 +228,19 @@ namespace VBA10
 			this->selectSRV.GetAddressOf()
 			);
 
+		LoadTextureFromFile(
+			m_deviceResources->GetD3DDevice(),
+			TURBO_GBASP_TEXTURE_FILE_NAME,
+			this->turboResource.GetAddressOf(),
+			this->turboSRV.GetAddressOf()
+			);
+
+		LoadTextureFromFile(
+			m_deviceResources->GetD3DDevice(),
+			COMBO_GBASP_TEXTURE_FILE_NAME,
+			this->comboResource.GetAddressOf(),
+			this->comboSRV.GetAddressOf()
+			);
 		
 		LoadTextureFromFile(
 			m_deviceResources->GetD3DDevice(),
@@ -440,10 +466,17 @@ namespace VBA10
 			m_deviceResources->GetDepthStencilView()
 			);
 
-		const float black[] = { 0.0f, 0.0f, 0.0f, 1.000f };
+		float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.000f }; //black
+		if (this->height > this->width) //portrait
+		{
+			bgcolor[0] = 210.0f / 255;
+			bgcolor[1] = 210.0f / 255;
+			bgcolor[2] = 210.0f / 255;
+		}
+
 		m_deviceResources->GetD3DDeviceContext()->ClearRenderTargetView(
 			m_deviceResources->GetBackBufferRenderTargetView(),
-			black
+			bgcolor
 			);
 
 		m_deviceResources->GetD3DDeviceContext()->ClearDepthStencilView(
@@ -489,126 +522,56 @@ namespace VBA10
 		int width;
 		RECT rect;
 
-	//	if (this->m_deviceResources->GetOrientation() == DisplayOrientations::Landscape)
-	//	{
-	//		height = this->height; // *(GetImageScale() / 100.0f);
-	//		switch (GetAspectRatio())
-	//		{
-	//		default:
-	//		case AspectRatioMode::Original:
-	//			if (gbaROMLoaded)
-	//			{
-	//				width = (int)(height * (240.0f / 160.0f));
-	//			}
-	//			else
-	//			{
-	//				width = (int)(height * (160.0f / 144.0f));
-	//			}
-	//			break;
-	//		case AspectRatioMode::Stretch:
-	//			width = this->width; //* (GetImageScale() / 100.0f);
-	//			break;
-	//		case AspectRatioMode::FourToThree:
-	//			width = (int)(height * (4.0f / 3.0f));
-	//			break;
-	//		case AspectRatioMode::FiveToFour:
-	//			width = (int)(height * (5.0f / 4.0f));
-	//			break;
-	//		case AspectRatioMode::One:
-	//			width = height;
-	//			break;
-	//		}
 
-	//		if (width > this->width) //fix the position of the image
-	//		{
-	//			height = height * 1.0f / width * this->width;
-	//			width = this->width;
-	//		}
-
-	//		int leftOffset = (this->width - width) / 2;
-	//		rect.left = leftOffset;
-	//		rect.right = width + leftOffset;
-	//		rect.top = 0;
-	//		rect.bottom = height;
-	//	}
-
-	//else
-	//{
-	//	width = this->height;
-
-	//	switch (GetAspectRatio())
-	//	{
-	//	default:
-	//	case AspectRatioMode::Original:
-	//	case AspectRatioMode::Stretch:
-	//		if (gbaROMLoaded)
-	//		{
-	//			height = (int)(width * (160.0f / 240.0f));
-	//		}
-	//		else
-	//		{
-	//			height = (int)(width * (144.0f / 160.0f));
-	//		}
-	//		break;
-	//	case AspectRatioMode::FourToThree:
-	//		height = (int)(width * (3.0f / 4.0f));
-	//		break;
-	//	case AspectRatioMode::FiveToFour:
-	//		height = (int)(width * (4.0f / 5.0f));
-	//		break;
-	//	case AspectRatioMode::One:
-	//		height = (int)width;
-	//		break;
-	//	}
-
-
-	//	rect.left = 0;
-	//	rect.right = width;
-	//	rect.top = 0;
-	//	rect.bottom = height;
-	//}
-
-
-			height = this->height; // *(GetImageScale() / 100.0f);
-			switch (GetAspectRatio())
+		height = this->height; // *(GetImageScale() / 100.0f);
+		switch (GetAspectRatio())
+		{
+		default:
+		case AspectRatioMode::Original:
+			if (gbaROMLoaded)
 			{
-			default:
-			case AspectRatioMode::Original:
-				if (gbaROMLoaded)
-				{
-					width = (int)(height * (240.0f / 160.0f));
-				}
-				else
-				{
-					width = (int)(height * (160.0f / 144.0f));
-				}
-				break;
-			case AspectRatioMode::Stretch:
-				width = this->width; //* (GetImageScale() / 100.0f);
-				break;
-			case AspectRatioMode::FourToThree:
-				width = (int)(height * (4.0f / 3.0f));
-				break;
-			case AspectRatioMode::FiveToFour:
-				width = (int)(height * (5.0f / 4.0f));
-				break;
-			case AspectRatioMode::One:
-				width = height;
-				break;
+				width = (int)(height * (240.0f / 160.0f));
 			}
-
-			if (width > this->width) //fix the position of the image
+			else
 			{
-				height = height * 1.0f / width * this->width;
-				width = this->width;
+				width = (int)(height * (160.0f / 144.0f));
 			}
+			break;
+		case AspectRatioMode::Stretch:
+			width = this->width; //* (GetImageScale() / 100.0f);
+			break;
+		case AspectRatioMode::FourToThree:
+			width = (int)(height * (4.0f / 3.0f));
+			break;
+		case AspectRatioMode::FiveToFour:
+			width = (int)(height * (5.0f / 4.0f));
+			break;
+		case AspectRatioMode::One:
+			width = height;
+			break;
+		}
 
-			int leftOffset = (this->width - width) / 2;
-			rect.left = leftOffset;
-			rect.right = width + leftOffset;
-			rect.top = 0;
-			rect.bottom = height;
+		if (width > this->width) //fix the position of the image
+		{
+			height = height * 1.0f / width * this->width;
+			width = this->width;
+		}
 
+		int leftOffset = (this->width - width) / 2;
+		rect.left = leftOffset;
+		rect.right = width + leftOffset;
+		rect.top = 0;
+		rect.bottom = height;
+
+		RECT dividerRect = RECT();
+		if (this->height > this->width) //portrait
+		{
+			dividerRect.left = 0;
+			dividerRect.right = width;
+			dividerRect.top = height;
+			float scale = DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
+			dividerRect.bottom = height + 4 * scale;
+		}
 
 		RECT source;
 		if(gbaROMLoaded)
@@ -630,6 +593,8 @@ namespace VBA10
 		this->controller->GetCrossRectangle(&crossRectangle);
 		this->controller->GetStartRectangle(&startRectangle);
 		this->controller->GetSelectRectangle(&selectRectangle);
+		this->controller->GetTurboRectangle(&turboRectangle);
+		this->controller->GetComboRectangle(&comboRectangle);
 		this->controller->GetLRectangle(&lRectangle);
 		this->controller->GetRRectangle(&rRectangle);
 
@@ -640,8 +605,10 @@ namespace VBA10
 		
 		// Render last frame to screen
 		Color white(1.0f, 1.0f, 1.0f, 1.0f);
-		Color color(1.0f, 1.0f, 1.0f, GetControllerOpacity() / 100.0f);
-		Color color2(1.0f, 1.0f, 1.0f, (GetControllerOpacity() / 100.0f) + 0.2f);
+
+		Color color(1.0f, 1.0f, 1.0f, 1.0f);
+		if (this->width > this->height) //landscape
+			color = Color(1.0f, 1.0f, 1.0f, 0.5f);
 		
 
 		
@@ -657,16 +624,6 @@ namespace VBA10
 
 		if(TouchControlsEnabled())
 		{
-			Engine::Rectangle aRect (this->aRectangle.left, this->aRectangle.top, this->aRectangle.right - this->aRectangle.left, this->aRectangle.bottom - this->aRectangle.top);
-			ComPtr<ID3D11Texture2D> tex;
-			this->aResource.As(&tex);
-			this->dxSpriteBatch->Draw(aRect, this->aSRV.Get(), tex.Get(), color);
-
-			Engine::Rectangle bRect(this->bRectangle.left, this->bRectangle.top, this->bRectangle.right - this->bRectangle.left, this->bRectangle.bottom - this->bRectangle.top);
-			ComPtr<ID3D11Texture2D> tex2;
-			this->bResource.As(&tex2);
-			this->dxSpriteBatch->Draw(bRect, this->bSRV.Get(), tex2.Get(), color);
-
 			int dpad = EmulatorSettings::Current->DPadStyle;
 			if(dpad == 0)
 			{
@@ -690,9 +647,31 @@ namespace VBA10
 				this->stickResource.As(&tex);
 				ComPtr<ID3D11Texture2D> tex2;
 				this->stickCenterResource.As(&tex2);
-				this->dxSpriteBatch->Draw(stickRectCenterE, this->stickCenterSRV.Get(), tex2.Get(), color2);
+				this->dxSpriteBatch->Draw(stickRectCenterE, this->stickCenterSRV.Get(), tex2.Get(), color);
 				this->dxSpriteBatch->Draw(stickRectE, this->stickSRV.Get(), tex.Get(), color);
 			}
+
+			//divider
+			Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);
+			if (this->height > this->width)
+			{
+				ComPtr<ID3D11Texture2D> tex;
+				this->dividerResource.As(&tex);
+
+				Engine::Rectangle targetRect(dividerRect.left, dividerRect.top, dividerRect.right - dividerRect.left, dividerRect.bottom - dividerRect.top);
+				this->dxSpriteBatch->Draw(targetRect, this->dividerSRV.Get(), tex.Get(), dividerColor);
+			}
+
+			Engine::Rectangle aRect(this->aRectangle.left, this->aRectangle.top, this->aRectangle.right - this->aRectangle.left, this->aRectangle.bottom - this->aRectangle.top);
+			ComPtr<ID3D11Texture2D> tex;
+			this->aResource.As(&tex);
+			this->dxSpriteBatch->Draw(aRect, this->aSRV.Get(), tex.Get(), color);
+
+			Engine::Rectangle bRect(this->bRectangle.left, this->bRectangle.top, this->bRectangle.right - this->bRectangle.left, this->bRectangle.bottom - this->bRectangle.top);
+			ComPtr<ID3D11Texture2D> tex2;
+			this->bResource.As(&tex2);
+			this->dxSpriteBatch->Draw(bRect, this->bSRV.Get(), tex2.Get(), color);
+
 
 			Engine::Rectangle startRectE (startRectangle.left, startRectangle.top, startRectangle.right - startRectangle.left, startRectangle.bottom - startRectangle.top);
 			ComPtr<ID3D11Texture2D> texStart;
@@ -703,6 +682,16 @@ namespace VBA10
 			ComPtr<ID3D11Texture2D> texSelect;
 			this->selectResource.As(&texSelect);
 			this->dxSpriteBatch->Draw(selectRectE, this->selectSRV.Get(), texSelect.Get(), color);
+
+			Engine::Rectangle turboRectE(turboRectangle.left, turboRectangle.top, turboRectangle.right - turboRectangle.left, turboRectangle.bottom - turboRectangle.top);
+			ComPtr<ID3D11Texture2D> texTurbo;
+			this->turboResource.As(&texTurbo);
+			this->dxSpriteBatch->Draw(turboRectE, this->turboSRV.Get(), texTurbo.Get(), color);
+
+			Engine::Rectangle comboRectE(comboRectangle.left, comboRectangle.top, comboRectangle.right - comboRectangle.left, comboRectangle.bottom - comboRectangle.top);
+			ComPtr<ID3D11Texture2D> texCombo;
+			this->comboResource.As(&texCombo);
+			this->dxSpriteBatch->Draw(comboRectE, this->comboSRV.Get(), texCombo.Get(), color);
 
 			if(gbaROMLoaded)
 			{

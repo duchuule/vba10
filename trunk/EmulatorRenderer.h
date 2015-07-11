@@ -58,6 +58,8 @@ namespace VBA10
 		RECT crossRectangle;
 		RECT startRectangle;
 		RECT selectRectangle;
+		RECT turboRectangle;
+		RECT comboRectangle;
 		RECT lRectangle;
 		RECT rRectangle;
 
@@ -71,6 +73,8 @@ namespace VBA10
 		ComPtr<ID3D11ShaderResourceView>	bufferSRVs[2];
 		ComPtr<ID3D11BlendState>			alphablend;
 		
+		ComPtr<ID3D11Resource>				dividerResource;
+		ComPtr<ID3D11ShaderResourceView>	dividerSRV;
 		ComPtr<ID3D11Resource>				stickCenterResource;
 		ComPtr<ID3D11ShaderResourceView>	stickCenterSRV;
 		ComPtr<ID3D11Resource>				stickResource;
@@ -85,6 +89,10 @@ namespace VBA10
 		ComPtr<ID3D11ShaderResourceView>	startSRV;
 		ComPtr<ID3D11Resource>				selectResource;
 		ComPtr<ID3D11ShaderResourceView>	selectSRV;
+		ComPtr<ID3D11Resource>				turboResource;
+		ComPtr<ID3D11ShaderResourceView>	turboSRV;
+		ComPtr<ID3D11Resource>				comboResource;
+		ComPtr<ID3D11ShaderResourceView>	comboSRV;
 		ComPtr<ID3D11Resource>				lButtonResource;
 		ComPtr<ID3D11ShaderResourceView>	lButtonSRV;
 		ComPtr<ID3D11Resource>				rButtonResource;
