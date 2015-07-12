@@ -520,7 +520,7 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	AppFrame->Width = 0.0f;
 
 	//unselect item
-	NavMenuList->SetSelectedItem(nullptr);
+	//NavMenuList->SetSelectedItem(nullptr);
 
 	//save and apply cheats if needed
 	if (ShouldApplyNewCheats)
@@ -584,7 +584,8 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	//navigate to the first item
 
 	//GoToPage(0);
-	if (!IsROMLoaded())
+	int test = NavMenuList->SelectedIndex;
+	if (!IsROMLoaded() || NavMenuList->SelectedIndex == 0) //even when ROM is loaded, we force the SelectROMPane to reload
 		GoToPage(0);
 
 
@@ -624,6 +625,9 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 
 	if (IsROMLoaded() && entry->FilePath == ROMFile->Path) //don't have to do anything
 		return;
+
+
+
 	
 	create_task([this, entry] {
 		if (IsROMLoaded() && entry->FilePath != ROMFile->Path)  //different rom, save old rom state

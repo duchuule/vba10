@@ -30,20 +30,30 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Margin="12,0,12,0"
-                      Grid.Row="1">
+                      Grid.Row="1"
+                      MaxWidth="500"
+                      HorizontalAlignment="Left">
             <StackPanel >
                 <TextBlock Text="Local storage"
                                 VerticalAlignment="Center"
                            FontSize="23"
-                           Margin="0,8,0,4"
+                           Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
-                           Text="Use this option to select a ROM already present on your phone or PC."                                
+                           Text="Use this option to import a file already present on your phone or PC. Due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing."                                
                                  Margin=" 0, 4, 0, 4" />
-                <Button x:Name="chooseFolderbtn" Content="Select Folder" 
-                        Click="chooseFolderbtn_Click"
-                        Margin =" 0, 4, 0, 4"/>
-                
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="chooseFolderbtn" Content="Import ROM" 
+                            Click="chooseFolderbtn_Click"
+                            Width="120"
+                            Margin =" 0, 4, 8, 4"/>
+
+                    <Button x:Name="importSavbtn" Content="Import Save" 
+                            Click="chooseFolderbtn_Click"
+                            Width="120"
+                            Margin =" 0, 4, 0, 4"/>
+                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>
