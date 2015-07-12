@@ -83,6 +83,20 @@ namespace VBA10
 			}
 		}
 
+		property int TurboFrameSkip
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(TurboFrameSkipKey, TurboFrameSkipDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(TurboFrameSkipKey, value);
+			}
+		}
+
+
+
 #pragma region Button positions
 
 		property double PadLeftP
@@ -515,6 +529,7 @@ namespace VBA10
 		Platform::String^ ControllerScaleKey = "ControllerScaleKey";
 		Platform::String^ ButtonScaleKey = "ButtonScaleKey";
 		Platform::String^ DPadStyleKey = "DPadStyleKey";
+		Platform::String^ TurboFrameSkipKey = "TurboFrameSkipKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -561,6 +576,7 @@ namespace VBA10
 		const int ControllerScaleDefault = 100;
 		const int ButtonScaleDefault = 100;
 		const int DPadStyleDefault = 0;
+		const int TurboFrameSkipDefault = 2;
 
 #pragma region button positions (in cm based on 6x10cm phone)
 		const double PadLeftPDefault = 0.1f; //from left
@@ -641,12 +657,6 @@ namespace VBA10
 	VirtualKey GetRKeyBinding(void);
 	void SetRKeyBinding(VirtualKey key);
 
-	void SetFrameSkip(int skip);
-	int GetFrameSkip(void);
-	void SetTurboFrameSkip(int skip);
-	int GetTurboFrameSkip(void);
-	void SetPowerFrameSkip(int skip);
-	int GetPowerFrameSkip(void);
 	void SetControllerOpacity(int opacity);
 	int GetControllerOpacity(void);
 

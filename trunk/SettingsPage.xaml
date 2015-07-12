@@ -23,7 +23,8 @@
 
         
         <Pivot Grid.Row="1" >
-            <PivotItem  Header="Input">
+            <PivotItem  Header="Input"
+                        >
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
@@ -201,7 +202,7 @@
 
                         <!--<ToggleSwitch Toggled="fpsToggle_Toggled" Header="Show Frames per Second" x:Name="fpsToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
-                        <ComboBox Name="skipComboBox" HorizontalAlignment="Stretch" 
+                        <!--<ComboBox Name="skipComboBox" HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top" 
                                    SelectedIndex="0" 
                                   SelectionChanged="skipComboBox_SelectionChanged_1"
@@ -211,7 +212,7 @@
                             <ComboBoxItem>1</ComboBoxItem>
                             <ComboBoxItem>2</ComboBoxItem>
                             <ComboBoxItem>3</ComboBoxItem>
-                        </ComboBox>
+                        </ComboBox>-->
 
 
 
@@ -227,6 +228,9 @@
                             <ComboBoxItem>4</ComboBoxItem>
                             <ComboBoxItem>5</ComboBoxItem>
                             <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem>8</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
                         </ComboBox>
 
                         <ComboBox Name="monitorComboBox" HorizontalAlignment="Stretch" 

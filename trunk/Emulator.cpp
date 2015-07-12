@@ -22,7 +22,7 @@ extern long  soundSampleRate;
 extern void soundSetVolume(float);
 
 CRITICAL_SECTION pauseSync;
-int turboSkip = 5;
+
 
 namespace VBA10
 {
