@@ -95,6 +95,18 @@ namespace VBA10
 			}
 		}
 
+		property bool EnableTurbo
+		{
+			bool get()
+			{
+				return GetValueOrDefault<bool>(EnableTurboKey, EnableTurboDefault);
+			}
+			void set(bool value)
+			{
+				AddOrUpdateValue(EnableTurboKey, value);
+			}
+		}
+
 
 
 #pragma region Button positions
@@ -530,6 +542,7 @@ namespace VBA10
 		Platform::String^ ButtonScaleKey = "ButtonScaleKey";
 		Platform::String^ DPadStyleKey = "DPadStyleKey";
 		Platform::String^ TurboFrameSkipKey = "TurboFrameSkipKey";
+		Platform::String^ EnableTurboKey = "EnableTurboKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -577,6 +590,7 @@ namespace VBA10
 		const int ButtonScaleDefault = 100;
 		const int DPadStyleDefault = 0;
 		const int TurboFrameSkipDefault = 2;
+		const bool EnableTurboDefault = false;
 
 #pragma region button positions (in cm based on 6x10cm phone)
 		const double PadLeftPDefault = 0.1f; //from left
