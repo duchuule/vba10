@@ -7,7 +7,6 @@
 
 using namespace VBA10;
 
-bool enableTurboMode = false;
 
 void log(const char *,...) { }
 
@@ -121,7 +120,7 @@ u32 systemReadJoypad(int gamepad)
 	{
 		if(!vControllerState->TurboTogglePressed && oldvControllerState.TurboTogglePressed)
 		{
-			enableTurboMode = !enableTurboMode;
+			EmulatorSettings::Current->EnableTurbo = !EmulatorSettings::Current->EnableTurbo;
 			toggledThisUpdate = true;
 		}
 	}
@@ -129,7 +128,7 @@ u32 systemReadJoypad(int gamepad)
 	{
 		if(!keyboardState->TurboTogglePressed && oldKeyboardState.TurboTogglePressed)
 		{
-			enableTurboMode = !enableTurboMode;
+			EmulatorSettings::Current->EnableTurbo = !EmulatorSettings::Current->EnableTurbo;
 			toggledThisUpdate = true;
 		}
 	}
@@ -137,20 +136,20 @@ u32 systemReadJoypad(int gamepad)
 	{
 		if(!controllerState->TurboTogglePressed && oldControllerState.TurboTogglePressed)
 		{
-			enableTurboMode = !enableTurboMode;
+			EmulatorSettings::Current->EnableTurbo = !EmulatorSettings::Current->EnableTurbo;
 			toggledThisUpdate = true;
 		}
 	}
 
-	if(enableTurboMode &&
+	if(EmulatorSettings::Current->EnableTurbo &&
 		(oldKeyboardState.TurboPressed && !keyboardState->TurboPressed) ||
 		(oldControllerState.TurboPressed && !controllerState->TurboPressed) ||
 		(oldvControllerState.TurboPressed && !vControllerState->TurboPressed))
 	{
-		enableTurboMode = false;
+		EmulatorSettings::Current->EnableTurbo = false;
 	}
 
-	if(enableTurboMode || keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed)
+	if(EmulatorSettings::Current->EnableTurbo || keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed)
 		res |= 1024;
 	
 	oldControllerState = *controllerState;

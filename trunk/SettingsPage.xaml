@@ -214,6 +214,11 @@
                             <ComboBoxItem>3</ComboBoxItem>
                         </ComboBox>-->
 
+                        <ToggleSwitch Header="Enable Turbo Mode" 
+                                      Name="enableTurboToggle" 
+                                      IsOn="False" 
+                                      Toggled="enableTurboToggle_Toggled"
+                                      />
 
 
                         <ComboBox Name="turboSkipComboBox" 
@@ -282,18 +287,7 @@
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
-                        <ToggleSwitch Header="Disable save confirmation" 
-                                      HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top" 
-                                      IsOn="False" 
-                                      Name="saveConfirmationToggle" 
-                                      Toggled="saveConfirmationToggle_Toggled_1"/>
-                        <ToggleSwitch Header="Disable load confirmation" 
-                                      HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top" 
-                                      IsOn="False" 
-                                      Name="loadConfirmationToggle" 
-                                      Toggled="loadConfirmationToggle_Toggled_1"/>
+                        
                         <ToggleSwitch Header="Sound" 
                                       Toggled="soundToggle_Toggled" 
                                       Name="soundToggle" 
@@ -306,6 +300,20 @@
                                       Name="soundSyncToggle" 
                                       IsOn="True" HorizontalAlignment="Left" 
                                       VerticalAlignment="Top"/>
+                        
+                        <ToggleSwitch Header="Disable save confirmation" 
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" 
+                                      IsOn="False" 
+                                      Name="saveConfirmationToggle" 
+                                      Toggled="saveConfirmationToggle_Toggled_1"/>
+                        <ToggleSwitch Header="Disable load confirmation" 
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" 
+                                      IsOn="False" 
+                                      Name="loadConfirmationToggle" 
+                                      Toggled="loadConfirmationToggle_Toggled_1"/>
+                        
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

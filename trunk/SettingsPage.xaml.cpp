@@ -51,6 +51,7 @@ SettingsPage::SettingsPage()
 	touchToggle_Toggled(nullptr, nullptr);
 
 	//video
+	this->enableTurboToggle->IsOn = EmulatorSettings::Current->EnableTurbo;
 	//this->skipComboBox->SelectedIndex = (GetFrameSkip() + 1 < this->skipComboBox->Items->Size) ? (GetFrameSkip() + 1) : (this->skipComboBox->Items->Size - 1);
 	this->turboSkipComboBox->SelectedIndex = (EmulatorSettings::Current->TurboFrameSkip - 1 < this->turboSkipComboBox->Items->Size) ? (EmulatorSettings::Current->TurboFrameSkip - 1) : (this->turboSkipComboBox->Items->Size - 1);
 	this->monitorComboBox->SelectedIndex = GetMonitorType();
@@ -382,5 +383,14 @@ void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows:
 	if (initdone)
 	{
 		EmulatorSettings::Current->LinearFilterEnabled = this->linearFilterToggle->IsOn;
+	}
+}
+
+
+void SettingsPage::enableTurboToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->EnableTurbo = this->enableTurboToggle->IsOn;
 	}
 }
