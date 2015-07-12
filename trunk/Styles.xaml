@@ -97,7 +97,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PageTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+    <Style x:Key="PageTitleTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="CharacterSpacing" Value="75"/>

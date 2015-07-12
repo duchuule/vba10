@@ -598,17 +598,17 @@ namespace VBA10
 		this->controller->GetLRectangle(&lRectangle);
 		this->controller->GetRRectangle(&rRectangle);
 
-		XMFLOAT4A colorf = XMFLOAT4A(1.0f, 1.0f, 1.0f, GetControllerOpacity() / 100.0f);
-		XMFLOAT4A colorf2 = XMFLOAT4A(1.0f, 1.0f, 1.0f, (GetControllerOpacity() / 100.0f) + 0.2f);
-		XMVECTOR colorv = XMLoadFloat4A(&colorf);
-		XMVECTOR colorv2 = XMLoadFloat4A(&colorf2);
+		//XMFLOAT4A colorf = XMFLOAT4A(1.0f, 1.0f, 1.0f, GetControllerOpacity() / 100.0f);
+		//XMFLOAT4A colorf2 = XMFLOAT4A(1.0f, 1.0f, 1.0f, (GetControllerOpacity() / 100.0f) + 0.2f);
+		//XMVECTOR colorv = XMLoadFloat4A(&colorf);
+		//XMVECTOR colorv2 = XMLoadFloat4A(&colorf2);
 		
 		// Render last frame to screen
 		Color white(1.0f, 1.0f, 1.0f, 1.0f);
 
 		Color color(1.0f, 1.0f, 1.0f, 1.0f);
 		if (this->width > this->height) //landscape
-			color = Color(1.0f, 1.0f, 1.0f, 0.5f);
+			color = Color(1.0f, 1.0f, 1.0f, GetControllerOpacity()/100.0f);
 		
 
 		
@@ -621,6 +621,18 @@ namespace VBA10
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 
 		this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVs[this->frontbuffer].Get(), this->buffers[this->frontbuffer].Get(), white);
+
+		//divider
+		Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);
+		if (this->height > this->width)
+		{
+			ComPtr<ID3D11Texture2D> tex;
+			this->dividerResource.As(&tex);
+
+			Engine::Rectangle targetRect(dividerRect.left, dividerRect.top, dividerRect.right - dividerRect.left, dividerRect.bottom - dividerRect.top);
+			this->dxSpriteBatch->Draw(targetRect, this->dividerSRV.Get(), tex.Get(), dividerColor);
+		}
+
 
 		if(TouchControlsEnabled())
 		{
@@ -651,16 +663,7 @@ namespace VBA10
 				this->dxSpriteBatch->Draw(stickRectE, this->stickSRV.Get(), tex.Get(), color);
 			}
 
-			//divider
-			Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);
-			if (this->height > this->width)
-			{
-				ComPtr<ID3D11Texture2D> tex;
-				this->dividerResource.As(&tex);
-
-				Engine::Rectangle targetRect(dividerRect.left, dividerRect.top, dividerRect.right - dividerRect.left, dividerRect.bottom - dividerRect.top);
-				this->dxSpriteBatch->Draw(targetRect, this->dividerSRV.Get(), tex.Get(), dividerColor);
-			}
+			
 
 			Engine::Rectangle aRect(this->aRectangle.left, this->aRectangle.top, this->aRectangle.right - this->aRectangle.left, this->aRectangle.bottom - this->aRectangle.top);
 			ComPtr<ID3D11Texture2D> tex;
