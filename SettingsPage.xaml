@@ -14,11 +14,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ctl:PageHeader>
-            <ctl:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" Text="SETTINGS"/>
-            </ctl:PageHeader.HeaderContent>
-        </ctl:PageHeader>
+        <Grid x:Name="titleBar" 
+              Height="48"
+              Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <TextBlock x:Name="title" 
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="SETTINGS"/>
+        </Grid>
 
         
         <Pivot Grid.Row="1" >
@@ -37,11 +38,11 @@
                                       Name="touchToggle" HorizontalAlignment="Left" 
                                       Toggled="touchToggle_Toggled"/>
 
-                        <ToggleSwitch Header="Virtual Controller Position" 
+                        <!--<ToggleSwitch Header="Virtual Controller Position" 
                                       OffContent="Bottom"
                                       OnContent="Top" IsOn="True" 
                                               x:Name="touchControlPosToggle" 
-                                              Toggled="touchControlPosToggle_Toggled"/>
+                                              Toggled="touchControlPosToggle_Toggled"/>-->
 
                         <ComboBox Name="dpadComboBox" 
                                   HorizontalAlignment="Stretch" 
@@ -66,7 +67,7 @@
 
 
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock >Controller Scale:</TextBlock>
+                            <TextBlock >Virtual Joystick Scale:</TextBlock>
                             <TextBlock Name="valueLabel"  Text="100" />
                             <TextBlock Text="%" />
                         </StackPanel>
@@ -76,7 +77,17 @@
                                  />
 
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock   >Controller Opacity:</TextBlock>
+                            <TextBlock >Virtual Button Scale:</TextBlock>
+                            <TextBlock Name="valueLabel2"  Text="100" />
+                            <TextBlock Text="%" />
+                        </StackPanel>
+                        <Slider  Minimum="50" Maximum="150" Value="100" 
+                                 Name="buttonScaleSlider" 
+                                 ValueChanged="buttonScaleSlider_ValueChanged_1"
+                                 />
+
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock   >Virtual controller opacity:</TextBlock>
                             <TextBlock Name="opacityValueLabel"  Text="50" />
                             <TextBlock  Text="%" />
                         </StackPanel>

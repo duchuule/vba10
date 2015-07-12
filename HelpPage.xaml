@@ -14,12 +14,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ctl:PageHeader>
-            <ctl:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" 
-                           Style="{ThemeResource PageTitleTextBlockStyle}" Text="HELP"/>
-            </ctl:PageHeader.HeaderContent>
-        </ctl:PageHeader>
+        <Grid x:Name="titleBar" 
+              Height="48"
+              Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <TextBlock x:Name="title" 
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="HELP"/>
+        </Grid>
 
         <Pivot Grid.Row="1" >
             <PivotItem Header="Keyboard">

@@ -51,12 +51,12 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ctl:PageHeader>
-            <ctl:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" 
-                           Style="{ThemeResource PageTitleTextBlockStyle}" Text="CHEATS"/>
-            </ctl:PageHeader.HeaderContent>
-        </ctl:PageHeader>
+        <Grid x:Name="titleBar" 
+              Height="48"
+              Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <TextBlock x:Name="title" 
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="CHEATS"/>
+        </Grid>
         <TextBlock x:Name="txtNoROM" Visibility="Collapsed"
                    Grid.Row="1"
                    Margin="8,8,8,4"

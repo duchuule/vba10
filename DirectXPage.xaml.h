@@ -57,17 +57,6 @@ namespace VBA10
 
 	//from AppShell
 	internal:
-		/// <summary>
-		/// An event to notify listeners when the hamburger button may occlude other content in the app.
-		/// The custom "PageHeader" user control is using this.
-		/// </summary>
-		event TypedEventHandler<DirectXPage^, Rect>^ TogglePaneButtonRectChanged;
-		property Rect TogglePaneButtonRect
-		{
-			Rect get() { return _togglePaneButtonRect; }
-		private:
-			void set(Rect value) { _togglePaneButtonRect = value; }
-		}
 
 		static property DirectXPage^ Current
 		{

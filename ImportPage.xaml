@@ -25,7 +25,7 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                           Style="{ThemeResource PageTitleTextBlockStyle}" Text="IMPORT"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="IMPORT"/>
         </Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"

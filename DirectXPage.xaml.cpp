@@ -484,28 +484,6 @@ void DirectXPage::NavMenuList_ItemInvoked(Object^ sender, ListViewItem^ listView
 
 
 /// <summary>
-/// Check for the conditions where the navigation pane does not occupy the space under the floating
-/// hamburger button and trigger the event.
-/// Actually: this one is triggerd when the menu is closed and what it does is to feed information to Pageheader about the margin
-/// </summary>
-void DirectXPage::CheckTogglePaneButtonSizeChanged()
-{
-	if (RootSplitView->DisplayMode == SplitViewDisplayMode::Inline ||
-		RootSplitView->DisplayMode == SplitViewDisplayMode::Overlay)
-	{
-		auto transform = TogglePaneButton->TransformToVisual(this);
-		auto rect = transform->TransformBounds(Rect(0, 0, (float)TogglePaneButton->ActualWidth, (float)TogglePaneButton->ActualHeight));
-		_togglePaneButtonRect = rect;
-	}
-	else
-	{
-		_togglePaneButtonRect = Rect();
-	}
-
-	TogglePaneButtonRectChanged(this, TogglePaneButtonRect);
-}
-
-/// <summary>
 /// Enable accessibility on each nav menu item by setting the AutomationProperties.Name on each container
 /// using the associated Label of each item.
 /// </summary>
@@ -551,7 +529,7 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 		SaveCheats();
 	}
 
-	CheckTogglePaneButtonSizeChanged();
+	//CheckTogglePaneButtonSizeChanged();
 
 	//unpause emulator
 	m_main->emulator->Unpause();
@@ -604,7 +582,10 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 
 	//navigate to the first item
-	GoToPage(0);
+
+	//GoToPage(0);
+	if (!IsROMLoaded())
+		GoToPage(0);
 
 
 	

@@ -561,9 +561,6 @@
     <Page Include="DirectXPage.xaml" />
     <Page Include="SelectROMPane.xaml" />
     <Page Include="Styles.xaml" />
-    <Page Include="PageHeader.xaml">
-      <Filter>Controls</Filter>
-    </Page>
     <Page Include="SettingsPage.xaml" />
     <Page Include="HelpPage.xaml" />
     <Page Include="SelectStatePane.xaml" />

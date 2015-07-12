@@ -302,9 +302,6 @@
     <ClInclude Include="NavMenuItem.h" />
     <ClInclude Include="NavMenuListView.h" />
     <ClInclude Include="OnResizeBuffer.h" />
-    <ClInclude Include="PageHeader.xaml.h">
-      <DependentUpon>PageHeader.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="Point.h" />
     <ClInclude Include="ppltasks_extra.h" />
     <ClInclude Include="Rectangle.h" />
@@ -547,15 +544,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="PageHeader.xaml.cpp">
-      <DependentUpon>PageHeader.xaml</DependentUpon>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Point.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -1066,7 +1054,6 @@
     <Page Include="ImportPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PageHeader.xaml" />
     <Page Include="SelectFilePane.xaml" />
     <Page Include="SelectROMPane.xaml" />
     <Page Include="SelectStatePane.xaml" />

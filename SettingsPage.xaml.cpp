@@ -30,7 +30,6 @@ SettingsPage::SettingsPage()
 {
 	InitializeComponent();
 	this->touchToggle->IsOn = TouchControlsEnabled();
-	this->touchControlPosToggle->IsOn = IsTouchControllerOnTop();
 	this->UpdateTextBox(this->leftKeyBox, GetLeftKeyBinding());
 	this->UpdateTextBox(this->rightKeyBox, GetRightKeyBinding());
 	this->UpdateTextBox(this->upKeyBox, GetUpKeyBinding());
@@ -43,6 +42,7 @@ SettingsPage::SettingsPage()
 	this->UpdateTextBox(this->rKeyBox, GetRKeyBinding());
 	this->UpdateTextBox(this->turboModeBox, GetTurboKeyBinding());
 	this->controllerScaleSlider->Value = (double)EmulatorSettings::Current->ControllerScale;
+	this->buttonScaleSlider->Value = (double)EmulatorSettings::Current->ButtonScale;
 	this->controllerOpacitySlider->Value = (double)GetControllerOpacity();
 	this->deadzoneSlider->Value = (double)GetDeadzone();
 	this->dpadComboBox->SelectedIndex = EmulatorSettings::Current->DPadStyle;
@@ -94,7 +94,6 @@ void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xa
 	{
 		EnableTouchControls(this->touchToggle->IsOn);
 	}
-	this->touchControlPosToggle->IsEnabled = this->touchToggle->IsOn;
 	this->controllerScaleSlider->IsEnabled = this->touchToggle->IsOn;
 	this->controllerOpacitySlider->IsEnabled = this->touchToggle->IsOn;
 	this->deadzoneSlider->IsEnabled = this->touchToggle->IsOn;
@@ -195,13 +194,6 @@ void SettingsPage::turboModeBox_KeyUp_1(Platform::Object^ sender, Windows::UI::X
 }
 
 
-void SettingsPage::touchControlPosToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	if (initdone)
-	{
-		SetTouchControllerOnTop(this->touchControlPosToggle->IsOn);
-	}
-}
 
 
 void SettingsPage::controllerScaleSlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
@@ -220,6 +212,22 @@ void SettingsPage::controllerScaleSlider_ValueChanged_1(Platform::Object^ sender
 	}
 }
 
+
+void SettingsPage::buttonScaleSlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
+{
+	if (this->valueLabel2)
+	{
+		wstringstream wss;
+		wss << (int)e->NewValue;
+
+		this->valueLabel2->Text = ref new String(wss.str().c_str());
+
+		if (initdone)
+		{
+			EmulatorSettings::Current->ButtonScale = (int)e->NewValue;
+		}
+	}
+}
 
 void SettingsPage::controllerOpacitySlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
