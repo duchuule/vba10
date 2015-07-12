@@ -98,12 +98,13 @@
     </Style>
 
     <Style x:Key="PageTitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="CharacterSpacing" Value="75"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Margin" Value="12, 14, 12, 4"/>
+        <Setter Property="Margin" Value="12, 14, 8, 4"/>
     </Style>
 
     <Style x:Key="NavigationBackButtonStyle" TargetType="Button" BasedOn="{StaticResource NavigationBackButtonNormalStyle}">

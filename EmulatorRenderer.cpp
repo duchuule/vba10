@@ -59,6 +59,8 @@ bool lastSkipped = false;
 int framesNotRendered = 0;
 bool monitorTypeSkipped = false;
 
+int turboSkip;
+
 void ContinueEmulation(void)
 {
 	if(swapEvent && updateEvent)
@@ -426,29 +428,33 @@ namespace VBA10
 
 			this->lastElapsed = timeDelta;
 			
-			systemFrameSkip = GetPowerFrameSkip();
-			float targetFPS = 55.0f;
-			if(GetMonitorType() == 0)
-			{
-				systemFrameSkip = systemFrameSkip * 2 + 1;
-				targetFPS = 28.0f;
-			}
-			if(GetFrameSkip() == -1 && GetPowerFrameSkip() == 0)
-			{
-				if(!lastSkipped && (this->lastElapsed * 1.0f) > (1.0f / targetFPS))
-				{
-					int skip = (int)((this->lastElapsed * 1.0f) / (1.0f / targetFPS));				
-					systemFrameSkip += (skip < 2) ? skip : 2;
-					//systemFrameSkip++;
-					lastSkipped = true;
-				}else
-				{
-					lastSkipped = false;
-				}
-			}else if(GetFrameSkip() >= 0)
-			 {
-				systemFrameSkip += GetFrameSkip();
-			 }
+			systemFrameSkip = 0;
+
+			turboSkip = EmulatorSettings::Current->TurboFrameSkip;
+
+			//systemFrameSkip = GetPowerFrameSkip();
+			//float targetFPS = 60.0f;
+			//if(GetMonitorType() == 0)
+			//{
+			//	systemFrameSkip = systemFrameSkip * 2 + 1;
+			//	targetFPS = 30.0f;
+			//}
+			//if(GetFrameSkip() == -1 && GetPowerFrameSkip() == 0)
+			//{
+			//	if(!lastSkipped && (this->lastElapsed * 1.0f) > (1.0f / targetFPS))
+			//	{
+			//		int skip = (int)((this->lastElapsed * 1.0f) / (1.0f / targetFPS));				
+			//		systemFrameSkip += (skip < 2) ? skip : 2;
+			//		//systemFrameSkip++;
+			//		lastSkipped = true;
+			//	}else
+			//	{
+			//		lastSkipped = false;
+			//	}
+			//}else if(GetFrameSkip() >= 0)
+			// {
+			//	systemFrameSkip += GetFrameSkip();
+			// }
 
 			this->Autosave();
 
@@ -491,7 +497,7 @@ namespace VBA10
 			if((GetMonitorType() != MONITOR_120HZ) || (monitorTypeSkipped))
 			{
 				monitorTypeSkipped = false;
-				if(framesNotRendered >= GetPowerFrameSkip())
+				//if(framesNotRendered >= GetPowerFrameSkip())
 				{
 					framesNotRendered = 0;
 					WaitForSingleObjectEx(swapEvent, INFINITE, false);
@@ -508,10 +514,11 @@ namespace VBA10
 					m_deviceResources->GetD3DDeviceContext()->Unmap(this->buffers[this->frontbuffer].Get(), 0);
 
 					SetEvent(updateEvent);
-				}else
+				}
+				/*else
 				{
 					framesNotRendered++;
-				}
+				}*/
 			}else
 			{
 				monitorTypeSkipped = true;

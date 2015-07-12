@@ -51,8 +51,8 @@ SettingsPage::SettingsPage()
 	touchToggle_Toggled(nullptr, nullptr);
 
 	//video
-	this->skipComboBox->SelectedIndex = (GetFrameSkip() + 1 < this->skipComboBox->Items->Size) ? (GetFrameSkip() + 1) : (this->skipComboBox->Items->Size - 1);
-	this->turboSkipComboBox->SelectedIndex = (GetTurboFrameSkip() - 1 < this->turboSkipComboBox->Items->Size) ? (GetTurboFrameSkip() - 1) : (this->turboSkipComboBox->Items->Size - 1);
+	//this->skipComboBox->SelectedIndex = (GetFrameSkip() + 1 < this->skipComboBox->Items->Size) ? (GetFrameSkip() + 1) : (this->skipComboBox->Items->Size - 1);
+	this->turboSkipComboBox->SelectedIndex = (EmulatorSettings::Current->TurboFrameSkip - 1 < this->turboSkipComboBox->Items->Size) ? (EmulatorSettings::Current->TurboFrameSkip - 1) : (this->turboSkipComboBox->Items->Size - 1);
 	this->monitorComboBox->SelectedIndex = GetMonitorType();
 	this->fpsToggle->IsOn = ShowingFPS();
 	switch (GetAspectRatio())
@@ -285,20 +285,20 @@ void SettingsPage::monitorComboBox_SelectionChanged_1(Platform::Object^ sender, 
 
 
 
-void SettingsPage::skipComboBox_SelectionChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
-{
-	if (initdone)
-	{
-		SetFrameSkip(this->skipComboBox->SelectedIndex - 1);
-	}
-}
+//void SettingsPage::skipComboBox_SelectionChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+//{
+//	if (initdone)
+//	{
+//		SetFrameSkip(this->skipComboBox->SelectedIndex - 1);
+//	}
+//}
 
 
 void SettingsPage::turboSkipComboBox_SelectionChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
 	if (initdone)
 	{
-		SetTurboFrameSkip(this->turboSkipComboBox->SelectedIndex + 1);
+		EmulatorSettings::Current->TurboFrameSkip = this->turboSkipComboBox->SelectedIndex + 1;
 	}
 }
 

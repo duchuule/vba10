@@ -59,7 +59,7 @@
         </Grid>
         <TextBlock x:Name="txtNoROM" Visibility="Collapsed"
                    Grid.Row="1"
-                   Margin="8,8,8,4"
+                   Margin="12,8,12,4"
                  Text="Please start a rom first." />
         
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -70,7 +70,7 @@
                
 
                 <StackPanel x:Name="panelAddCode"
-                        Padding="8,0,8,0"
+                        Padding="12,0,12,0"
                         BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
                             MaxWidth="400"
                         >
@@ -130,7 +130,7 @@
                 </StackPanel>
 
                 <StackPanel x:Name="panelCheatList"
-                        Padding="8,0,8,0"
+                        Padding="12,0,12,0"
                         BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
                             MaxWidth="400"
                         >

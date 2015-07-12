@@ -10,14 +10,11 @@ using namespace Windows::Foundation;
 #define DEFAULT_TOUCH_BUTTONS_INTERSECTING	false
 #define DEFAULT_AUTOSAVING_ENABLED true
 #define DEFAULT_GRAY_BUTTONS	false
-#define DEFAULT_SKIP_FRAMES		0
-#define DEFAULT_TURBO_SKIP		5
 #define DEFAULT_CONTROLLER_SCALE	100
 #define DEFAULT_CONTROLLER_OPACITY	50
 #define DEFAULT_ASPECT			AspectRatioMode::Original
 #define DEFAULT_IMAGE_SCALE		100
 #define DEFAULT_SYNC_AUDIO		true
-#define DEFAULT_POWER_SKIP		0
 #define DEFAULT_DPAD_STYLE		1
 #define DEFAULT_DEADZONE_VALUE	10.0f
 #define DEFAULT_MONITOR_TYPE	MONITOR_60HZ
@@ -73,9 +70,7 @@ namespace VBA10
 	//bool lowFrequencyMode = false;
 	bool touchControllerOnTop = true;
 	bool autosavingEnabled = true;
-	int skipframes = -1;
-	int turboSkip = 5;
-	int powerSkip = 1;
+
 
 	int controllerOpacity = 50;
 	AspectRatioMode aspect = AspectRatioMode::Original;
@@ -110,7 +105,6 @@ namespace VBA10
 	void setRKeyBinding(VirtualKey key);
 	void setTurboKeyBinding(VirtualKey key);
 	void setSynchronizeAudio(bool sync);	
-	void setPowerFrameSkip(int skip);	
 	void setMonitorType(int type);
 
 	//void enableLowDisplayRefreshMode(bool enable);
@@ -119,8 +113,6 @@ namespace VBA10
 	void setTouchControllerOnTop(bool onTop);
 	void enableShowFPS(bool show);
 	void enableAutosaving(bool enable);
-	void setFrameSkip(int skip);
-	void setTurboFrameSkip(int skip);
 	void setControllerOpacity(int opacity);
 	void setAspectRatio(AspectRatioMode aspect);
 	void setImageScale(int scale);
@@ -145,21 +137,7 @@ namespace VBA10
 		StoreSettings();
 	}
 	
-	void setPowerFrameSkip(int skip)
-	{
-		powerSkip = skip;
-	}
 
-	void SetPowerFrameSkip(int skip)
-	{
-		powerSkip = skip;
-		StoreSettings();
-	}
-
-	int GetPowerFrameSkip(void)
-	{
-		return powerSkip;
-	}
 	
 	void setSynchronizeAudio(bool sync)
 	{
@@ -454,37 +432,7 @@ namespace VBA10
 		return autosavingEnabled;
 	}
 
-	void setFrameSkip(int skip)
-	{
-		skipframes = skip;
-	}
-	
-	void SetFrameSkip(int skip)
-	{
-		setFrameSkip(skip);
-		StoreSettings();
-	}
 
-	int GetFrameSkip(void)
-	{
-		return skipframes;
-	}
-
-	void setTurboFrameSkip(int skip)
-	{
-		turboSkip = skip;
-	}
-
-	void SetTurboFrameSkip(int skip)
-	{
-		setTurboFrameSkip(skip);
-		StoreSettings();
-	}
-
-	int GetTurboFrameSkip(void)
-	{
-		return turboSkip;
-	}
 
 	void setAspectRatio(AspectRatioMode aspect)
 	{
@@ -616,9 +564,6 @@ namespace VBA10
 		values->Insert("TurboKeyMapping", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32((int)turboKey)));
 		values->Insert("TouchControllerOnTop", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(touchControllerOnTop)));
 		values->Insert("EnableAutosaving", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(autosavingEnabled)));
-		values->Insert("SkipFrames", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(skipframes)));
-		values->Insert("TurboSkipFrames", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(turboSkip)));
-		values->Insert("PowerFrameSkip", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(powerSkip)));
 		values->Insert("AspectRatio", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32((int) aspect)));
 		values->Insert("ImageScale", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(imageScale)));
 		values->Insert("ControllerOpacity", dynamic_cast<PropertyValue^>(PropertyValue::CreateInt32(controllerOpacity)));
@@ -645,13 +590,10 @@ namespace VBA10
 		auto buttonsIntersecting = safe_cast<IPropertyValue^>(values->Lookup("TouchButtonsIntersecting"));
 		auto autosaving = safe_cast<IPropertyValue^>(values->Lookup("EnableAutosaving"));
 		auto grayButtons = safe_cast<IPropertyValue^>(values->Lookup("GrayButtons"));
-		auto skipFrames = safe_cast<IPropertyValue^>(values->Lookup("SkipFrames"));
-		auto turboSkipFrames = safe_cast<IPropertyValue^>(values->Lookup("TurboSkipFrames"));
 		auto aspect = safe_cast<IPropertyValue^>(values->Lookup("AspectRatio"));
 		auto imageScale = safe_cast<IPropertyValue^>(values->Lookup("ImageScale"));
 		auto controllerOpacity = safe_cast<IPropertyValue^>(values->Lookup("ControllerOpacity"));
 		auto synchronizeAudio = safe_cast<IPropertyValue^>(values->Lookup("SynchronizeAudio"));
-		auto powerSkipEntry = safe_cast<IPropertyValue^>(values->Lookup("PowerFrameSkip"));
 		auto deadzoneEntry = safe_cast<IPropertyValue^>(values->Lookup("Deadzone"));
 		auto monitorTypeEntry = safe_cast<IPropertyValue^>(values->Lookup("MonitorType"));
 
@@ -700,13 +642,6 @@ namespace VBA10
 			setDeadzone(DEFAULT_DEADZONE_VALUE);
 		}
 
-		if(powerSkipEntry)
-		{
-			setPowerFrameSkip(powerSkipEntry->GetInt32());
-		}else
-		{
-			setPowerFrameSkip(DEFAULT_POWER_SKIP);
-		}
 		if(synchronizeAudio)
 		{
 			setSynchronizeAudio(synchronizeAudio->GetBoolean());
@@ -722,20 +657,7 @@ namespace VBA10
 			setControllerOpacity(DEFAULT_CONTROLLER_OPACITY);
 		}
 
-		if(skipFrames)
-		{
-			setFrameSkip(skipFrames->GetInt32());
-		}else
-		{
-			setFrameSkip(DEFAULT_SKIP_FRAMES);
-		}
-		if(turboSkipFrames)
-		{
-			setTurboFrameSkip(turboSkipFrames->GetInt32());
-		}else
-		{
-			setTurboFrameSkip(DEFAULT_TURBO_SKIP);
-		}
+
 		if(aspect)
 		{
 			setAspectRatio((AspectRatioMode) aspect->GetInt32());
