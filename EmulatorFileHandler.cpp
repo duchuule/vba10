@@ -302,9 +302,12 @@ namespace VBA10
 
 	task<void> LoadGBROMAsync(StorageFile ^file, StorageFolder ^folder)
 	{
-		
 
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
+		
+		gbaLoopForceQuit = true;
+
+
 
 		gbexecute = false; //added by Duc Le
 
@@ -367,6 +370,7 @@ namespace VBA10
 
 			gbReset();			
 			EmulatorGame::emulator = GBSystem;
+
 			gbBorderOn = false;
 
 			soundInit();
@@ -413,6 +417,8 @@ namespace VBA10
 	task<void> LoadGBAROMAsync(StorageFile ^file, StorageFolder ^folder)//(unsigned char *rom, size_t length)
 	{		
 		EmulatorGame *emulator = EmulatorGame::GetInstance();
+		gbaLoopForceQuit = false;
+
 		return ParseVBAIniAsync().then([emulator]()
 		{
 			return emulator->StopROMAsync();

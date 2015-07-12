@@ -142,6 +142,23 @@ namespace VBA10
 		this->graphicsResourcesReleased = false;
 	}
 
+	void EmulatorGame::StartEmulatorThread()
+	{
+		this->threadAction = ThreadPool::RunAsync(ref new WorkItemHandler([this](IAsyncAction ^action)
+		{
+			this->UpdateAsync();
+		}), WorkItemPriority::High, WorkItemOptions::None);
+	}
+
+	void EmulatorGame::StopEmulatorThread()
+	{
+		if (this->threadAction)
+		{
+			this->threadAction->Cancel();
+			this->threadAction->Close();
+		}
+	}
+
 	void EmulatorGame::InitSound(void)
 	{
 		if(soundDriver)
@@ -268,11 +285,15 @@ namespace VBA10
 	void EmulatorGame::UpdateAsync(void)
 	{
 		WaitForSingleObjectEx(this->updateEvent, INFINITE, false);
+		
 		while(!this->stopThread)
 		{			
 			EnterCriticalSection(&pauseSync);
 			emulator.emuMain(emulator.emuCount);
 			LeaveCriticalSection(&pauseSync);
+
+			if (this->stopThread)
+				bool test = true;
 		}
 		SetEvent(this->flipBufferEvent);
 

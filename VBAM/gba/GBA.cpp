@@ -47,6 +47,7 @@ u32 cpuDmaLast = 0;
 int dummyAddress = 0;
 
 bool cpuBreakLoop = false;
+bool gbaLoopForceQuit = false;
 int cpuNextEvent = 0;
 
 int gbaSaveType = 0; // used to remember the save type on reset
@@ -3659,6 +3660,10 @@ void CPULoop(int ticks)
               if(systemPauseOnFrame())
                 ticks = 0;
             }
+
+			//added by DL: to break out of the loop when change rom from gba to gb
+			if (gbaLoopForceQuit)
+				return;
 
             UPDATE_REG(0x04, DISPSTAT);
             CPUCompareVCOUNT();

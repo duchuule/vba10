@@ -54,6 +54,8 @@ namespace VBA10
 		void Unpause(void);
 		void Update(void);
 		bool LastFrameSkipped(void);
+		void StartEmulatorThread();
+		void StopEmulatorThread();
 
 	private:
 		static EmulatorGame *instance;
