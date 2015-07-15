@@ -22,16 +22,23 @@
         </Grid>
 
         <Pivot Grid.Row="1" >
-            <PivotItem Header="Keyboard">
+            <PivotItem Header="How to">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                       HorizontalAlignment="Left" 
                                     MaxWidth="440">
-                        <TextBlock TextWrapping="Wrap" >
-                            <Run Text="Here are some keyboard shortcut"/>
+                        <TextBlock Text="How to restore saves" FontSize="19" />
+                        <TextBlock TextWrapping="Wrap"
+                                 Margin=" 0, 0, 0, 4" >
+                            <Run>1. Quit the app completelely.</Run><LineBreak/>
+                            <Run>2. Make sure the name of the save file match the name 
+                                of the rom exactly (except the extension).</Run><LineBreak/>
+                            <Run>3. Open the app and import the save file.</Run><LineBreak/>
+                            <Run>4. Start the game.</Run><LineBreak/>
                         </TextBlock>
+
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

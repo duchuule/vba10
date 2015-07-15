@@ -42,9 +42,7 @@
                 <TextBlock TextWrapping="Wrap"
                            Text="Use this option to import a file already present on your phone or PC. Note: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing."                                
                                  Margin=" 0, 4, 0, 4" />
-                <TextBlock TextWrapping="Wrap"
-                           Text="To restore saves: (i) Make sure the names of the rom and the save file match exactly. (ii) Import the save file. (iii) Start the game."                                
-                                 Margin=" 0, 4, 0, 4" />
+
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="chooseFolderbtn" Content="Import ROM" 
                             Click="chooseFolderbtn_Click"

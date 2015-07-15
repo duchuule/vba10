@@ -262,7 +262,6 @@
     <ClCompile Include="NavMenuListView.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="PageHeader.xaml.cpp" />
     <ClCompile Include="SettingsPage.xaml.cpp" />
     <ClCompile Include="HelpPage.xaml.cpp" />
     <ClCompile Include="SelectStatePane.xaml.cpp" />
@@ -511,7 +510,6 @@
     <ClInclude Include="NavMenuListView.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClInclude Include="PageHeader.xaml.h" />
     <ClInclude Include="SettingsPage.xaml.h" />
     <ClInclude Include="HelpPage.xaml.h" />
     <ClInclude Include="SelectStatePane.xaml.h" />
