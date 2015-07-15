@@ -171,8 +171,8 @@ namespace VBA10
 		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
 		{
 			//scale is the ratio between real physical size and design physical size
-			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.75f); 
-			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.75f); 
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.5f); 
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.5f); 
 
 			PadLeft = settings->PadLeftP * vscale / 2.54f * rawDpiX;
 			PadBottom = settings->PadBottomP * vscale / 2.54f * rawDpiY;

@@ -642,8 +642,11 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	}).then([entry] (StorageFile^ file){ 
 		return LoadROMAsync(file, entry->Folder);
 
-	}).then([] {
-		return LoadStateAsync(AUTOSAVESTATE_SLOT);
+	}).then([entry] {
+		if (entry->AutoLoadLastState)
+			return LoadStateAsync(AUTOSAVESTATE_SLOT);
+		else
+			return create_task([] {});
 	});
 	//this is OK after we fixed the ParseVBAiniAsync so that it does not branch to another thread but it makes the UI unreponsive
 	//LoadROMAsync(file, folder).then([this]
