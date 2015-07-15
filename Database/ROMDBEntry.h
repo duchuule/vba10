@@ -159,6 +159,8 @@ namespace VBA10
 			}
 		}
 
+		property bool AutoLoadLastState;
+
 		//this is just to hold the snapshot image while the app is running
 		property BitmapSource^ Snapshot
 		{

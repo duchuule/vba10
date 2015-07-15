@@ -47,12 +47,11 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 	picker->FileTypeFilter->Append(".gba");
 	picker->FileTypeFilter->Append(".gbc");
 	picker->FileTypeFilter->Append(".gb");
-	picker->FileTypeFilter->Append(".sav");
-	picker->FileTypeFilter->Append(".sgm");
-	picker->FileTypeFilter->Append(".gb");
-	picker->FileTypeFilter->Append(".zip");
-	picker->FileTypeFilter->Append(".rar");
-	picker->FileTypeFilter->Append(".7z");
+	//picker->FileTypeFilter->Append(".sav");
+	//picker->FileTypeFilter->Append(".sgm");
+	//picker->FileTypeFilter->Append(".zip");
+	//picker->FileTypeFilter->Append(".rar");
+	//picker->FileTypeFilter->Append(".7z");
 
 	picker->ViewMode = PickerViewMode::List;
 	picker->CommitButtonText = "Select ROM Directory";
@@ -183,3 +182,71 @@ void ImportPage::ImportFile(StorageFile^ file)
 
 
 
+
+
+void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	FileOpenPicker ^picker = ref new FileOpenPicker();
+	
+	picker->FileTypeFilter->Append(".sav");
+	picker->FileTypeFilter->Append(".sgm");
+	
+
+	picker->ViewMode = PickerViewMode::List;
+	//picker->CommitButtonText = "Select";
+
+	task<void> t = create_task(picker->PickSingleFileAsync()).then([this](StorageFile ^file)
+	{
+		if (file)
+		{
+			//get the save name without extension
+			Platform::String ^file_path = file->Path;
+			wstring wfilepath(file_path->Begin(), file_path->End());
+
+			wstring folderpath;
+			wstring filename;
+			wstring filenamenoext;
+			wstring ext;
+			splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+			
+			Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
+
+			ROMDBEntry^ entry = App::ROMDB->GetEntryFromName(pfilenamenoext);
+
+			if (entry == nullptr)
+			{
+				MessageDialog ^dialog = ref new MessageDialog("Could not find a matching ROM name.", "Error");
+				dialog->ShowAsync();
+				return create_task([] {});
+			}
+
+			//if the file is ingame save then prevent autoloading
+			if (ext == L"sav")
+				entry->AutoLoadLastState = false;
+
+			//copy the save file over
+			Platform::String^ pfolderpath = ref new Platform::String(folderpath.c_str());
+			if (pfolderpath == entry->Folder->Path)
+			{
+				MessageDialog ^dialog = ref new MessageDialog("Save file imported successfully.");
+				dialog->ShowAsync();
+				return create_task([] {});
+			}
+			else
+			{
+				return create_task(file->CopyAsync(entry->Folder, file->Name, NameCollisionOption::ReplaceExisting))
+					.then([](StorageFile^ file)
+				{
+					MessageDialog ^dialog = ref new MessageDialog("Save file imported successfully.");
+					dialog->ShowAsync();
+					return create_task([] {});
+				});
+			}
+
+		}
+		else
+			return create_task([] {});
+
+	});
+}

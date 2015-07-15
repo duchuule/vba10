@@ -24,5 +24,6 @@ namespace VBA10
 	private:
 		void chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		StorageFolder^ tmpfolder;
+		void importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

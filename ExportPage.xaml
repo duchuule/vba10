@@ -20,5 +20,37 @@
             <TextBlock x:Name="title" 
                      Style="{StaticResource PageTitleTextBlockStyle}" Text="EXPORT"/>
         </Grid>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="12,0,12,0"
+                      Grid.Row="1"
+                      MaxWidth="500"
+                      HorizontalAlignment="Left">
+            <StackPanel >
+                <TextBlock Text="Local storage"
+                                VerticalAlignment="Center"
+                           FontSize="23"
+                           Margin="0,8,0,0"
+                                  />
+                <TextBlock TextWrapping="Wrap"
+                           Text="If you import the rom using local storage option, then all save files are stored in the same folder as the rom. You just need to go there and copy them to wherever you need."                                
+                                 Margin=" 0, 4, 0, 4" />
+
+                <TextBlock Text="OneDrive"
+                           VerticalAlignment="Center"
+                           FontSize="23"
+                           Margin="0,8,0,0"
+                                  />
+                <TextBlock TextWrapping="Wrap"
+                           Text="If for any reason you cannot access the rom folder or the rom is copied to the app's private storage, use this option to export save files to OneDrive."                                
+                                 Margin=" 0, 4, 0, 4" />
+                
+                <TextBlock TextWrapping="Wrap"
+                           Text="This option is only useful on Windows 10 Mobile, which is not released yet, so it will be added later."                                
+                                 Margin=" 0, 4, 0, 4" />
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
