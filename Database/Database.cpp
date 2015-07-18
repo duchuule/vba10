@@ -1,7 +1,7 @@
 #include "Database.h"
 #include <ppltasks.h>
 
-using namespace SQLiteWinRT;
+using namespace VBA10::SQLiteWinRT;
 using namespace Platform;
 using namespace concurrency;
 using namespace Windows::Storage;

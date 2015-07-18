@@ -7,7 +7,7 @@
 #include <vector>
 
 // Modified from http://stackoverflow.com/questions/10520335/how-to-wrap-a-char-buffer-in-a-winrt-ibuffer-in-c 
-namespace SQLiteWinRT
+namespace VBA10
 {
 	class NativeBuffer : 
 		public Microsoft::WRL::RuntimeClass<Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::RuntimeClassType::WinRtClassicComMix>,
