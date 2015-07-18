@@ -17,20 +17,21 @@
 #else
 #define SimulateSlowOperation void
 #endif
-
-namespace SQLiteWinRT
+namespace VBA10
 {
-	using Platform::String;
-
-	const DWORD WASTE_TIME_MS = 300;
-	void WasteTimeToSimulateSlowOperation();
-
-	std::unique_ptr<char []> PlatformStringToCharArray(String^ string);
-	Windows::Storage::Streams::IBuffer ^CreateNativeBuffer(LPVOID lpBuffer, DWORD nNumberOfBytes);
-
-	public enum class SqliteReturnCode
+	namespace SQLiteWinRT
 	{
-		Ok = SQLITE_OK,
+		using Platform::String;
+
+		const DWORD WASTE_TIME_MS = 300;
+		void WasteTimeToSimulateSlowOperation();
+
+		std::unique_ptr<char[]> PlatformStringToCharArray(String^ string);
+		Windows::Storage::Streams::IBuffer ^CreateNativeBuffer(LPVOID lpBuffer, DWORD nNumberOfBytes);
+
+		public enum class SqliteReturnCode
+		{
+			Ok = SQLITE_OK,
 			Error = SQLITE_ERROR,
 			InternalError = SQLITE_INTERNAL,
 			AccessDenied = SQLITE_PERM,
@@ -61,81 +62,82 @@ namespace SQLiteWinRT
 			LogWarning = SQLITE_WARNING,
 			MoreRows = SQLITE_ROW,
 			Done = SQLITE_DONE,
-	};
+		};
 
-	public enum class ColumnType
-	{
-		Text = SQLITE_TEXT,
+		public enum class ColumnType
+		{
+			Text = SQLITE_TEXT,
 			Integer = SQLITE_INTEGER,
 			Double = SQLITE_FLOAT,
 			Null = SQLITE_NULL,
 			Blob = SQLITE_BLOB,
-	};
+		};
 
-	ref class Database;
+		ref class Database;
 
-	using Windows::Foundation::IAsyncOperation;
-	using Windows::Foundation::Collections::IMap;
-	using Windows::Foundation::Collections::IMapView;
+		using Windows::Foundation::IAsyncOperation;
+		using Windows::Foundation::Collections::IMap;
+		using Windows::Foundation::Collections::IMapView;
 
-	public ref class Statement sealed
-	{
+		public ref class Statement sealed
+		{
 
-	private:
-		sqlite3_stmt* m_statement;
-		bool m_noMoreRows;
-		bool m_columnsEnabled;
-		Platform::Collections::Map<String^, String^>^ m_columns;
+		private:
+			sqlite3_stmt* m_statement;
+			bool m_noMoreRows;
+			bool m_columnsEnabled;
+			Platform::Collections::Map<String^, String^>^ m_columns;
 
-		SqliteReturnCode Step(void);
-		int GetParameterIndexNoThrow(String^ name);
-		int GetColumnCount();
-		void CheckForMoreRows();
+			SqliteReturnCode Step(void);
+			int GetParameterIndexNoThrow(String^ name);
+			int GetColumnCount();
+			void CheckForMoreRows();
 
-		template<typename T>
-		void BindPrimitiveParameter(sqlite3_stmt* statement, String^ name, T value, int func(sqlite3_stmt*, int, T));
+			template<typename T>
+			void BindPrimitiveParameter(sqlite3_stmt* statement, String^ name, T value, int func(sqlite3_stmt*, int, T));
 
-	internal:
-		Statement(Database^ database, String^ cmd);
-		static void ThrowIfStepFailed(SqliteReturnCode rc);
-		static void ThrowIfFailed(HRESULT hr);
+		internal:
+			Statement(Database^ database, String^ cmd);
+			static void ThrowIfStepFailed(SqliteReturnCode rc);
+			static void ThrowIfFailed(HRESULT hr);
 
-	public:
-		property int ColumnCount { int get() { return GetColumnCount(); } };
+		public:
+			property int ColumnCount { int get() { return GetColumnCount(); } };
 
-		property IMapView<String^, String^>^ Columns { IMapView<String^, String^>^ get(); };
-		void EnableColumnsProperty() { m_columnsEnabled = true; }
+			property IMapView<String^, String^>^ Columns { IMapView<String^, String^>^ get(); };
+			void EnableColumnsProperty() { m_columnsEnabled = true; }
 
-		IAsyncOperation<bool>^ StepAsync();
+			IAsyncOperation<bool>^ StepAsync();
 
-		String^ GetTextAt(int index);
-		int GetIntAt(int index);
-		int64 GetInt64At(int index);
-		double GetDoubleAt(int index);
-		Windows::Storage::Streams::IBuffer^ GetBlobAt(int index);
+			String^ GetTextAt(int index);
+			int GetIntAt(int index);
+			int64 GetInt64At(int index);
+			double GetDoubleAt(int index);
+			Windows::Storage::Streams::IBuffer^ GetBlobAt(int index);
 
-		void BindTextParameterAt(int index, String^ param);
-		void BindIntParameterAt(int index, int param);
-		void BindInt64ParameterAt(int index, int64 param);
-		void BindDoubleParameterAt(int index, double param);
-		void BindNullParameterAt(int index);
-		void BindBlobParameterAt(int index, Windows::Storage::Streams::IBuffer^ buffer);
+			void BindTextParameterAt(int index, String^ param);
+			void BindIntParameterAt(int index, int param);
+			void BindInt64ParameterAt(int index, int64 param);
+			void BindDoubleParameterAt(int index, double param);
+			void BindNullParameterAt(int index);
+			void BindBlobParameterAt(int index, Windows::Storage::Streams::IBuffer^ buffer);
 
-		void BindTextParameterWithName(String^ name, String^ param);
-		void BindIntParameterWithName(String^ name, int param);
-		void BindInt64ParameterWithName(String^ name, int64 param);
-		void BindDoubleParameterWithName(String^ name, double param);
-		void BindNullParameterWithName(String^ name);
-		void BindBlobParameterWithName(String^ name, Windows::Storage::Streams::IBuffer^ buffer);
+			void BindTextParameterWithName(String^ name, String^ param);
+			void BindIntParameterWithName(String^ name, int param);
+			void BindInt64ParameterWithName(String^ name, int64 param);
+			void BindDoubleParameterWithName(String^ name, double param);
+			void BindNullParameterWithName(String^ name);
+			void BindBlobParameterWithName(String^ name, Windows::Storage::Streams::IBuffer^ buffer);
 
-		int GetParameterIndex(String^ name);
+			int GetParameterIndex(String^ name);
 
-		String^ GetColumnName(int index);
-		ColumnType GetColumnType(int index);
+			String^ GetColumnName(int index);
+			ColumnType GetColumnType(int index);
 
-		void ClearBindings();
-		void Reset();
+			void ClearBindings();
+			void Reset();
 
-		virtual ~Statement();
-	};
+			virtual ~Statement();
+		};
+	}
 }

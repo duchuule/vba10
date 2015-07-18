@@ -111,6 +111,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>VBA10_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxPackageDir>D:\Duc\Documents\Visual Studio 2015\Projects\VBA10\AppPackages\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>.\VBAM;.\VBAM\gb;.\VBAM\gba;.\VBAM\apu;.\VBAM\common;.\VBAM\zlib;$(IncludePath)</IncludePath>

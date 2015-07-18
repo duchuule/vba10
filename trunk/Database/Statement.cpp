@@ -8,7 +8,7 @@
 #include <robuffer.h>
 
 
-using namespace SQLiteWinRT;
+using namespace VBA10::SQLiteWinRT;
 using namespace Platform;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Foundation;
@@ -16,7 +16,7 @@ using namespace concurrency;
 using namespace Microsoft::WRL;
 
 
-std::unique_ptr<char []> SQLiteWinRT::PlatformStringToCharArray(Platform::String^ string)
+std::unique_ptr<char []> VBA10::SQLiteWinRT::PlatformStringToCharArray(Platform::String^ string)
 {
 	//copy from msdn, need this to get correct buffer size
 	https://social.msdn.microsoft.com/forums/windowsapps/en-US/ce2ecbe8-f009-41c0-bbf4-e6f20eca9eb5/winrt-to-win32-string-converstions
@@ -42,13 +42,13 @@ std::unique_ptr<char []> SQLiteWinRT::PlatformStringToCharArray(Platform::String
 	return ansi;
 }
 
-void SQLiteWinRT::WasteTimeToSimulateSlowOperation()
+void VBA10::SQLiteWinRT::WasteTimeToSimulateSlowOperation()
 {
 	auto handle = GetCurrentThread();
 	WaitForSingleObjectEx(handle, WASTE_TIME_MS, FALSE);
 }
 
-Streams::IBuffer ^SQLiteWinRT::CreateNativeBuffer(LPVOID lpBuffer, DWORD nNumberOfBytes)
+Streams::IBuffer ^VBA10::SQLiteWinRT::CreateNativeBuffer(LPVOID lpBuffer, DWORD nNumberOfBytes)
 {
 	Microsoft::WRL::ComPtr<NativeBuffer> nativeBuffer;
 	Microsoft::WRL::Details::MakeAndInitialize<NativeBuffer>(&nativeBuffer, (byte *) lpBuffer, nNumberOfBytes);
