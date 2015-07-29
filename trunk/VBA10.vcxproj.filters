@@ -17,19 +17,7 @@
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <Image Include="Assets\Logo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\StoreLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\WideLogo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
     <Filter Include="VBAM">
@@ -554,6 +542,8 @@
     <None Include="Assets\vba-over.ini">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="VBA10_StoreKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
@@ -567,6 +557,7 @@
     <Page Include="ImportPage.xaml" />
     <Page Include="StandardStyles.xaml" />
     <Page Include="SelectFilePane.xaml" />
+    <Page Include="PurchasePage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
@@ -581,12 +572,6 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\play.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.scale-140.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.scale-240.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\SmallTile.scale-100.png">
@@ -690,6 +675,120 @@
     </Image>
     <Image Include="Assets\Direct3D\thumbstickcenter.dds">
       <Filter>Assets\Direct3D</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallTile.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-20.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-24.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-30.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-32.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-36.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-40.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-48.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-60.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-64.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-72.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-80.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-96.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-256.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\MediumTile.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\MediumTile.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\MediumTile.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\MediumTile.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\MediumTile.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideTile.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideTile.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideTile.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideTile.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\WideTile.scale-400.png">
+      <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
 </Project>

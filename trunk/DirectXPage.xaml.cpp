@@ -22,6 +22,7 @@
 #include "CheatPane.xaml.h"
 #include "ExportPage.xaml.h"
 #include "ImportPage.xaml.h"
+#include "PurchasePage.xaml.h"
 
 
 
@@ -156,7 +157,7 @@ DirectXPage::DirectXPage():
 	navlist->Append(
 		ref new NavMenuItem(
 			"Cheats",
-			Symbol::Admin,
+			Symbol::ReportHacked,
 			TypeName(CheatPane::typeid)));
 
 	navlist->Append(
@@ -170,6 +171,12 @@ DirectXPage::DirectXPage():
 			"Export",
 			Symbol::Upload,
 			TypeName(ExportPage::typeid)));
+
+	navlist->Append(
+		ref new NavMenuItem(
+			"Purchase",
+			Symbol::Shop,
+			TypeName(PurchasePage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(

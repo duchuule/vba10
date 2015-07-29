@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="2b9558e5-6253-426c-8989-3284f508e743" Publisher="CN=lehuu" Version="1.0.0.0" />
+  <Identity Name="16994Sparksoft.VBA10" Publisher="CN=9289A21E-3389-49E2-A9E0-46AA1289C3CB" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="2b9558e5-6253-426c-8989-3284f508e743" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>VBA10</DisplayName>
-    <PublisherDisplayName>lehuu</PublisherDisplayName>
+    <PublisherDisplayName>WP8Emu</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="VBA10.App">
-      <uap:VisualElements DisplayName="VBA10" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="VBA10" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\SmallTile.png">
+      <uap:VisualElements DisplayName="VBA10" Square150x150Logo="Assets\MediumTile.png" Square44x44Logo="Assets\AppList.png" Description="A Gameboy/Gameboy Advance Emulator for Windows 10." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\WideTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="VBA10">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
