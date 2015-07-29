@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="titleBar" 
@@ -32,10 +33,23 @@
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
                         <TextBlock TextWrapping="Wrap" 
-                                   Text="Tip: This emulator supports Xbox 360 Gamepads."
+                                   Text="You can buy premium feature package or watch a short video to enable Xbox 360 Controller."
                                    Margin="0,0,0,8"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="purchaseBtn" Content="Buy" 
+                            IsEnabled="False"
+                            Width="120"
+                            Margin =" 0, 4, 8, 4"/>
 
-                        <ToggleSwitch Header="Enable Touch Controls" 
+                            <Button x:Name="watchVideoBtn" Content="Watch Video" 
+                            Width="120"
+                            Margin =" 0, 4, 0, 4" 
+                            Click="watchVideobtn_Click"/>
+
+
+                        </StackPanel>
+
+                        <ToggleSwitch Header="Show Virutal Buttons" 
                                       Name="touchToggle" HorizontalAlignment="Left" 
                                       Toggled="touchToggle_Toggled"/>
 
@@ -318,6 +332,9 @@
                 </ScrollViewer>
             </PivotItem>
         </Pivot>
-            
+
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
+
     </Grid>
 </Page>

@@ -100,6 +100,8 @@
             </CommandBar.Content>-->
         </CommandBar>
 
+
+
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
@@ -244,6 +246,9 @@
                     Click="addROMbtn_Click"/>
             </StackPanel>
         </ScrollViewer>
+
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
         <!--<Grid Grid.Row="1" >            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>

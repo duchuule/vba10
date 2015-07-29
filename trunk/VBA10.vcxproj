@@ -318,6 +318,9 @@
     <Image Include="Assets\WideTile.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdControl.xaml.h">
+      <DependentUpon>AdControl.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="CheatPane.xaml.h">
       <DependentUpon>CheatPane.xaml</DependentUpon>
     </ClInclude>
@@ -440,6 +443,9 @@
     <ClInclude Include="virtualcontrollerinput.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdControl.xaml.cpp">
+      <DependentUpon>AdControl.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="CheatPane.xaml.cpp">
       <DependentUpon>CheatPane.xaml</DependentUpon>
     </ClCompile>
@@ -1104,6 +1110,9 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AdControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CheatPane.xaml" />
     <Page Include="ExportPage.xaml">
       <SubType>Designer</SubType>

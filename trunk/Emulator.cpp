@@ -41,7 +41,7 @@ namespace VBA10
 	EmulatorGame::EmulatorGame(bool restore) 
 		: restoreState(restore),
 		graphicsResourcesReleased(false), stopThread(false),
-		updateCount(0), frameSkipped(0), gfxbuffer(nullptr), threadAction(nullptr)
+		updateCount(0), frameSkipped(0), gfxbuffer(nullptr), threadAction(nullptr), xboxElapsed(3601.0f)
 	{
 		EmulatorGame::instance = this;
 	}
@@ -282,6 +282,11 @@ namespace VBA10
 		return this->frameSkipped;
 	}
 
+	void EmulatorGame::ResetXboxTimer()
+	{
+		this->xboxElapsed = 0.0f;
+	}
+
 	void EmulatorGame::UpdateAsync(void)
 	{
 		WaitForSingleObjectEx(this->updateEvent, INFINITE, false);
@@ -302,11 +307,14 @@ namespace VBA10
 #endif
 	}
 
-	void EmulatorGame::Update(void)
+	void EmulatorGame::Update(float timeDelta)
 	{		
 		this->keyboard->Update();
+		this->xboxElapsed += timeDelta;
+
 #ifndef NO_XBOX
-		this->p1Controller->Update();
+		if (timeDelta < 3600.0f)
+			this->p1Controller->Update();
 #endif
 		this->virtualInput->Update();
 
