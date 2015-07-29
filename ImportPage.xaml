@@ -40,7 +40,7 @@
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
-                           Text="Use this option to import a file already present on your phone or PC. Note: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing."                                
+                           Text="Use this option to import a file already present on your phone or PC. Note: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing. Just select the folder containing the rom and will be presented with a list of rom to import."                                
                                  Margin=" 0, 4, 0, 4" />
 
                 <StackPanel Orientation="Horizontal">
@@ -63,11 +63,11 @@
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
-                           Text="Use this option to import rom through the OneDrive app. The rom will be copied to the app's private storage."                                
+                           Text="Use this option to import rom through OneDrive. The rom will be copied to the app's private storage."                                
                                  Margin=" 0, 4, 0, 4" />
                 
                 <TextBlock TextWrapping="Wrap"
-                           Text="This function is really only useful on Windows 10 Mobile, which is not released yet, so it will be added later."                                
+                           Text="This function will be added in a future release. In the mean time, please store roms on your phone's SD Card or documents folder and use the Local Storage option."                                
                                  Margin=" 0, 4, 0, 4" />
 
             </StackPanel>

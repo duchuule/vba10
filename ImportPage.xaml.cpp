@@ -164,7 +164,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 				auto transform = ((UIElement^)titleBar)->TransformToVisual(nullptr);
 
 				Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
-				statePopup->HorizontalOffset = point.X; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
+				statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
 				statePopup->VerticalOffset = point.Y + titleBar->ActualHeight;
 
 				statePopup->IsOpen = true;

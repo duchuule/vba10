@@ -28,6 +28,11 @@
                        />
         </StackPanel>
 
+        <TextBlock x:Name="txtNoFile" Grid.Row="1"
+                   Text="No supported file found!" 
+                   Foreground="Red"
+                   Margin="8,8,0,8"/>
+
         <ListBox Name="fileList" 
             Background="Transparent" 
             SelectionChanged="fileList_SelectionChanged"

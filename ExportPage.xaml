@@ -43,11 +43,11 @@
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
-                           Text="If for any reason you cannot access the rom folder or the rom is copied to the app's private storage, use this option to export save files to OneDrive."                                
+                           Text="If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive."                                
                                  Margin=" 0, 4, 0, 4" />
                 
                 <TextBlock TextWrapping="Wrap"
-                           Text="This option is only useful on Windows 10 Mobile, which is not released yet, so it will be added later."                                
+                           Text="This feature will be added in a future release."                                
                                  Margin=" 0, 4, 0, 4" />
 
             </StackPanel>
