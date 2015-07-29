@@ -24,4 +24,6 @@ namespace VBA10
 
 		task<void> LoadImageFromPath(BitmapImage^ bitmap, String^ filepath);
 	};
+
+
 }
