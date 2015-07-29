@@ -134,6 +134,18 @@ namespace VBA10
 			}
 		}
 
+
+		property Platform::String^ Token  //token to the folder containing the rom
+		{
+			Platform::String^ get()
+			{
+				return _token;
+			}
+			void set(Platform::String^ value)
+			{
+				_token = value;
+			}
+		}
 		//this is to hold temporary information about ROM folder when the app is running (for convenience)
 		property StorageFolder^ Folder
 		{
@@ -183,6 +195,7 @@ namespace VBA10
 		Windows::Foundation::DateTime _lastPlayed;
 		int _lastSaveIndex;
 		int _autoSaveIndex;  //use to hold what save state to upload automatically
+		Platform::String^ _token;
 		Platform::String^ _snapshotUri;
 		BitmapSource^ _snapshot;
 		StorageFolder^ _folder;

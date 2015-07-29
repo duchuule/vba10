@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="VBA10.PurchasePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VBA10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="titleBar" 
+              Height="48"
+              Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <TextBlock x:Name="title" 
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="PURCHASE"/>
+        </Grid>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="12,0,12,0"
+                      Grid.Row="1"
+                      MaxWidth="500"
+                      HorizontalAlignment="Left">
+            <StackPanel >
+                <!--<TextBlock Text="Local storage"
+                                VerticalAlignment="Center"
+                           FontSize="23"
+                           Margin="0,8,0,0"
+                                  />-->
+                <TextBlock TextWrapping="Wrap"
+                           Text="The ability to purchase products will come in a future release. NOTE: there will be a way for paid users of VBA8, VBA8+ and VGBC8 to unlock features without paying again. Stay tune!"                                
+                                 Margin=" 0, 4, 0, 4" />
+
+                <!--<TextBlock Text="OneDrive"
+                           VerticalAlignment="Center"
+                           FontSize="23"
+                           Margin="0,8,0,0"
+                                  />
+                <TextBlock TextWrapping="Wrap"
+                           Text="If for any reason you cannot access the rom folder or the rom is copied to the app's private storage, use this option to export save files to OneDrive."                                
+                                 Margin=" 0, 4, 0, 4" />
+
+                <TextBlock TextWrapping="Wrap"
+                           Text="This option is only useful on Windows 10 Mobile, which is not released yet, so it will be added later."                                
+                                 Margin=" 0, 4, 0, 4" />-->
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

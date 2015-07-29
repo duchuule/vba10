@@ -68,8 +68,18 @@ task<void> ROMDatabase::Initialize(void)
 
 		//load rom entry
 		return LoadSnapshotImage();
-	}).then([](task<void> t)
+	}).then([this](task<void> t)
 	{
+		//check to see if any entry failed to load (due to deleted folder)
+		for (int i = 0; i < _allROMDBEntries->Size; i++)
+		{
+			auto entry = _allROMDBEntries->GetAt(i);
+			if (!entry->Folder)
+			{
+				_allROMDBEntries->RemoveAt(i);
+				i--;
+			}
+		}
 		return t.get();
 	});
 
@@ -197,7 +207,10 @@ task<void> ROMDatabase::LoadSnapshotImage()
 			}
 		}).then([entry](StorageFolder^ folder)
 		{
-
+			if (entry->FilePath != folder->Path)
+			{
+				int test = 1;
+			}
 			entry->Folder = folder;
 
 			//get the snapshot file
