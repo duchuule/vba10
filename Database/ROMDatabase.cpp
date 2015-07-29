@@ -47,8 +47,9 @@ task<void> ROMDatabase::Initialize(void)
 		return db->ExecuteStatementAsync("CREATE TABLE IF NOT EXISTS  ROMTABLE ( "\
 			"LOCATIONTYPE           INT    NOT NULL,"\
 			"DISPLAYNAME           TEXT    NOT NULL,"\
-			"FILENAME            INT     NOT NULL,"\
-			"FILEPATH            INT     NOT NULL,"\
+			"FILENAME            TEXT     NOT NULL,"\
+			"FOLDERPATH            TEXT     NOT NULL,"\
+			"TOKEN            TEXT     NOT NULL,"\
 			"LASTPLAYED         INT  NOT NULL,"\
 			"LASTSAVEINDEX    INT  NOT NULL, "\
 			"AUTOSAVEINDEX    INT  NOT NULL, "\
@@ -104,11 +105,12 @@ task<void> ROMDatabase::AddAsync(ROMDBEntry^ entry)
 			
 
 		//prepare statement to add to rom table
-		Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FILEPATH, LASTPLAYED, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
+		Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FOLDERPATH, TOKEN, LASTPLAYED, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
 		cmd += entry->LocationType + ",";
 		cmd += "'" + entry->DisplayName + "',";
 		cmd += "'" + entry->FileName + "',";
-		cmd += "'" + entry->FilePath + "',";
+		cmd += "'" + entry->FolderPath + "',";
+		cmd += "'" + entry->Token + "',";
 		cmd += entry->LastPlayed.UniversalTime + ",";
 		cmd += entry->LastSaveIndex + ",";
 		cmd += entry->AutoSaveIndex + ",";
@@ -145,7 +147,7 @@ task<Vector<ROMDBEntry^>^> ROMDatabase::RetrieveQuerry()
 				{
 					ROMDBEntry^ entry = ref new ROMDBEntry(
 						statement->GetIntAt(0), statement->GetTextAt(1), statement->GetTextAt(2), statement->GetTextAt(3),
-						DateTime{ statement->GetInt64At(4) }, statement->GetIntAt(5), statement->GetIntAt(6), statement->GetTextAt(7)
+						statement->GetTextAt(4), DateTime{ statement->GetInt64At(5) }, statement->GetIntAt(6), statement->GetIntAt(7), statement->GetTextAt(8)
 						);
 					items->Append(entry);
 
@@ -187,31 +189,20 @@ task<void> ROMDatabase::LoadSnapshotImage()
 			else // external storage
 			{
 				//find the folder in futureaccesslist
-				//create token from file path
-				Platform::String ^ptoken = entry->FilePath;
-				wstring token(ptoken->Begin(), ptoken->End());
 
-				//get rid of the file name, keep only the folder path
-				size_t found = token.find_last_of(L"/\\");
-				token = token.substr(0, found);
-
-				replace(token.begin(), token.end(), ':', '_');
-				replace(token.begin(), token.end(), '/', '_');
-				replace(token.begin(), token.end(), '\\', '_');
-				ptoken = ref new Platform::String(token.c_str());
-
-				return create_task([entry, ptoken]
+				return create_task([entry]
 				{
-					return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
+					return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(entry->Token);
 				});
 			}
 		}).then([entry](StorageFolder^ folder)
 		{
-			if (entry->FilePath != folder->Path)
+			if (folder) 
 			{
-				int test = 1;
+				//update folder path (incase user change folder name)
+				entry->FolderPath = folder->Path;
+				entry->Folder = folder;
 			}
-			entry->Folder = folder;
 
 			//get the snapshot file
 			return folder->GetFileAsync(entry->SnapshotUri);
@@ -253,10 +244,11 @@ task<void> ROMDatabase::UpdateAsync(ROMDBEntry^ entry)
 		//prepare statement to update entry
 		Platform::String^ cmd = "UPDATE ROMTABLE SET DISPLAYNAME = "; 
 		cmd += "'" + entry->DisplayName + "',";
+		cmd += " FOLDERPATH = '" + entry->FolderPath + "',";
 		cmd += " LASTPLAYED = " + entry->LastPlayed.UniversalTime + ",";
 		cmd += " LASTSAVEINDEX = " + entry->LastSaveIndex + ",";
 		cmd += " AUTOSAVEINDEX = " + entry->AutoSaveIndex ;
-		cmd += " WHERE FILEPATH = '" + entry->FilePath + "';";
+		cmd += " WHERE FILENAME = '" + entry->FileName + "' AND TOKEN = '" + entry->Token + "';";
 
 #if _DEBUG
 		Platform::String ^message = cmd;

@@ -61,7 +61,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 		if (folder)
 		{
 			//store folder
-			tmpfolder = folder;
+			this->tmpfolder = folder;
 
 			//remove special char in path so that we can use path as token
 			Platform::String ^ptoken = folder->Path;
@@ -71,6 +71,8 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 			replace(token.begin(), token.end(), '/', '_');
 			replace(token.begin(), token.end(), '\\', '_');
 			ptoken = ref new Platform::String(token.c_str());
+
+			this->tmptoken = ptoken;
 
 			//add folder to future accesslist
 			if (!StorageApplicationPermissions::FutureAccessList->ContainsItem(ptoken))
@@ -111,10 +113,10 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 					Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
 
 					//create rom entry
-					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, file->Path, 
-						psnapshotname);
+					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, this->tmpfolder->Path,
+						this->tmptoken, psnapshotname);
 
-					entry->Folder = tmpfolder;
+					entry->Folder = this->tmpfolder;
 
 					App::ROMDB->AllROMDBEntries->Append(entry);
 

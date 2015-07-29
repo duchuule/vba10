@@ -258,8 +258,8 @@ task<void> DirectXPage::CopyDemoROMAsync(void)
 		OutputDebugStringW(wstr.c_str());
 #endif
 		//add entry to database and rom list
-		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, file->Path, 
-			"Bunny Advance (Demo).jpg"); //snapshot just need the file name
+		ROMDBEntry^ entry = ref new ROMDBEntry(0, file->DisplayName, file->Name, ApplicationData::Current->LocalFolder->Path,
+			"none","Bunny Advance (Demo).jpg"); //snapshot just need the file name
 
 		entry->Folder = ApplicationData::Current->LocalFolder; //store pointer to folder
 
@@ -630,14 +630,16 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	loadedEntry = entry; //store loaded entry for later use
 	SavestateSlot = entry->LastSaveIndex;
 
-	if (IsROMLoaded() && entry->FilePath == ROMFile->Path) //don't have to do anything
+
+
+	if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName == ROMFile->Path) //don't have to do anything
 		return;
 
 
 
 	
 	create_task([this, entry] {
-		if (IsROMLoaded() && entry->FilePath != ROMFile->Path)  //different rom, save old rom state
+		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName != ROMFile->Path)  //different rom, save old rom state
 		{
 			SaveBeforeStop().wait();
 			

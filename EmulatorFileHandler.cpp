@@ -1139,17 +1139,17 @@ namespace VBA10
 		if(!ROMFile || !ROMFolder)
 			return task<void>([](){});
 
-		Platform::String ^path = ROMFile->Path;
-		const wchar_t *end = path->End();
+		Platform::String ^name = ROMFile->Name;
+		const wchar_t *end = name->End();
 		while(*end != '.') end--;
-		size_t diff = path->End() - end;
+		size_t diff = name->End() - end;
 
-		Platform::String ^nameWithoutExt = ref new Platform::String(path->Begin(), path->Length() - diff);
+		Platform::String ^nameWithoutExt = ref new Platform::String(name->Begin(), name->Length() - diff);
 		Platform::String ^sramName = nameWithoutExt->Concat(nameWithoutExt, ".sav");
 
 		return create_task([sramName]()
 		{
-			return StorageFile::GetFileFromPathAsync(sramName);
+			return ROMFolder->GetFileAsync(sramName);
 		}).then([](StorageFile ^file)
 		{
 			return GetBytesFromFileAsync(file);
@@ -1328,13 +1328,13 @@ namespace VBA10
 		if(!ROMFile || !ROMFolder)
 			return task<void>([](){});
 
-		Platform::String ^path = ROMFile->Path;
-		Platform::String ^nameWithoutExt = ref new Platform::String(path->Begin(), path->Length() - 4);
+		Platform::String ^name = ROMFile->Name;
+		Platform::String ^nameWithoutExt = ref new Platform::String(name->Begin(), name->Length() - 4);
 		Platform::String ^sramName = nameWithoutExt->Concat(nameWithoutExt, ".sav");
 
 		return create_task([sramName]()
 		{
-			return StorageFile::GetFileFromPathAsync(sramName);
+			return ROMFolder->GetFileAsync(sramName);
 		}).then([](StorageFile ^file)
 		{
 			return GetBytesFromFileAsync(file);
@@ -1852,14 +1852,15 @@ namespace VBA10
 			wstringstream extension;
 			extension << whichslot << L".sgm";
 
-			Platform::String ^tmp = ROMFile->Name;
-			const wchar_t *end = tmp->End();
+			Platform::String ^name = ROMFile->Name;
+			const wchar_t *end = name->End();
 			while(*end != '.') end--;
-			size_t diff = tmp->End() - end;
+			size_t diff = name->End() - end;
 
-			Platform::String ^nameWithoutExtension = ref new Platform::String(ROMFile->Path->Data(), ROMFile->Path->Length() - diff);			
-			Platform::String ^statePath = nameWithoutExtension + ref new Platform::String(extension.str().c_str());
-			return StorageFile::GetFileFromPathAsync(statePath);
+			Platform::String ^nameWithoutExt = ref new Platform::String(name->Begin(), name->Length() - diff);
+			Platform::String ^stateName = nameWithoutExt + ref new Platform::String(extension.str().c_str());
+			return ROMFolder->GetFileAsync(stateName);
+
 		}).then([](StorageFile ^file)
 		{
 			return file->CopyAsync(Windows::Storage::ApplicationData::Current->TemporaryFolder, file->Name, NameCollisionOption::ReplaceExisting);
@@ -2263,9 +2264,11 @@ namespace VBA10
 			emulator->Pause();
 			wstringstream extension;
 			extension << whichslot << L".sgm";
-			Platform::String ^nameWithoutExtension = ref new Platform::String(ROMFile->Path->Data(), ROMFile->Path->Length() - 4);			
-			Platform::String ^statePath = nameWithoutExtension + ref new Platform::String(extension.str().c_str());
-			return StorageFile::GetFileFromPathAsync(statePath);
+
+			Platform::String ^name = ROMFile->Name;
+			Platform::String ^nameWithoutExt = ref new Platform::String(name->Begin(), name->Length() - 4);
+			Platform::String ^stateName = nameWithoutExt + ref new Platform::String(extension.str().c_str());
+			return ROMFolder->GetFileAsync(stateName);
 		}).then([](StorageFile ^file)
 		{
 			return file->CopyAsync(Windows::Storage::ApplicationData::Current->TemporaryFolder, file->Name, NameCollisionOption::ReplaceExisting);
