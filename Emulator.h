@@ -52,10 +52,13 @@ namespace VBA10
 		bool IsPaused(void);
 		void Pause(void);
 		void Unpause(void);
-		void Update(void);
+		void Update(float timeDelta);
 		bool LastFrameSkipped(void);
 		void StartEmulatorThread();
 		void StopEmulatorThread();
+		void ResetXboxTimer();
+
+		
 
 	private:
 		static EmulatorGame *instance;
@@ -71,6 +74,7 @@ namespace VBA10
 		bool focus;		
 		bool graphicsResourcesReleased;
 		bool restoreState;
+		float xboxElapsed;
 #ifndef NO_XBOX
 		ControllerInput *p1Controller;
 #endif

@@ -46,7 +46,7 @@
 #define DIVIDER_TEXTURE_FILE_NAME					L"Assets/Direct3D/divider.dds"
 
 
-#define AUTOSAVE_INTERVAL				10.0f
+#define AUTOSAVE_INTERVAL				60.0f
 
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
@@ -97,7 +97,7 @@ namespace VBA10
 	EmulatorRenderer::EmulatorRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 		: emulator(EmulatorGame::GetInstance()),
 		frontbuffer(0), controller(nullptr),
-		elapsedTime(0.0f), frames(0), autosaveElapsed(0.0f),
+		elapsedTime(0.0f), frames(0), autosaveElapsed(0.0f),  
 		m_deviceResources(deviceResources)
 	{ 
 		this->gameTime = ref new GameTime();
@@ -458,7 +458,8 @@ namespace VBA10
 
 			this->Autosave();
 
-			this->emulator->Update();
+
+			this->emulator->Update(timeDelta);
 		}
 		this->FPSCounter();
 	}

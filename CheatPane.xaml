@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Adaptive triggers -->
@@ -207,5 +208,8 @@
                 </StackPanel>
             </RelativePanel>
         </ScrollViewer>
+
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
     </Grid>
 </Page>

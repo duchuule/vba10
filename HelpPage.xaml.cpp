@@ -39,10 +39,10 @@ void HelpPage::gplButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rout
 }
 
 
-void HelpPage::sourceButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	Windows::System::Launcher::LaunchUriAsync(ref new Windows::Foundation::Uri("http://sdrv.ms/10ehg2a"));
-}
+//void HelpPage::sourceButton_Tapped(Platform::Object^ sender, Windows::UI::Xaml::TappedRoutedEventArgs^ e)
+//{
+//	Windows::System::Launcher::LaunchUriAsync(ref new Windows::Foundation::Uri("http://sdrv.ms/10ehg2a"));
+//}
 
 void HelpPage::contactBlock_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {

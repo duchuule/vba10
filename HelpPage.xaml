@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="titleBar" 
@@ -84,18 +85,24 @@
                     	    <LineBreak/>
 
                         </TextBlock>
-                        <Button Name="gplButton" Content="GNU Public License v3" 
-                                Click="gplButton_Click" 
-                                Margin="0,0,0,8"/>
+
+                        <TextBlock Text="You can receive the source code by sending an email request to to store.support@outlook.com. Your request should include: (i) the name of the covered binary, (ii) your name, (iii) your company name (if applicable) and (iv) your return email address. Your request must be sent within three (3) years of the date you received the GPL covered code. "  
+                                   TextWrapping="Wrap" 
+                                />
                         
-                        <Button Name="sourceButton" Content="Source code"
-                                Click="sourceButton_Click"
-                                Margin="0,0,0,8"/>
+                        <Button Name="gplButton" Content="GNU Public License v3"
+                                Click="gplButton_Click" 
+                                Margin="0,8,0,8"/>
+                        
+
 
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
         </Pivot>
+
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
 
     </Grid>
 </Page>

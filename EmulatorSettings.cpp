@@ -14,7 +14,7 @@ using namespace Windows::Foundation;
 #define DEFAULT_CONTROLLER_OPACITY	50
 #define DEFAULT_ASPECT			AspectRatioMode::Original
 #define DEFAULT_IMAGE_SCALE		100
-#define DEFAULT_SYNC_AUDIO		true
+#define DEFAULT_SYNC_AUDIO		false
 #define DEFAULT_DPAD_STYLE		1
 #define DEFAULT_DEADZONE_VALUE	10.0f
 #define DEFAULT_MONITOR_TYPE	MONITOR_60HZ
@@ -28,8 +28,8 @@ using namespace Windows::Foundation;
 #define DEFAULT_DOWN_KEY	83
 #define DEFAULT_START_KEY	32
 #define DEFAULT_SELECT_KEY	17
-#define DEFAULT_A_KEY		39
-#define DEFAULT_B_KEY		40
+#define DEFAULT_A_KEY		75
+#define DEFAULT_B_KEY		74
 #define DEFAULT_X_KEY		38
 #define DEFAULT_Y_KEY		37
 #define DEFAULT_L_KEY		81

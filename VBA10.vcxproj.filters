@@ -274,6 +274,7 @@
     <ClCompile Include="SelectFilePane.xaml.cpp" />
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="EmulatorSettings.cpp" />
+    <ClCompile Include="PurchasePage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -527,6 +528,7 @@
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="EmulatorSettings.h" />
+    <ClInclude Include="PurchasePage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -558,6 +560,7 @@
     <Page Include="StandardStyles.xaml" />
     <Page Include="SelectFilePane.xaml" />
     <Page Include="PurchasePage.xaml" />
+    <Page Include="AdControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">

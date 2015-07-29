@@ -25,6 +25,7 @@ namespace VBA10
 		bool initdone;
 
 		//input
+		void watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, VirtualKey vk);
 		void touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void keyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);

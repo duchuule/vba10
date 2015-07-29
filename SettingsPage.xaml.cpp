@@ -22,6 +22,8 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Popups;
+using namespace Windows::Globalization;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -85,8 +87,17 @@ SettingsPage::SettingsPage()
 
 
 	initdone = true;
+}
 
+void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//reset xbox controller timer
+
+	this->emulator->ResetXboxTimer();
 	
+
+	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
+	dialog->ShowAsync();
 }
 
 void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)

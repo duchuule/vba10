@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="titleBar" 
@@ -52,5 +53,8 @@
 
             </StackPanel>
         </ScrollViewer>
+
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
     </Grid>
 </Page>
