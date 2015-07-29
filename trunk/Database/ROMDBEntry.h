@@ -17,11 +17,11 @@ namespace VBA10
 	public ref class ROMDBEntry sealed
 	{
 	public:
-		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath,
-			Platform::String^ snapshoturi);
+		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ folderpath,
+			Platform::String^ token, Platform::String^ snapshoturi);
 
-		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ filepath,
-			DateTime lastplayed, int lastsaveindex, int autosaveindex, Platform::String^ snapshoturi);
+		ROMDBEntry(int locationtype, Platform::String^ displayname, Platform::String^ filename, Platform::String^ folder,
+			Platform::String^ folderpath, DateTime lastplayed, int lastsaveindex, int autosaveindex, Platform::String^ snapshoturi);
 
 		//property int ID
 		//{
@@ -74,15 +74,27 @@ namespace VBA10
 			}
 		}
 
-		property Platform::String^ FilePath
+		property Platform::String^ FolderPath
 		{
 			Platform::String^ get()
 			{
-				return _filePath;
+				return _folderPath;
 			}
 			void set(Platform::String^ value)
 			{
-				_filePath = value;
+				_folderPath = value;
+			}
+		}
+
+		property Platform::String^ Token  //token to the folder containing the rom
+		{
+			Platform::String^ get()
+			{
+				return _token;
+			}
+			void set(Platform::String^ value)
+			{
+				_token = value;
 			}
 		}
 
@@ -135,17 +147,7 @@ namespace VBA10
 		}
 
 
-		property Platform::String^ Token  //token to the folder containing the rom
-		{
-			Platform::String^ get()
-			{
-				return _token;
-			}
-			void set(Platform::String^ value)
-			{
-				_token = value;
-			}
-		}
+		
 		//this is to hold temporary information about ROM folder when the app is running (for convenience)
 		property StorageFolder^ Folder
 		{
@@ -191,7 +193,7 @@ namespace VBA10
 		int _locationType;
 		Platform::String^ _displayName;
 		Platform::String^ _fileName;
-		Platform::String^ _filePath;
+		Platform::String^ _folderPath;
 		Windows::Foundation::DateTime _lastPlayed;
 		int _lastSaveIndex;
 		int _autoSaveIndex;  //use to hold what save state to upload automatically
