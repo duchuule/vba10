@@ -103,3 +103,4 @@ Object^ IsoImageConverter::ConvertBack(Object^ value, TypeName targetType, Objec
 	return nullptr; //doing one-way binding so this is not required.
 }
 
+

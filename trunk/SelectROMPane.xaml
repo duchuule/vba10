@@ -206,7 +206,7 @@
                                         
                                     </StackPanel>-->
                                     <TextBlock 
-                                            Text="{Binding FilePath}" 
+                                            Text="{Binding FolderPath}" 
                                             FontSize="12"
                                                 />
                                 </StackPanel>

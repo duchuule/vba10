@@ -202,6 +202,9 @@ task<void> ROMDatabase::LoadSnapshotImage()
 				//update folder path (incase user change folder name)
 				entry->FolderPath = folder->Path;
 				entry->Folder = folder;
+
+
+				
 			}
 
 			//get the snapshot file
