@@ -491,7 +491,7 @@ void SelectROMPane::selectStateBtn_Click(Platform::Object^ sender, Windows::UI::
 	auto transform = ((UIElement^)topbar)->TransformToVisual(nullptr);
 
 	Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
-	statePopup->HorizontalOffset = point.X; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
+	statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
 	statePopup->VerticalOffset = point.Y + selectStateBtn->ActualHeight; 
 
 	//statePopup->Measure(Windows::Foundation::Size(Window::Current->Bounds.Width, Window::Current->Bounds.Height));

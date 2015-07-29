@@ -216,6 +216,16 @@ task<void> ROMDatabase::LoadSnapshotImage()
 			//load bitmap image for snapshot
 			entry->Snapshot = ref new BitmapImage();
 			return entry->Snapshot->SetSourceAsync(stream);
+		}).then([tasks](task<void> t)
+		{
+			try
+			{
+				t.get();
+			}
+			catch (Exception^ e)
+			{
+				// We'll handle the specific errors below.
+			}
 		}));
 	}
 

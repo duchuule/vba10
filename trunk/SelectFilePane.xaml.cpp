@@ -28,12 +28,23 @@ SelectFilePane::SelectFilePane(IVectorView<StorageFile^>^ list):initdone(false)
 	InitializeComponent();
 	this->fileVector = ref new Vector<StorageFile^>();
 
+	
 	for (int i = 0; i < list->Size; i++)
 		this->fileVector->Append(list->GetAt(i));
-	
+
 	this->FileListvs->Source = this->fileVector;
 	this->fileList->SelectedItem = nullptr;
 
+	if (list->Size > 0)
+	{
+		this->fileList->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	}
+	else
+	{
+		this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	}
 	initdone = true;
 }
 

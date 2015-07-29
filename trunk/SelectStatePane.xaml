@@ -192,7 +192,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Border BorderThickness="2,2,2,2" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}">
             <ListBox Name="savestateList" 
-                     Background="Transparent" 
                      SelectionChanged="savestateList_SelectionChanged"
                       >
                 <ListBox.ItemTemplate>
