@@ -275,6 +275,7 @@
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="EmulatorSettings.cpp" />
     <ClCompile Include="PurchasePage.xaml.cpp" />
+    <ClCompile Include="AdControl.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -529,6 +530,7 @@
     <ClInclude Include="Converter.h" />
     <ClInclude Include="EmulatorSettings.h" />
     <ClInclude Include="PurchasePage.xaml.h" />
+    <ClInclude Include="AdControl.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -791,6 +793,18 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\WideTile.scale-400.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-125.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-150.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-400.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
