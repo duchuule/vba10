@@ -109,6 +109,8 @@ namespace VBA10
 		//event for rendering
 		Windows::Foundation::EventRegistrationToken m_eventToken;
 
+		//back button
+		void OnHardwareBackButtonPressed(Platform::Object^ sender,	Windows::Phone::UI::Input::BackPressedEventArgs ^args);
 
 		// Independent input handling functions.
 		void OnPointerPressed(CoreWindow ^window, PointerEventArgs ^args);
