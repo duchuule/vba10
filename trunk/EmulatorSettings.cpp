@@ -27,7 +27,7 @@ using namespace Windows::Foundation;
 #define DEFAULT_UP_KEY		87
 #define DEFAULT_DOWN_KEY	83
 #define DEFAULT_START_KEY	32
-#define DEFAULT_SELECT_KEY	17
+#define DEFAULT_SELECT_KEY	16
 #define DEFAULT_A_KEY		75
 #define DEFAULT_B_KEY		74
 #define DEFAULT_X_KEY		38
