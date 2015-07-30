@@ -120,7 +120,7 @@
   <PropertyGroup>
     <PackageCertificateKeyFile>VBA10_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>D:\Duc\Documents\Visual Studio 2015\Projects\VBA10\AppPackages\</AppxPackageDir>
     <PackageCertificateThumbprint>08CD9A4FE4AF2AA8EA82CE08CD6DE0DE1B1D9452</PackageCertificateThumbprint>
   </PropertyGroup>
@@ -311,6 +311,10 @@
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-400.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
+    <Image Include="Assets\StoreLogo.scale-125.png" />
+    <Image Include="Assets\StoreLogo.scale-150.png" />
+    <Image Include="Assets\StoreLogo.scale-200.png" />
+    <Image Include="Assets\StoreLogo.scale-400.png" />
     <Image Include="Assets\WideTile.scale-100.png" />
     <Image Include="Assets\WideTile.scale-125.png" />
     <Image Include="Assets\WideTile.scale-150.png" />

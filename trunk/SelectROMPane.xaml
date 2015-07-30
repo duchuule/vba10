@@ -164,6 +164,13 @@
                          
                          Padding="0"
                     >
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="40" x:Name="lbAllROMMainGrid">
@@ -172,6 +179,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60"/>
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="0" />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Grid.Column="0" 
@@ -210,6 +218,12 @@
                                             FontSize="12"
                                                 />
                                 </StackPanel>
+
+                                <!--<Button Grid.Column="2"   Click="RemoveROMButton_Click" 
+                                            Name="RemoveROMButton"
+                                            Content="&#xE107;"
+                		                Style="{StaticResource AppBarButtonStyleSmall}"
+                		             />-->
                             </Grid>
           
                         </DataTemplate>

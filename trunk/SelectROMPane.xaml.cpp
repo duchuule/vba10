@@ -515,4 +515,10 @@ void SelectROMPane::lastRomImage_Tapped(Platform::Object^ sender, Windows::UI::X
 	DirectXPage::Current->LoadROM(entry);
 }
 
+void SelectROMPane::RemoveROMButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Button ^button = safe_cast<Button ^>(sender);
+	ROMDBEntry ^entry = safe_cast<ROMDBEntry ^>(button->DataContext);
+}
+
 
