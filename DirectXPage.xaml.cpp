@@ -50,6 +50,7 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::Graphics::Imaging;
 using namespace Windows::Globalization; //to get date time
 
+
 using namespace std;
 using namespace VBA10;
 using namespace VBA10::Controls;
@@ -76,6 +77,12 @@ DirectXPage::DirectXPage():
 	if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
 	{
 		Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
+	}
+
+	if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+	{
+		//BackButton::Visibility = Visibility.Collapsed;
+		Windows::Phone::UI::Input::HardwareButtons::BackPressed += ref new EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs^>(this, &DirectXPage::OnHardwareBackButtonPressed);
 	}
 
 
@@ -219,6 +226,27 @@ DirectXPage::DirectXPage():
 	});
 	
 
+}
+
+void DirectXPage::OnHardwareBackButtonPressed(Platform::Object^ sender,
+	Windows::Phone::UI::Input::BackPressedEventArgs ^args	)
+{
+	if (RootSplitView->IsPaneOpen)  
+	{
+		RootSplitView->IsPaneOpen = false;
+		args->Handled = true;
+
+		//args->Handled = false;  //default behavior, i.e. close the app
+
+		
+	}
+	else
+	{
+		// The game is currently in active play mode, so hitting the hardware back button 
+		// will cause the game to pause. 
+		RootSplitView->IsPaneOpen = true;
+		args->Handled = true;
+	}
 }
 
 task<void> DirectXPage::CopyDemoROMAsync(void)
