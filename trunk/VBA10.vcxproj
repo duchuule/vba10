@@ -181,7 +181,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj /Zm130</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4996</DisableSpecificWarnings>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);METRO_APP;__WIN32__;C_CORE;NO_ASM;NO_OGL;NO_OAL;NO_LINK;NO_PNG;NO_XBOX;_CRT_SECURE_NO_WARNINGS;DNO_DEFLATE;FINAL_VERSION;NO_DEFLATE;TILED_RENDERING</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);METRO_APP;__WIN32__;C_CORE;NO_ASM;NO_OGL;NO_OAL;NO_LINK;NO_PNG;_CRT_SECURE_NO_WARNINGS;DNO_DEFLATE;FINAL_VERSION;NO_DEFLATE;TILED_RENDERING</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
     </ClCompile>

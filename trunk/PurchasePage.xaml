@@ -34,7 +34,7 @@
                            Margin="0,8,0,0"
                                   />-->
                 <TextBlock TextWrapping="Wrap"
-                           Text="The ability to purchase products will come in a future release. NOTE: there will be a way for paid users of VBA8, VBA8+ and VGBC8 to unlock features without paying again. Stay tune!"                                
+                           Text="The ability to purchase products will come in a future release. NOTE: there will be a way for paid users and users with unlock codes of VBA8, VBA8+ and VGBC8 to unlock VBA10 features without paying again. Stay tune!"                                
                                  Margin=" 0, 4, 0, 4" />
 
                 <!--<TextBlock Text="OneDrive"
