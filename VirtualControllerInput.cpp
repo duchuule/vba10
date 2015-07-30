@@ -56,12 +56,13 @@ namespace VBA10
 		this->pointers->Insert(point->PointerId, point);
 		LeaveCriticalSection(&this->cs);
 
+		this->ptest = point->Position;
 
 		int dpad = EmulatorSettings::Current->DPadStyle;
 		if(dpad >= 1)
 		{
 			Windows::Foundation::Point p = point->Position;
-			this->ptest = p;
+			
 
 			if(this->stickBoundaries.Contains(p) && !stickFingerDown && !this->lRect.Contains(p))
 			{
@@ -143,8 +144,7 @@ namespace VBA10
 
 	void VirtualControllerInput::CreateRenderRectangles(void)
 	{
-		float value = EmulatorSettings::Current->ControllerScale / 100.0f;
-		float value2 = EmulatorSettings::Current->ButtonScale / 100.0f;
+		
 
 		EmulatorSettings ^settings = EmulatorSettings::Current;
 
@@ -217,6 +217,10 @@ namespace VBA10
 			ComboCenterX = settings->ComboCenterXL * vscale / 2.54f * rawDpiX;
 			ComboCenterY = settings->ComboCenterYL * vscale / 2.54f * rawDpiY;
 		}
+
+		//setting to scale the size of the button
+		float value = EmulatorSettings::Current->ControllerScale / 100.0f * rawDpiX / 122.0f; //122.0f is dpi of 14'' laptop
+		float value2 = EmulatorSettings::Current->ButtonScale / 100.0f * rawDpiX / 122.0f;
 		
 		float pheight = this->emulator->GetHeight();
 		float pwidth = this->emulator->GetWidth();

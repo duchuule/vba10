@@ -595,9 +595,9 @@ namespace VBA10
 #pragma region button positions (in cm based on 6x10cm phone)
 		const double PadLeftPDefault = 0.1f; //from left
 		const double PadBottomPDefault = 0.9f; //from bottom
-		const double ACenterXPDefault = 0.8f;  //from right
-		const double ACenterYPDefault = 2.9f;  //from bottom
-		const double BCenterXPDefault = 1.8f; //from right
+		const double ACenterXPDefault = 0.6f;  //from right
+		const double ACenterYPDefault = 2.8f;  //from bottom
+		const double BCenterXPDefault = 1.7f; //from right
 		const double BCenterYPDefault = 1.8f; //from bottom
 		const double startCenterXPDefault = 0.85f; //from center
 		const double startBottomPDefault = 0.1f;  //from bottom
@@ -607,17 +607,17 @@ namespace VBA10
 		const double LCenterYPDefault = 4.0f;  ///from bottom
 		const double RRightPDefault = 0.0f;  //from right
 		const double RCenterYPDefault = 4.0f;  //from bottom
-		const double TurboCenterXPDefault = 2.0f;  //from right
-		const double TurboCenterYPDefault = 3.0f; //from bottom
+		const double TurboCenterXPDefault = 1.8f;  //from right
+		const double TurboCenterYPDefault = 2.8f; //from bottom
 		const double ComboCenterXPDefault = 0.6f;  //from right
 		const double ComboCenterYPDefault = 1.8f; //from bottom
 
-		const double PadLeftLDefault = 0.3f;
-		const double PadBottomLDefault = 0.3f;
-		const double ACenterXLDefault = 1.0f;
-		const double ACenterYLDefault = 2.5f;
-		const double BCenterXLDefault = 2.0f;
-		const double BCenterYLDefault = 1.0f;
+		const double PadLeftLDefault = 0.3f; //from left
+		const double PadBottomLDefault = 0.3f; //from bottom
+		const double ACenterXLDefault = 0.8f; //from right
+		const double ACenterYLDefault = 2.1f; //from bottom
+		const double BCenterXLDefault = 2.0f; //from right
+		const double BCenterYLDefault = 1.0f; //from bottom
 		const double startCenterXLDefault = 1.0f;
 		const double startBottomLDefault = 0.3f;
 		const double selectCenterXLDefault = -1.0f;
@@ -626,10 +626,10 @@ namespace VBA10
 		const double LCenterYLDefault = 3.8f;
 		const double RRightLDefault = 0.0f;
 		const double RCenterYLDefault = 3.8f;
-		const double TurboCenterXLDefault = 2.2f;
-		const double TurboCenterYLDefault = 2.3f;
+		const double TurboCenterXLDefault = 2.0f;
+		const double TurboCenterYLDefault = 2.1f;
 		const double ComboCenterXLDefault = 0.8f;
-		const double ComboCenterYLDefault = 1.3f;
+		const double ComboCenterYLDefault = 1.1f;
 #pragma endregion
 
 	};

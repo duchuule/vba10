@@ -313,7 +313,7 @@ namespace VBA10
 		this->xboxElapsed += timeDelta;
 
 #ifndef NO_XBOX
-		if (timeDelta < 3600.0f)
+		if (xboxElapsed < 3600.0f)
 			this->p1Controller->Update();
 #endif
 		this->virtualInput->Update();

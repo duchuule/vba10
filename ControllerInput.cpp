@@ -33,12 +33,12 @@ namespace VBA10
 			this->state.StartPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_START);
 			this->state.SelectPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
 
-			this->state.APressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
-			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
-			this->state.YPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
-			this->state.XPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_Y);
-			this->state.LPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
-			this->state.RPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+			this->state.APressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
+			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+			//this->state.YPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
+			this->state.LPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) || state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+			this->state.RPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) || state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 
 			//this->state.TurboPressed = ((state.Gamepad.BCenterXTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) || (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD));
 			this->state.TurboTogglePressed = this->state.XPressed || this->state.YPressed;
