@@ -23,7 +23,8 @@
 
         <StackPanel Background="{ThemeResource ListBoxBorderThemeBrush}"
                     VerticalAlignment="Stretch">
-            <TextBlock Text="Select file to import" FontSize="24" 
+            <TextBlock Text="Select file to import" 
+                       Style="{ThemeResource TitleTextBlockStyle}"
                        Margin="8,4,0,4"
                        />
         </StackPanel>

@@ -37,7 +37,7 @@
             <StackPanel >
                 <TextBlock Text="Local storage"
                                 VerticalAlignment="Center"
-                           FontSize="23"
+                           Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
@@ -60,7 +60,7 @@
 
                 <TextBlock Text="OneDrive"
                            VerticalAlignment="Center"
-                           FontSize="23"
+                           Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"

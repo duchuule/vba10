@@ -3,19 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VBA10"
+    xmlns:adduplex="using:AdDuplex"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="400">
 
-    <Grid Background="AliceBlue">
-        <TextBlock Text="This is a placeholder for ads because the Ad SDK for Windows 10 is not yet available."
-                   TextWrapping="Wrap"
-                   FontSize="12"
-                   Margin="6,0,6,0"
-                   Height="36"
-                   />
+    <Grid >
+        <adduplex:AdControl AdUnitId="163903" 
+                            AppKey="68de832f-c026-4930-9511-06ebea251c14"
+                            />
 
     </Grid>
 </UserControl>

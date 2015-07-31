@@ -95,5 +95,8 @@ namespace VBA10
 		void lastRomImage_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 		void RemoveROMButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
+
+		Windows::Foundation::Rect GetElementRect(Windows::UI::Xaml::FrameworkElement^ element);
+		void ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }
