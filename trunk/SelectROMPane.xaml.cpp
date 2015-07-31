@@ -48,7 +48,7 @@ SelectROMPane::SelectROMPane()
 	initdone = false;
 
 	this->InitializeComponent();
-	//this->InitializeStorageLists();
+
 
 	//bind list of ROM to display
 	cvsAllROMEntries->Source = App::ROMDB->AllROMDBEntries;
@@ -81,157 +81,32 @@ SelectROMPane::SelectROMPane()
 	initdone = true;
 }
 
-void SelectROMPane::InitializeStorageLists(void)
-{
-	this->storageFileVector = ref new Platform::Collections::Vector<StorageFileModel ^>();
-	this->storageFolderVector = ref new Platform::Collections::Vector<StorageFolderModel ^>();
-	AccessListEntryView ^folderList = StorageApplicationPermissions::FutureAccessList->Entries;
-
-	if(folderList->Size == 0)
-	{
-		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-		{
-			this->romDirList->ItemsSource = this->storageFolderVector;
-			this->RefreshROMList();
-		}));
-		return;
-	}
-	
-	task<void> prevTask = create_task([folderList]()
-	{
-		return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(folderList->GetAt(0).Token);
-	}).then([this](StorageFolder ^folder)
-	{
-		this->storageFolderVector->Append(ref new StorageFolderModel(folder));
-	}).then([this](task<void> t)
-	{
-		try
-		{
-			t.get();
-		}catch(Platform::COMException ^ex)
-		{
-#if _DEBUG
-			OutputDebugStringW(L"Folder in FutureAccessList does not exist anymore.");
-#endif
-		}
-		catch(...)
-		{
-#if _DEBUG
-			OutputDebugStringW(L"Folder in FutureAccessList does not exist anymore.");
-#endif
-		}
-	});
-
-	for (int i = 1; i < folderList->Size; i++)
-	{
-		prevTask = prevTask.then([this, folderList, i]()
-		{
-			return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(folderList->GetAt(i).Token);
-		}).then([this](StorageFolder ^folder)
-		{
-			this->storageFolderVector->Append(ref new StorageFolderModel(folder));
-		}).then([this](task<void> t)
-		{
-			try
-			{
-				t.get();
-			}catch(Platform::COMException ^ex)
-			{
-#if _DEBUG
-				OutputDebugStringW(L"Folder in FutureAccessList does not exist anymore.");
-#endif
-			}
-			catch(...)
-			{
-#if _DEBUG
-				OutputDebugStringW(L"Folder in FutureAccessList does not exist anymore.");
-#endif
-			}
-		});
-	}
-
-	prevTask.then([this]()
-	{
-		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-		{
-			this->romDirList->ItemsSource = this->storageFolderVector;
-			this->RefreshROMList();
-		}));
-	});	
-}
 
 
-void SelectROMPane::Close()
-{
-	try
-	{
-		(safe_cast<Popup ^>(this->Parent))->IsOpen = false;
-	}catch(InvalidCastException ^ex)
-	{
-#if _DEBUG
-		Platform::String ^message = ex->Message;
-		wstring wstr(message->Begin(), message->End());
-		OutputDebugStringW(L"InvalidCastException");
-#endif
-	}
-}
 
-void SelectROMPane::AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	FolderPicker ^picker = ref new FolderPicker();
-	
-	picker->FileTypeFilter->Append(".gba");
 
-	picker->FileTypeFilter->Append(".gbc");
-	picker->FileTypeFilter->Append(".gb");
 
-	picker->SuggestedStartLocation = PickerLocationId::ComputerFolder;
-	picker->ViewMode = PickerViewMode::List;
-	picker->CommitButtonText = "Select ROM Directory";
-	
-	task<void> t = create_task(picker->PickSingleFolderAsync()).then([this](StorageFolder ^folder)
-	{
-		if(folder)
-		{
-			bool contained = StorageApplicationPermissions::FutureAccessList->ContainsItem(folder->DisplayName);
-			StorageApplicationPermissions::FutureAccessList->AddOrReplace(folder->DisplayName, folder); 
-			if(contained)
-			{
-				this->RemoveFolderByToken(folder->DisplayName);
-			}
-			this->storageFolderVector->Append(ref new StorageFolderModel(folder));
-		}
-	}).then([this]()
-	{
-		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-		{
-			this->romDirList->ItemsSource = this->storageFolderVector;
-			this->RefreshROMList();
-		}));
-	});
-}
+//void SelectROMPane::DeleteFolderClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+//{
+//	Button ^button = safe_cast<Button ^>(sender);
+//	StorageFolderModel ^model = safe_cast<StorageFolderModel ^>(button->DataContext);
+//	StorageApplicationPermissions::FutureAccessList->Remove(model->Name);
+//	this->RemoveFolderByToken(model->Name);
+//	this->romDirList->ItemsSource = this->storageFolderVector;
+//	this->RefreshROMList();
+//}
 
-void SelectROMPane::DeleteFolderClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	Button ^button = safe_cast<Button ^>(sender);
-	StorageFolderModel ^model = safe_cast<StorageFolderModel ^>(button->DataContext);
-	StorageApplicationPermissions::FutureAccessList->Remove(model->Name);
-	this->RemoveFolderByToken(model->Name);
-	this->romDirList->ItemsSource = this->storageFolderVector;
-	this->RefreshROMList();
-}
-
-void SelectROMPane::RemoveFolderByToken(Platform::String ^token)
-{
-	for (int i = 0; i < this->storageFolderVector->Size; i++)
-	{
-		if(this->storageFolderVector->GetAt(i)->Name == token)
-		{
-			this->storageFolderVector->RemoveAt(i);
-			break;
-		}
-	}
-}
+//void SelectROMPane::RemoveFolderByToken(Platform::String ^token)
+//{
+//	for (int i = 0; i < this->storageFolderVector->Size; i++)
+//	{
+//		if(this->storageFolderVector->GetAt(i)->Name == token)
+//		{
+//			this->storageFolderVector->RemoveAt(i);
+//			break;
+//		}
+//	}
+//}
 
 void SelectROMPane::RefreshROMList(void)
 {
@@ -521,4 +396,74 @@ void SelectROMPane::RemoveROMButton_Click(Platform::Object^ sender, Windows::UI:
 	ROMDBEntry ^entry = safe_cast<ROMDBEntry ^>(button->DataContext);
 }
 
+Rect SelectROMPane::GetElementRect(FrameworkElement^ element)
+{
+	GeneralTransform^ buttonTransform = element->TransformToVisual(nullptr);
+	const Windows::Foundation::Point pointOrig(0, 0);
+	const Windows::Foundation::Point pointTransformed = buttonTransform->TransformPoint(pointOrig);
+	const Rect rect(pointTransformed.X, pointTransformed.Y, safe_cast<float>(element->ActualWidth), safe_cast<float>(element->ActualHeight));
+	return rect;
+}
 
+
+void SelectROMPane::ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	// Create a menu and add commands specifying a callback delegate for each.
+	// Since command delegates are unique, no need to specify command Ids.
+	auto menu = ref new PopupMenu();
+	Button ^button = safe_cast<Button ^>(sender);
+	ROMDBEntry ^entry = safe_cast<ROMDBEntry ^>(button->DataContext);
+
+	menu->Commands->Append(ref new UICommand("Delete", ref new UICommandInvokedHandler([this, entry](IUICommand^ command)
+	{
+		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName == ROMFile->Path) //rom is runnning
+		{
+			MessageDialog ^dialog = ref new MessageDialog("You cannot remove a running ROM. Please start another ROM or restart the app.");
+			dialog->ShowAsync();
+		}
+		else
+		{
+			MessageDialog ^dialog;
+
+			if (entry->LocationType == 0)  //private folder
+				dialog = ref new MessageDialog("This will delete the ROM file from the app's private storage. Continue?", "Confirm");
+
+			else 
+				dialog = ref new MessageDialog("This will remove the ROM entry from the app's list. Your actual ROM files and saves will not be affected. Continue?", "Confirm");
+			
+			UICommand ^confirm = ref new UICommand("Yes",
+				ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+			{
+				//action here
+			}));
+
+
+			UICommand ^no = ref new UICommand("No",
+				ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+			{
+				//do nothing
+			}));
+
+			dialog->Commands->Append(confirm);
+			dialog->Commands->Append(no);
+
+			dialog->DefaultCommandIndex = 1;
+			dialog->CancelCommandIndex = 1;
+
+			dialog->ShowAsync();
+		}
+	})));
+
+
+
+	// We don't want to obscure content, so pass in a rectangle representing the sender of the context menu event.
+	auto rect = GetElementRect(safe_cast<FrameworkElement^>(sender));
+	create_task(menu->ShowForSelectionAsync(rect, Placement::Below)).then([this](IUICommand^ command)
+	{
+		if (command == nullptr)
+		{
+			// The command is null if no command was invoked.
+		}
+	});
+	
+}

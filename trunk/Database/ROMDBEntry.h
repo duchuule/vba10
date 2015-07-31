@@ -36,7 +36,7 @@ namespace VBA10
 		//}
 		
 
-		property int LocationType  //0: local folder, 1: external
+		property int LocationType  //0: private app folder, 1: external
 		{
 			int get()
 			{

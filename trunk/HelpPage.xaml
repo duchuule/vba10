@@ -30,9 +30,10 @@
                     <StackPanel Orientation="Vertical"
                                       HorizontalAlignment="Left" 
                                     MaxWidth="440">
-                        <TextBlock Text="How to restore saves" FontSize="19" />
+                        <TextBlock Text="How to restore saves" Style="{ThemeResource BaseTextBlockStyle}" />
                         <TextBlock TextWrapping="Wrap"
-                                 Margin=" 0, 0, 0, 4" >
+                                 Margin=" 0, 0, 0, 4" 
+                                   >
                             <Run>1. Quit the app completelely.</Run><LineBreak/>
                             <Run>2. Make sure the name of the save file match the name 
                                 of the rom exactly (except the extension).</Run><LineBreak/>

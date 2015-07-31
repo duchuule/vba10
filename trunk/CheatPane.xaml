@@ -78,7 +78,7 @@
 
 
                     <TextBlock Grid.Row="0" Text="Add" 
-                               FontSize="23" 
+                               Style="{ThemeResource TitleTextBlockStyle}"
                                Margin="0,8,0,4"
                                />
                     <TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
@@ -140,7 +140,7 @@
                     </StackPanel.Resources>
 
                     <TextBlock Text="List" 
-                           FontSize="23" 
+                           Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,4"
                            />
                     
