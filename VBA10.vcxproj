@@ -132,6 +132,8 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>D:\Duc\Documents\Visual Studio 2015\Projects\VBA10\AppPackages\</AppxPackageDir>
     <PackageCertificateThumbprint>08CD9A4FE4AF2AA8EA82CE08CD6DE0DE1B1D9452</PackageCertificateThumbprint>
+    <AppxBundle>Auto</AppxBundle>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>.\VBAM;.\VBAM\gb;.\VBAM\gba;.\VBAM\apu;.\VBAM\common;.\VBAM\zlib;$(IncludePath)</IncludePath>
@@ -1204,7 +1206,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="AdDuplex.Windows10, Version=10.0.0.1" />
     <SDKReference Include="SQLite.UAP.2015, Version=3.8.11.1" />
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0" />
   </ItemGroup>
