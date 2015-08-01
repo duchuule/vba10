@@ -77,6 +77,8 @@ namespace VBA10
 		Platform::Collections::Vector<StorageFolderModel ^> ^storageFolderVector;
 		Platform::Collections::Vector<StorageFileModel ^> ^storageFileVector;
 
+		void ResetLastPlayedImage();
+
 		void InitializeStorageLists(void);
 		void Close(void);
 		void AddRomDirectoryClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -98,5 +100,7 @@ namespace VBA10
 
 		Windows::Foundation::Rect GetElementRect(Windows::UI::Xaml::FrameworkElement^ element);
 		void ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void lbAllROMMainGrid_RightTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::RightTappedRoutedEventArgs^ e);
+		void ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect rect);
 	};
 }

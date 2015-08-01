@@ -155,7 +155,7 @@
                     >
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="12,12,12,12"/>
+                            <Setter Property="Padding" Value="12"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
@@ -163,7 +163,9 @@
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="40" x:Name="lbAllROMMainGrid">
+                            <Grid Height="40" x:Name="lbAllROMMainGrid"
+                                  RightTapped="lbAllROMMainGrid_RightTapped"
+                                 >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60"/>
                                     <ColumnDefinition Width="*" />
@@ -220,6 +222,12 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
+                <Button x:Name="addROMbtn" HorizontalAlignment="Center" 
+                    Content="Add ROM"
+                    Width="120" Height="40"
+                    Margin="0,12,0,12"
+                    Click="addROMbtn_Click"/>
 
             </StackPanel>
         </ScrollViewer>

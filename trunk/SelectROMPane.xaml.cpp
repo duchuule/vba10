@@ -54,9 +54,24 @@ SelectROMPane::SelectROMPane()
 	cvsAllROMEntries->Source = App::ROMDB->AllROMDBEntries;
 	romList->SelectedItem = nullptr;
 	
+	//refresh last played image
+	ResetLastPlayedImage();
+	
+
+	//disable the command bar if no rom is loaded
+	topbar->IsEnabled = IsROMLoaded();
+
+	initdone = true;
+}
+
+void SelectROMPane::ResetLastPlayedImage()
+{
 	//find the most recently play game
 	if (App::ROMDB->AllROMDBEntries->Size == 0) //no rom in list
+	{
 		lastRomGrid->Visibility = Windows::UI::Xaml::Visibility::Collapsed;  //collapse
+		return;
+	}
 
 	int index = 0;
 	for (int i = 1; i < App::ROMDB->AllROMDBEntries->Size; i++)
@@ -67,21 +82,11 @@ SelectROMPane::SelectROMPane()
 	}
 
 
-
-
 	if (App::ROMDB->AllROMDBEntries->GetAt(index)->LastPlayed.UniversalTime > 0) // have been played
 		lastRomGrid->DataContext = App::ROMDB->AllROMDBEntries->GetAt(index);
 	else
 		lastRomGrid->Visibility = Windows::UI::Xaml::Visibility::Collapsed;  //collapse
-	
-
-	//disable the command bar if no rom is loaded
-	topbar->IsEnabled = IsROMLoaded();
-
-	initdone = true;
 }
-
-
 
 
 
@@ -410,10 +415,29 @@ void SelectROMPane::ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::
 {
 	// Create a menu and add commands specifying a callback delegate for each.
 	// Since command delegates are unique, no need to specify command Ids.
-	auto menu = ref new PopupMenu();
+	
 	Button ^button = safe_cast<Button ^>(sender);
 	ROMDBEntry ^entry = safe_cast<ROMDBEntry ^>(button->DataContext);
+	auto rect = GetElementRect(safe_cast<FrameworkElement^>(sender));
 
+	ShowContextMenu( entry, rect);
+	
+}
+
+
+void VBA10::SelectROMPane::lbAllROMMainGrid_RightTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::RightTappedRoutedEventArgs^ e)
+{
+	Grid ^grid = safe_cast<Grid ^>(sender);
+	ROMDBEntry ^entry = safe_cast<ROMDBEntry ^>(grid->DataContext);
+
+	auto point = e->GetPosition(nullptr);
+	auto rect = Rect(point.X, point.Y, 10.0f, 10.0f);
+	ShowContextMenu( entry, rect);
+}
+
+void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect rect)
+{
+	auto menu = ref new PopupMenu();
 	menu->Commands->Append(ref new UICommand("Delete", ref new UICommandInvokedHandler([this, entry](IUICommand^ command)
 	{
 		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName == ROMFile->Path) //rom is runnning
@@ -428,13 +452,39 @@ void SelectROMPane::ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::
 			if (entry->LocationType == 0)  //private folder
 				dialog = ref new MessageDialog("This will delete the ROM file from the app's private storage. Continue?", "Confirm");
 
-			else 
-				dialog = ref new MessageDialog("This will remove the ROM entry from the app's list. Your actual ROM files and saves will not be affected. Continue?", "Confirm");
-			
+			else
+				dialog = ref new MessageDialog("This will remove the ROM entry from the app's list. Your actual ROM files and save files will not be affected. Continue?", "Confirm");
+
 			UICommand ^confirm = ref new UICommand("Yes",
-				ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+				ref new UICommandInvokedHandler([this, entry](IUICommand ^cmd)
 			{
-				//action here
+				//find the index of the entry in the list
+				int idx = -1;
+				for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
+				{
+					ROMDBEntry^ entry2 = App::ROMDB->AllROMDBEntries->GetAt(i);
+					if (entry2->Token == entry->Token && entry2->FileName == entry->FileName) //found the entry
+					{
+						idx = i;
+						break;
+					}
+				}
+
+				if (idx == -1) //not found error
+					return;
+
+				if (entry->LocationType == 0)
+				{
+					//delete the rom file
+					create_task(entry->Folder->GetFileAsync(entry->FileName)).then([] (StorageFile^ file) 
+					{
+						file->DeleteAsync();
+					});
+
+				}
+				App::ROMDB->AllROMDBEntries->RemoveAt(idx);
+				App::ROMDB->RemoveAsync(entry);
+				ResetLastPlayedImage();
 			}));
 
 
@@ -457,7 +507,7 @@ void SelectROMPane::ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::
 
 
 	// We don't want to obscure content, so pass in a rectangle representing the sender of the context menu event.
-	auto rect = GetElementRect(safe_cast<FrameworkElement^>(sender));
+	
 	create_task(menu->ShowForSelectionAsync(rect, Placement::Below)).then([this](IUICommand^ command)
 	{
 		if (command == nullptr)
@@ -465,5 +515,4 @@ void SelectROMPane::ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::
 			// The command is null if no command was invoked.
 		}
 	});
-	
 }
