@@ -286,3 +286,21 @@ ROMDBEntry^ ROMDatabase::GetEntryFromName(Platform::String^ name)
 	return nullptr;
 }
 
+task<void> ROMDatabase::RemoveAsync(ROMDBEntry ^ entry)
+{
+	return create_task([this, entry]
+	{
+
+		//prepare statement to update entry
+		Platform::String^ cmd = "DELETE FROM ROMTABLE ";
+		cmd += " WHERE FILENAME = '" + entry->FileName + "' AND TOKEN = '" + entry->Token + "';";
+
+#if _DEBUG
+		Platform::String ^message = cmd;
+		wstring wstr(message->Begin(), message->End());
+		OutputDebugStringW(wstr.c_str());
+#endif
+		return db->ExecuteStatementAsync(cmd);
+	});
+}
+

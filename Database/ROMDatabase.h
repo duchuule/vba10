@@ -34,6 +34,7 @@ namespace VBA10
 		task<Vector<ROMDBEntry^>^> RetrieveQuerry();
 		task<void> UpdateAsync(ROMDBEntry^ entry);
 		ROMDBEntry^ GetEntryFromName(Platform::String^ name);
+		task<void> RemoveAsync(ROMDBEntry^ entry);
 		
 		property PC::Vector<ROMDBEntry^>^ AllROMDBEntries
 		{
