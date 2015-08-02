@@ -669,9 +669,11 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	create_task([this, entry] {
 		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName != ROMFile->Path)  //different rom, save old rom state
 		{
-			SaveBeforeStop().wait();
-			
+			return SaveBeforeStop();
+
 		}
+		else
+			return create_task([] {});
 
 	}).then([entry] {
 		return entry->Folder->GetFileAsync(entry->FileName);

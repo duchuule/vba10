@@ -19,6 +19,8 @@ namespace VBA10
 		_lastSaveIndex = 0;
 		_autoSaveIndex = 0;
 		_snapshot = nullptr;
+		AutoLoadLastState = true; //default to true except when import save
+
 		
 	}
 
@@ -29,6 +31,7 @@ namespace VBA10
 	{
 		
 		_snapshot = nullptr;
+		AutoLoadLastState = true;
 	}
 
 
