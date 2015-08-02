@@ -46,7 +46,7 @@ void HelpPage::gplButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rout
 
 void HelpPage::contactBlock_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
-	auto uri = ref new Windows::Foundation::Uri("mailto:store.support@outlook.com");
+	auto uri = ref new Windows::Foundation::Uri("mailto:store.support@outlook.com?subject=VBA10 bug report or feature suggestion&body=");
 
 	// Launch the URI
 	concurrency::task<bool> launchUriOperation(Windows::System::Launcher::LaunchUriAsync(uri));

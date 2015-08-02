@@ -173,7 +173,7 @@ task<void> ROMDatabase::LoadSnapshotImage()
 	for (int i= 0; i < _allROMDBEntries->Size; i++)
 	{
 		auto entry = _allROMDBEntries->GetAt(i);
-		entry->AutoLoadLastState = true; //default to true, except after import in-game save
+		
 			
 		tasks.emplace_back(create_task([entry]
 		{
