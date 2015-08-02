@@ -24,6 +24,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Popups;
 using namespace Windows::Globalization;
+using namespace Windows::UI::ViewManagement;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -78,6 +79,7 @@ SettingsPage::SettingsPage()
 		break;
 	}
 	this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
+	this->fullscreenToggle->IsOn = EmulatorSettings::Current->FullScreen;
 
 	//general
 	this->loadConfirmationToggle->IsOn = IsLoadConfirmationDisabled();
@@ -403,5 +405,30 @@ void SettingsPage::enableTurboToggle_Toggled(Platform::Object^ sender, Windows::
 	if (initdone)
 	{
 		EmulatorSettings::Current->EnableTurbo = this->enableTurboToggle->IsOn;
+	}
+}
+
+
+void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		//save setting
+		
+
+		EmulatorSettings::Current->FullScreen = this->fullscreenToggle->IsOn;
+
+		//try enter/exit full screenmode
+		ApplicationView^ view = ApplicationView::GetForCurrentView();
+
+
+		if (this->fullscreenToggle->IsOn)
+		{
+			view->TryEnterFullScreenMode();
+		}
+		else
+		{
+			view->ExitFullScreenMode();
+		}
 	}
 }

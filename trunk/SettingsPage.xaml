@@ -35,21 +35,22 @@
                         <TextBlock TextWrapping="Wrap" 
                                    Text="You can buy premium feature package or watch a short video to enable Xbox 360 Controller."
                                    Margin="0,0,0,8"/>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,0,0,12">
                             <Button x:Name="purchaseBtn" Content="Buy" 
                             IsEnabled="False"
                             Width="120"
-                            Margin =" 0, 4, 8, 4"/>
+                            Margin =" 0, 0, 8, 0"/>
 
                             <Button x:Name="watchVideoBtn" Content="Watch Video" 
                             Width="120"
-                            Margin =" 0, 4, 0, 4" 
+                            Margin =" 0, 0, 0, 0" 
                             Click="watchVideobtn_Click"/>
 
 
                         </StackPanel>
 
-                        <ToggleSwitch Header="Show Virutal Buttons" 
+                        <ToggleSwitch Header="Show Virtual Buttons" 
                                       Name="touchToggle" HorizontalAlignment="Left" 
                                       Toggled="touchToggle_Toggled"/>
 
@@ -288,7 +289,8 @@
                                       IsOn="True"
                                       Toggled="fpsToggle_Toggled"/>
 
-                        
+
+
 
                     </StackPanel>
                 </ScrollViewer>
@@ -301,6 +303,12 @@
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
+                        
+                        <ToggleSwitch Header="Use fullscreen mode" 
+                                      Name="fullscreenToggle" 
+                                      IsOn="False"
+                                      Toggled="fullscreenToggle_Toggled"/>
+                        
                         
                         <ToggleSwitch Header="Sound" 
                                       Toggled="soundToggle_Toggled" 

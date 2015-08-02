@@ -30,6 +30,7 @@ using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
+using namespace Windows::UI::ViewManagement;
 
 StorageFolderModel::StorageFolderModel(StorageFolder ^folder)
 { 
@@ -515,4 +516,20 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 			// The command is null if no command was invoked.
 		}
 	});
+}
+
+
+void SelectROMPane::maximizebtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	ApplicationView^ view = ApplicationView::GetForCurrentView();
+
+
+	if (view->IsFullScreenMode)
+	{
+		view->ExitFullScreenMode();
+	}
+	else
+	{
+		view->TryEnterFullScreenMode();
+	}
 }
