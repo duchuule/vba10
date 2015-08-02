@@ -10,6 +10,9 @@
 #include "Globals.h"
 #include "../NLS.h"
 #include "../Util.h"
+
+using namespace Windows::UI::Popups;
+using namespace Windows::UI::Core;
 //#include "WP8VBAMComponent.h"
 
 /**
@@ -1601,6 +1604,11 @@ void cheatsAddGSACode(const char *code, const char *desc, bool v3)
     }
   }
 
+  
+
+  
+
+
   char buffer[10];
   strncpy(buffer, code, 8);
   buffer[8] = 0;
@@ -1635,7 +1643,20 @@ void cheatsAddGSACode(const char *code, const char *desc, bool v3)
 	  mbstowcs( wcode, code, 16 );
 	  wcode[16] = 0;
 
-	  //TODO: show message about wrong cheat version
+	  Platform::String^ pcode = ref new Platform::String(wcode);
+	  Platform::String^ pbuffer = ref new Platform::String(wbuffer);
+	  Platform::String^ pbuffer2 = ref new Platform::String(wbuffer2);
+
+	CoreWindow::GetForCurrentThread()->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([pcode, pbuffer, pbuffer2]()
+	{
+		MessageDialog ^dialog = ref new MessageDialog("Cheat code " + pcode + " is for rom "
+			+ pbuffer + " while the current rom is " + pbuffer2
+			+ ". It will not work and may cause problems. This happens mostly because you are using a EU cheat code with a US rom or vice versa.");
+
+		dialog->ShowAsync();
+	}));
+
+
 	 // if(Direct3DBackground::WrongCheatVersion)
 	 //{
 		//Direct3DBackground::WrongCheatVersion(ref new Platform::String(wcode), ref new Platform::String(wbuffer), ref new Platform::String(wbuffer2));
