@@ -414,7 +414,10 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 	{
 		//need code to pause game here
 		//m_main->StartRenderLoop();
-		m_main->emulator->Unpause();
+		if (RootSplitView->IsPaneOpen) //pause if menu is open
+			m_main->emulator->Pause();
+		else
+			m_main->emulator->Unpause();
 	}
 	else
 	{
@@ -613,6 +616,8 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 	//change width to 100%, NAN means auto
 	AppFrame->Width = NAN;
+
+
 
 
 
