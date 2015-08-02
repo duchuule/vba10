@@ -102,5 +102,6 @@ namespace VBA10
 		void ContextMenuBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void lbAllROMMainGrid_RightTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::RightTappedRoutedEventArgs^ e);
 		void ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect rect);
+		void maximizebtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }
