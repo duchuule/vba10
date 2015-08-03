@@ -9,27 +9,27 @@ namespace Engine
 	struct Rectangle
 	{
 	public:
-		union
-		{
-			struct
-			{
+		//union
+		//{
+		//	struct
+		//	{
 				int X;
 				int Y;
 				unsigned int Width;
 				unsigned int Height;
-			};
-			struct
-			{
+			//};
+			//struct
+			//{
 				Point TopLeft;
 				Size Size;
-			};
-		};
+		//	};
+		//};
 
 		Rectangle();
 		Rectangle(int x, int y, unsigned int width, unsigned int height);
 		Rectangle(const Point &topleft, const Engine::Size &size);
 
-		~Rectangle();
+		~Rectangle() = default;
 
 		Point GetBottomRight(void) const;
 		void GetBottomRight(Point *p) const;

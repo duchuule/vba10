@@ -14,8 +14,8 @@ namespace Engine
 		: TopLeft(topleft), Size(size), X(topleft.X), Y(topleft.Y), Width(size.Width), Height(size.Height)
 	{ }
 
-	Rectangle::~Rectangle()
-	{ }
+	//Rectangle::~Rectangle()
+	//{ }
 
 	Point Rectangle::GetBottomRight(void) const
 	{
