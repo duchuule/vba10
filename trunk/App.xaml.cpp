@@ -28,7 +28,7 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 
 ROMDatabase^ VBA10::App::ROMDB = nullptr;
-//web::live::live_client* LiveClient = nullptr;
+live::live_client* VBA10::App::LiveClient = nullptr;
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code
@@ -42,7 +42,7 @@ App::App()
 	Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
 
 	ROMDB = ref new ROMDatabase();
-	//LiveClient = new web::live::live_client();
+	LiveClient = new live::live_client();
 }
 
 /// <summary>

@@ -256,22 +256,55 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 }
 
 
+void ImportPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e)
+{
+	
+}
+
 void ImportPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	//try re-sign in silently because access token expires every 1 hour
-	if (!EmulatorSettings::Current->SignedIn)
+	if (EmulatorSettings::Current->SignedIn)
 	{
-		live::live_client* LiveClient = new live::live_client();
-		LiveClient->login(L"wl.skydrive_update wl.signin")
+		//live::live_client* LiveClient = new live::live_client();
+		App::LiveClient->login(L"wl.skydrive_update wl.signin", true)
 			.then([this](bool isLoggedIn)
 		{
-			if (!isLoggedIn)
+			if (isLoggedIn)
 			{
-				throw std::exception();
+				this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+				this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Visible;
+				EmulatorSettings::Current->SignedIn = true;
 			}
-			// Request the "me" object from OneDrive
-			// and pass the return value to the next continuation
-			//return model->LiveClient.get(L"me");
+			else
+			{
+				this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Visible;
+				this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+				EmulatorSettings::Current->SignedIn = false;
+			}
 		});
 	}
+}
+
+
+void ImportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//live::live_client* LiveClient = new live::live_client();
+	App::LiveClient->login(L"wl.skydrive_update wl.signin", false)
+		.then([this](bool isLoggedIn)
+	{
+		if (isLoggedIn)
+		{
+			this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Visible;
+			EmulatorSettings::Current->SignedIn = true;
+		}
+		else
+		{
+			this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Visible;
+			this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			EmulatorSettings::Current->SignedIn = false;
+		}
+
+	});
 }
