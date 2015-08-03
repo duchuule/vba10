@@ -414,8 +414,6 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 	if (initdone)
 	{
 		//save setting
-		
-
 		EmulatorSettings::Current->FullScreen = this->fullscreenToggle->IsOn;
 
 		//try enter/exit full screenmode
@@ -425,10 +423,12 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		if (this->fullscreenToggle->IsOn)
 		{
 			view->TryEnterFullScreenMode();
+			view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::FullScreen;
 		}
 		else
 		{
 			view->ExitFullScreenMode();
+			view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::Auto;
 		}
 	}
 }

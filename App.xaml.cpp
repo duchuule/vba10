@@ -61,24 +61,6 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
 	ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
 
-	//set full screen
-	if (EmulatorSettings::Current->FullScreen)
-	{
-		ApplicationView::GetForCurrentView()->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::FullScreen;
-		if (!EmulatorSettings::Current->PreviousFullScreen)
-			EmulatorSettings::Current->PreviousFullScreen = true;
-	}
-	else  //the user don't want full screen
-	{
-		if (EmulatorSettings::Current->PreviousFullScreen) //last time we use full screen
-		{
-			ApplicationView::PreferredLaunchViewSize = Windows::Foundation::Size{ 900,600 };
-			ApplicationView::GetForCurrentView()->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::PreferredLaunchViewSize;
-			EmulatorSettings::Current->PreviousFullScreen = false;
-		}
-		else
-			ApplicationView::GetForCurrentView()->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::Auto;
-	}
 
 	App::ROMDB->Initialize().then([this, e] {
 		if (m_directXPage == nullptr)

@@ -73,7 +73,12 @@
                     	    <Run  Text="Feel free to report bugs or broken games."/>
                     	    <LineBreak />
                     	    <LineBreak />
-                    	    <Run  Text="The author is not responsible for any illegal use of this software. "/>
+                            <Run  Text="Credits:"/>
+                    	    <LineBreak />
+                            <Run  Text="- Eddi Bento for logo design."/>
+                    	    <LineBreak />
+                            <LineBreak />
+                    	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
                     	    <LineBreak/>
                      	    <LineBreak/>
                     	    <Run  Text="This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or(at your option) any later version.  "/>
