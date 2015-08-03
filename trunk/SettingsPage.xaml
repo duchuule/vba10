@@ -289,7 +289,10 @@
                                       IsOn="True"
                                       Toggled="fpsToggle_Toggled"/>
 
-
+                        <ToggleSwitch Header="Use fullscreen mode" 
+                                      Name="fullscreenToggle" 
+                                      IsOn="False"
+                                      Toggled="fullscreenToggle_Toggled"/>
 
 
                     </StackPanel>
@@ -304,10 +307,7 @@
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
                         
-                        <ToggleSwitch Header="Use fullscreen mode" 
-                                      Name="fullscreenToggle" 
-                                      IsOn="False"
-                                      Toggled="fullscreenToggle_Toggled"/>
+                        
                         
                         
                         <ToggleSwitch Header="Sound" 

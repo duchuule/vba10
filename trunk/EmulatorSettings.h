@@ -119,18 +119,6 @@ namespace VBA10
 			}
 		}
 
-		//hold setting about previous full screen setting to walk aroudn a bug in ApplicationViewWindowingMode::Auto
-		property bool PreviousFullScreen
-		{
-			bool get()
-			{
-				return GetValueOrDefault<bool>(PreviousFullScreenKey, PreviousFullScreenDefault);
-			}
-			void set(bool value)
-			{
-				AddOrUpdateValue(PreviousFullScreenKey, value);
-			}
-		}
 
 
 #pragma region Button positions
@@ -568,7 +556,6 @@ namespace VBA10
 		Platform::String^ TurboFrameSkipKey = "TurboFrameSkipKey";
 		Platform::String^ EnableTurboKey = "EnableTurboKey";
 		Platform::String^ FullScreenKey = "FullScreenKey";
-		Platform::String^ PreviousFullScreenKey = "PreviousFullScreenKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -618,7 +605,7 @@ namespace VBA10
 		const int TurboFrameSkipDefault = 2;
 		const bool EnableTurboDefault = false;
 		const bool FullScreenDefault = false;
-		const bool PreviousFullScreenDefault = false;
+
 
 #pragma region button positions (in cm based on 6x10cm phone)
 		const double PadLeftPDefault = 0.1f; //from left
