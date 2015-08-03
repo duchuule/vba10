@@ -8,6 +8,8 @@
 #include "CheatPane.g.h"
 #include "CheatData.h"
 
+using namespace Platform::Collections;
+
 namespace VBA10
 {
 	[Windows::Foundation::Metadata::WebHostHidden]

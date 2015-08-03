@@ -9,6 +9,7 @@
 
 using namespace Windows::Foundation::Collections;
 using namespace Platform::Collections;
+using namespace Windows::Storage;
 
 namespace VBA10
 {

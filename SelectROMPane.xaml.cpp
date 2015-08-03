@@ -4,14 +4,17 @@
 //
 
 #include "pch.h"
+
 #include "SelectROMPane.xaml.h"
-#include <Windows.h>
+
 #include "DirectXPage.xaml.h";
 #include "EmulatorSettings.h";
 #include "EmulatorFileHandler.h"
 #include "SelectStatePane.xaml.h"
 #include "Database\ROMDBEntry.h"
 #include "Converter.h"
+#include "App.xaml.h"
+
 
 
 using namespace VBA10;

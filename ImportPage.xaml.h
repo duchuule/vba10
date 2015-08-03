@@ -26,5 +26,6 @@ namespace VBA10
 		StorageFolder^ tmpfolder;
 		Platform::String^ tmptoken;
 		void importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

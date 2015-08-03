@@ -531,6 +531,7 @@
     <ClInclude Include="EmulatorSettings.h" />
     <ClInclude Include="PurchasePage.xaml.h" />
     <ClInclude Include="AdControl.xaml.h" />
+    <ClInclude Include="live_connect.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -548,6 +549,7 @@
     </None>
     <None Include="Package.StoreAssociation.xml" />
     <None Include="VBA10_StoreKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />

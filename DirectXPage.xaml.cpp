@@ -12,7 +12,7 @@
 #include "Database\ROMDatabase.h"
 #include "Definitions.h"
 #include "stringhelper.h"
-
+#include "App.xaml.h"
 
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"

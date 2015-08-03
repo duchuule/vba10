@@ -6,7 +6,8 @@
     xmlns:ctl="using:VBA10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -66,10 +67,15 @@
                 <TextBlock TextWrapping="Wrap"
                            Text="Use this option to import rom through OneDrive. The rom will be copied to the app's private storage."                                
                                  Margin=" 0, 4, 0, 4" />
+
+                <Button x:Name="SignInbtn" Content="Sign in" 
+                            Click="chooseFolderbtn_Click"
+                            Width="248"
+                            Margin =" 0, 4, 0, 4"/>
                 
-                <TextBlock TextWrapping="Wrap"
+                <!--<TextBlock TextWrapping="Wrap"
                            Text="This function will be added in a future release. In the mean time, please store roms on your phone's SD Card or documents folder and use the Local Storage option."                                
-                                 Margin=" 0, 4, 0, 4" />
+                                 Margin=" 0, 4, 0, 4" />-->
 
             </StackPanel>
         </ScrollViewer>

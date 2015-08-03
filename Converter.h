@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+
 #include <ppltasks.h>
 
 //IMPORTANT NOTE: need to include this header file in both the .h and .cpp of an xaml page
