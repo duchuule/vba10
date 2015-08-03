@@ -256,10 +256,7 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 }
 
 
-void ImportPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e)
-{
-	
-}
+
 
 void ImportPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -307,4 +304,10 @@ void ImportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 		}
 
 	});
+}
+
+
+void ImportPage::importOneDriveROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+
 }
