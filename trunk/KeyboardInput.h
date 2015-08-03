@@ -2,6 +2,7 @@
 
 #include "Input.h"
 #include "EmulatorInput.h"
+#include <agile.h>
 
 using namespace Windows::UI::Core;
 
@@ -19,6 +20,6 @@ namespace VBA10
 
 	private:
 		ControllerState state;
-		CoreWindow ^window;
+		Platform::Agile<CoreWindow^> window;
 	};
 }
