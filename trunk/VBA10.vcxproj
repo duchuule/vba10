@@ -373,6 +373,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="live_connect.h" />
     <ClInclude Include="NavMenuItem.h" />
     <ClInclude Include="NavMenuListView.h" />
     <ClInclude Include="OnResizeBuffer.h" />
@@ -1117,6 +1118,7 @@
     <None Include="Assets\vba-over.ini">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="packages.config" />
     <None Include="SpriteBatch.hlsli" />
     <None Include="VBA10_StoreKey.pfx" />
     <None Include="VBA10_TemporaryKey.pfx" />
@@ -1217,5 +1219,12 @@
     <Import Project="$(VSINSTALLDIR)\Common7\IDE\Extensions\Microsoft\VsGraphics\ImageContentTask.targets" />
     <Import Project="$(VSINSTALLDIR)\Common7\IDE\Extensions\Microsoft\VsGraphics\MeshContentTask.targets" />
     <Import Project="$(VSINSTALLDIR)\Common7\IDE\Extensions\Microsoft\VsGraphics\ShaderGraphContentTask.targets" />
+    <Import Project="packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.6.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.6.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.6.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.6.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets'))" />
+  </Target>
 </Project>

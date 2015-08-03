@@ -119,6 +119,19 @@ namespace VBA10
 			}
 		}
 
+		//keep track of whether the user successfully signed in before or not (so that we tried to silently resign in)
+		property bool SignedIn
+		{
+			bool get()
+			{
+				return GetValueOrDefault<bool>(SignedInKey, SignedInDefault);
+			}
+			void set(bool value)
+			{
+				AddOrUpdateValue(SignedInKey, value);
+			}
+		}
+
 
 
 #pragma region Button positions
@@ -556,6 +569,7 @@ namespace VBA10
 		Platform::String^ TurboFrameSkipKey = "TurboFrameSkipKey";
 		Platform::String^ EnableTurboKey = "EnableTurboKey";
 		Platform::String^ FullScreenKey = "FullScreenKey";
+		Platform::String^ SignedInKey = "SignedInKey";  
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -605,6 +619,7 @@ namespace VBA10
 		const int TurboFrameSkipDefault = 2;
 		const bool EnableTurboDefault = false;
 		const bool FullScreenDefault = false;
+		const bool SignedInDefault = false;
 
 
 #pragma region button positions (in cm based on 6x10cm phone)

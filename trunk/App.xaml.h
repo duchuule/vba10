@@ -9,6 +9,7 @@
 #include "DirectXPage.xaml.h"
 #include "Database\ROMDatabase.h"
 #include "EmulatorSettings.h"
+#include "live_connect.h"
 
 namespace VBA10
 {
@@ -23,12 +24,16 @@ namespace VBA10
 
 	internal:
 		static ROMDatabase^ ROMDB;
+		static live::live_client* LiveClient;
+
+
 		
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
 		void OnResuming(Platform::Object ^sender, Platform::Object ^args);
 		DirectXPage^ m_directXPage;
+
 
 
 	};

@@ -2,6 +2,8 @@
 #include "DeviceResources.h"
 #include "DirectXHelper.h"
 #include <windows.ui.xaml.media.dxinterop.h>
+#include <algorithm>
+
 
 using namespace D2D1;
 using namespace DirectX;
@@ -220,8 +222,8 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	m_outputSize.Height = m_logicalSize.Height * m_compositionScaleY;
 	
 	// Prevent zero size DirectX content from being created.
-	m_outputSize.Width = max(m_outputSize.Width, 1);
-	m_outputSize.Height = max(m_outputSize.Height, 1);
+	m_outputSize.Width = std::max(m_outputSize.Width, 1.0f);
+	m_outputSize.Height = std::max(m_outputSize.Height, 1.0f);
 
 	// The width and height of the swap chain must be based on the window's
 	// natively-oriented width and height. If the window is not in the native

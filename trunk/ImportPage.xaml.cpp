@@ -8,8 +8,10 @@
 #include "Database\ROMDBEntry.h"
 #include "Database\ROMDatabase.h"
 #include "SelectFilePane.xaml.h"
+#include "App.xaml.h"
 
 #include "stringhelper.h"
+
 
 
 using namespace VBA10;
@@ -251,4 +253,25 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 			return create_task([] {});
 
 	});
+}
+
+
+void ImportPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//try re-sign in silently because access token expires every 1 hour
+	if (!EmulatorSettings::Current->SignedIn)
+	{
+		live::live_client* LiveClient = new live::live_client();
+		LiveClient->login(L"wl.skydrive_update wl.signin")
+			.then([this](bool isLoggedIn)
+		{
+			if (!isLoggedIn)
+			{
+				throw std::exception();
+			}
+			// Request the "me" object from OneDrive
+			// and pass the return value to the next continuation
+			//return model->LiveClient.get(L"me");
+		});
+	}
 }

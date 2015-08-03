@@ -4,8 +4,10 @@
 //
 
 #include "pch.h"
+#include "App.xaml.h"
 #include "DirectXPage.xaml.h"
 #include "EmulatorSettings.h"
+#include "live_connect.h"
 
 using namespace VBA10;
 
@@ -26,7 +28,7 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 
 ROMDatabase^ VBA10::App::ROMDB = nullptr;
-
+//web::live::live_client* LiveClient = nullptr;
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code
@@ -40,6 +42,7 @@ App::App()
 	Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
 
 	ROMDB = ref new ROMDatabase();
+	//LiveClient = new web::live::live_client();
 }
 
 /// <summary>
