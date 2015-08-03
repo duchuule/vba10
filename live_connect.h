@@ -30,6 +30,7 @@
 #include "cpprest/streams.h"
 #include "cpprest/filestream.h"
 
+using namespace Windows::Security::Authentication::OnlineId;
 
 namespace VBA10 {
 	namespace live {
@@ -115,42 +116,60 @@ namespace VBA10 {
 			/// </summary>
 			/// <param name="services">A string containing a space-separated list of access scopes to request</param>
 			/// <returns><c>true</c> if authentication succeeded, <c>false</c> otherwise.</returns>
-			pplx::task<bool> login(utility::string_t scopes)
+			pplx::task<bool> login(utility::string_t scopes, bool silent)
 			{
 				this->m_token.clear();
 
-				auto request = ref new Windows::Security::Authentication::OnlineId::OnlineIdServiceTicketRequest(ref new Platform::String(scopes.c_str()), "DELEGATION");
+				auto request = ref new OnlineIdServiceTicketRequest(ref new Platform::String(scopes.c_str()), "DELEGATION");
+				auto request_vec = ref new Vector<OnlineIdServiceTicketRequest^>();
+				request_vec->Append(request);
 
-				return pplx::create_task(m_authenticator->AuthenticateUserAsync(request))
-					.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
+				if (silent)
 				{
-					try
+					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, CredentialPromptType::DoNotPrompt))
+						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
 					{
-						auto ident = idtask.get();
-						if (ident->Tickets->Size > 0)
+						try
 						{
-							auto ticket = ident->Tickets->GetAt(0);
+							auto ident = idtask.get();
+							if (ident->Tickets->Size > 0)
+							{
+								auto ticket = ident->Tickets->GetAt(0);
 
-							m_token = std::wstring(ticket->Value->Data());
-							return true;
+								m_token = std::wstring(ticket->Value->Data());
+								return true;
+							}
 						}
-					}
-					catch (const concurrency::task_canceled &)
+						catch (const concurrency::task_canceled &) {}
+						catch (const std::exception &){}
+						catch (Platform::Exception ^ex) {}
+
+						return false;
+					});
+				}
+				else
+				{
+					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, CredentialPromptType::PromptIfNeeded))
+						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
 					{
+						try
+						{
+							auto ident = idtask.get();
+							if (ident->Tickets->Size > 0)
+							{
+								auto ticket = ident->Tickets->GetAt(0);
 
-					}
-					catch (const std::exception &)
-					{
+								m_token = std::wstring(ticket->Value->Data());
+								return true;
+							}
+						}
+						catch (const concurrency::task_canceled &) {}
+						catch (const std::exception &) {}
+						catch (Platform::Exception ^ex) {}
 
-					}
-					catch (Platform::Exception ^ex)
-					{
-						//std::wstring s = std::wstring(ex->Message->Data());
-
-
-					}
-					return false;
-				});
+						return false;
+					});
+				}
 			}
 
 			/// <summary>

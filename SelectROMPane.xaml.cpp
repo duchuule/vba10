@@ -78,7 +78,7 @@ void SelectROMPane::ResetLastPlayedImage()
 	}
 
 	int index = 0;
-	for (int i = 1; i < App::ROMDB->AllROMDBEntries->Size; i++)
+	for (unsigned int i = 1; i < App::ROMDB->AllROMDBEntries->Size; i++)
 	{
 
 		if (App::ROMDB->AllROMDBEntries->GetAt(i)->LastPlayed.UniversalTime > App::ROMDB->AllROMDBEntries->GetAt(index)->LastPlayed.UniversalTime)
@@ -168,14 +168,14 @@ void SelectROMPane::RefreshROMList(void)
 		return folder->CreateFileQueryWithOptions(options)->GetFilesAsync();		
 	}).then([this, folder](IVectorView<StorageFile ^> ^files)
 	{
-		for (int i = 0; i < files->Size; i++)
+		for (unsigned int i = 0; i < files->Size; i++)
 		{
 			StorageFileModel ^model = ref new StorageFileModel(files->GetAt(i), folder);
 			this->storageFileVector->Append(model);
 		}
 	});
 
-	for (int i = 1; i < this->storageFolderVector->Size; i++)
+	for (unsigned int i = 1; i < this->storageFolderVector->Size; i++)
 	{
 		StorageFolder ^folder = this->storageFolderVector->GetAt(i)->Folder;
 		t = t.then([this, folder, options]()
@@ -183,7 +183,7 @@ void SelectROMPane::RefreshROMList(void)
 			return folder->CreateFileQueryWithOptions(options)->GetFilesAsync();		
 		}).then([this, folder](IVectorView<StorageFile ^> ^files)
 		{
-			for (int i = 0; i < files->Size; i++)
+			for (unsigned int i = 0; i < files->Size; i++)
 			{
 				StorageFileModel ^model = ref new StorageFileModel(files->GetAt(i), folder);
 				this->storageFileVector->Append(model);

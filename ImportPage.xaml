@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Loaded="Page_Loaded">
+    Loaded="Page_Loaded"
+    d:DesignWidth="320">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -69,10 +70,14 @@
                                  Margin=" 0, 4, 0, 4" />
 
                 <Button x:Name="SignInbtn" Content="Sign in" 
-                            Click="chooseFolderbtn_Click"
+                            Click="SignInbtn_Click"
                             Width="248"
                             Margin =" 0, 4, 0, 4"/>
-                
+                <TextBlock x:Name="txtSignedIn"
+                           Text="You are signed in. Manage app permissions at https://account.live.com/consent/Manage."
+                           Style="{ThemeResource CaptionTextBlockStyle}"
+                           Visibility="Collapsed"
+                           />
                 <!--<TextBlock TextWrapping="Wrap"
                            Text="This function will be added in a future release. In the mean time, please store roms on your phone's SD Card or documents folder and use the Local Storage option."                                
                                  Margin=" 0, 4, 0, 4" />-->
