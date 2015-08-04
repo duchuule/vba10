@@ -182,6 +182,9 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 	}
 	else if (item->Type == OneDriveItemType::ROM)
 	{
+		if (item->Downloading)  //prevent double downloading of 1 file
+			return;
+
 		item->Downloading = true;
 		//download file
 		DownloadFile(item).then([this, item](size_t size)
@@ -239,11 +242,13 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 					t.get();
 					// .get() didn't throw, so we succeeded, print out success message
 					item->Downloading = false;
-					MessageDialog ^dialog = ref new MessageDialog("File imported successfully.");
+					MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " was imported successfully.");
 					dialog->ShowAsync();
 				}
 				catch (Platform::Exception ^ex)
 				{
+					MessageDialog ^dialog = ref new MessageDialog("Error: " + ex->Message);
+					dialog->ShowAsync();
 				}
 			});
 		});
@@ -285,11 +290,42 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
 
 void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//check to see if any thing is downloading
+	for (unsigned int i = 0; i < this->fileVector->Size; i++)
+	{
+		OneDriveFileItem^ item = this->fileVector->GetAt(i);
+		if (item->Downloading)
+		{
+			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			dialog->ShowAsync();
+			return;
+		}
+	}
+
+
 	if (Frame->CanGoBack)
 	{
 		Frame->GoBack();
 	}
 }
+
+
+void FileBrowserPane::OnNavigatingFrom(Windows::UI::Xaml::Navigation::NavigatingCancelEventArgs^ e)
+{
+	for (unsigned int i = 0; i < this->fileVector->Size; i++)
+	{
+		OneDriveFileItem^ item = this->fileVector->GetAt(i);
+		if (item->Downloading)
+		{
+			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			dialog->ShowAsync();
+			e->Cancel = true;
+			break;
+		}
+	}
+	
+}
+
 
 OneDriveItemType FileBrowserPane::GetOneDriveItemType(wstring ext)
 {

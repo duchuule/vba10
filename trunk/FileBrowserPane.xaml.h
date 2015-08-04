@@ -17,6 +17,8 @@ namespace VBA10
 	{
 	public:
 		FileBrowserPane();
+	protected:
+		virtual void OnNavigatingFrom(Windows::UI::Xaml::Navigation::NavigatingCancelEventArgs^ e) override;
 
 	private:
 		void fileList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
