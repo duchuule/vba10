@@ -30,7 +30,7 @@
 #include "cpprest/streams.h"
 #include "cpprest/filestream.h"
 
-using namespace Windows::Security::Authentication::OnlineId;
+
 
 namespace VBA10 {
 	namespace live {
@@ -120,13 +120,22 @@ namespace VBA10 {
 			{
 				this->m_token.clear();
 
-				auto request = ref new OnlineIdServiceTicketRequest(ref new Platform::String(scopes.c_str()), "DELEGATION");
-				auto request_vec = ref new Vector<OnlineIdServiceTicketRequest^>();
+				auto request = ref new Windows::Security::Authentication::OnlineId::OnlineIdServiceTicketRequest(ref new Platform::String(scopes.c_str()), "DELEGATION");
+				auto request_vec = ref new Vector<Windows::Security::Authentication::OnlineId::OnlineIdServiceTicketRequest^>();
 				request_vec->Append(request);
+
+				//create task like this will put the task in background thread, which is not desired since prompt cannot be shown
+				//return pplx::create_task([this, request_vec]
+				//{
+				//	return m_authenticator->AuthenticateUserAsync(request_vec, Windows::Security::Authentication::OnlineId::CredentialPromptType::DoNotPrompt);
+				//})
+				//	.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
+				//{});
+
 
 				if (silent)
 				{
-					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, CredentialPromptType::DoNotPrompt))
+					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, Windows::Security::Authentication::OnlineId::CredentialPromptType::DoNotPrompt))
 						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
 					{
 						try
@@ -149,7 +158,7 @@ namespace VBA10 {
 				}
 				else
 				{
-					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, CredentialPromptType::PromptIfNeeded))
+					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, Windows::Security::Authentication::OnlineId::CredentialPromptType::PromptIfNeeded))
 						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
 					{
 						try

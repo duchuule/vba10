@@ -670,9 +670,10 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName == ROMFile->Path) //don't have to do anything
 		return;
 
+	//NOTE: create task like this will put the task on the same thread (UI thread)
+	//create_task(SaveBeforeStop())
 
-
-	
+	//create task like this will put the task on background thread
 	create_task([this, entry] {
 		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName != ROMFile->Path)  //different rom, save old rom state
 		{
@@ -681,7 +682,6 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 		}
 		else
 			return create_task([] {});
-
 	}).then([entry] {
 		return entry->Folder->GetFileAsync(entry->FileName);
 

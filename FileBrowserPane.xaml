@@ -30,7 +30,8 @@
                           IsTabStop="False"
                           IsCompact="True"
                           Width="36"
-                          Click="backBtn_Click"/>
+                          Click="backBtn_Click"
+                          IsEnabled="False"/>
             <TextBlock Text="Root" 
                        Style="{ThemeResource TitleTextBlockStyle}"
                        Margin="8,4,0,4"

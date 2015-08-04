@@ -9,6 +9,7 @@
 #include "Definitions.h"
 #include "cpprest\json.h"
 
+
 namespace VBA10
 {
 	[Windows::Foundation::Metadata::WebHostHidden]
@@ -27,5 +28,7 @@ namespace VBA10
 		void client_GetCompleted(web::json::value v);
 		bool loading;//keep track of when the app is loading new data
 		void backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		Concurrency::task<size_t> DownloadFile(OneDriveFileItem^ item);
+		Windows::Storage::StorageFile^ tmpfile;
 	};
 }
