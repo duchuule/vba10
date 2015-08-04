@@ -188,7 +188,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 		{
 			//update rom dabatase
 			//calculate snapshot name
-			Platform::String ^file_path = tmpfile->Path;
+			Platform::String ^file_path = item->File->Path;
 			wstring wfilepath(file_path->Begin(), file_path->End());
 
 			wstring folderpath;
@@ -201,7 +201,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 			Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
 
 			//create rom entry
-			ROMDBEntry^ entry = ref new ROMDBEntry(0, tmpfile->DisplayName, tmpfile->Name, ApplicationData::Current->LocalFolder->Path,
+			ROMDBEntry^ entry = ref new ROMDBEntry(0, item->File->DisplayName, item->File->Name, ApplicationData::Current->LocalFolder->Path,
 				"none", psnapshotname);
 
 			entry->Folder = ApplicationData::Current->LocalFolder;
@@ -263,7 +263,7 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
 	return create_task(ApplicationData::Current->LocalFolder->CreateFileAsync(item->Name, CreationCollisionOption::GenerateUniqueName))
 		.then([this, item] (StorageFile^ file)
 	{
-		tmpfile = file;
+		item->File = file;
 		return App::LiveClient->download(item->OneDriveID->Data(), file);
 	}).then([](task<size_t> t) 
 	{
@@ -277,6 +277,7 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
 			size_t length = 0;
 			return length;
 		}
+
 		
 	});
 }

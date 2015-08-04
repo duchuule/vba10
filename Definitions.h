@@ -101,7 +101,7 @@ namespace VBA10
 		property Platform::String^ ParentID;
 		property Platform::String^ OneDriveLink;
 		property int FolderChildrenCount;
-
+		property Windows::Storage::StorageFile^ File;  //to store the pointer to the file when downloading
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 	protected:
 		void OnPropertyChanged(Platform::String^ propertyName);

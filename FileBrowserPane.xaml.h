@@ -29,6 +29,6 @@ namespace VBA10
 		bool loading;//keep track of when the app is loading new data
 		void backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		Concurrency::task<size_t> DownloadFile(OneDriveFileItem^ item);
-		Windows::Storage::StorageFile^ tmpfile;
+		//Windows::Storage::StorageFile^ tmpfile;
 	};
 }
