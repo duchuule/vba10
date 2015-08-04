@@ -25,5 +25,14 @@ namespace VBA10
 		task<void> LoadImageFromPath(BitmapImage^ bitmap, String^ filepath);
 	};
 
+	[Windows::Foundation::Metadata::WebHostHidden]
+	public ref class VisibilityConverter sealed : Windows::UI::Xaml::Data::IValueConverter
+	{
+	public:
+		virtual Object^ Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language);
+		virtual Object^ ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language);
+
+	};
+
 
 }

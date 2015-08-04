@@ -274,6 +274,7 @@
     <ClCompile Include="PurchasePage.xaml.cpp" />
     <ClCompile Include="AdControl.xaml.cpp" />
     <ClCompile Include="stringhelper.cpp" />
+    <ClCompile Include="Definitions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
