@@ -7,8 +7,8 @@
 
 #include "SelectROMPane.xaml.h"
 
-#include "DirectXPage.xaml.h";
-#include "EmulatorSettings.h";
+#include "DirectXPage.xaml.h"
+#include "EmulatorSettings.h"
 #include "EmulatorFileHandler.h"
 #include "SelectStatePane.xaml.h"
 #include "Database\ROMDBEntry.h"
@@ -464,7 +464,7 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 			{
 				//find the index of the entry in the list
 				int idx = -1;
-				for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
+				for (unsigned int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
 				{
 					ROMDBEntry^ entry2 = App::ROMDB->AllROMDBEntries->GetAt(i);
 					if (entry2->Token == entry->Token && entry2->FileName == entry->FileName) //found the entry

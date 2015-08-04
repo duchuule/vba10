@@ -59,5 +59,36 @@ namespace VBA10
 		}
 
 		StorageFileModel(StorageFile ^file, StorageFolder ^folder);
+
+
 	};
+
+	public enum  class OneDriveItemType: int
+	{
+		File,
+		Folder,
+		ROM,
+		SRAM,
+		Savestate,
+		Zip,
+		Rar,
+		SevenZip
+	};
+
+
+	[Windows::UI::Xaml::Data::BindableAttribute]
+	public ref class OneDriveFileItem sealed
+	{
+	public:
+		property Platform::String^ Name;
+		property OneDriveItemType Type;
+		property bool Downloading;
+		//public Stream Stream{ get; set; } //the Stream corresponding to this item
+		property Platform::String^ OneDriveID;
+		property Platform::String^ ParentID;
+		property Platform::String^ OneDriveLink;
+		property int FolderChildrenCount;
+
+	};
+
 }
