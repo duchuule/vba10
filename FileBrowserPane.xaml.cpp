@@ -43,7 +43,7 @@ FileBrowserPane::FileBrowserPane()
 
 	//create the root item
 	OneDriveFileItem^ root = ref new OneDriveFileItem();
-	root->Name = "Root";
+	root->Name = "OneDrive";
 	root->OneDriveID = "me/skydrive";
 	root->Type = OneDriveItemType::Folder;
 	root->ParentID = "";
@@ -138,6 +138,7 @@ void FileBrowserPane::client_GetCompleted(web::json::value v)
 
 void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
+
 	if (this->loading)
 		return;
 
@@ -181,8 +182,9 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 	}
 	else if (item->Type == OneDriveItemType::ROM)
 	{
+		item->Downloading = true;
 		//download file
-		DownloadFile(item).then([this](size_t size)
+		DownloadFile(item).then([this, item](size_t size)
 		{
 			//update rom dabatase
 			//calculate snapshot name
@@ -211,10 +213,10 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 				StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
 				return installDir->GetFolderAsync("Assets/");
 
-			}).then([entry](StorageFolder^ assetFolder)
+			}).then([entry, item](StorageFolder^ assetFolder)
 			{
 				return assetFolder->GetFileAsync("no_snapshot.png");
-			}).then([entry](StorageFile ^file)
+			}).then([entry, item](StorageFile ^file)
 			{
 				//copy snapshot file to would be location
 				return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
@@ -223,19 +225,20 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 			{
 				//open file
 				return file->OpenAsync(FileAccessMode::Read);
-			}).then([entry](IRandomAccessStream^ stream)
+			}).then([entry, item](IRandomAccessStream^ stream)
 			{
 				//load bitmap image for snapshot
 				entry->Snapshot = ref new BitmapImage();
 				return entry->Snapshot->SetSourceAsync(stream);
 
 
-			}).then([](task<void> t)
+			}).then([item](task<void> t)
 			{
 				try
 				{
 					t.get();
 					// .get() didn't throw, so we succeeded, print out success message
+					item->Downloading = false;
 					MessageDialog ^dialog = ref new MessageDialog("File imported successfully.");
 					dialog->ShowAsync();
 				}
@@ -246,6 +249,11 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 		});
 
 		
+	}
+	else
+	{
+		MessageDialog ^dialog = ref new MessageDialog("This file type is not supported.");
+		dialog->ShowAsync();
 	}
 
 }
@@ -266,14 +274,20 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
 		catch (COMException^ e)
 		{
 			// We'll handle the specific errors below.
+			size_t length = 0;
+			return length;
 		}
+		
 	});
 }
 
 
 void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	(safe_cast<Popup ^>(this->Parent))->IsOpen = false;
+	if (Frame->CanGoBack)
+	{
+		Frame->GoBack();
+	}
 }
 
 OneDriveItemType FileBrowserPane::GetOneDriveItemType(wstring ext)
@@ -329,7 +343,7 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 	if (this->onedriveStack->Size == 2) //special case
 	{
-		parentName = "Root";
+		parentName = this->onedriveStack->GetAt(0)->GetAt(0)->Name;
 		this->backBtn->IsEnabled = false;
 	}
 	else

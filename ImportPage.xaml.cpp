@@ -306,26 +306,31 @@ void ImportPage::signin_Completed(bool isLoggedIn)
 
 void ImportPage::importOneDriveROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	//open panel to let user select file
-	Popup ^statePopup = ref new Popup();
-	statePopup->IsLightDismissEnabled = true;
+	Frame->Navigate(
+		TypeName(FileBrowserPane::typeid),
+		nullptr,
+		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
 
-	FileBrowserPane ^pane = ref new FileBrowserPane();
-	statePopup->Child = pane;
-	pane->Width = titleBar->ActualWidth;//statePopup->Width;
-	pane->Height = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
+	////open panel to let user select file
+	//Popup ^statePopup = ref new Popup();
+	//statePopup->IsLightDismissEnabled = false;
 
-	//pane->FileSelectedCallback = ref new FileSelectedDelegate([=](StorageFile ^file)
-	//{
+	//FileBrowserPane ^pane = ref new FileBrowserPane();
+	//statePopup->Child = pane;
+	//pane->Width = titleBar->ActualWidth;//statePopup->Width;
+	//pane->Height = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
 
-	//});
+	////pane->FileSelectedCallback = ref new FileSelectedDelegate([=](StorageFile ^file)
+	////{
 
-	//auto transform = ((UIElement^)sender)->TransformToVisual(nullptr); //nullptr to get position related to windows
-	auto transform = ((UIElement^)titleBar)->TransformToVisual(nullptr);
+	////});
 
-	Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
-	statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
-	statePopup->VerticalOffset = point.Y + titleBar->ActualHeight;
+	////auto transform = ((UIElement^)sender)->TransformToVisual(nullptr); //nullptr to get position related to windows
+	//auto transform = ((UIElement^)titleBar)->TransformToVisual(nullptr);
 
-	statePopup->IsOpen = true;
+	//Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
+	//statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
+	//statePopup->VerticalOffset = point.Y + titleBar->ActualHeight;
+
+	//statePopup->IsOpen = true;
 }

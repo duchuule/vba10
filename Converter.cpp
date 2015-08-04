@@ -104,3 +104,16 @@ Object^ IsoImageConverter::ConvertBack(Object^ value, TypeName targetType, Objec
 }
 
 
+Object^ VisibilityConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+{
+	bool visible = (bool)value;
+	if (visible)
+		return Windows::UI::Xaml::Visibility::Visible;
+	else
+		return Windows::UI::Xaml::Visibility::Collapsed;
+}
+
+Object^ VisibilityConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+{
+	return nullptr; 
+}

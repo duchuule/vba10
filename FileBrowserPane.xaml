@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<Page
     x:Class="VBA10.FileBrowserPane"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +10,6 @@
     d:DesignWidth="400">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          BorderThickness="2,0,2,2" BorderBrush="{ThemeResource ListBoxBorderThemeBrush}"
           >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,6 +19,7 @@
 
         <Grid.Resources>
             <CollectionViewSource x:Name="FileListvs"/>
+            <local:VisibilityConverter x:Key="VisibilityConverter" />
         </Grid.Resources>
 
 
@@ -29,7 +29,7 @@
             <AppBarButton Icon="Back" Label="Back"  x:Name="backBtn" 
                           IsTabStop="False"
                           IsCompact="True"
-                          Width="36"
+                          Width="44"
                           Click="backBtn_Click"
                           IsEnabled="False"/>
             <TextBlock Text="Root" 
@@ -53,16 +53,27 @@
             >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="Padding" Value="7"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Padding" Value="12"/>
+                    <!--<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>-->
                 </Style>
             </ListBox.ItemContainerStyle>
             
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
                         <TextBlock Text="{Binding Name}" 
-                            FontSize="18"/>
+                            FontSize="18" Grid.Column="0"/>
+                        
+                        <ProgressRing IsActive="True" 
+                                      Grid.Column="1"
+                                      Margin="8,0,0,0"
+                                      Visibility="{Binding Downloading, Converter={StaticResource VisibilityConverter}}"/>
+                        
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -75,4 +86,4 @@
                 x:Name="closeBtn"
                 Click="closeBtn_Click"/>
     </Grid>
-</UserControl>
+</Page>
