@@ -9,6 +9,7 @@
 #include "Database\ROMDatabase.h"
 #include "SelectFilePane.xaml.h"
 #include "App.xaml.h"
+#include "FileBrowserPane.xaml.h"
 
 #include "stringhelper.h"
 
@@ -267,18 +268,7 @@ void ImportPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Routed
 		App::LiveClient->login(L"wl.skydrive_update wl.signin", true)
 			.then([this](bool isLoggedIn)
 		{
-			if (isLoggedIn)
-			{
-				this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-				this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Visible;
-				EmulatorSettings::Current->SignedIn = true;
-			}
-			else
-			{
-				this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Visible;
-				this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-				EmulatorSettings::Current->SignedIn = false;
-			}
+			signin_Completed(isLoggedIn);
 		});
 	}
 }
@@ -290,24 +280,52 @@ void ImportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	App::LiveClient->login(L"wl.skydrive_update wl.signin", false)
 		.then([this](bool isLoggedIn)
 	{
-		if (isLoggedIn)
-		{
-			this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-			this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Visible;
-			EmulatorSettings::Current->SignedIn = true;
-		}
-		else
-		{
-			this->SignInbtn->Visibility = Windows::UI::Xaml::Visibility::Visible;
-			this->txtSignedIn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-			EmulatorSettings::Current->SignedIn = false;
-		}
+		signin_Completed(isLoggedIn);
 
 	});
+}
+
+void ImportPage::signin_Completed(bool isLoggedIn)
+{
+	if (isLoggedIn)
+	{
+		this->SignInbtn->Content = "Signed in";
+		this->SignInbtn->IsEnabled = false;
+		this->importOneDriveROMbtn->IsEnabled = true;
+		EmulatorSettings::Current->SignedIn = true;
+	}
+	else
+	{
+		this->SignInbtn->Content = "Sign in";
+		this->SignInbtn->IsEnabled = true;
+		this->importOneDriveROMbtn->IsEnabled = false;
+		EmulatorSettings::Current->SignedIn = false;
+	}
 }
 
 
 void ImportPage::importOneDriveROMbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//open panel to let user select file
+	Popup ^statePopup = ref new Popup();
+	statePopup->IsLightDismissEnabled = false;
 
+	FileBrowserPane ^pane = ref new FileBrowserPane();
+	statePopup->Child = pane;
+	pane->Width = titleBar->ActualWidth;//statePopup->Width;
+	pane->Height = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
+
+	//pane->FileSelectedCallback = ref new FileSelectedDelegate([=](StorageFile ^file)
+	//{
+
+	//});
+
+	//auto transform = ((UIElement^)sender)->TransformToVisual(nullptr); //nullptr to get position related to windows
+	auto transform = ((UIElement^)titleBar)->TransformToVisual(nullptr);
+
+	Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
+	statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
+	statePopup->VerticalOffset = point.Y + titleBar->ActualHeight;
+
+	statePopup->IsOpen = true;
 }

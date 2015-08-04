@@ -348,6 +348,9 @@
     <ClInclude Include="ExportPage.xaml.h">
       <DependentUpon>ExportPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="FileBrowserPane.xaml.h">
+      <DependentUpon>FileBrowserPane.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="HelpPage.xaml.h">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </ClInclude>
@@ -505,6 +508,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="FileBrowserPane.xaml.cpp">
+      <DependentUpon>FileBrowserPane.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="HelpPage.xaml.cpp">
       <DependentUpon>HelpPage.xaml</DependentUpon>
@@ -1132,6 +1138,9 @@
     </Page>
     <Page Include="CheatPane.xaml" />
     <Page Include="ExportPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FileBrowserPane.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HelpPage.xaml">
