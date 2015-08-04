@@ -25,5 +25,7 @@ namespace VBA10
 		Platform::Collections::Vector<Windows::Foundation::Collections::IVector<OneDriveFileItem^>^>^ onedriveStack;
 
 		void client_GetCompleted(web::json::value v);
+		bool loading;//keep track of when the app is loading new data
+		void backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }
