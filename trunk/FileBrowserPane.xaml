@@ -24,7 +24,13 @@
 
 
         <StackPanel Background="{ThemeResource ListBoxBorderThemeBrush}"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    Orientation="Horizontal" >
+            <AppBarButton Icon="Back" Label="Back"  x:Name="backBtn" 
+                          IsTabStop="False"
+                          IsCompact="True"
+                          Width="36"
+                          Click="backBtn_Click"/>
             <TextBlock Text="Root" 
                        Style="{ThemeResource TitleTextBlockStyle}"
                        Margin="8,4,0,4"
@@ -46,7 +52,7 @@
             >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="Padding" Value="6"/>
+                    <Setter Property="Padding" Value="7"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                 </Style>
             </ListBox.ItemContainerStyle>

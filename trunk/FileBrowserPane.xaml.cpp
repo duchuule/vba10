@@ -51,6 +51,7 @@ FileBrowserPane::FileBrowserPane()
 
 	//get the content of the root
 	this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	this->loading = true;
 	App::LiveClient->get(L"/me/skydrive/files")
 		.then([this](web::json::value v)
 	{
@@ -105,14 +106,15 @@ void FileBrowserPane::client_GetCompleted(web::json::value v)
 		{
 			//get extension
 			int index = name.find_last_of('.');
-			wstring ext = type.substr(index + 1);
+			wstring ext = name.substr(index + 1);
 
 			a->Type = GetOneDriveItemType(ext);  //default, will change below
 		}
 
 		a->OneDriveID = ref new String(album[L"id"].as_string().c_str());
 		a->ParentID = ref new String(album[L"parent_id"].as_string().c_str());
-		a->FolderChildrenCount = album[L"count"].as_integer();
+		if (a->Type == OneDriveItemType::Folder)
+			a->FolderChildrenCount = album[L"count"].as_integer();
 		a->OneDriveLink = ref new String(album[L"link"].as_string().c_str());
 
 		this->fileVector->Append(a);
@@ -122,12 +124,52 @@ void FileBrowserPane::client_GetCompleted(web::json::value v)
 	this->FileListvs->Source = this->fileVector;
 	this->fileList->SelectedItem = nullptr;
 	this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	this->loading = false;
 }
 
 
 void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
+	if (this->loading)
+		return;
 
+	OneDriveFileItem ^ item = (OneDriveFileItem ^)(this->fileList->SelectedItem);
+	if (item == nullptr)
+		return;
+
+	if (item->Type == OneDriveItemType::Folder)
+	{
+
+		this->FileListvs->Source = nullptr;
+		this->txtCurrentFolder->Text = item->Name;
+
+
+		//get the content of the folder
+		this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		this->loading = true;
+		Platform::String ^id = item->OneDriveID;
+		wstring wid(id->Begin(), id->End());
+
+		App::LiveClient->get(wid +  L"/files")
+			.then([this](web::json::value v)
+		{
+			client_GetCompleted(v);
+
+		}, task_continuation_context::use_current())
+			.then([](task<void> t)
+		{
+			try
+			{
+				// Handle exceptions in task chain.
+				t.get();
+			}
+
+			catch (const exception& e)
+			{
+			}
+		}, task_continuation_context::use_current());
+
+	}
 }
 
 
@@ -163,4 +205,47 @@ OneDriveItemType FileBrowserPane::GetOneDriveItemType(wstring ext)
 		return OneDriveItemType::SRAM;
 	}
 	return OneDriveItemType::File;
+}
+
+
+void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//TODO: add handle while downloading
+
+	if (this->onedriveStack->Size <= 2)
+	{
+		return;
+	}
+
+	//remove last folder in stack
+	this->onedriveStack->RemoveAtEnd();
+
+	//set source for the upper folder
+	this->loading = true;
+	IVector<OneDriveFileItem^>^ currentFolder = this->onedriveStack->GetAt(this->onedriveStack->Size - 1);
+	this->FileListvs->Source = currentFolder;
+	this->fileList->SelectedItem = nullptr;
+
+	//find parent name
+	String^ parentName = "";
+
+	if (this->onedriveStack->Size == 2) //special case
+		parentName = "Root"; 
+	else
+	{
+		IVector<OneDriveFileItem^>^ parentFolder = this->onedriveStack->GetAt(this->onedriveStack->Size - 2);
+		OneDriveFileItem^ currentItem = currentFolder->GetAt(0);
+		for (unsigned int i = 0; i <= parentFolder->Size - 1; i++)
+		{
+			OneDriveFileItem^ parentItem = parentFolder->GetAt(i);
+			if (parentItem->OneDriveID == currentItem->ParentID)
+			{
+				parentName = parentItem->Name;
+				break;
+			}
+		}
+	}
+	this->txtCurrentFolder->Text = parentName;
+
+	this->loading = false;
 }

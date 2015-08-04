@@ -308,7 +308,7 @@ void ImportPage::importOneDriveROMbtn_Click(Platform::Object^ sender, Windows::U
 {
 	//open panel to let user select file
 	Popup ^statePopup = ref new Popup();
-	statePopup->IsLightDismissEnabled = false;
+	statePopup->IsLightDismissEnabled = true;
 
 	FileBrowserPane ^pane = ref new FileBrowserPane();
 	statePopup->Child = pane;

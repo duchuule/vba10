@@ -33,7 +33,7 @@
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
                         <TextBlock TextWrapping="Wrap" 
-                                   Text="You can buy premium feature package or watch a short video to enable Xbox 360 Controller."
+                                   Text="You can buy premium feature package or watch a short video to enable XBox Controller."
                                    Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,0,0,12">
