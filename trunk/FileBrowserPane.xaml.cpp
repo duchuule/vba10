@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "FileBrowserPane.xaml.h"
 #include "App.xaml.h"
+#include "stringhelper.h"
 
 using namespace VBA10;
 
@@ -19,6 +20,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Popups;
 using namespace std;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -52,6 +54,8 @@ FileBrowserPane::FileBrowserPane()
 	//get the content of the root
 	this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	this->loading = true;
+	this->backBtn->IsEnabled = false;
+
 	App::LiveClient->get(L"/me/skydrive/files")
 		.then([this](web::json::value v)
 	{
@@ -124,6 +128,10 @@ void FileBrowserPane::client_GetCompleted(web::json::value v)
 	this->FileListvs->Source = this->fileVector;
 	this->fileList->SelectedItem = nullptr;
 	this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	if (this->onedriveStack->Size <= 2)
+		this->backBtn->IsEnabled = false;
+	else
+		this->backBtn->IsEnabled = true;
 	this->loading = false;
 }
 
@@ -147,6 +155,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 		//get the content of the folder
 		this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		this->loading = true;
+		this->backBtn->IsEnabled = false;
 		Platform::String ^id = item->OneDriveID;
 		wstring wid(id->Begin(), id->End());
 
@@ -170,6 +179,95 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 		}, task_continuation_context::use_current());
 
 	}
+	else if (item->Type == OneDriveItemType::ROM)
+	{
+		//download file
+		DownloadFile(item).then([this](size_t size)
+		{
+			//update rom dabatase
+			//calculate snapshot name
+			Platform::String ^file_path = tmpfile->Path;
+			wstring wfilepath(file_path->Begin(), file_path->End());
+
+			wstring folderpath;
+			wstring filename;
+			wstring filenamenoext;
+			wstring ext;
+			splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+			wstring snapshotname = filenamenoext + L".jpg";
+			Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+
+			//create rom entry
+			ROMDBEntry^ entry = ref new ROMDBEntry(0, tmpfile->DisplayName, tmpfile->Name, ApplicationData::Current->LocalFolder->Path,
+				"none", psnapshotname);
+
+			entry->Folder = ApplicationData::Current->LocalFolder;
+
+			App::ROMDB->AllROMDBEntries->Append(entry);
+
+			create_task(App::ROMDB->AddAsync(entry)).then([entry] {
+				//copy the default snapshot file over
+				StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+				return installDir->GetFolderAsync("Assets/");
+
+			}).then([entry](StorageFolder^ assetFolder)
+			{
+				return assetFolder->GetFileAsync("no_snapshot.png");
+			}).then([entry](StorageFile ^file)
+			{
+				//copy snapshot file to would be location
+				return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
+
+			}).then([entry](StorageFile ^file)
+			{
+				//open file
+				return file->OpenAsync(FileAccessMode::Read);
+			}).then([entry](IRandomAccessStream^ stream)
+			{
+				//load bitmap image for snapshot
+				entry->Snapshot = ref new BitmapImage();
+				return entry->Snapshot->SetSourceAsync(stream);
+
+
+			}).then([](task<void> t)
+			{
+				try
+				{
+					t.get();
+					// .get() didn't throw, so we succeeded, print out success message
+					MessageDialog ^dialog = ref new MessageDialog("File imported successfully.");
+					dialog->ShowAsync();
+				}
+				catch (Platform::Exception ^ex)
+				{
+				}
+			});
+		});
+
+		
+	}
+
+}
+
+task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
+{
+	return create_task(ApplicationData::Current->LocalFolder->CreateFileAsync(item->Name, CreationCollisionOption::GenerateUniqueName))
+		.then([this, item] (StorageFile^ file)
+	{
+		tmpfile = file;
+		return App::LiveClient->download(item->OneDriveID->Data(), file);
+	}).then([](task<size_t> t) 
+	{
+		try
+		{
+			return t.get();
+		}
+		catch (COMException^ e)
+		{
+			// We'll handle the specific errors below.
+		}
+	});
 }
 
 
@@ -230,7 +328,10 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 	String^ parentName = "";
 
 	if (this->onedriveStack->Size == 2) //special case
-		parentName = "Root"; 
+	{
+		parentName = "Root";
+		this->backBtn->IsEnabled = false;
+	}
 	else
 	{
 		IVector<OneDriveFileItem^>^ parentFolder = this->onedriveStack->GetAt(this->onedriveStack->Size - 2);
@@ -244,6 +345,7 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 				break;
 			}
 		}
+		this->backBtn->IsEnabled = true;
 	}
 	this->txtCurrentFolder->Text = parentName;
 

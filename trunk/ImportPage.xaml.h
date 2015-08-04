@@ -7,7 +7,7 @@
 
 #include "ImportPage.g.h"
 
-using namespace Windows::Storage;
+
 
 namespace VBA10
 {
@@ -19,13 +19,13 @@ namespace VBA10
 	{
 	public:
 		ImportPage();
-		void ImportFile(StorageFile^ file);
+		void ImportFile(Windows::Storage::StorageFile^ file);
 
 
 
 	private:
 		void chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		StorageFolder^ tmpfolder;
+		Windows::Storage::StorageFolder^ tmpfolder;
 		Platform::String^ tmptoken;
 		void importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
