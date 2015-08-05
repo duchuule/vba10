@@ -133,52 +133,28 @@ namespace VBA10 {
 				//{});
 
 
-				if (silent)
+
+				return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, (silent)?Windows::Security::Authentication::OnlineId::CredentialPromptType::DoNotPrompt : Windows::Security::Authentication::OnlineId::CredentialPromptType::PromptIfNeeded))
+					.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
 				{
-					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, Windows::Security::Authentication::OnlineId::CredentialPromptType::DoNotPrompt))
-						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
+					try
 					{
-						try
+						auto ident = idtask.get();
+						if (ident->Tickets->Size > 0)
 						{
-							auto ident = idtask.get();
-							if (ident->Tickets->Size > 0)
-							{
-								auto ticket = ident->Tickets->GetAt(0);
+							auto ticket = ident->Tickets->GetAt(0);
 
-								m_token = std::wstring(ticket->Value->Data());
-								return true;
-							}
+							m_token = std::wstring(ticket->Value->Data());
+							return true;
 						}
-						catch (const concurrency::task_canceled &) {}
-						catch (const std::exception &){}
-						catch (Platform::Exception ^ex) {}
+					}
+					catch (const concurrency::task_canceled &) {}
+					catch (const std::exception &){}
+					catch (Platform::Exception ^ex) {}
 
-						return false;
-					});
-				}
-				else
-				{
-					return pplx::create_task(m_authenticator->AuthenticateUserAsync(request_vec, Windows::Security::Authentication::OnlineId::CredentialPromptType::PromptIfNeeded))
-						.then([this](concurrency::task<Windows::Security::Authentication::OnlineId::UserIdentity^> idtask)
-					{
-						try
-						{
-							auto ident = idtask.get();
-							if (ident->Tickets->Size > 0)
-							{
-								auto ticket = ident->Tickets->GetAt(0);
+					return false;
+				});
 
-								m_token = std::wstring(ticket->Value->Data());
-								return true;
-							}
-						}
-						catch (const concurrency::task_canceled &) {}
-						catch (const std::exception &) {}
-						catch (Platform::Exception ^ex) {}
-
-						return false;
-					});
-				}
 			}
 
 			/// <summary>

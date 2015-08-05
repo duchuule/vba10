@@ -6,7 +6,8 @@
     xmlns:ctl="using:VBA10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -35,7 +36,7 @@
                            Margin="0,8,0,0"
                                   />
                 <TextBlock TextWrapping="Wrap"
-                           Text="If you import the rom using local storage option, then all save files are stored in the same folder as the rom. You just need to go there and copy them to wherever you need."                                
+                           Text="If you import the rom using local storage option, then all save files are stored in the same folder as the rom; you just need to go there and copy them to wherever you need. Better yet, if you are on Desktop/Tablet and store the rom in OneDrive folder, all your saves are automatically synced to the cloud."                                
                                  Margin=" 0, 4, 0, 4" />
 
                 <TextBlock Text="OneDrive"
@@ -46,10 +47,25 @@
                 <TextBlock TextWrapping="Wrap"
                            Text="If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive."                                
                                  Margin=" 0, 4, 0, 4" />
-                
-                <TextBlock TextWrapping="Wrap"
-                           Text="This feature will be added in a future release."                                
-                                 Margin=" 0, 4, 0, 4" />
+
+                <StackPanel Orientation="Horizontal"
+                             Margin="0,4,0,12">
+                    <Button x:Name="SignInbtn" Content="Sign in" 
+                            Click="SignInbtn_Click"
+                            Width="120"
+                            Margin =" 0, 0, 8, 0"/>
+
+                    <Button x:Name="exportOneDrivebtn" Content="Export" 
+                            Click="exportOneDrivebtn_Click"
+                            Width="120"
+                            IsEnabled="False"
+                            Margin =" 0, 0, 0, 0"/>
+
+                    <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
+                            Width="120"
+                            Margin ="0" 
+                            Click="importSavbtn_Click"/>-->
+                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
