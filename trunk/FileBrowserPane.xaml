@@ -41,7 +41,7 @@
 
         <TextBlock x:Name="txtLoading" Grid.Row="1"
                    Text="Loading..." 
-                   Margin="8,8,0,8"
+                   Margin="12,8,0,8"
                    Visibility="Collapsed"
                    FontSize="18"/>
 

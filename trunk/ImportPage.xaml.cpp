@@ -114,9 +114,10 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 
 					wstring snapshotname = filenamenoext + L".jpg";
 					Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+					Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
 
 					//create rom entry
-					ROMDBEntry^ entry = ref new ROMDBEntry(1, file->DisplayName, file->Name, this->tmpfolder->Path,
+					ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, this->tmpfolder->Path,
 						this->tmptoken, psnapshotname);
 
 					entry->Folder = this->tmpfolder;

@@ -454,7 +454,7 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 			MessageDialog ^dialog;
 
 			if (entry->LocationType == 0)  //private folder
-				dialog = ref new MessageDialog("This will delete the ROM file from the app's private storage. Continue?", "Confirm");
+				dialog = ref new MessageDialog("This will *delete* the ROM file and save files from the app's private storage. Continue?", "Confirm");
 
 			else
 				dialog = ref new MessageDialog("This will remove the ROM entry from the app's list. Your actual ROM files and save files will not be affected. Continue?", "Confirm");
@@ -479,10 +479,63 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 
 				if (entry->LocationType == 0)
 				{
+					wstring name(entry->FileName->Begin(), entry->FileName->End());
+					int index = name.find_last_of('.');
+					//wstring ext = name.substr(index + 1);
+
+					wstring filenamenoext = name.substr(0, index);
+
+					wstring snapshotname = filenamenoext + L".jpg";
+					Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+
+					wstring autosavename = filenamenoext + L"9.sgm";
+					Platform::String^ pautosavename = ref new Platform::String(autosavename.c_str());
+
+					wstring sramname = filenamenoext + L".sav";
+					Platform::String^ psramname = ref new Platform::String(sramname.c_str());
+
 					//delete the rom file
-					create_task(entry->Folder->GetFileAsync(entry->FileName)).then([] (StorageFile^ file) 
+					create_task(entry->Folder->GetFileAsync(entry->FileName)).then([] (task<StorageFile^> tfile) 
 					{
-						file->DeleteAsync();
+						try
+						{
+							StorageFile^ file = tfile.get();
+							file->DeleteAsync();
+						}
+						catch (Platform::Exception^) {}
+					});
+
+					//delete the snapshot file
+					create_task(entry->Folder->GetFileAsync(psnapshotname)).then([](task<StorageFile^> tfile)
+					{
+						try
+						{
+							StorageFile^ file = tfile.get();
+							file->DeleteAsync();
+						}
+						catch (Platform::Exception^) {}
+					});
+
+					//delete the auto save file
+					create_task(entry->Folder->GetFileAsync(pautosavename)).then([](task<StorageFile^> tfile)
+					{
+						try
+						{
+							StorageFile^ file = tfile.get();
+							file->DeleteAsync();
+						}
+						catch (Platform::Exception^) {}
+					});
+
+					//delete the sram file
+					create_task(entry->Folder->GetFileAsync(psramname)).then([](task<StorageFile^> tfile)
+					{
+						try
+						{
+							StorageFile^ file = tfile.get();
+							file->DeleteAsync();
+						}
+						catch (Platform::Exception^) {}
 					});
 
 				}
