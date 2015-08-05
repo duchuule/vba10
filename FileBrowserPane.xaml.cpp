@@ -187,7 +187,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 		item->Downloading = true;
 		//download file
-		DownloadFile(item).then([this, item](size_t size)
+		DownloadFile(item, CreationCollisionOption::GenerateUniqueName).then([this, item](size_t size)
 		{
 			//update rom dabatase
 			//calculate snapshot name
@@ -202,9 +202,10 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 			wstring snapshotname = filenamenoext + L".jpg";
 			Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+			Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
 
 			//create rom entry
-			ROMDBEntry^ entry = ref new ROMDBEntry(0, item->File->DisplayName, item->File->Name, ApplicationData::Current->LocalFolder->Path,
+			ROMDBEntry^ entry = ref new ROMDBEntry(0, pfilenamenoext, item->File->Name, ApplicationData::Current->LocalFolder->Path,
 				"none", psnapshotname);
 
 			entry->Folder = ApplicationData::Current->LocalFolder;
@@ -255,6 +256,45 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 		
 	}
+	else if (item->Type == OneDriveItemType::SRAM || item->Type == OneDriveItemType::Savestate)
+	{
+		if (item->Downloading)  //prevent double downloading of 1 file
+			return;
+
+		//get the save name without extension
+		wstring name(item->Name->Begin(), item->Name->End());
+		int index = name.find_last_of('.');
+		//wstring ext = name.substr(index + 1);
+
+		wstring filenamenoext = name.substr(0, index);
+
+
+		Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
+
+		ROMDBEntry^ entry = App::ROMDB->GetEntryFromName(pfilenamenoext);
+
+		if (entry == nullptr)
+		{
+			MessageDialog ^dialog = ref new MessageDialog("Could not find a matching ROM name.", "Error");
+			dialog->ShowAsync();
+		}
+		else
+		{
+			//start download the file
+			item->Downloading = true;
+			DownloadFile(item, CreationCollisionOption::ReplaceExisting).then([item, entry](size_t size)
+			{
+				item->Downloading = false;
+
+				//if the file is ingame save then prevent autoloading
+				if (item->Type == OneDriveItemType::SRAM)
+					entry->AutoLoadLastState = false;
+
+				MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " was imported successfully.");
+				dialog->ShowAsync();
+			});
+		}
+	}
 	else
 	{
 		MessageDialog ^dialog = ref new MessageDialog("This file type is not supported.");
@@ -263,9 +303,9 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 }
 
-task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
+task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item, CreationCollisionOption collitionOption)
 {
-	return create_task(ApplicationData::Current->LocalFolder->CreateFileAsync(item->Name, CreationCollisionOption::GenerateUniqueName))
+	return create_task(ApplicationData::Current->LocalFolder->CreateFileAsync(item->Name, collitionOption))
 		.then([this, item] (StorageFile^ file)
 	{
 		item->File = file;
@@ -276,9 +316,12 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item)
 		{
 			return t.get();
 		}
-		catch (COMException^ e)
+		catch (Platform::Exception^ ex)
 		{
 			// We'll handle the specific errors below.
+			MessageDialog ^dialog = ref new MessageDialog("Error: " + ex->Message);
+			dialog->ShowAsync();
+
 			size_t length = 0;
 			return length;
 		}
@@ -364,6 +407,18 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 	if (this->onedriveStack->Size <= 2)
 	{
 		return;
+	}
+
+	//check to see if any thing is downloading
+	for (unsigned int i = 0; i < this->fileVector->Size; i++)
+	{
+		OneDriveFileItem^ item = this->fileVector->GetAt(i);
+		if (item->Downloading)
+		{
+			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			dialog->ShowAsync();
+			return;
+		}
 	}
 
 	//remove last folder in stack
