@@ -7,27 +7,23 @@
 
 #include "SelectFilePane.g.h"
 
-using namespace Windows::Foundation::Collections;
-using namespace Platform::Collections;
-using namespace Windows::Storage;
+
 
 namespace VBA10
 {
 
-	public delegate void FileSelectedDelegate(StorageFile ^file);
+	public delegate void FileSelectedDelegate(int selectedIndex);
 
 	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class SelectFilePane sealed
 	{
 	public:
-		SelectFilePane(IVectorView<StorageFile^>^ list);
+		SelectFilePane(Windows::Foundation::Collections::IVector<Platform::String^>^ list, Platform::String^ Title);
 		property FileSelectedDelegate ^FileSelectedCallback;
 	private:
 		bool initdone;
 
-		Platform::Collections::Vector<StorageFile^>^ fileVector;
-
-		void Init(void);
+		//Platform::Collections::Vector<Platform::String^>^ fileVector;
 
 		void fileList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
 	};

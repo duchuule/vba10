@@ -395,6 +395,9 @@
     <ClInclude Include="SelectFilePane.xaml.h">
       <DependentUpon>SelectFilePane.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="SelectFilesPane.xaml.h">
+      <DependentUpon>SelectFilesPane.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="SelectROMPane.xaml.h">
       <DependentUpon>SelectROMPane.xaml</DependentUpon>
     </ClInclude>
@@ -674,6 +677,9 @@
     </ClCompile>
     <ClCompile Include="SelectFilePane.xaml.cpp">
       <DependentUpon>SelectFilePane.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="SelectFilesPane.xaml.cpp">
+      <DependentUpon>SelectFilesPane.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="SelectROMPane.xaml.cpp">
       <DependentUpon>SelectROMPane.xaml</DependentUpon>
@@ -1174,6 +1180,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectFilePane.xaml" />
+    <Page Include="SelectFilesPane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SelectROMPane.xaml" />
     <Page Include="SelectStatePane.xaml" />
     <Page Include="SettingsPage.xaml">

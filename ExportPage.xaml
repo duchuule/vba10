@@ -46,7 +46,7 @@
                                   />
                 <TextBlock TextWrapping="Wrap"
                            Text="If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive."                                
-                                 Margin=" 0, 4, 0, 4" />
+                                 Margin=" 0, 4, 0, 4"  />
 
                 <StackPanel Orientation="Horizontal"
                              Margin="0,4,0,12">
