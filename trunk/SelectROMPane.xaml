@@ -234,8 +234,8 @@
         </ScrollViewer>
 
 
-        <!--<local:AdControl Grid.Row="2">
-        </local:AdControl>-->
+        <local:AdControl Grid.Row="2">
+        </local:AdControl>
      
 
     </Grid>

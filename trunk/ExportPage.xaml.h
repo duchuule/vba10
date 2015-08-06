@@ -22,5 +22,6 @@ namespace VBA10
 		void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void signin_Completed(bool isLoggedIn);
+
 	};
 }

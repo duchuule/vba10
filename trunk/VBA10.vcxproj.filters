@@ -275,6 +275,8 @@
     <ClCompile Include="AdControl.xaml.cpp" />
     <ClCompile Include="stringhelper.cpp" />
     <ClCompile Include="Definitions.cpp" />
+    <ClCompile Include="FileBrowserPane.xaml.cpp" />
+    <ClCompile Include="SelectFilesPane.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -529,6 +531,8 @@
     <ClInclude Include="AdControl.xaml.h" />
     <ClInclude Include="live_connect.h" />
     <ClInclude Include="stringhelper.h" />
+    <ClInclude Include="FileBrowserPane.xaml.h" />
+    <ClInclude Include="SelectFilesPane.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -563,6 +567,7 @@
     <Page Include="PurchasePage.xaml" />
     <Page Include="AdControl.xaml" />
     <Page Include="FileBrowserPane.xaml" />
+    <Page Include="SelectFilesPane.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">

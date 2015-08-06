@@ -1,15 +1,15 @@
 ﻿//
-// SelectStatePane.xaml.cpp
-// Implementation of the SelectStatePane class
+// SelectFilesPane.xaml.cpp
+// Implementation of the SelectFilesPane class
 //
 
 #include "pch.h"
-#include "SelectFilePane.xaml.h"
-#include "DirectXPage.xaml.h"
+#include "SelectFilesPane.xaml.h"
 
 using namespace VBA10;
 
 using namespace Platform;
+using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml;
@@ -19,19 +19,14 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
-using namespace Platform::Collections;
+using namespace Windows::Storage;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-
-SelectFilePane::SelectFilePane(IVector<Platform::String^>^ list, Platform::String^ title):initdone(false)
+SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::String^ title) :initdone(false)
 {
 	InitializeComponent();
-	//this->fileVector = ref new Vector<Platform::String^>();
-	
-	
-	//for (int i = 0; i < list->Size; i++)
-	//	this->fileVector->Append(list->GetAt(i));
+
 	this->txtTitle->Text = title;
 
 	this->FileListvs->Source = list;
@@ -48,25 +43,14 @@ SelectFilePane::SelectFilePane(IVector<Platform::String^>^ list, Platform::Strin
 		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 	initdone = true;
+
 }
 
 
-void SelectFilePane::fileList_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	if (initdone)
-	{
-		//StorageFile ^file = (StorageFile ^)(this->fileList->SelectedItem);
-		int selectedIndex = this->fileList->SelectedIndex;
-
-		//close the pane
-		auto dp = this->Parent;
-		Popup^ pop = (Popup^)dp;
-		pop->IsOpen = false;
-
-		//return the file to whatever windows that call it
-		if (this->FileSelectedCallback)
-			FileSelectedCallback(selectedIndex);
-
-		
-	}
+	//close the pane
+	auto dp = this->Parent;
+	Popup^ pop = (Popup^)dp;
+	pop->IsOpen = false;
 }

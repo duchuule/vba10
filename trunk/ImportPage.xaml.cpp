@@ -95,13 +95,18 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 				Popup ^statePopup = ref new Popup();
 				statePopup->IsLightDismissEnabled = true;
 
-				SelectFilePane ^pane = ref new SelectFilePane(files);
+				Vector<Platform::String ^> ^fileNames = ref new Vector<Platform::String ^>();
+				for (int i = 0; i < files->Size; i++)
+					fileNames->Append(files->GetAt(i)->Name);
+
+				SelectFilePane ^pane = ref new SelectFilePane(fileNames, "Select file to import");
 				statePopup->Child = pane;
 				pane->Width = titleBar->ActualWidth;//statePopup->Width;
 				pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
 
-				pane->FileSelectedCallback = ref new FileSelectedDelegate([=](StorageFile ^file)
+				pane->FileSelectedCallback = ref new FileSelectedDelegate([=](int selectedIndex)
 				{
+					StorageFile^ file = files->GetAt(selectedIndex);
 					//calculate snapshot name
 					Platform::String ^file_path = file->Path;
 					wstring wfilepath(file_path->Begin(), file_path->End());
