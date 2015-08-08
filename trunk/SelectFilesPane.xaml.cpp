@@ -49,8 +49,30 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 
 void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	Vector<int>^ selectedIndices = ref new Vector<int>  ();
+
+	for (int i = 0; i < this->fileList->SelectedItems->Size; i++)
+	{
+		String^ selectedName = (String^)this->fileList->SelectedItems->GetAt(i);
+		//find the index of this item
+		for (int j = 0; j < this->fileList->Items->Size; j++)
+		{
+			String^ name = (String^)this->fileList->Items->GetAt(j);
+			if (selectedName == name)
+			{
+				selectedIndices->Append(j);
+				break;
+			}
+		}
+	}
+
+
 	//close the pane
 	auto dp = this->Parent;
 	Popup^ pop = (Popup^)dp;
 	pop->IsOpen = false;
+
+	//return the file to whatever windows that call it
+	if (this->FilesSelectedCallback)
+		FilesSelectedCallback(selectedIndices);
 }

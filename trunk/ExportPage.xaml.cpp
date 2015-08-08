@@ -7,6 +7,9 @@
 #include "App.xaml.h"
 #include "SelectFilePane.xaml.h"
 #include "SelectFilesPane.xaml.h"
+#include "Definitions.h"
+#include "ppltasks_extra.h"
+
 
 using namespace VBA10;
 
@@ -20,7 +23,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
-
+using namespace Windows::UI::Popups;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -66,6 +69,42 @@ void ExportPage::signin_Completed(bool isLoggedIn)
 		this->SignInbtn->IsEnabled = false;
 		this->exportOneDrivebtn->IsEnabled = true;
 		EmulatorSettings::Current->SignedIn = true;
+
+		//get the export folder id
+		if (App::ExportFolderID == "")
+		{
+			App::LiveClient->get(L"/me/skydrive/files")
+				.then([this](web::json::value v)
+			{
+				//int test = v[L"data"].as_array().size();
+				for (const auto& it : (v[L"data"]).as_array())
+				{
+					auto album = it;
+
+					wstring name = album[L"name"].as_string();
+					wstring type = album[L"type"].as_string();
+					if (name == EXPORT_FOLDER && (type == L"folder" || type == L"album"))
+					{
+						App::ExportFolderID = ref new String(album[L"id"].as_string().c_str());
+						break;
+					}
+	
+				}
+
+				if (App::ExportFolderID == "")  //need to create the folder
+				{
+					web::json::value data;
+					data[U("name")] = web::json::value::string(EXPORT_FOLDER);
+
+					create_task(App::LiveClient->post(L"/me/skydrive", data))
+						.then([](web::json::value v)
+					{
+							App::ExportFolderID = ref new String(v[L"id"].as_string().c_str());
+
+					});
+				}
+			});
+		}
 	}
 	else
 	{
@@ -120,7 +159,53 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 
 			pane->FilesSelectedCallback = ref new FilesSelectedDelegate([=](IVector<int>^ selectedIndices)
 			{
+				
+				if (App::ExportFolderID != "")
+				{
+					create_task([selectedIndices, files, this]()
+					{
+						vector<task<web::json::value>> tasks;
 
+						for (int i = 0; i < selectedIndices->Size; i++)
+						{
+							auto file = files->GetAt(selectedIndices->GetAt(i));
+							String^ path = App::ExportFolderID + L"/files/" + file->Name;  //need to handle space in name
+							
+							tasks.emplace_back(App::LiveClient->upload(web::uri::encode_uri(path->Data()), file));
+						}
+
+						return when_all(begin(tasks), end(tasks)).then([this](task<std::vector<web::json::value>> t)
+						{
+							try
+							{
+								t.get();
+								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+								{
+									MessageDialog ^dialog = ref new MessageDialog("Upload completed successfully.");
+									dialog->ShowAsync();
+								}));
+
+								
+
+							}
+							catch (Platform::Exception^ e)
+							{
+								// We'll handle the specific errors below.
+							}
+
+						});
+					});
+				}
+				else
+				{
+					MessageDialog ^dialog = ref new MessageDialog("Could not find export folder.", "Error");
+					dialog->ShowAsync();
+				}
+
+				//int test = selectedIndices->Size;
+				
+				
+				
 			});
 
 			auto transform = ((UIElement^)titleBar)->TransformToVisual(nullptr);
@@ -145,4 +230,5 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 
 	statePopup->IsOpen = true;
 }
+
 

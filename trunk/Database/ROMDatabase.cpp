@@ -1,5 +1,5 @@
 #include "ROMDatabase.h"
-#include "ppltasks_extra.h";
+#include "ppltasks_extra.h"
 
 #include <collection.h>
 

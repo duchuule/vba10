@@ -29,6 +29,7 @@ using namespace Windows::UI::ViewManagement;
 
 ROMDatabase^ VBA10::App::ROMDB = nullptr;
 live::live_client* VBA10::App::LiveClient = nullptr;
+Platform::String^ VBA10::App::ExportFolderID = "";
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code

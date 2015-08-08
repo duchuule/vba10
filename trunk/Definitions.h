@@ -1,6 +1,7 @@
 #pragma once
 
-#define DEFAULT_SNAPSHOT  L"Assets/no_snapshot.png"
+#define DEFAULT_SNAPSHOT	L"Assets/no_snapshot.png"
+#define EXPORT_FOLDER		L"VBA10 Export"
 
 using namespace Windows::Storage;
 

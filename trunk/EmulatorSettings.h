@@ -2,8 +2,6 @@
 
 #include "Emulator.h"
 
-using namespace Windows::System;
-using namespace Windows::Storage;
 
 #define MONITOR_30HZ	0
 #define MONITOR_60HZ	1
@@ -571,6 +569,7 @@ namespace VBA10
 		Platform::String^ FullScreenKey = "FullScreenKey";
 		Platform::String^ SignedInKey = "SignedInKey";  
 
+
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
 		Platform::String^ PadBottomPKey = "PadBottomPKey";
@@ -620,6 +619,7 @@ namespace VBA10
 		const bool EnableTurboDefault = false;
 		const bool FullScreenDefault = false;
 		const bool SignedInDefault = false;
+
 
 
 #pragma region button positions (in cm based on 6x10cm phone)
