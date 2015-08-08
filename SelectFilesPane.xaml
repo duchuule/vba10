@@ -60,13 +60,18 @@
         </ListBox>
 
 
-        <Button Content="OK" Grid.Row="2"
-                    Width="120"
-                    HorizontalAlignment="Center"
-                    Margin="0,4,0,4"
-                    x:Name="OkBtn"
-                Click="OkBtn_Click"
-            />
+
+        <Button Content="OK" 
+                Width="120"
+                HorizontalAlignment="Center"
+                Margin="0,4,0,4"
+                x:Name="OkBtn"
+            Click="OkBtn_Click"
+                Grid.Row="2"
+           />
+            
+
+        
 
     </Grid>
 </UserControl>

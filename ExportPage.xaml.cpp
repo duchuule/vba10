@@ -162,8 +162,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 				
 				if (App::ExportFolderID != "")
 				{
-					create_task([selectedIndices, files, this]()
-					{
+
 						vector<task<web::json::value>> tasks;
 
 						for (int i = 0; i < selectedIndices->Size; i++)
@@ -174,7 +173,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 							tasks.emplace_back(App::LiveClient->upload(web::uri::encode_uri(path->Data()), file));
 						}
 
-						return when_all(begin(tasks), end(tasks)).then([this](task<std::vector<web::json::value>> t)
+						when_all(begin(tasks), end(tasks)).then([this](task<std::vector<web::json::value>> t)
 						{
 							try
 							{
@@ -194,7 +193,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 							}
 
 						});
-					});
+
 				}
 				else
 				{

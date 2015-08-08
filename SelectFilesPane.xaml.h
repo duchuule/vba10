@@ -21,5 +21,6 @@ namespace VBA10
 		bool initdone;
 		Platform::Collections::Vector<Windows::Storage::StorageFile^>^ fileVector;
 		void OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void CancelBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

@@ -83,3 +83,6 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	if (this->FilesSelectedCallback)
 		FilesSelectedCallback(selectedIndices);
 }
+
+
+

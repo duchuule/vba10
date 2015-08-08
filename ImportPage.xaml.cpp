@@ -7,7 +7,7 @@
 #include "ImportPage.xaml.h"
 #include "Database\ROMDBEntry.h"
 #include "Database\ROMDatabase.h"
-#include "SelectFilePane.xaml.h"
+#include "SelectFilesPane.xaml.h"
 #include "App.xaml.h"
 #include "FileBrowserPane.xaml.h"
 
@@ -99,72 +99,104 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 				for (int i = 0; i < files->Size; i++)
 					fileNames->Append(files->GetAt(i)->Name);
 
-				SelectFilePane ^pane = ref new SelectFilePane(fileNames, "Select file to import");
+				SelectFilesPane ^pane = ref new SelectFilesPane(fileNames, "Select file(s) to import");
 				statePopup->Child = pane;
 				pane->Width = titleBar->ActualWidth;//statePopup->Width;
 				pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
 
-				pane->FileSelectedCallback = ref new FileSelectedDelegate([=](int selectedIndex)
+				pane->FilesSelectedCallback = ref new FilesSelectedDelegate([=](IVector<int>^ selectedIndices)
 				{
-					StorageFile^ file = files->GetAt(selectedIndex);
-					//calculate snapshot name
-					Platform::String ^file_path = file->Path;
-					wstring wfilepath(file_path->Begin(), file_path->End());
 
-					wstring folderpath;
-					wstring filename;
-					wstring filenamenoext;
-					wstring ext;
-					splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+					vector<task<void>> tasks;
 
-					wstring snapshotname = filenamenoext + L".jpg";
-					Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
-					Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
-
-					//create rom entry
-					ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, this->tmpfolder->Path,
-						this->tmptoken, psnapshotname);
-
-					entry->Folder = this->tmpfolder;
-
-					App::ROMDB->AllROMDBEntries->Append(entry);
-
-					create_task(App::ROMDB->AddAsync(entry)).then([entry] {
-						//copy the default snapshot file over
-						StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
-						return installDir->GetFolderAsync("Assets/");
-
-					}).then([entry](StorageFolder^ assetFolder)
+					for (int i = 0; i < selectedIndices->Size; i++)
 					{
-						return assetFolder->GetFileAsync("no_snapshot.png");
-					}).then([entry](StorageFile ^file)
-					{
-						//copy snapshot file to would be location
-						return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
+						StorageFile^ file = files->GetAt(selectedIndices->GetAt(i));
 
-					}).then([entry](StorageFile ^file)
-					{
-						//open file
-						return file->OpenAsync(FileAccessMode::Read);
-					}).then([entry](IRandomAccessStream^ stream)
-					{
-						//load bitmap image for snapshot
-						entry->Snapshot = ref new BitmapImage();
-						return entry->Snapshot->SetSourceAsync(stream);
+						//calculate snapshot name
+						Platform::String ^file_path = file->Path;
+						wstring wfilepath(file_path->Begin(), file_path->End());
+
+						wstring folderpath;
+						wstring filename;
+						wstring filenamenoext;
+						wstring ext;
+						splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+						wstring snapshotname = filenamenoext + L".jpg";
+						Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+						Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
 
 
-					}).then([](task<void> t)
+						//create rom entry
+						ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, this->tmpfolder->Path,
+							this->tmptoken, psnapshotname);
+
+						entry->Folder = this->tmpfolder;
+
+						App::ROMDB->AllROMDBEntries->Append(entry);
+
+
+
+						tasks.emplace_back(  
+							create_task(App::ROMDB->AddAsync(entry)).then([entry] {
+								//copy the default snapshot file over
+								StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+								return installDir->GetFolderAsync("Assets/");
+
+							}).then([entry](StorageFolder^ assetFolder)
+							{
+								return assetFolder->GetFileAsync("no_snapshot.png");
+							}).then([entry](StorageFile ^file)
+							{
+								//copy snapshot file to would be location
+								return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
+
+							}).then([entry](StorageFile ^file)
+							{
+								//open file
+								return file->OpenAsync(FileAccessMode::Read);
+							}).then([entry](IRandomAccessStream^ stream)
+							{
+								//load bitmap image for snapshot
+								entry->Snapshot = ref new BitmapImage();
+								return entry->Snapshot->SetSourceAsync(stream);
+
+
+							}).then([](task<void> t)
+							{
+								try
+								{
+									t.get();
+								
+								}
+								catch (Platform::Exception ^ex)
+								{
+								}
+							})					
+							
+						);  //end of tasks.emplace_back
+					}
+
+					when_all(begin(tasks), end(tasks)).then([this](task<void> t)
 					{
 						try
 						{
 							t.get();
-							// .get() didn't throw, so we succeeded, print out success message
-							MessageDialog ^dialog = ref new MessageDialog("File imported successfully.");
-							dialog->ShowAsync();
+							this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+							{
+								// .get() didn't throw, so we succeeded, print out success message
+								MessageDialog ^dialog = ref new MessageDialog("Files imported successfully.");
+								dialog->ShowAsync();
+							}));
+
 						}
-						catch (Platform::Exception ^ex)
+						catch (Platform::Exception^ e)
 						{
+							// We'll handle the specific errors below.
 						}
+
+
 					});
 					
 				});
