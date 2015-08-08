@@ -25,6 +25,7 @@ namespace VBA10
 	internal:
 		static ROMDatabase^ ROMDB;
 		static live::live_client* LiveClient;
+		static Platform::String^ ExportFolderID;
 
 
 		
