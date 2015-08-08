@@ -41,6 +41,7 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 	{
 		this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		this->txtNoFile->Text = "No supported file found.";
 	}
 	initdone = true;
 
@@ -49,6 +50,12 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 
 void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	this->OkBtn->IsEnabled = false;
+	this->txtNoFile->Text = "Processing...";
+
+
 	Vector<int>^ selectedIndices = ref new Vector<int>  ();
 
 	for (int i = 0; i < this->fileList->SelectedItems->Size; i++)
@@ -68,9 +75,9 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 
 
 	//close the pane
-	auto dp = this->Parent;
-	Popup^ pop = (Popup^)dp;
-	pop->IsOpen = false;
+	//auto dp = this->Parent;
+	//Popup^ pop = (Popup^)dp;
+	//pop->IsOpen = false;
 
 	//return the file to whatever windows that call it
 	if (this->FilesSelectedCallback)

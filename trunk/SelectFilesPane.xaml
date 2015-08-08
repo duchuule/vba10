@@ -32,8 +32,7 @@
         </StackPanel>
 
         <TextBlock x:Name="txtNoFile" Grid.Row="1"
-                   Text="No supported file found!" 
-                   Foreground="Red"
+                   Text="Assigned at run time" 
                    Margin="10,8,0,8"/>
 
         <ListBox Name="fileList" 
