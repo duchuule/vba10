@@ -52,6 +52,7 @@ namespace VBA10
 
 		PC::Vector<ROMDBEntry^>^ _allROMDBEntries;
 		task<void> LoadSnapshotImage();
+		Platform::String^ ReplaceSingleQuote(Platform::String^ pstr);
 		
 	};
 

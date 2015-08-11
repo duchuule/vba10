@@ -23,11 +23,11 @@ namespace VBA10
 	private:
 		EmulatorGame *emulator;
 		bool initdone;
-		//Vector<String
+		Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ HIDDeviceList;
 
 
 		//input
-		void lbHIDGamepad_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
+		void ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, VirtualKey vk);
 		void touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -65,6 +65,7 @@ namespace VBA10
 		void soundToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void soundSyncToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		
 		
 		
 		

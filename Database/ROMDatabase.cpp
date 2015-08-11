@@ -1,6 +1,6 @@
 #include "ROMDatabase.h"
 #include "ppltasks_extra.h"
-
+#include "stringhelper.h"
 #include <collection.h>
 
 using namespace Platform;
@@ -96,6 +96,12 @@ task<void> ROMDatabase::Initialize(void)
 	//	items->Append(stmt->GetIntAt(0) + ": " + stmt->GetTextAt(1));
 }
 
+Platform::String^ ROMDatabase::ReplaceSingleQuote(Platform::String^ pstr)
+{
+	wstring wstr(pstr->Begin(), pstr->End());
+	replaceAll(wstr, L"'", L"''");
+	return ref new Platform::String(wstr.c_str());
+}
 
 task<void> ROMDatabase::AddAsync(ROMDBEntry^ entry)
 {
@@ -107,14 +113,14 @@ task<void> ROMDatabase::AddAsync(ROMDBEntry^ entry)
 		//prepare statement to add to rom table
 		Platform::String^ cmd = "INSERT INTO ROMTABLE (LOCATIONTYPE, DISPLAYNAME, FILENAME, FOLDERPATH, TOKEN, LASTPLAYED, LASTSAVEINDEX, AUTOSAVEINDEX, SNAPSHOTURI) VALUES (";
 		cmd += entry->LocationType + ",";
-		cmd += "'" + entry->DisplayName + "',";
-		cmd += "'" + entry->FileName + "',";
-		cmd += "'" + entry->FolderPath + "',";
-		cmd += "'" + entry->Token + "',";
+		cmd += "'" + ReplaceSingleQuote(entry->DisplayName) + "',";
+		cmd += "'" + ReplaceSingleQuote(entry->FileName) + "',";
+		cmd += "'" + ReplaceSingleQuote(entry->FolderPath) + "',";
+		cmd += "'" + ReplaceSingleQuote(entry->Token) + "',";
 		cmd += entry->LastPlayed.UniversalTime + ",";
 		cmd += entry->LastSaveIndex + ",";
 		cmd += entry->AutoSaveIndex + ",";
-		cmd += "'" + entry->SnapshotUri + "')";
+		cmd += "'" + ReplaceSingleQuote(entry->SnapshotUri) + "')";
 
 #if _DEBUG
 		Platform::String ^message = cmd;
@@ -256,12 +262,12 @@ task<void> ROMDatabase::UpdateAsync(ROMDBEntry^ entry)
 
 		//prepare statement to update entry
 		Platform::String^ cmd = "UPDATE ROMTABLE SET DISPLAYNAME = "; 
-		cmd += "'" + entry->DisplayName + "',";
-		cmd += " FOLDERPATH = '" + entry->FolderPath + "',";
+		cmd += "'" + ReplaceSingleQuote(entry->DisplayName) + "',";
+		cmd += " FOLDERPATH = '" + ReplaceSingleQuote(entry->FolderPath) + "',";
 		cmd += " LASTPLAYED = " + entry->LastPlayed.UniversalTime + ",";
 		cmd += " LASTSAVEINDEX = " + entry->LastSaveIndex + ",";
 		cmd += " AUTOSAVEINDEX = " + entry->AutoSaveIndex ;
-		cmd += " WHERE FILENAME = '" + entry->FileName + "' AND TOKEN = '" + entry->Token + "';";
+		cmd += " WHERE FILENAME = '" + ReplaceSingleQuote(entry->FileName) + "' AND TOKEN = '" + ReplaceSingleQuote(entry->Token) + "';";
 
 #if _DEBUG
 		Platform::String ^message = cmd;
@@ -293,7 +299,7 @@ task<void> ROMDatabase::RemoveAsync(ROMDBEntry ^ entry)
 
 		//prepare statement to update entry
 		Platform::String^ cmd = "DELETE FROM ROMTABLE ";
-		cmd += " WHERE FILENAME = '" + entry->FileName + "' AND TOKEN = '" + entry->Token + "';";
+		cmd += " WHERE FILENAME = '" + ReplaceSingleQuote(entry->FileName) + "' AND TOKEN = '" + ReplaceSingleQuote(entry->Token) + "';";
 
 #if _DEBUG
 		Platform::String ^message = cmd;

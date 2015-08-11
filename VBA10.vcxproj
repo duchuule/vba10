@@ -376,6 +376,9 @@
     <ClInclude Include="EmulatorSettings.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="HIDControllerInput.h" />
+    <ClInclude Include="HIDGamepadConfig.xaml.h">
+      <DependentUpon>HIDGamepadConfig.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="ImportPage.xaml.h">
       <DependentUpon>ImportPage.xaml</DependentUpon>
     </ClInclude>
@@ -615,6 +618,9 @@
     </ClCompile>
     <ClCompile Include="HIDControllerInput.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HIDGamepadConfig.xaml.cpp">
+      <DependentUpon>HIDGamepadConfig.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="ImportPage.xaml.cpp">
       <DependentUpon>ImportPage.xaml</DependentUpon>
@@ -1175,6 +1181,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DirectXPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HIDGamepadConfig.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ImportPage.xaml">

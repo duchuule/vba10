@@ -8,6 +8,7 @@
 #include "ControllerInput.h"
 #include "GameTime.h"
 #include <System.h>
+#include "HIDControllerInput.h"
 
 using namespace Platform::Collections;
 using namespace concurrency;
@@ -80,6 +81,7 @@ namespace VBA10
 #endif
 		KeyboardInput *keyboard;
 		VirtualControllerInput *virtualInput;
+
 		int updateCount;
 		bool frameSkipped;
 
