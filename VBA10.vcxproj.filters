@@ -277,6 +277,9 @@
     <ClCompile Include="Definitions.cpp" />
     <ClCompile Include="FileBrowserPane.xaml.cpp" />
     <ClCompile Include="SelectFilesPane.xaml.cpp" />
+    <ClCompile Include="HIDControllerInput.cpp">
+      <Filter>Emulator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -533,6 +536,9 @@
     <ClInclude Include="stringhelper.h" />
     <ClInclude Include="FileBrowserPane.xaml.h" />
     <ClInclude Include="SelectFilesPane.xaml.h" />
+    <ClInclude Include="HIDControllerInput.h">
+      <Filter>Emulator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

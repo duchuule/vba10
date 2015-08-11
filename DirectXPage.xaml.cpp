@@ -214,6 +214,15 @@ DirectXPage::DirectXPage():
 	// create_task([this] {return CopyDemoROMAsync();}).then([this] //NOTE: this will make CopyDemoROM to run on background thread
 	//and cause exception at entry->Snapshot->SetSourceAsync(stream);
 	
+
+	//For some reason, the first call to check xbox controller status always return false, so we call it first here,
+	//then the next call in settings will return the true status.
+	XINPUT_STATE state;
+	ZeroMemory(&state,sizeof(XINPUT_STATE));
+	XInputGetState(0, &state);
+
+
+
 	CopyDemoROMAsync()
 		.then([this]   //NOTE: this let CopyDemonROM to run on UI thread
 	{

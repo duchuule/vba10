@@ -9,7 +9,8 @@ namespace VBA10
 	XINPUT_STATE CXBOXController::GetState(void)
 	{
 		ZeroMemory(&this->state, sizeof(XINPUT_STATE));
-		XInputGetState(this->controllerNumber, &this->state);
+		XInputGetState(this->controllerNumber, &this->state);  //get state of controller #controlerNumber (hardcode 0 at the moment)
+															   //see this->p1Controller = new ControllerInput(1);
 
 		return this->state;
 	}

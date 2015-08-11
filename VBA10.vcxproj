@@ -375,6 +375,7 @@
     <ClInclude Include="EmulatorRenderer.h" />
     <ClInclude Include="EmulatorSettings.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="HIDControllerInput.h" />
     <ClInclude Include="ImportPage.xaml.h">
       <DependentUpon>ImportPage.xaml</DependentUpon>
     </ClInclude>
@@ -611,6 +612,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HIDControllerInput.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImportPage.xaml.cpp">
       <DependentUpon>ImportPage.xaml</DependentUpon>

@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <ppltasks.h>
+#include <Xinput.h>
 
 using namespace VBA10;
 
@@ -25,6 +26,8 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Popups;
 using namespace Windows::Globalization;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::Devices::Enumeration;
+using namespace Windows::Devices::HumanInterfaceDevice;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -88,8 +91,65 @@ SettingsPage::SettingsPage()
 	this->soundSyncToggle->IsOn = SynchronizeAudio();
 
 
+	//check xbox controller connection
+	XINPUT_STATE state;
+	ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+	if (XInputGetState(0, &state) == ERROR_DEVICE_NOT_CONNECTED)
+	{
+		this->txtControllerStatus->Text = "No XBox controller detected.";
+	}
+	else
+	{
+		this->txtControllerStatus->Text = "XBox controller is connected.";
+	}
+
+	
+	//check hid gamepad connection
+	auto deviceSelector = HidDevice::GetDeviceSelector(0x0001, 0x0005);
+	create_task(DeviceInformation::FindAllAsync(deviceSelector))
+		.then([this](DeviceInformationCollection^ collection)
+	{
+		if (collection->Size > 0)
+		{
+			Vector<DeviceInformation^>^ deviceList = ref new Vector<DeviceInformation^>();
+			Vector<String^>^ deviceID = ref new Vector<String^>();
+			for (int i = 0; i < collection->Size; i++)
+			{
+				DeviceInformation^ device = collection->GetAt(i);
+				deviceList->Append(device);
+				deviceID->Append(device->Name);
+			}
+
+			this->txtHIDGamepad->Text = collection->Size + "HID gamepad detected:";
+			this->vsControllerList->Source = deviceID;
+			this->lbHIDGamepad->SelectedItem = nullptr;
+			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Visible;
+			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		}
+		else
+		{
+			this->txtHIDGamepad->Text = "No HID gamepads detected.";
+			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		}
+
+	}, task_continuation_context::use_current());
+
+	
 	initdone = true;
 }
+
+
+void SettingsPage::lbHIDGamepad_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+
+	}
+
+}
+
 
 void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -432,3 +492,6 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		}
 	}
 }
+
+
+
