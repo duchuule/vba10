@@ -32,11 +32,15 @@
                     <StackPanel Orientation="Vertical" x:Name="InputStackPanel" 
                                   HorizontalAlignment="Left" 
                                 MaxWidth="440">
+                        <StackPanel.Resources>
+                            <CollectionViewSource x:Name="vsControllerList"/>
+                        </StackPanel.Resources>
+
                         <TextBlock TextWrapping="Wrap" 
-                                   Text="You can buy premium feature package or watch a short video to enable XBox Controller."
+                                   Text="Both Xbox and generic HID gamepads are supported. You can buy premium feature package or watch a short video to enable this feature."
                                    Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal"
-                                    Margin="0,0,0,12">
+                                    Margin="0,0,0,8">
                             <Button x:Name="purchaseBtn" Content="Buy" 
                             IsEnabled="False"
                             Width="120"
@@ -49,6 +53,57 @@
 
 
                         </StackPanel>
+
+                        <TextBlock TextWrapping="Wrap" 
+                                   Text="txtControllerStatus - set by cpp"
+                                   x:Name="txtControllerStatus"
+                                   Foreground="Blue"
+                                   Margin="0,0,0,8"
+                                   >
+                        </TextBlock>
+                        
+                        <StackPanel x:Name="panelHIDGamepad" >
+                            <TextBlock Text="txtHIDGamepad - set by cpp" 
+                                       Foreground="Blue"
+                                       Margin="0,0,0,8"
+                                       x:Name="txtHIDGamepad"/>
+                            <ListBox x:Name="lbHIDGamepad"
+                                      ItemsSource="{Binding Source={StaticResource vsControllerList}}"
+                                     SelectionChanged="lbHIDGamepad_SelectionChanged"
+                                     Margin="0,0,0,8">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Padding" Value="4"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"
+                                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                                   TextWrapping="NoWrap"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <StackPanel Orientation="Horizontal"
+                                    Margin =" 0, 0, 0, 12"
+                                        x:Name="panelHIDConnect">
+                                <Button x:Name="ConfigureBtn" Content="Configure" 
+                                IsEnabled="False"
+                                Width="120"
+                                Margin =" 0, 0, 8, 0"/>
+
+                                    <Button x:Name="ConnectBtn" Content="Connect" 
+                                Width="120"
+                                Margin =" 0, 0, 0, 0" 
+                                Click="watchVideobtn_Click"/>
+
+
+                            </StackPanel>
+                        </StackPanel>
+                        
 
                         <ToggleSwitch Header="Show Virtual Buttons" 
                                       Name="touchToggle" HorizontalAlignment="Left" 
@@ -149,7 +204,7 @@
                             <TextBlock HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" 
                                                Text="Right" VerticalAlignment="Center"/>
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1" x:Name="rightKeyBox" Margin="0,0,0,4"
-                                             AcceptsReturn="False" KeyDown="keyDown" KeyUp="rightKeyBox_KeyUp" TextWrapping="Wrap" 
+                                             AcceptsReturn="False" KeyDown="keyDown"    KeyUp="rightKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Right" VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" 
