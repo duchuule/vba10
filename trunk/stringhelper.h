@@ -13,6 +13,9 @@ std::vector<std::string> &strSplitLines(std::string &input, std::vector<std::str
 
 void replaceAll(std::string& str, const std::string& from, const std::string& to);
 
+void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to);
+
+
 void StrToUpper(std::string &input);
 
 void splitFilePath(std::wstring &filepath, std::wstring &folderpath, std::wstring &filename, std::wstring &filenamenoext, std::wstring &ext);

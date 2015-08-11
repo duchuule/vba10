@@ -9,8 +9,7 @@
 
 namespace VBA10
 {
-	class ControllerInput
-		: public EmulatorInput
+	class ControllerInput: public EmulatorInput
 	{
 	public:
 		ControllerInput(int index);

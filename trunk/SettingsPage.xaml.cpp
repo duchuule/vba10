@@ -8,8 +8,8 @@
 #include "EmulatorSettings.h"
 #include <string>
 #include <sstream>
-#include <ppltasks.h>
 #include <Xinput.h>
+#include <HIDGamepadConfig.xaml.h>
 
 using namespace VBA10;
 
@@ -23,6 +23,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Popups;
 using namespace Windows::Globalization;
 using namespace Windows::UI::ViewManagement;
@@ -112,16 +113,19 @@ SettingsPage::SettingsPage()
 	{
 		if (collection->Size > 0)
 		{
-			Vector<DeviceInformation^>^ deviceList = ref new Vector<DeviceInformation^>();
+			//VID_045E = microsoft
+			this->HIDDeviceList = ref new Vector<DeviceInformation^>();
 			Vector<String^>^ deviceID = ref new Vector<String^>();
 			for (int i = 0; i < collection->Size; i++)
 			{
 				DeviceInformation^ device = collection->GetAt(i);
-				deviceList->Append(device);
-				deviceID->Append(device->Name);
+				//device->
+				//if (device->Properties)
+				this->HIDDeviceList->Append(device);
+				deviceID->Append(device->Id);
 			}
 
-			this->txtHIDGamepad->Text = collection->Size + "HID gamepad detected:";
+			this->txtHIDGamepad->Text = collection->Size + " HID gamepad(s) detected:";
 			this->vsControllerList->Source = deviceID;
 			this->lbHIDGamepad->SelectedItem = nullptr;
 			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Visible;
@@ -141,13 +145,110 @@ SettingsPage::SettingsPage()
 }
 
 
-void SettingsPage::lbHIDGamepad_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+
+
+void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	if (initdone)
+	int index = lbHIDGamepad->SelectedIndex;
+
+	if (this->HIDDeviceList->Size > 1 && index < 0)
 	{
-
+		MessageDialog ^dialog = ref new MessageDialog("Please select a HID gamepad.");
+		dialog->ShowAsync();
+		return;
 	}
+	else if (this->HIDDeviceList->Size == 1)
+		index = 0;
+		
+	create_task(HidDevice::FromIdAsync(this->HIDDeviceList->GetAt(index)->Id, FileAccessMode::Read))
+		.then([this](task<HidDevice^> deviceTask)
+	{
+		bool successfullyOpenedDevice = false;
+		//NotifyType notificationStatus;
+		//String^ notificationMessage = nullptr;
 
+		//// This may throw an exception or return null if we could not open the device
+		//device = deviceTask.get();
+
+		//// Device could have been blocked by user or the device has already been opened by another app.
+		//if (device != nullptr)
+		//{
+		//	successfullyOpenedDevice = true;
+
+		//	deviceInformation = deviceInfo;
+		//	this->deviceSelector = deviceSelector;
+
+		//	notificationStatus = NotifyType::StatusMessage;
+		//	notificationMessage = "Device " + deviceInformation->Id + " opened";
+
+		//	if (appSuspendEventToken.Value == 0 || appResumeEventToken.Value == 0)
+		//	{
+		//		RegisterForAppEvents();
+		//	}
+
+		//	// User can block the device after it has been opened in the Settings charm. We can detect this by registering for the 
+		//	// DeviceAccessInformation->AccessChanged event
+		//	if (deviceAccessInformation == nullptr)
+		//	{
+		//		RegisterForDeviceAccessStatusChange();
+		//	}
+
+		//	// Create and register device watcher events for the device to be opened unless we're reopening the device
+		//	if (deviceWatcher == nullptr)
+		//	{
+		//		deviceWatcher = Enumeration::DeviceInformation::CreateWatcher(this->deviceSelector);
+
+		//		RegisterForDeviceWatcherEvents();
+		//	}
+
+		//	if (!watcherStarted)
+		//	{
+		//		// Start the device watcher after we made sure that the device is opened.
+		//		StartDeviceWatcher();
+		//	}
+		//}
+		//else
+		//{
+		//	successfullyOpenedDevice = false;
+
+		//	notificationStatus = NotifyType::ErrorMessage;
+
+		//	auto deviceAccessStatus = Enumeration::DeviceAccessInformation::CreateFromId(deviceInfo->Id)->CurrentStatus;
+
+		//	if (deviceAccessStatus == DeviceAccessStatus::DeniedByUser)
+		//	{
+		//		notificationMessage = "Access to the device was blocked by the user : " + deviceInfo->Id;
+		//	}
+		//	else if (deviceAccessStatus == DeviceAccessStatus::DeniedBySystem)
+		//	{
+		//		// This status is most likely caused by app permissions (did not declare the device in the app's package.appxmanifest)
+		//		// This status does not cover the case where the device is already opened by another app.
+		//		notificationMessage = "Access to the device was blocked by the system : " + deviceInfo->Id;
+		//	}
+		//	else
+		//	{
+		//		// Most likely the device is opened by another app, but cannot be sure
+		//		notificationMessage = "Unknown error, possibly opened by another app : " + deviceInfo->Id;
+		//	}
+		//}
+
+		//MainPage::Current->NotifyUser(notificationMessage, notificationStatus);
+
+		//// Notify registered callback handle whether or not the device has been opened
+		//if (deviceConnectedCallback != nullptr)
+		//{
+		//	auto deviceConnectedEventArgs = ref new OnDeviceConnectedEventArgs(successfullyOpenedDevice, deviceInfo);
+
+		//	deviceConnectedCallback(this, deviceConnectedEventArgs);
+		//}
+
+		//return successfullyOpenedDevice;
+	});
+
+	Frame->Navigate(
+		TypeName(HIDGamepadConfig::typeid),
+		nullptr,
+		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
 }
 
 
@@ -492,6 +593,9 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		}
 	}
 }
+
+
+
 
 
 

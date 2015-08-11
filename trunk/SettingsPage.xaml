@@ -69,19 +69,17 @@
                                        x:Name="txtHIDGamepad"/>
                             <ListBox x:Name="lbHIDGamepad"
                                       ItemsSource="{Binding Source={StaticResource vsControllerList}}"
-                                     SelectionChanged="lbHIDGamepad_SelectionChanged"
                                      Margin="0,0,0,8">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem">
                                         <Setter Property="Padding" Value="4"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                        <!--<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>-->
                                     </Style>
                                 </ListBox.ItemContainerStyle>
 
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}"
-                                                   Style="{ThemeResource CaptionTextBlockStyle}"
                                                    TextWrapping="NoWrap"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -91,9 +89,9 @@
                                     Margin =" 0, 0, 0, 12"
                                         x:Name="panelHIDConnect">
                                 <Button x:Name="ConfigureBtn" Content="Configure" 
-                                IsEnabled="False"
-                                Width="120"
-                                Margin =" 0, 0, 8, 0"/>
+                                    Width="120"
+                                    Margin =" 0, 0, 8, 0"
+                                        Click="ConfigureBtn_Click"/>
 
                                     <Button x:Name="ConnectBtn" Content="Connect" 
                                 Width="120"
