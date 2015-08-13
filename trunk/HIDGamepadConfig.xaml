@@ -13,6 +13,7 @@
           >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -24,12 +25,19 @@
             
             <TextBlock Text="HID Gamepad Config" 
                        Style="{ThemeResource TitleTextBlockStyle}"
-                       Margin="8,4,0,4"
+                       Margin="12,4,0,4"
                        x:Name="txtTitle"
                        />
         </StackPanel>
 
-        <Grid Grid.Row="1" Margin="12,0,12,0">
+        <TextBlock x:Name="txtNotification" Text="txtNotification - see cpp"
+                   Grid.Row="1" 
+                   Margin="12,8,0,0"
+                   Visibility="Visible"/>
+
+        <Grid Grid.Row="2" Margin="12,0,12,0"
+              x:Name="gridMain"
+              Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -45,14 +53,14 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Left" VerticalAlignment="Center" Margin="0,12,0,4"  />
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtLeft1" GotFocus="txtLeft1_GotFocus" Margin="0,12,0,4"/>
-            <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtLeft2" GotFocus="txtLeft1_GotFocus" Margin="0,12,0,4"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtLeft1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
+            <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtLeft2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
         </Grid>
 
 
        
 
-        <Button Content="Close" Grid.Row="2"
+        <Button Content="Close" Grid.Row="3"
                 Width="120"
                 HorizontalAlignment="Center"
                 Margin="0,0,0,4"

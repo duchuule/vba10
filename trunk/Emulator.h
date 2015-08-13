@@ -58,7 +58,15 @@ namespace VBA10
 		void StartEmulatorThread();
 		void StopEmulatorThread();
 		void ResetXboxTimer();
+		Windows::Devices::HumanInterfaceDevice::HidDevice^ GetHIDDevice()
+		{
+			return hidInput->GetHidDevice();;
+		}
 
+		void SetHIDDevice(Windows::Devices::HumanInterfaceDevice::HidDevice^ device)
+		{
+			this->hidInput->SetHidDevice(device);
+		}
 		
 
 	private:
@@ -81,6 +89,7 @@ namespace VBA10
 #endif
 		KeyboardInput *keyboard;
 		VirtualControllerInput *virtualInput;
+		HIDControllerInput *hidInput;
 
 		int updateCount;
 		bool frameSkipped;
