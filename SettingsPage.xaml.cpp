@@ -122,7 +122,7 @@ SettingsPage::SettingsPage()
 				//device->
 				//if (device->Properties)
 				this->HIDDeviceList->Append(device);
-				deviceID->Append(device->Id);
+				deviceID->Append(device->Name);
 			}
 
 			this->txtHIDGamepad->Text = collection->Size + " HID gamepad(s) detected:";
@@ -159,6 +159,8 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 	}
 	else if (this->HIDDeviceList->Size == 1)
 		index = 0;
+
+
 		
 	create_task(HidDevice::FromIdAsync(this->HIDDeviceList->GetAt(index)->Id, FileAccessMode::Read))
 		.then([this](task<HidDevice^> deviceTask)
@@ -168,10 +170,16 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 		//String^ notificationMessage = nullptr;
 
 		//// This may throw an exception or return null if we could not open the device
-		//device = deviceTask.get();
+
+		emulator->SetHIDDevice(deviceTask.get());
+
+		this->Frame->Navigate(
+			TypeName(HIDGamepadConfig::typeid),
+			nullptr,
+			ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
 
 		//// Device could have been blocked by user or the device has already been opened by another app.
-		//if (device != nullptr)
+		//if (emulator->hidInput->device != nullptr)
 		//{
 		//	successfullyOpenedDevice = true;
 
@@ -245,10 +253,7 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 		//return successfullyOpenedDevice;
 	});
 
-	Frame->Navigate(
-		TypeName(HIDGamepadConfig::typeid),
-		nullptr,
-		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+	
 }
 
 

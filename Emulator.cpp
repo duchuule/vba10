@@ -98,7 +98,9 @@ namespace VBA10
 #endif
 		this->keyboard = new KeyboardInput();
 		this->virtualInput = new VirtualControllerInput();
-		
+		this->hidInput = new HIDControllerInput();
+
+
 		this->updateCount = 0;
 		this->frameSkipped = false;
 
