@@ -115,7 +115,8 @@
                             </NavigationThemeTransition>
                         </TransitionCollection>
                     </Frame.ContentTransitions>
-                </Frame>
+               
+            </Frame>
             </SplitView>
 
             <!-- Declared last to have it rendered above everything else, but it needs to be the first item in the tab sequence. -->

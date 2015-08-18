@@ -32,6 +32,7 @@ namespace VBA10
 		bool navigatedAway;
 
 		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
+		bool hasHatSwitch;  //to see if the gamepad has a hat switch used as d-pad
 		int configureStage; //0: press start, 1: freely assign
 		int startbuttonID; //record id of start button
 		//int selectbuttonID; //id of select button
