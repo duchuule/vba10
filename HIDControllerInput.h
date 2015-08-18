@@ -1,5 +1,6 @@
 #pragma once
 
+#include <collection.h>
 #include "EmulatorInput.h"
 
 namespace VBA10
@@ -33,11 +34,29 @@ namespace VBA10
 		
 	};
 
+	ref class NumericControlMapping
+	{
+	internal:
+		NumericControlMapping(long long minval, long long maxval, Platform::String^ assignment);
+		long long MinVal;
+		long long MaxVal;
+		Platform::String^ Assignment;
+	};
+
 	ref class HidNumericControlExt sealed
 	{
 	public:
-		HidNumericControlExt(Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription^ desc);
-		property Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription^ Description;
-		property long long DefaultValue;
+		HidNumericControlExt(unsigned short usagepage, unsigned short usageid);
+	internal:
+		unsigned short UsagePage;
+		unsigned short UsageId;
+		long long DefaultValue;
+		long long MaximumValue;
+		Platform::String^ Assignment;
+		int Type; //0: only on-off state , 1: left - off -right state  , 2: value state
+		Platform::Collections::Map<int, Platform::String^>^ Mapping;
+
 	};
+
+	
 }

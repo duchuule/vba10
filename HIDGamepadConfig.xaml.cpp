@@ -28,7 +28,8 @@ using namespace Microsoft::WRL;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-HIDGamepadConfig::HIDGamepadConfig() :isRegisteredForInputReportEvents(false), navigatedAway(false), configureStage(0)
+HIDGamepadConfig::HIDGamepadConfig() :
+	isRegisteredForInputReportEvents(false), navigatedAway(false), configureStage(0), hasHatSwitch(false)
 {
 	InitializeComponent();
 
@@ -58,8 +59,21 @@ HIDGamepadConfig::HIDGamepadConfig() :isRegisteredForInputReportEvents(false), n
 				
 				if (numDescs->Size == 1)  //only this is the real control
 				{
-					HidNumericControlExt^ control = ref new HidNumericControlExt( numDescs->GetAt(0));
+					HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
 					this->allNumericControls->Append(control);
+
+					if (usagePage == 0x01 && usageId == 0x39)  //this gamepad has hatswitch
+					{
+						hasHatSwitch = true;
+						txtLeft1->Text = "D-pad Left";
+						txtUp1->Text = "D-pad Up";
+						txtRight1->Text = "D-pad Right";
+						txtDown1->Text = "D-pad Down";
+						txtLeft1->IsEnabled = false;
+						txtUp1->IsEnabled = false;
+						txtRight1->IsEnabled = false;
+						txtDown1->IsEnabled = false;
+					}
 				}
 			}
 		}
@@ -93,7 +107,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 		for (int i = 0;i < allNumericControls->Size; i++)
 		{
 			auto controlExt = allNumericControls->GetAt(i);
-			auto control = inputReport->GetNumericControlByDescription(controlExt->Description);
+			auto control = inputReport->GetNumericControl(controlExt->UsagePage, controlExt->UsageId);
 			controlExt->DefaultValue = control->Value;
 
 			//fix default value for xbox controller axis (potentially other high precision controller as well)
@@ -102,6 +116,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 		}
 
 
+		//get id of start button
 		for (int i = 0; i < bcontrols->Size; i++)
 		{
 			auto item = bcontrols->GetAt(0);
@@ -113,13 +128,48 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 			this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, item]()
 			{
-				txtNotification->Text = "You can now assign buttons as you wish. Up to two buttons can be assigned for each function.";
+				Platform::String^ instruction = "You can now assign buttons as you wish. Up to two buttons can be assigned for each function.";
+				if (hasHatSwitch)
+					instruction += " NOTE: the D-pad can only be used for direction and cannot be assigned to other functions.";
+				txtNotification->Text = instruction;
+				
+				txtStart1->Text = "Button " + startbuttonID.ToString();
+
 				this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
 			}));
 
 			break;  //only take the first button press as id of start button
 					
 		}
+
+		//create mapping for hat switch based on default value
+		if (hasHatSwitch)
+		{
+			//find the hat switch
+			HidNumericControlExt^ controlExt;
+			for (int i = 0;i < allNumericControls->Size; i++) //loop through all available numeric control
+			{
+				controlExt = allNumericControls->GetAt(i);
+				if (controlExt->UsagePage = 0x01 && controlExt->UsageId == 0x39)
+					break;
+			}
+
+			//set mapping
+			controlExt->Type = 2;
+			int offset = 1;
+			if (controlExt->DefaultValue != 0)  //if default value is not zero, up has value of 0
+				offset = 0;
+			controlExt->Mapping->Insert(0 + offset, "Up1");
+			controlExt->Mapping->Insert(1 + offset, "UpRight");
+			controlExt->Mapping->Insert(2 + offset, "Right1");
+			controlExt->Mapping->Insert(3 + offset, "DownRight");
+			controlExt->Mapping->Insert(4 + offset, "Down1");
+			controlExt->Mapping->Insert(5 + offset, "DownLeft");
+			controlExt->Mapping->Insert(6 + offset, "Left1");
+			controlExt->Mapping->Insert(7 + offset, "UpLeft");
+		}
+
+		//set button on ui
 	}
 	//else if (configureStage == 1) //record select button
 	//{
@@ -162,34 +212,62 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 			}
 
 
-			for (int i = 0;i < allNumericControls->Size; i++)
+			for (int i = 0;i < allNumericControls->Size; i++) //loop through all available numeric control to see which one change value
 			{
 				auto controlExt = allNumericControls->GetAt(i);
-				auto control = inputReport->GetNumericControlByDescription(controlExt->Description);
-				if (controlExt->DefaultValue <= 15 && control->Value != controlExt->DefaultValue)  //this is the d-pad
+				auto control = inputReport->GetNumericControl(controlExt->UsagePage, controlExt->UsageId);
+
+				//record maximum value from input
+				if (control->Value > controlExt->MaximumValue)
 				{
-					long long value = control->Value;
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, value]()
-					{
-						//note: we include value in the capture list because control->Value can change back to default value
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") - " + value;
-					}));
-				}
-				else if (controlExt->DefaultValue > 15 && control->Value - controlExt->DefaultValue < -0.25 * controlExt->DefaultValue)
-				{
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control]()
-					{
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
-					}));
-				}
-				else if (controlExt->DefaultValue > 15 && control->Value - controlExt->DefaultValue > 0.25 * controlExt->DefaultValue)
-				{
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control]()
-					{
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
-					}));
+					controlExt->MaximumValue = control->Value;
 				}
 
+				//determine button type
+				if (controlExt->UsagePage == 0x01 && controlExt->UsageId == 0x39)  //d-pad
+					controlExt->Type = 2;
+				else if (controlExt->DefaultValue == 0)  //trigger
+					controlExt->Type = 0; 
+				else  //axis
+					controlExt->Type = 1; 
+
+
+				//if (controlExt->DefaultValue <= 15 && control->Value != controlExt->DefaultValue)  //this is the d-pad
+				//{
+				//	long long value = control->Value;
+				//	this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, value]()
+				//	{
+				//		//note: we include value in the capture list because control->Value can change back to default value
+				//		focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") - " + value;
+				//	}));
+				//}
+				if (controlExt->Type == 0 && control->Value != controlExt->DefaultValue)
+				{
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					{
+						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
+						controlExt->Mapping->Insert(1, (String^)focusTextbox->Tag);
+
+					}));
+				}
+				else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue < -0.25 * controlExt->DefaultValue)
+				{
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					{
+						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
+						String^ test = (String^)focusTextbox->Tag;
+						controlExt->Mapping->Insert(-1, (String^)focusTextbox->Tag);
+
+					}));
+				}
+				else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue > 0.25 * controlExt->DefaultValue)
+				{
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					{
+						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
+						controlExt->Mapping->Insert(1, (String^)focusTextbox->Tag);
+					}));
+				}
 			}
 		}
 		//check numeric controls

@@ -280,6 +280,7 @@
     <ClCompile Include="HIDControllerInput.cpp">
       <Filter>Emulator</Filter>
     </ClCompile>
+    <ClCompile Include="HIDGamepadConfig.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -539,6 +540,7 @@
     <ClInclude Include="HIDControllerInput.h">
       <Filter>Emulator</Filter>
     </ClInclude>
+    <ClInclude Include="HIDGamepadConfig.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
