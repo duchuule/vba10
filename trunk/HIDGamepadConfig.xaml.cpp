@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "HIDGamepadConfig.xaml.h"
+#include "EventHandlerForDevice.h"
 
 #include <robuffer.h>
 #include <math.h>
@@ -25,17 +26,26 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::Devices::HumanInterfaceDevice;
 using namespace Windows::Storage::Streams;
 using namespace Microsoft::WRL;
+using namespace Windows::Devices::Enumeration;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 HIDGamepadConfig::HIDGamepadConfig() :
-	isRegisteredForInputReportEvents(false), navigatedAway(false), configureStage(0), hasHatSwitch(false), emulator(EmulatorGame::GetInstance())
+	isRegisteredForInputReportEvents(false), configureStage(0), hasHatSwitch(false), emulator(EmulatorGame::GetInstance())
 {
 	InitializeComponent();
 
 
-	registeredDevice = emulator->HidInput->Device;
-	if (registeredDevice == nullptr) //connection failed
+	
+
+	
+}
+
+
+void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
+{
+	navigatedAway = false;
+	if (!EventHandlerForDevice::Current->IsDeviceConnected) //connection failed
 	{
 		//this->txtNotification->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		//this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
@@ -48,7 +58,7 @@ HIDGamepadConfig::HIDGamepadConfig() :
 		this->txtNotification->Text = "First press Start button.";
 
 		//initialize boolean button map
-		emulator->HidInput->booleanControlMapping = ref new Map <Platform::String^, int>();
+		emulator->HidInput->booleanControlMapping = ref new Map <int, Platform::String^ >();
 
 		//create list of numeric controls
 		emulator->HidInput->allNumericControls = ref new Vector < HidNumericControlExt^>();
@@ -58,8 +68,8 @@ HIDGamepadConfig::HIDGamepadConfig() :
 			{
 
 
-				auto numDescs = registeredDevice->GetNumericControlDescriptions(HidReportType::Input, usagePage, usageId);
-				
+				auto numDescs = EventHandlerForDevice::Current->Device->GetNumericControlDescriptions(HidReportType::Input, usagePage, usageId);
+
 				if (numDescs->Size == 1)  //only this is the real control
 				{
 					HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
@@ -81,24 +91,24 @@ HIDGamepadConfig::HIDGamepadConfig() :
 			}
 		}
 
+		RegisterForInputReportEvents();
 
-		if (!isRegisteredForInputReportEvents)
-		{
-			// Save event registration token so we can unregisted for events
-			inputReportEventToken = registeredDevice->InputReportReceived +=
-				ref new TypedEventHandler<HidDevice^, HidInputReportReceivedEventArgs^>(this, &HIDGamepadConfig::OnInputReportEvent);
+		EventHandlerForDevice::Current->OnDeviceConnected = 
+			ref new TypedEventHandler<EventHandlerForDevice^, OnDeviceConnectedEventArgs^>(this, &HIDGamepadConfig::OnDeviceConnected);
 
-			isRegisteredForInputReportEvents = true;
-		}
+		EventHandlerForDevice::Current->OnDeviceClose =
+			ref new TypedEventHandler<EventHandlerForDevice^, DeviceInformation^>(this, &HIDGamepadConfig::OnDeviceClosing);
 	}
-	
+
+
 }
+
+
 
 void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportReceivedEventArgs^ eventArgs)
 {
 	// The data from the InputReport
 	HidInputReport^ inputReport = eventArgs->Report;
-
 
 	//check buttons
 	auto bcontrols = inputReport->ActivatedBooleanControls;
@@ -137,7 +147,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				txtNotification->Text = instruction;
 				
 				txtStart1->Text = "Button " + startbuttonID.ToString();
-				emulator->HidInput->booleanControlMapping->Insert( "Start1", startbuttonID);
+				emulator->HidInput->booleanControlMapping->Insert( startbuttonID, "Start1");
 
 				this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
 			}));
@@ -154,7 +164,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 			for (int i = 0;i < emulator->HidInput->allNumericControls->Size; i++) //loop through all available numeric control
 			{
 				controlExt = emulator->HidInput->allNumericControls->GetAt(i);
-				if (controlExt->UsagePage = 0x01 && controlExt->UsageId == 0x39)
+				if (controlExt->UsagePage == 0x01 && controlExt->UsageId == 0x39)
 					break;
 			}
 
@@ -198,6 +208,8 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 	{
 		if (focusTextbox != nullptr)
 		{
+
+			//buttons
 			for (int i = 0; i < bcontrols->Size; i++)
 			{
 				auto control = bcontrols->GetAt(0);
@@ -211,14 +223,28 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 				this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control]()
 				{
-					emulator->HidInput->booleanControlMapping->Insert((String^)focusTextbox->Tag, control->Id);
+					//remove the tag if it has been asiggned to a different button
+					for (auto pair : emulator->HidInput->booleanControlMapping)
+					{
+						auto key = pair->Key;
+						auto value = pair->Value;
+
+						if (value == (String^)focusTextbox->Tag)
+						{
+							emulator->HidInput->booleanControlMapping->Remove(key);
+							break;
+						}
+					}
+
+					emulator->HidInput->booleanControlMapping->Insert(control->Id, (String^)focusTextbox->Tag);
 					focusTextbox->Text = "Button " + control->Id.ToString();
 				}));
 			}
 
-
+			//numeric controls
 			for (int i = 0;i < emulator->HidInput->allNumericControls->Size; i++) //loop through all available numeric control to see which one change value
 			{
+				
 				auto controlExt = emulator->HidInput->allNumericControls->GetAt(i);
 				auto control = inputReport->GetNumericControl(controlExt->UsagePage, controlExt->UsageId);
 
@@ -248,18 +274,51 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				//}
 				if (controlExt->Type == 0 && control->Value != controlExt->DefaultValue)
 				{
+					
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
 						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
+
+
+						//remove the tag if it has been asiggned to a different button value
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (value == (String^)focusTextbox->Tag)
+							{
+								controlExt->Mapping->Remove(key);
+								break;
+							}
+						}
+
+						
 						controlExt->Mapping->Insert(1, (String^)focusTextbox->Tag);
 
 					}));
 				}
 				else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue < -0.25 * controlExt->DefaultValue)
 				{
+					
+
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
 						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
+						
+						//remove the tag if it has been asiggned to a different button value
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (value == (String^)focusTextbox->Tag)
+							{
+								controlExt->Mapping->Remove(key);
+								break;
+							}
+						}
+
 						String^ test = (String^)focusTextbox->Tag;
 						controlExt->Mapping->Insert(-1, (String^)focusTextbox->Tag);
 
@@ -267,9 +326,25 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				}
 				else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue > 0.25 * controlExt->DefaultValue)
 				{
+					
+
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
 						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
+						
+						//remove the tag if it has been asiggned to a different button value
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (value == (String^)focusTextbox->Tag)
+							{
+								controlExt->Mapping->Remove(key);
+								break;
+							}
+						}
+
 						controlExt->Mapping->Insert(1, (String^)focusTextbox->Tag);
 					}));
 				}
@@ -326,16 +401,12 @@ void HIDGamepadConfig::OnNavigatedFrom(NavigationEventArgs^ /* e */)
 {
 	navigatedAway = true;
 
-	if (isRegisteredForInputReportEvents)
-	{
-		// Don't unregister event token if the device was removed and reconnected because registration token is no longer valid
-		registeredDevice->InputReportReceived -= inputReportEventToken;
-		registeredDevice = nullptr;
-		isRegisteredForInputReportEvents = false;
-	}
+	UnregisterFromInputReportEvent();
 
-
+	EventHandlerForDevice::Current->OnDeviceClose = nullptr;
+	EventHandlerForDevice::Current->OnDeviceConnected = nullptr;
 }
+
 
 
 void HIDGamepadConfig::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -345,3 +416,42 @@ void HIDGamepadConfig::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 		Frame->GoBack();
 	}
 }
+
+void HIDGamepadConfig::RegisterForInputReportEvents()
+{
+	if (!isRegisteredForInputReportEvents)
+	{
+		// Remember which device we are registering the device with, in case there is a device disconnect and reconnect. We want to avoid unregistering
+		// a stale token. Ideally, one should remove the event token (e.g. assign to null) upon the device removal to avoid using it again.
+		registeredDevice = EventHandlerForDevice::Current->Device;
+
+		// Save event registration token so we can unregisted for events
+		inputReportEventToken = registeredDevice->InputReportReceived +=
+			ref new TypedEventHandler<HidDevice^, HidInputReportReceivedEventArgs^>(this, &HIDGamepadConfig::OnInputReportEvent);
+
+		isRegisteredForInputReportEvents = true;
+	}
+}
+
+void HIDGamepadConfig::UnregisterFromInputReportEvent(void)
+{
+	if (isRegisteredForInputReportEvents)
+	{
+		// Don't unregister event token if the device was removed and reconnected because registration token is no longer valid
+		registeredDevice->InputReportReceived -= inputReportEventToken;
+		registeredDevice = nullptr;
+		isRegisteredForInputReportEvents = false;
+	}
+}
+
+
+void HIDGamepadConfig::OnDeviceConnected(EventHandlerForDevice^ /* sender */, OnDeviceConnectedEventArgs^ onDeviceConnectedEventArgs)
+{
+	RegisterForInputReportEvents();
+}
+void HIDGamepadConfig::OnDeviceClosing(EventHandlerForDevice^ /* sender */, DeviceInformation^ /* deviceInformation */)
+{
+	UnregisterFromInputReportEvent();
+
+}
+

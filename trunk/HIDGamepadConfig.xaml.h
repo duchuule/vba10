@@ -7,6 +7,7 @@
 
 #include "HIDGamepadConfig.g.h"
 #include "HIDControllerInput.h"
+#include "EventHandlerForDevice.h"
 #include "Emulator.h"
 
 namespace VBA10
@@ -21,6 +22,7 @@ namespace VBA10
 		HIDGamepadConfig();
 	protected:
 		virtual void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+		virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 	private:
 		EmulatorGame *emulator;
 
@@ -49,6 +51,11 @@ namespace VBA10
 		void closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void txtLeft1_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-		
+
+		void RegisterForInputReportEvents();
+		void UnregisterFromInputReportEvent(void);
+
+		void OnDeviceConnected(EventHandlerForDevice^ sender, OnDeviceConnectedEventArgs^ onDeviceConnectedEventArgs);
+		void OnDeviceClosing(EventHandlerForDevice^ sender, Windows::Devices::Enumeration::DeviceInformation^ deviceInformation);
 	};
 }

@@ -7,6 +7,7 @@
 #include <Util.h>
 #include <SoundDriver.h>
 
+
 using namespace Platform;
 using namespace concurrency;
 
@@ -254,7 +255,7 @@ namespace VBA10
 		{
 			EnterCriticalSection(&pauseSync);
 			emulating = false;
-			this->HidInput->StopListening();
+		
 		}
 
 	}
@@ -265,7 +266,6 @@ namespace VBA10
 		{
 
 			emulating = true;
-			this->HidInput->StartListening();
 
 			LeaveCriticalSection(&pauseSync);
 		}
@@ -324,9 +324,16 @@ namespace VBA10
 
 #ifndef NO_XBOX
 		if (xboxElapsed < 3600.0f)
+		{
 			this->p1Controller->Update();
+			this->HidInput->Update();
+		}
 #endif
 		this->virtualInput->Update();
+
+		
+
+		//there is no need to update hidcontroller because we use event to update
 
 		/*if(timeMeasured && IsROMLoaded() && (!Settings.StopEmulation || autosaving))
 		{		

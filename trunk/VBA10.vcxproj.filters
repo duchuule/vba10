@@ -281,6 +281,7 @@
       <Filter>Emulator</Filter>
     </ClCompile>
     <ClCompile Include="HIDGamepadConfig.xaml.cpp" />
+    <ClCompile Include="EventHandlerForDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -541,6 +542,7 @@
       <Filter>Emulator</Filter>
     </ClInclude>
     <ClInclude Include="HIDGamepadConfig.xaml.h" />
+    <ClInclude Include="EventHandlerForDevice.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
