@@ -10,6 +10,7 @@
 #include <sstream>
 #include <Xinput.h>
 #include <HIDGamepadConfig.xaml.h>
+#include "EventHandlerForDevice.h"
 
 using namespace VBA10;
 
@@ -161,97 +162,33 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 		index = 0;
 
 
-		
-	create_task(HidDevice::FromIdAsync(this->HIDDeviceList->GetAt(index)->Id, FileAccessMode::Read))
-		.then([this](task<HidDevice^> deviceTask)
+	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index))).then([this](task<bool> openDeviceTask)
 	{
-		bool successfullyOpenedDevice = false;
-		//NotifyType notificationStatus;
-		//String^ notificationMessage = nullptr;
-
-		//// This may throw an exception or return null if we could not open the device
-
-		emulator->HidInput->Device = deviceTask.get();
+		bool openSuccess = openDeviceTask.get();
 
 		this->Frame->Navigate(
 			TypeName(HIDGamepadConfig::typeid),
 			nullptr,
 			ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
-
-		//// Device could have been blocked by user or the device has already been opened by another app.
-		//if (emulator->hidInput->device != nullptr)
-		//{
-		//	successfullyOpenedDevice = true;
-
-		//	deviceInformation = deviceInfo;
-		//	this->deviceSelector = deviceSelector;
-
-		//	notificationStatus = NotifyType::StatusMessage;
-		//	notificationMessage = "Device " + deviceInformation->Id + " opened";
-
-		//	if (appSuspendEventToken.Value == 0 || appResumeEventToken.Value == 0)
-		//	{
-		//		RegisterForAppEvents();
-		//	}
-
-		//	// User can block the device after it has been opened in the Settings charm. We can detect this by registering for the 
-		//	// DeviceAccessInformation->AccessChanged event
-		//	if (deviceAccessInformation == nullptr)
-		//	{
-		//		RegisterForDeviceAccessStatusChange();
-		//	}
-
-		//	// Create and register device watcher events for the device to be opened unless we're reopening the device
-		//	if (deviceWatcher == nullptr)
-		//	{
-		//		deviceWatcher = Enumeration::DeviceInformation::CreateWatcher(this->deviceSelector);
-
-		//		RegisterForDeviceWatcherEvents();
-		//	}
-
-		//	if (!watcherStarted)
-		//	{
-		//		// Start the device watcher after we made sure that the device is opened.
-		//		StartDeviceWatcher();
-		//	}
-		//}
-		//else
-		//{
-		//	successfullyOpenedDevice = false;
-
-		//	notificationStatus = NotifyType::ErrorMessage;
-
-		//	auto deviceAccessStatus = Enumeration::DeviceAccessInformation::CreateFromId(deviceInfo->Id)->CurrentStatus;
-
-		//	if (deviceAccessStatus == DeviceAccessStatus::DeniedByUser)
-		//	{
-		//		notificationMessage = "Access to the device was blocked by the user : " + deviceInfo->Id;
-		//	}
-		//	else if (deviceAccessStatus == DeviceAccessStatus::DeniedBySystem)
-		//	{
-		//		// This status is most likely caused by app permissions (did not declare the device in the app's package.appxmanifest)
-		//		// This status does not cover the case where the device is already opened by another app.
-		//		notificationMessage = "Access to the device was blocked by the system : " + deviceInfo->Id;
-		//	}
-		//	else
-		//	{
-		//		// Most likely the device is opened by another app, but cannot be sure
-		//		notificationMessage = "Unknown error, possibly opened by another app : " + deviceInfo->Id;
-		//	}
-		//}
-
-		//MainPage::Current->NotifyUser(notificationMessage, notificationStatus);
-
-		//// Notify registered callback handle whether or not the device has been opened
-		//if (deviceConnectedCallback != nullptr)
-		//{
-		//	auto deviceConnectedEventArgs = ref new OnDeviceConnectedEventArgs(successfullyOpenedDevice, deviceInfo);
-
-		//	deviceConnectedCallback(this, deviceConnectedEventArgs);
-		//}
-
-		//return successfullyOpenedDevice;
 	});
+
+	//create_task(HidDevice::FromIdAsync(this->HIDDeviceList->GetAt(index)->Id, FileAccessMode::Read))
+	//	.then([this](task<HidDevice^> deviceTask)
+	//{
+	//	bool successfullyOpenedDevice = false;
+	//	//NotifyType notificationStatus;
+	//	//String^ notificationMessage = nullptr;
+
+	//	//// This may throw an exception or return null if we could not open the device
+
+	//	emulator->HidInput->Device = deviceTask.get();
+
+	//	this->Frame->Navigate(
+	//		TypeName(HIDGamepadConfig::typeid),
+	//		nullptr,
+	//		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+
+	//});
 
 	
 }

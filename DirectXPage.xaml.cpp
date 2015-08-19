@@ -427,11 +427,14 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 			m_main->emulator->Pause();
 		else
 			m_main->emulator->Unpause();
+
+		//m_main->emulator->HidInput->StartListening();
 	}
 	else
 	{
 		//m_main->StopRenderLoop();
 		m_main->emulator->Pause();
+		//m_main->emulator->HidInput->StopListening();
 	}
 }
 

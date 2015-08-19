@@ -28,15 +28,16 @@ namespace VBA10
 		
 	internal:
 		const ControllerState* GetControllerState(void);
+		void Update();
 
 		void StartListening();  //start listening to report event
 		void StopListening();
 		
 
-		Windows::Devices::HumanInterfaceDevice::HidDevice ^Device;
+		//Windows::Devices::HumanInterfaceDevice::HidDevice ^Device;
 		
 		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
-		Platform::Collections::Map <Platform::String^, int>^ booleanControlMapping;
+		Platform::Collections::Map <int, Platform::String^>^ booleanControlMapping;
 		
 
 	private:
@@ -44,13 +45,16 @@ namespace VBA10
 
 		bool isListening;
 		Windows::Foundation::EventRegistrationToken inputReportEventToken;
+		Windows::Devices::HumanInterfaceDevice::HidInputReport^ inputReport;
 
 		~HIDControllerInput(void);
 		void OnInputReportEvent(
 			Windows::Devices::HumanInterfaceDevice::HidDevice^ sender,
 			Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs^ eventArgs);
 
-		void GetMapping(Platform::String^ tag, bool* left, bool* right, bool* up, bool* down, bool* a, bool* b, bool* l, bool* r, bool* turbo);
+		CRITICAL_SECTION inputSync;
+
+		void GetMapping(Platform::String^ tag, bool* left, bool* right, bool* up, bool* down, bool* a, bool* b, bool* l, bool* r, bool* select, bool* start, bool* turbo);
 
 	};
 

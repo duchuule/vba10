@@ -57,6 +57,7 @@ SoundDriver * systemSoundInit()
 ControllerState oldKeyboardState;
 ControllerState oldControllerState;
 ControllerState oldvControllerState;
+ControllerState oldHidState;
 
 u32 systemReadJoypad(int gamepad) 
 { 
@@ -96,21 +97,21 @@ u32 systemReadJoypad(int gamepad)
 		res |= 1;
 	if(keyboardState->BPressed || controllerState->BPressed || vControllerState->BPressed || hidState->BPressed)
 		res |= 2;
-	if(keyboardState->SelectPressed || controllerState->SelectPressed || vControllerState->SelectPressed)
+	if(keyboardState->SelectPressed || controllerState->SelectPressed || vControllerState->SelectPressed || hidState->SelectPressed)
 		res |= 4;
-	if(keyboardState->StartPressed || controllerState->StartPressed || vControllerState->StartPressed)
+	if(keyboardState->StartPressed || controllerState->StartPressed || vControllerState->StartPressed || hidState->StartPressed)
 		res |= 8;
-	if(keyboardState->RightPressed || controllerState->RightPressed || vControllerState->RightPressed)
+	if(keyboardState->RightPressed || controllerState->RightPressed || vControllerState->RightPressed || hidState->RightPressed)
 		res |= 16;
-	if(keyboardState->LeftPressed || controllerState->LeftPressed || vControllerState->LeftPressed)
+	if(keyboardState->LeftPressed || controllerState->LeftPressed || vControllerState->LeftPressed || hidState->LeftPressed)
 		res |= 32;
-	if(keyboardState->UpPressed || controllerState->UpPressed || vControllerState->UpPressed)
+	if(keyboardState->UpPressed || controllerState->UpPressed || vControllerState->UpPressed || hidState->UpPressed)
 		res |= 64;
-	if(keyboardState->DownPressed || controllerState->DownPressed || vControllerState->DownPressed)
+	if(keyboardState->DownPressed || controllerState->DownPressed || vControllerState->DownPressed || hidState->DownPressed)
 		res |= 128;
-	if(keyboardState->RPressed || controllerState->RPressed || vControllerState->RPressed)
+	if(keyboardState->RPressed || controllerState->RPressed || vControllerState->RPressed || hidState->RPressed)
 		res |= 256;
-	if(keyboardState->LPressed || controllerState->LPressed || vControllerState->LPressed)
+	if(keyboardState->LPressed || controllerState->LPressed || vControllerState->LPressed || hidState->LPressed)
 		res |= 512;
 
 	// disallow L+R or U+D of being pressed at the same time
@@ -145,21 +146,31 @@ u32 systemReadJoypad(int gamepad)
 			toggledThisUpdate = true;
 		}
 	}
+	if (!toggledThisUpdate)
+	{
+		if (!hidState->TurboTogglePressed && oldHidState.TurboTogglePressed)
+		{
+			EmulatorSettings::Current->EnableTurbo = !EmulatorSettings::Current->EnableTurbo;
+			toggledThisUpdate = true;
+		}
+	}
 
 	if(EmulatorSettings::Current->EnableTurbo &&
 		(oldKeyboardState.TurboPressed && !keyboardState->TurboPressed) ||
 		(oldControllerState.TurboPressed && !controllerState->TurboPressed) ||
-		(oldvControllerState.TurboPressed && !vControllerState->TurboPressed))
+		(oldvControllerState.TurboPressed && !vControllerState->TurboPressed) ||
+		(oldHidState.TurboPressed && !hidState->TurboPressed))
 	{
 		EmulatorSettings::Current->EnableTurbo = false;
 	}
 
-	if(EmulatorSettings::Current->EnableTurbo || keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed)
+	if(EmulatorSettings::Current->EnableTurbo || keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed || hidState->TurboPressed)
 		res |= 1024;
 	
 	oldControllerState = *controllerState;
 	oldKeyboardState = *keyboardState;
 	oldvControllerState = *vControllerState;
+	oldHidState = *hidState;
 
 	return res;
 }

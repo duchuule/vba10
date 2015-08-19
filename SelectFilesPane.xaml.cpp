@@ -20,6 +20,7 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::Storage;
+using namespace Windows::UI::Popups;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -47,9 +48,23 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 
 }
 
+void SelectFilesPane::CancelBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//close the pane
+	auto dp = this->Parent;
+	Popup^ pop = (Popup^)dp;
+	pop->IsOpen = false;
+}
 
 void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	if (this->fileList->SelectedItems->Size == 0)
+	{
+		MessageDialog ^dialog = ref new MessageDialog("You have to select at least one file.");
+		dialog->ShowAsync();
+		return;
+	}
+
 	this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	this->OkBtn->IsEnabled = false;
@@ -74,10 +89,7 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	}
 
 
-	//close the pane
-	//auto dp = this->Parent;
-	//Popup^ pop = (Popup^)dp;
-	//pop->IsOpen = false;
+
 
 	//return the file to whatever windows that call it
 	if (this->FilesSelectedCallback)
