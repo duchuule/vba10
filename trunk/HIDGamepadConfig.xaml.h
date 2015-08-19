@@ -7,6 +7,7 @@
 
 #include "HIDGamepadConfig.g.h"
 #include "HIDControllerInput.h"
+#include "Emulator.h"
 
 namespace VBA10
 {
@@ -21,6 +22,8 @@ namespace VBA10
 	protected:
 		virtual void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 	private:
+		EmulatorGame *emulator;
+
 		Windows::Foundation::EventRegistrationToken inputReportEventToken;
 		bool isRegisteredForInputReportEvents;
 
@@ -31,7 +34,8 @@ namespace VBA10
 		Windows::UI::Xaml::Controls::TextBox^ focusTextbox;
 		bool navigatedAway;
 
-		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
+		//Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
+		//Platform::Collections::Map <int, Platform::String^>^ booleanControlMapping;
 		bool hasHatSwitch;  //to see if the gamepad has a hat switch used as d-pad
 		int configureStage; //0: press start, 1: freely assign
 		int startbuttonID; //record id of start button

@@ -5,44 +5,6 @@
 
 namespace VBA10
 {
-	class HIDControllerInput : public EmulatorInput
-	{
-	public:
-		HIDControllerInput();
-		~HIDControllerInput(void);
-
-		const ControllerState *GetControllerState(void);
-		void Update(void);
-
-		Windows::Devices::HumanInterfaceDevice::HidDevice^ GetHidDevice()
-		{
-			return device;
-		}
-
-		void SetHidDevice(Windows::Devices::HumanInterfaceDevice::HidDevice^ device)
-		{
-			this->device = device;
-		}
-
-		
-
-		
-
-	private:
-		ControllerState state;
-		Windows::Devices::HumanInterfaceDevice::HidDevice ^device;
-		
-	};
-
-	ref class NumericControlMapping
-	{
-	internal:
-		NumericControlMapping(long long minval, long long maxval, Platform::String^ assignment);
-		long long MinVal;
-		long long MaxVal;
-		Platform::String^ Assignment;
-	};
-
 	ref class HidNumericControlExt sealed
 	{
 	public:
@@ -57,6 +19,43 @@ namespace VBA10
 		Platform::Collections::Map<int, Platform::String^>^ Mapping;
 
 	};
+
+
+	ref class HIDControllerInput sealed
+	{
+	public:
+		HIDControllerInput();
+		
+	internal:
+		const ControllerState* GetControllerState(void);
+
+		void StartListening();  //start listening to report event
+		void StopListening();
+		
+
+		Windows::Devices::HumanInterfaceDevice::HidDevice ^Device;
+		
+		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
+		Platform::Collections::Map <Platform::String^, int>^ booleanControlMapping;
+		
+
+	private:
+		ControllerState state;
+
+		bool isListening;
+		Windows::Foundation::EventRegistrationToken inputReportEventToken;
+
+		~HIDControllerInput(void);
+		void OnInputReportEvent(
+			Windows::Devices::HumanInterfaceDevice::HidDevice^ sender,
+			Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs^ eventArgs);
+
+		void GetMapping(Platform::String^ tag, bool* left, bool* right, bool* up, bool* down, bool* a, bool* b, bool* l, bool* r, bool* turbo);
+
+	};
+
+
+	
 
 	
 }

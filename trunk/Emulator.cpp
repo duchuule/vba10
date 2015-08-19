@@ -98,7 +98,7 @@ namespace VBA10
 #endif
 		this->keyboard = new KeyboardInput();
 		this->virtualInput = new VirtualControllerInput();
-		this->hidInput = new HIDControllerInput();
+		this->HidInput = ref new HIDControllerInput();
 
 
 		this->updateCount = 0;
@@ -200,6 +200,11 @@ namespace VBA10
 	}
 #endif
 
+	HIDControllerInput ^EmulatorGame::GetHidControllerInput(void) const
+	{
+		return this->HidInput;
+	}
+
 	void EmulatorGame::FocusChanged(bool focus)
 	{
 		this->focus = focus;
@@ -249,6 +254,7 @@ namespace VBA10
 		{
 			EnterCriticalSection(&pauseSync);
 			emulating = false;
+			this->HidInput->StopListening();
 		}
 
 	}
@@ -259,6 +265,8 @@ namespace VBA10
 		{
 
 			emulating = true;
+			this->HidInput->StartListening();
+
 			LeaveCriticalSection(&pauseSync);
 		}
 	}

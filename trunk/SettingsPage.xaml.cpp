@@ -171,7 +171,7 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 
 		//// This may throw an exception or return null if we could not open the device
 
-		emulator->SetHIDDevice(deviceTask.get());
+		emulator->HidInput->Device = deviceTask.get();
 
 		this->Frame->Navigate(
 			TypeName(HIDGamepadConfig::typeid),
