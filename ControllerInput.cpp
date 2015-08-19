@@ -25,6 +25,8 @@ namespace VBA10
 		{
 			XINPUT_STATE state = this->xboxPad->GetState();
 
+			this->state.TurboTogglePressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
+
 			this->state.LeftPressed = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) || (state.Gamepad.sThumbLX < (-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
 			this->state.RightPressed = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) || (state.Gamepad.sThumbLX > (XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
 			this->state.UpPressed = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) || (state.Gamepad.sThumbLY > (XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
@@ -35,13 +37,13 @@ namespace VBA10
 
 			this->state.APressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
 			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
-			//this->state.YPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+			this->state.YPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
 			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
 			this->state.LPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) || state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 			this->state.RPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) || state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 
 			//this->state.TurboPressed = ((state.Gamepad.BCenterXTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) || (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD));
-			this->state.TurboTogglePressed = this->state.XPressed || this->state.YPressed;
+			
 		}else
 		{
 			ZeroMemory(&this->state, sizeof(ControllerState));

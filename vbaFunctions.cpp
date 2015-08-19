@@ -4,6 +4,7 @@
 #include "ControllerInput.h"
 #include "Emulator.h"
 #include "EmulatorSettings.h"
+#include "HIDControllerInput.h"
 
 using namespace VBA10;
 
@@ -66,6 +67,8 @@ u32 systemReadJoypad(int gamepad)
 #ifndef NO_XBOX
 	ControllerInput *controller = emulator->GetControllerInput();
 #endif
+	
+	HIDControllerInput ^hidController = emulator->GetHidControllerInput();
 
 	VirtualControllerInput *vController = VirtualControllerInput::GetInstance();
 	if (
@@ -85,11 +88,13 @@ u32 systemReadJoypad(int gamepad)
 	const ControllerState *controllerState = &controllerState1;
 #endif
 
+	const ControllerState *hidState = hidController->GetControllerState();
+
 	const ControllerState *vControllerState = vController->GetControllerState();
 
-	if(keyboardState->APressed || controllerState->APressed || vControllerState->APressed)
+	if(keyboardState->APressed || controllerState->APressed || vControllerState->APressed || hidState->APressed)
 		res |= 1;
-	if(keyboardState->BPressed || controllerState->BPressed || vControllerState->BPressed)
+	if(keyboardState->BPressed || controllerState->BPressed || vControllerState->BPressed || hidState->BPressed)
 		res |= 2;
 	if(keyboardState->SelectPressed || controllerState->SelectPressed || vControllerState->SelectPressed)
 		res |= 4;

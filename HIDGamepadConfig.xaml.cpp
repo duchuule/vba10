@@ -5,7 +5,7 @@
 
 #include "pch.h"
 #include "HIDGamepadConfig.xaml.h"
-#include "Emulator.h"
+
 #include <robuffer.h>
 #include <math.h>
 #include <Windows.h>
@@ -29,12 +29,12 @@ using namespace Microsoft::WRL;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 HIDGamepadConfig::HIDGamepadConfig() :
-	isRegisteredForInputReportEvents(false), navigatedAway(false), configureStage(0), hasHatSwitch(false)
+	isRegisteredForInputReportEvents(false), navigatedAway(false), configureStage(0), hasHatSwitch(false), emulator(EmulatorGame::GetInstance())
 {
 	InitializeComponent();
 
 
-	registeredDevice = EmulatorGame::GetInstance()->GetHIDDevice();
+	registeredDevice = emulator->HidInput->Device;
 	if (registeredDevice == nullptr) //connection failed
 	{
 		//this->txtNotification->Visibility = Windows::UI::Xaml::Visibility::Visible;
@@ -47,8 +47,11 @@ HIDGamepadConfig::HIDGamepadConfig() :
 		//this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		this->txtNotification->Text = "First press Start button.";
 
+		//initialize boolean button map
+		emulator->HidInput->booleanControlMapping = ref new Map <Platform::String^, int>();
+
 		//create list of numeric controls
-		this->allNumericControls = ref new Vector < HidNumericControlExt^>();
+		emulator->HidInput->allNumericControls = ref new Vector < HidNumericControlExt^>();
 		for (unsigned short usagePage = 1; usagePage <= 5; usagePage++)
 		{
 			for (unsigned short usageId = 1; usageId < 255; usageId++)
@@ -60,7 +63,7 @@ HIDGamepadConfig::HIDGamepadConfig() :
 				if (numDescs->Size == 1)  //only this is the real control
 				{
 					HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
-					this->allNumericControls->Append(control);
+					emulator->HidInput->allNumericControls->Append(control);
 
 					if (usagePage == 0x01 && usageId == 0x39)  //this gamepad has hatswitch
 					{
@@ -101,12 +104,12 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 	auto bcontrols = inputReport->ActivatedBooleanControls;
 
 
-	if (configureStage == 0) //record start button
+	if (configureStage == 0) //record start button and default value of numeric buttons
 	{
 		//get default value of numeric button
-		for (int i = 0;i < allNumericControls->Size; i++)
+		for (int i = 0;i < emulator->HidInput->allNumericControls->Size; i++)
 		{
-			auto controlExt = allNumericControls->GetAt(i);
+			auto controlExt = emulator->HidInput->allNumericControls->GetAt(i);
 			auto control = inputReport->GetNumericControl(controlExt->UsagePage, controlExt->UsageId);
 			controlExt->DefaultValue = control->Value;
 
@@ -134,6 +137,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				txtNotification->Text = instruction;
 				
 				txtStart1->Text = "Button " + startbuttonID.ToString();
+				emulator->HidInput->booleanControlMapping->Insert( "Start1", startbuttonID);
 
 				this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
 			}));
@@ -147,9 +151,9 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 		{
 			//find the hat switch
 			HidNumericControlExt^ controlExt;
-			for (int i = 0;i < allNumericControls->Size; i++) //loop through all available numeric control
+			for (int i = 0;i < emulator->HidInput->allNumericControls->Size; i++) //loop through all available numeric control
 			{
-				controlExt = allNumericControls->GetAt(i);
+				controlExt = emulator->HidInput->allNumericControls->GetAt(i);
 				if (controlExt->UsagePage = 0x01 && controlExt->UsageId == 0x39)
 					break;
 			}
@@ -207,14 +211,15 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 				this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control]()
 				{
+					emulator->HidInput->booleanControlMapping->Insert((String^)focusTextbox->Tag, control->Id);
 					focusTextbox->Text = "Button " + control->Id.ToString();
 				}));
 			}
 
 
-			for (int i = 0;i < allNumericControls->Size; i++) //loop through all available numeric control to see which one change value
+			for (int i = 0;i < emulator->HidInput->allNumericControls->Size; i++) //loop through all available numeric control to see which one change value
 			{
-				auto controlExt = allNumericControls->GetAt(i);
+				auto controlExt = emulator->HidInput->allNumericControls->GetAt(i);
 				auto control = inputReport->GetNumericControl(controlExt->UsagePage, controlExt->UsageId);
 
 				//record maximum value from input
