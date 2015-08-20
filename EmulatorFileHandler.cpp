@@ -63,6 +63,7 @@ namespace VBA10
 	};
 
 	Map<String ^, ROMConfig> ^romConfigs = nullptr;
+	Map<String^, HIDControllerInput^>^ hidConfigs = ref new Map<String^, HIDControllerInput^>();
 
 	int ROMSize = 0;
 	bool ROMLoaded = false;
@@ -2884,7 +2885,60 @@ namespace VBA10
 		});
 	}
 
+	task<void> SaveHidConfig()
+	{
+		return create_task(ApplicationData::Current->LocalFolder->CreateFileAsync("hid-configs.ini", CreationCollisionOption::ReplaceExisting))
+			.then([](StorageFile ^file)
+		{
+			return file->OpenAsync(FileAccessMode::ReadWrite);
+		}).then([](IRandomAccessStream ^stream)
+		{
+			IOutputStream ^outStream = stream->GetOutputStreamAt(0);
+			DataWriter ^writer = ref new DataWriter(outStream);
 
+			writer->UnicodeEncoding = UnicodeEncoding::Utf8;
+			writer->ByteOrder = ByteOrder::LittleEndian;
 
+			for (auto pair : hidConfigs)
+			{
+				String^ id = pair->Key;
+				HIDControllerInput^ config = pair->Value;
+
+				writer->WriteString("[" + id + "]\n");
+
+				for (auto bpair : config->booleanControlMapping)
+				{
+					int bid = bpair->Key;
+					String^ function = bpair->Value;
+
+					writer->WriteString("B_" + bid + ":" + function + "\n");
+				}
+
+				for (auto &ncontrol : config->allNumericControls)
+				{
+					String^ out = "N_" + ncontrol->UsagePage + "_" + ncontrol->UsageId + ":" + ncontrol->Type + "_"
+						+ ncontrol->DefaultValue + "_" + ncontrol->MaximumValue + "_" + ncontrol->Mapping->Size;
+					for (auto npair : ncontrol->Mapping)
+					{
+						int nid = npair->Key;
+						String^ function = npair->Value;
+						out += "_" + nid + "_" + function;
+					}
+
+					out += "\n";
+
+					writer->WriteString(out);
+				}
+
+				writer->WriteString("\n");
+			}
+			return create_task([writer]()
+			{
+				create_task(writer->StoreAsync()).wait();
+				create_task(writer->FlushAsync()).wait();
+				writer->DetachStream();
+			});
+		});
+	}
 
 }

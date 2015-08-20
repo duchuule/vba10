@@ -64,7 +64,8 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 		if (folder)
 		{
 			//store folder
-			this->tmpfolder = folder;
+			//this->tmpfolder = folder;
+			auto tmpfolder = make_shared<StorageFolder ^>(folder);
 
 			//remove special char in path so that we can use path as token
 			Platform::String ^ptoken = folder->Path;
@@ -75,7 +76,9 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 			replace(token.begin(), token.end(), '\\', '_');
 			ptoken = ref new Platform::String(token.c_str());
 
-			this->tmptoken = ptoken;
+			//this->tmptoken = ptoken;
+			auto tmptoken = make_shared<String^>(ptoken);
+			
 
 			//add folder to future accesslist
 			if (!StorageApplicationPermissions::FutureAccessList->ContainsItem(ptoken))
@@ -88,7 +91,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 			options->FileTypeFilter->Append(".gb");
 			//TODO: add support for other file types
 			return create_task(folder->CreateFileQueryWithOptions(options)->GetFilesAsync())
-				.then([this](IVectorView<StorageFile ^> ^files)
+				.then([this, tmpfolder, tmptoken](IVectorView<StorageFile ^> ^files)
 			{
 
 				//open panel to let user select file
@@ -104,7 +107,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 				pane->Width = titleBar->ActualWidth;//statePopup->Width;
 				pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
 
-				pane->FilesSelectedCallback = ref new FilesSelectedDelegate([=](IVector<int>^ selectedIndices)
+				pane->FilesSelectedCallback = ref new FilesSelectedDelegate([this, tmpfolder, tmptoken, files](IVector<int>^ selectedIndices)
 				{
 
 					vector<task<void>> tasks;
@@ -129,10 +132,10 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 
 
 						//create rom entry
-						ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, this->tmpfolder->Path,
-							this->tmptoken, psnapshotname);
+						ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, (*tmpfolder)->Path,
+							*tmptoken, psnapshotname);
 
-						entry->Folder = this->tmpfolder;
+						entry->Folder = *tmpfolder;
 
 						App::ROMDB->AllROMDBEntries->Append(entry);
 

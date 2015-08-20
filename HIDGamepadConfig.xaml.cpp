@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "HIDGamepadConfig.xaml.h"
 #include "EventHandlerForDevice.h"
+#include "EmulatorFileHandler.h"
 
 #include <robuffer.h>
 #include <math.h>
@@ -399,12 +400,20 @@ void HIDGamepadConfig::txtLeft1_LostFocus(Platform::Object^ sender, Windows::UI:
 
 void HIDGamepadConfig::OnNavigatedFrom(NavigationEventArgs^ /* e */)
 {
+	
 	navigatedAway = true;
 
 	UnregisterFromInputReportEvent();
 
 	EventHandlerForDevice::Current->OnDeviceClose = nullptr;
 	EventHandlerForDevice::Current->OnDeviceConnected = nullptr;
+
+	//print out config
+	if (EventHandlerForDevice::Current->Device != nullptr)
+	{
+		hidConfigs->Insert(EventHandlerForDevice::Current->DeviceInformation->Id, emulator->HidInput);
+		SaveHidConfig();
+	}
 }
 
 

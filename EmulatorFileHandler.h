@@ -18,10 +18,11 @@ namespace VBA10
 	extern int SavestateSlot;
 	extern Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats;
 	extern bool ShouldApplyNewCheats;
+	extern Platform::Collections::Map<Platform::String^, HIDControllerInput^>^ hidConfigs;
 
 	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight);
 
-
+	
 	task<void> ParseVBAIniAsync();
 	bool IsROMLoaded(void);
 	bool IsGBAROMLoaded(void);
@@ -61,5 +62,8 @@ namespace VBA10
 
 	void SelectSavestateSlot(int slot);
 	int GetSavestateSlot(void);
+
+	task<void> SaveHidConfig();
+	
 
 }
