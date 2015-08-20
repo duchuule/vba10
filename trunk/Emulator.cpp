@@ -326,8 +326,10 @@ namespace VBA10
 		if (xboxElapsed < 3600.0f)
 		{
 			this->p1Controller->Update();
-			this->HidInput->Update();
+			this->HidInput->Update(true);
 		}
+		else
+			this->HidInput->Update(false);
 #endif
 		this->virtualInput->Update();
 

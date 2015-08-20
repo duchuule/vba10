@@ -90,8 +90,14 @@ IAsyncOperation<bool>^ EventHandlerForDevice::OpenDeviceAsync(Enumeration::Devic
 			//String^ notificationMessage = nullptr;
 
 			// This may throw an exception or return null if we could not open the device
-			device = deviceTask.get();
-
+			try
+			{
+				device = deviceTask.get();
+			}
+			catch (Platform::Exception^)
+			{
+				device = nullptr;
+			}
 			// Device could have been blocked by user or the device has already been opened by another app.
 			if (device != nullptr)
 			{
