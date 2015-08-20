@@ -2,6 +2,7 @@
 
 #include <collection.h>
 #include "EmulatorInput.h"
+#include "EventHandlerForDevice.h"
 
 namespace VBA10
 {
@@ -33,24 +34,36 @@ namespace VBA10
 		void StartListening();  //start listening to report event
 		void StopListening();
 		
+		void RegisterForInputReportEvents();
+		void UnregisterFromInputReportEvent(void);
 
 		//Windows::Devices::HumanInterfaceDevice::HidDevice ^Device;
 		
 		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
 		Platform::Collections::Map <int, Platform::String^>^ booleanControlMapping;
 		
+		void OnDeviceConnected(EventHandlerForDevice^ sender, OnDeviceConnectedEventArgs^ onDeviceConnectedEventArgs);
+		void OnDeviceClosing(EventHandlerForDevice^ sender, Windows::Devices::Enumeration::DeviceInformation^ deviceInformation);
 
 	private:
 		ControllerState state;
 
-		bool isListening;
 		Windows::Foundation::EventRegistrationToken inputReportEventToken;
-		Windows::Devices::HumanInterfaceDevice::HidInputReport^ inputReport;
+		bool isRegisteredForInputReportEvents;
+
+		// Device that we registered for events with
+		Windows::Devices::HumanInterfaceDevice::HidDevice^ registeredDevice;
 
 		~HIDControllerInput(void);
+
+		
+
 		void OnInputReportEvent(
 			Windows::Devices::HumanInterfaceDevice::HidDevice^ sender,
 			Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs^ eventArgs);
+
+		
+
 
 		CRITICAL_SECTION inputSync;
 

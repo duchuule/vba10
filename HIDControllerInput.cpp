@@ -3,10 +3,11 @@
 using namespace Windows::Devices::HumanInterfaceDevice;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
+using namespace Windows::Devices::Enumeration;
 
 namespace VBA10
 {
-	HIDControllerInput::HIDControllerInput(): isListening(false)
+	HIDControllerInput::HIDControllerInput(): isRegisteredForInputReportEvents(false)
 	{
 		InitializeCriticalSectionEx(&inputSync, NULL, NULL);
 
@@ -28,31 +29,63 @@ namespace VBA10
 
 	void HIDControllerInput::StartListening()
 	{
-		//if (Device == nullptr)
-		//	return;
+		if (EventHandlerForDevice::Current->IsDeviceConnected)
+		{
+			RegisterForInputReportEvents();
 
-		//if (!isListening)
-		//{
-		//	// Save event registration token so we can unregisted for events
-		//	inputReportEventToken = Device->InputReportReceived +=
-		//		ref new TypedEventHandler<HidDevice^, HidInputReportReceivedEventArgs^>(this, &HIDControllerInput::OnInputReportEvent);
+			EventHandlerForDevice::Current->OnDeviceConnected =
+				ref new TypedEventHandler<EventHandlerForDevice^, OnDeviceConnectedEventArgs^>(this, &HIDControllerInput::OnDeviceConnected);
 
-		//	isListening = true;
-		//}
+			EventHandlerForDevice::Current->OnDeviceClose =
+				ref new TypedEventHandler<EventHandlerForDevice^, DeviceInformation^>(this, &HIDControllerInput::OnDeviceClosing);
+		}
 	}
 
 	void HIDControllerInput::StopListening()
 	{
-		//if (Device == nullptr)
-		//	return;
+		UnregisterFromInputReportEvent();
 
-		//if (isListening)
-		//{
-		//	Device->InputReportReceived -= inputReportEventToken;
-		//	isListening = false;
-		//}
+		EventHandlerForDevice::Current->OnDeviceClose = nullptr;
+		EventHandlerForDevice::Current->OnDeviceConnected = nullptr;
 
 	}
+
+	void HIDControllerInput::RegisterForInputReportEvents()
+	{
+		if (!isRegisteredForInputReportEvents)
+		{
+			// Remember which device we are registering the device with, in case there is a device disconnect and reconnect. We want to avoid unregistering
+			// a stale token. Ideally, one should remove the event token (e.g. assign to null) upon the device removal to avoid using it again.
+			registeredDevice = EventHandlerForDevice::Current->Device;
+
+			// Save event registration token so we can unregisted for events
+			inputReportEventToken = registeredDevice->InputReportReceived +=
+				ref new TypedEventHandler<HidDevice^, HidInputReportReceivedEventArgs^>(this, &HIDControllerInput::OnInputReportEvent);
+
+			isRegisteredForInputReportEvents = true;
+		}
+	}
+
+	void HIDControllerInput::UnregisterFromInputReportEvent(void)
+	{
+		if (isRegisteredForInputReportEvents)
+		{
+			// Don't unregister event token if the device was removed and reconnected because registration token is no longer valid
+			registeredDevice->InputReportReceived -= inputReportEventToken;
+			registeredDevice = nullptr;
+			isRegisteredForInputReportEvents = false;
+		}
+	}
+
+	void HIDControllerInput::OnDeviceConnected(EventHandlerForDevice^ /* sender */, OnDeviceConnectedEventArgs^ onDeviceConnectedEventArgs)
+	{
+		RegisterForInputReportEvents();
+	}
+	void HIDControllerInput::OnDeviceClosing(EventHandlerForDevice^ /* sender */, DeviceInformation^ /* deviceInformation */)
+	{
+		UnregisterFromInputReportEvent();
+	}
+
 
 	void HIDControllerInput::OnInputReportEvent(HidDevice^ sender, HidInputReportReceivedEventArgs^ eventArgs)
 	{
@@ -132,16 +165,10 @@ namespace VBA10
 
 	void HIDControllerInput::Update()
 	{
-		if (this->inputReport == nullptr)
-			return;
-
-
-		
-
-
-
 
 	}
+
+
 
 	void HIDControllerInput::GetMapping(Platform::String^ tag, bool* left, bool* right, bool* up, bool* down, bool* a, bool* b, bool* l, bool* r, bool* select, bool* start, bool* turbo)
 	{
