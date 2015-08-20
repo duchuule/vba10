@@ -29,7 +29,7 @@ namespace VBA10
 		
 	internal:
 		const ControllerState* GetControllerState(void);
-		void Update();
+		void Update(bool shouldUpdate);
 
 		void StartListening();  //start listening to report event
 		void StopListening();
@@ -47,6 +47,7 @@ namespace VBA10
 
 	private:
 		ControllerState state;
+		bool shouldUpdate;
 
 		Windows::Foundation::EventRegistrationToken inputReportEventToken;
 		bool isRegisteredForInputReportEvents;

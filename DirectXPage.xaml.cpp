@@ -596,7 +596,7 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	m_main->emulator->HidInput->UnregisterFromInputReportEvent();
+	m_main->emulator->HidInput->StopListening();
 
 	//pause emulator
 	m_main->emulator->Pause();

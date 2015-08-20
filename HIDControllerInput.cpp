@@ -58,6 +58,9 @@ namespace VBA10
 			// a stale token. Ideally, one should remove the event token (e.g. assign to null) upon the device removal to avoid using it again.
 			registeredDevice = EventHandlerForDevice::Current->Device;
 
+			if (registeredDevice == nullptr)
+				return;
+
 			// Save event registration token so we can unregisted for events
 			inputReportEventToken = registeredDevice->InputReportReceived +=
 				ref new TypedEventHandler<HidDevice^, HidInputReportReceivedEventArgs^>(this, &HIDControllerInput::OnInputReportEvent);
@@ -68,6 +71,9 @@ namespace VBA10
 
 	void HIDControllerInput::UnregisterFromInputReportEvent(void)
 	{
+		if (registeredDevice == nullptr)
+			return;
+
 		if (isRegisteredForInputReportEvents)
 		{
 			// Don't unregister event token if the device was removed and reconnected because registration token is no longer valid
@@ -109,6 +115,8 @@ namespace VBA10
 		this->state.UpPressed = false;
 		this->state.DownPressed = false;
 
+		if (this->shouldUpdate == false)
+			return;
 
 		//check buttons
 		auto bcontrols = inputReport->ActivatedBooleanControls;
@@ -163,9 +171,9 @@ namespace VBA10
 
 	}
 
-	void HIDControllerInput::Update()
+	void HIDControllerInput::Update(bool shouldUpdate)
 	{
-
+		this->shouldUpdate = shouldUpdate;
 	}
 
 
