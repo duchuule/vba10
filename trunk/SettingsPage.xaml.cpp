@@ -96,8 +96,18 @@ SettingsPage::SettingsPage()
 	//check xbox controller connection
 	XINPUT_STATE state;
 	ZeroMemory(&state, sizeof(XINPUT_STATE));
+	bool xboxConnected = false;
 
-	if (XInputGetState(0, &state) == ERROR_DEVICE_NOT_CONNECTED)
+	for (int i = 0; i <= 3; i++)
+	{
+		if (XInputGetState(i, &state) != ERROR_DEVICE_NOT_CONNECTED)
+		{
+			xboxConnected = true;
+			break;
+		}
+	}
+
+	if (!xboxConnected)
 	{
 		this->txtControllerStatus->Text = "No XBox controller detected.";
 	}

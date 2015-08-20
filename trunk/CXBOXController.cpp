@@ -4,7 +4,9 @@ namespace VBA10
 {
 	CXBOXController::CXBOXController(int playerNumber)
 		: controllerNumber(playerNumber - 1)
-	{ }
+	{ 
+		
+	}
 
 	XINPUT_STATE CXBOXController::GetState(void)
 	{
@@ -18,10 +20,22 @@ namespace VBA10
 	bool CXBOXController::IsConnected(void)
 	{
 		//ZeroMemory(&this->state, sizeof(XINPUT_STATE));
+		bool connected = false;
+		for (int i = 0; i <= 3; i++)
+		{
+			int cNumber = (this->controllerNumber + i) % 4;  //try from the current controller number first
 
-		DWORD result = XInputGetState(this->controllerNumber, &this->state);
+			if (XInputGetState(cNumber, &this->state) == ERROR_SUCCESS)
+			{
+				controllerNumber = cNumber;
+				connected = true;
+				break;
+			}
+		}
 
-		return (result == ERROR_SUCCESS);
+
+
+		return connected;
 	}
 
 	void CXBOXController::Vibrate(int leftVal, int rightVal)

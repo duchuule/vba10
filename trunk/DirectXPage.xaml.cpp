@@ -219,7 +219,9 @@ DirectXPage::DirectXPage():
 	//then the next call in settings will return the true status.
 	XINPUT_STATE state;
 	ZeroMemory(&state,sizeof(XINPUT_STATE));
-	XInputGetState(0, &state);
+
+	for (int i = 0; i <= 3; i++)
+		XInputGetState(i, &state);
 
 
 
@@ -428,13 +430,18 @@ void DirectXPage::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEvent
 		else
 			m_main->emulator->Unpause();
 
-		//m_main->emulator->HidInput->StartListening();
+
+		m_main->emulator->HidInput->StartListening();
+
+
 	}
 	else
 	{
 		//m_main->StopRenderLoop();
 		m_main->emulator->Pause();
-		//m_main->emulator->HidInput->StopListening();
+
+		m_main->emulator->HidInput->UnregisterFromInputReportEvent();
+
 	}
 }
 
@@ -583,10 +590,14 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 
 	//unpause emulator
 	m_main->emulator->Unpause();
+
+	m_main->emulator->HidInput->StartListening();
 }
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	m_main->emulator->HidInput->UnregisterFromInputReportEvent();
+
 	//pause emulator
 	m_main->emulator->Pause();
 
@@ -667,6 +678,8 @@ void DirectXPage::AppShell_KeyDown(Object^ sender, KeyRoutedEventArgs^ e)
 
 void DirectXPage::CloseMenu()
 {
+	
+
 	RootSplitView->IsPaneOpen = false; //this will toggle the hamburger menu because of the 2-way binding
 	m_main->emulator->GetVirtualController()->Reset();
 }
