@@ -5,11 +5,16 @@
 #include <vector>
 
 
+//template <typename charT>
+//std::vector<std::basic_string<charT>> split(const std::basic_string<charT> &s, charT delim);
+
+std::vector<std::string> split(const std::string &s, char delim);
+std::vector<std::wstring> split(const std::wstring &s, wchar_t delim);
 
 std::string &strreplace(std::string &input, char oldChar, char newChar);
 std::wstring &strreplace(std::wstring &input, char oldChar, char newChar);
 
-std::vector<std::string> &strSplitLines(std::string &input, std::vector<std::string> &v);
+void strSplitLines(std::string &input, std::vector<std::string> &v);
 
 void replaceAll(std::string& str, const std::string& from, const std::string& to);
 

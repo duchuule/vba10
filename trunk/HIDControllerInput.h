@@ -38,7 +38,6 @@ namespace VBA10
 		void UnregisterFromInputReportEvent(void);
 
 		//Windows::Devices::HumanInterfaceDevice::HidDevice ^Device;
-		
 		Platform::Collections::Vector < HidNumericControlExt^>^ allNumericControls;
 		Platform::Collections::Map <int, Platform::String^>^ booleanControlMapping;
 		
@@ -66,7 +65,7 @@ namespace VBA10
 		
 
 
-		CRITICAL_SECTION inputSync;
+
 
 		void GetMapping(Platform::String^ tag, bool* left, bool* right, bool* up, bool* down, bool* a, bool* b, bool* l, bool* r, bool* select, bool* start, bool* turbo);
 

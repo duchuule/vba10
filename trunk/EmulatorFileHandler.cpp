@@ -76,7 +76,8 @@ namespace VBA10
 	Windows::Foundation::Collections::IVector<CheatData ^> ^ROMCheats = nullptr;
 	bool ShouldApplyNewCheats = false;
 
-	int firstIndexOf(string &s, char c) 
+	template <typename charT>
+	int firstIndexOf(std::basic_string<charT> &s, charT c)
 	{
 		for(int i = 0; i < s.size(); ++i) 
 		{
@@ -85,24 +86,10 @@ namespace VBA10
 		return -1;
 	}
 
-	vector<string> &split(const string &s, char delim, vector<string> &elems) 
-	{
-		stringstream ss(s);
-		string item;
-		while(getline(ss, item, delim)) 
-		{
-			elems.push_back(item);
-		}
-		return elems;
-	}
 
-	vector<string> split(const string &s, char delim) 
-	{
-		vector<string> elems;
-		return split(s, delim, elems);
-	}
-
-	bool stringWhitespace(const string &s)
+	
+	template <typename charT>
+	bool stringWhitespace(const basic_string<charT> &s)
 	{
 		for (int i = 0; i < s.size(); i++)
 		{
@@ -113,6 +100,8 @@ namespace VBA10
 		}
 		return true;
 	}
+
+
 
 	Platform::Array<unsigned char> ^GetSnapshotBuffer(unsigned char *backbuffer, size_t pitch, int imageWidth, int imageHeight)
 	{
@@ -2941,4 +2930,113 @@ namespace VBA10
 		});
 	}
 
+
+	task<void> LoadHidConfig()
+	{
+		auto reader = make_shared<DataReader ^>();
+
+		return create_task(ApplicationData::Current->LocalFolder->GetFileAsync("hid-configs.ini"))
+			.then([reader](StorageFile ^file)
+		{
+			return file->OpenReadAsync();
+		}).then([reader](IRandomAccessStreamWithContentType ^stream)
+		{
+			*reader = ref new DataReader(stream);
+			return create_task((*reader)->LoadAsync((unsigned int)stream->Size));
+		
+		}).then([reader](unsigned int bytesRead)
+		{
+			String ^text = nullptr;
+			Map<Platform::String ^, ROMConfig> ^map = ref new Map<Platform::String ^, ROMConfig>();
+
+			text = (*reader)->ReadString(bytesRead);
+
+			if (text == nullptr)
+				return;
+
+			wstring str(text->Begin(), text->End());
+			vector<wstring> lines = split(str, L'\n');
+
+			for (vector<wstring>::const_iterator i = lines.begin(); i != lines.end(); ++i)
+			{
+				wstring line = *i;
+				int startBraces = firstIndexOf(line, L'[');
+				if (startBraces == -1)
+				{
+					continue;
+				}
+				int endBraces = firstIndexOf(line, L']');
+				if (endBraces == -1)
+				{
+					continue;
+				}
+
+				HIDControllerInput^ config = ref new HIDControllerInput();
+
+				wstring deviceId = line.substr(startBraces + 1, endBraces - startBraces - 1);
+				Platform::String^ pDeviceId = ref new Platform::String(deviceId.c_str());
+
+				for (++i; i != lines.end() && !stringWhitespace(line = *i); ++i)  //look for button mapping until find a blank line
+				{
+					int colonIndex = firstIndexOf(line, L':');
+					if (colonIndex == -1)
+					{
+						continue;
+					}
+					if (colonIndex + 1 >= line.size())
+					{
+						continue;
+					}
+					wstring controlName = line.substr(0, colonIndex);
+					wstring controlValue = line.substr(colonIndex + 1);
+
+					vector<wstring> nameParts = split(controlName, L'_');
+					
+
+					if (nameParts.at(0) == L"B")  //this is a button (boolean control)
+					{
+						int buttonId = stoi(nameParts.at(1));
+						Platform::String^ function = ref new Platform::String(controlValue.c_str());
+						config->booleanControlMapping->Insert(buttonId, function);
+					}
+					else if (nameParts.at(0) == L"N") //numeric control (axis, hat)
+					{
+						//usagepage and usageid
+						int usagePage = stoi(nameParts.at(1));
+						int usageId = stoi(nameParts.at(2));
+						HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
+
+						//get the control info
+						vector<wstring> valueParts = split(controlValue, L'_');
+						control->Type = stoi(valueParts.at(0));
+						control->DefaultValue = stoi(valueParts.at(1));
+						control->MaximumValue = stoi(valueParts.at(2));
+
+						int Nmapping = stoi(valueParts.at(3));
+						int index = 4;
+						for (int j = 0; j < Nmapping; j++)
+						{
+							int function_id = stoi(valueParts.at(index));
+							Platform::String^ function = ref new Platform::String(valueParts.at(index+1).c_str());
+							control->Mapping->Insert(function_id, function);
+
+							index += 2;
+						}
+
+						//add to list
+						config->allNumericControls->Append(control);
+					}
+
+				}
+
+				hidConfigs->Insert(pDeviceId, config);
+				
+
+				if (i == lines.end())
+				{
+					break;
+				}
+			}
+		});
+	}
 }

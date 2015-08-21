@@ -3,6 +3,54 @@
 
 using namespace std;
 
+
+template <typename charT>
+vector<basic_string<charT>> split(const basic_string<charT> &s, charT delim)
+{
+	vector<basic_string<charT>> elems;
+	basic_stringstream<charT> ss(s);
+	basic_string<charT> item;
+
+	while (getline(ss, item, delim))
+	{
+		elems.push_back(item);
+	}
+	return elems;
+}
+
+vector<string> &split(const string &s, char delim, vector<string> &elems)
+{
+	stringstream ss(s);
+	string item;
+	while (getline(ss, item, delim))
+	{
+		elems.push_back(item);
+	}
+	return elems;
+}
+
+vector<string> split(const string &s, char delim)
+{
+	vector<string> elems;
+	return split(s, delim, elems);
+}
+
+
+
+vector<wstring> split(const wstring &s, wchar_t delim)
+{
+	vector<wstring> elems;
+	wstringstream ss(s);
+	wstring item;
+
+	while (getline(ss, item, delim))
+	{
+		elems.push_back(item);
+	}
+	return elems;
+}
+
+
 string &strreplace(string &input, char oldChar, char newChar)
 {
 	for (int i = 0; i < input.length(); i++)
@@ -27,7 +75,7 @@ wstring &strreplace(wstring &input, char oldChar, char newChar)
 	return input;
 }
 
-vector<string> &strSplitLines(string &input, vector<string> &v)
+void strSplitLines(string &input, vector<string> &v)
 {
 	string line;
 	stringstream wss(input);
@@ -40,7 +88,6 @@ vector<string> &strSplitLines(string &input, vector<string> &v)
 		}
 	}
 
-	return v;
 }
 
 void replaceAll(std::string& str, const std::string& from, const std::string& to) {

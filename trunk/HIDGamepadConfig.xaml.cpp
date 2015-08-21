@@ -58,6 +58,7 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 		//this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		this->txtNotification->Text = "First press Start button.";
 
+
 		//initialize boolean button map
 		emulator->HidInput->booleanControlMapping = ref new Map <int, Platform::String^ >();
 
@@ -92,6 +93,92 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 			}
 		}
 
+		//Read stored configuration and transfer config to current one
+		create_task(LoadHidConfig())
+			.then([this] {
+			if (hidConfigs->HasKey(EventHandlerForDevice::Current->DeviceInformation->Id))
+			{
+				auto config = hidConfigs->Lookup(EventHandlerForDevice::Current->DeviceInformation->Id);
+
+				//transfer boolean control
+				for (auto bpair : config->booleanControlMapping)
+				{
+					int bid = bpair->Key;
+					String^ function = bpair->Value;
+
+					emulator->HidInput->booleanControlMapping->Insert(bid, function);
+				}
+
+				//transfer numeric control
+				for (auto ncontrol : emulator->HidInput->allNumericControls)
+				{
+					for (auto ncontrol2 : config->allNumericControls)
+					{
+						if (ncontrol->UsagePage == ncontrol2->UsagePage && ncontrol->UsageId == ncontrol2->UsageId)  //find the match
+						{
+							//transfer the value
+							ncontrol->Type = ncontrol2->Type;
+							ncontrol->DefaultValue = ncontrol2->DefaultValue;
+							ncontrol->MaximumValue = ncontrol2->MaximumValue;
+							for (auto npair : ncontrol2->Mapping)
+							{
+								int nid = npair->Key;
+								String^ function = npair->Value;
+								ncontrol->Mapping->Insert(nid, function);
+							}
+
+							break;
+						}
+
+
+					}
+				}
+
+
+				//display boolean control
+				for (auto bpair : emulator->HidInput->booleanControlMapping)
+				{
+					int bid = bpair->Key;
+					String^ function = bpair->Value;
+
+					TextBox^ txtbox = FindTextbox(function);
+
+					if (txtbox != nullptr)
+						txtbox->Text = "Button " + bid.ToString();
+				}
+
+				//display numeric control
+				for (auto ncontrol : emulator->HidInput->allNumericControls)
+				{
+					if (ncontrol->UsagePage == 0x01 && ncontrol->UsageId == 0x39)  //text for hat switch has already been printed
+						continue;
+
+					for (auto npair : ncontrol->Mapping)
+					{
+						int nid = npair->Key;
+						String^ function = npair->Value;
+
+						TextBox^ txtbox = FindTextbox(function);
+
+						if (txtbox != nullptr)
+						{
+							if (ncontrol->Type == 0)
+								txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ")";
+							else if (ncontrol->Type == 1)
+							{
+								if (nid == -1)
+									txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") -";
+								else if (nid == 1)
+									txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") +";
+							}
+
+						}
+					}
+				}
+			}
+		}, task_continuation_context::use_current());
+
+
 		RegisterForInputReportEvents();
 
 		EventHandlerForDevice::Current->OnDeviceConnected = 
@@ -102,6 +189,56 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 	}
 
 
+}
+
+TextBox^ HIDGamepadConfig::FindTextbox(Platform::String^ tag)
+{
+	if (tag == "Left1")
+		return this->txtLeft1;
+	else if (tag == "Left2")
+		return this->txtLeft2;
+	else if (tag == "Right1")
+		return this->txtRight1;
+	else if (tag == "Right2")
+		return this->txtRight2;
+	else if (tag == "Up1")
+		return this->txtUp1;
+	else if (tag == "Up2")
+		return this->txtUp2;
+	else if (tag == "Down1")
+		return this->txtDown1;
+	else if (tag == "Down2")
+		return this->txtDown2;
+	else if (tag == "A1")
+		return this->txtA1;
+	else if (tag == "A2")
+		return this->txtA2;
+	else if (tag == "B1")
+		return this->txtB1;
+	else if (tag == "B2")
+		return this->txtB2;
+	else if (tag == "L1")
+		return this->txtL1;
+	else if (tag == "L2")
+		return this->txtL2;
+	else if (tag == "R1")
+		return this->txtR1;
+	else if (tag == "R2")
+		return this->txtR2;
+	else if (tag == "Select1")
+		return this->txtSelect1;
+	else if (tag == "Select2")
+		return this->txtSelect2;
+	else if (tag == "Start1")
+		return this->txtStart1;
+	else if (tag == "Start2")
+		return this->txtStart2;
+	else if (tag == "Turbo1")
+		return this->txtTurbo1;
+	else if (tag == "Turbo2")
+		return this->txtTurbo2;
+	else
+		return nullptr;
 }
 
 
@@ -278,7 +415,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 					
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
+						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
 
 
 						//remove the tag if it has been asiggned to a different button value
@@ -305,7 +442,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
+						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
 						
 						//remove the tag if it has been asiggned to a different button value
 						for (auto pair : controlExt->Mapping)
@@ -331,7 +468,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
 					{
-						focusTextbox->Text = "Button (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
+						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
 						
 						//remove the tag if it has been asiggned to a different button value
 						for (auto pair : controlExt->Mapping)
