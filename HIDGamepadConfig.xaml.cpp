@@ -374,6 +374,23 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 						}
 					}
 
+					//empty text box if this button value has been assigned to a different function
+					for (auto pair : emulator->HidInput->booleanControlMapping)
+					{
+						auto key = pair->Key;
+						auto value = pair->Value;
+
+						if (key == control->Id && (String^)focusTextbox->Tag != value)
+						{
+							TextBox^ txtbox = FindTextbox(value);
+
+							if (txtbox != nullptr)
+								txtbox->Text = "";
+
+							break;
+						}
+					}
+
 					emulator->HidInput->booleanControlMapping->Insert(control->Id, (String^)focusTextbox->Tag);
 					focusTextbox->Text = "Button " + control->Id.ToString();
 				}));
@@ -431,6 +448,23 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 							}
 						}
 
+						//empty text box if this button value has been assigned to a different function
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (key == 1 && (String^)focusTextbox->Tag != value)
+							{
+								TextBox^ txtbox = FindTextbox(value);
+
+								if (txtbox != nullptr)
+									txtbox->Text = "";
+
+								break;
+							}
+						}
+
 						
 						controlExt->Mapping->Insert(1, (String^)focusTextbox->Tag);
 
@@ -457,7 +491,23 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 							}
 						}
 
-						String^ test = (String^)focusTextbox->Tag;
+						//empty text box if this button value has been assigned to a different function
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (key == -1 && (String^)focusTextbox->Tag != value)
+							{
+								TextBox^ txtbox = FindTextbox(value);
+
+								if (txtbox != nullptr)
+									txtbox->Text = "";
+
+								break;
+							}
+						}
+
 						controlExt->Mapping->Insert(-1, (String^)focusTextbox->Tag);
 
 					}));
@@ -470,15 +520,33 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 					{
 						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
 						
-						//remove the tag if it has been asiggned to a different button value
+						//remove the function if it has been asiggned to a different button value
 						for (auto pair : controlExt->Mapping)
 						{
 							auto key = pair->Key;
 							auto value = pair->Value;
 
+							
 							if (value == (String^)focusTextbox->Tag)
 							{
 								controlExt->Mapping->Remove(key);
+								break;
+							}
+						}
+
+						//empty text box if this button value has been assigned to a different function
+						for (auto pair : controlExt->Mapping)
+						{
+							auto key = pair->Key;
+							auto value = pair->Value;
+
+							if (key == 1 && (String^)focusTextbox->Tag != value)
+							{
+								TextBox^ txtbox = FindTextbox(value);
+
+								if (txtbox != nullptr)
+									txtbox->Text = "";
+
 								break;
 							}
 						}
