@@ -57,5 +57,7 @@ namespace VBA10
 
 		void OnDeviceConnected(EventHandlerForDevice^ sender, OnDeviceConnectedEventArgs^ onDeviceConnectedEventArgs);
 		void OnDeviceClosing(EventHandlerForDevice^ sender, Windows::Devices::Enumeration::DeviceInformation^ deviceInformation);
+
+		Windows::UI::Xaml::Controls::TextBox^ FindTextbox(Platform::String^ tag);
 	};
 }

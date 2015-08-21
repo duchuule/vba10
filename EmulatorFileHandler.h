@@ -64,6 +64,6 @@ namespace VBA10
 	int GetSavestateSlot(void);
 
 	task<void> SaveHidConfig();
-	
+	task<void> LoadHidConfig();
 
 }

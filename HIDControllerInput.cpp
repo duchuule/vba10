@@ -9,7 +9,6 @@ namespace VBA10
 {
 	HIDControllerInput::HIDControllerInput(): isRegisteredForInputReportEvents(false)
 	{
-		InitializeCriticalSectionEx(&inputSync, NULL, NULL);
 
 		//initialize boolean button map
 		this->booleanControlMapping = ref new Map <int, Platform::String^>();
