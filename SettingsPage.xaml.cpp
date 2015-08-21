@@ -37,6 +37,11 @@ SettingsPage::SettingsPage()
 	: initdone(false), emulator(EmulatorGame::GetInstance())
 {
 	InitializeComponent();
+	//notice text about watch video
+	if (emulator->GetXboxTimer() >= 3600.0f)
+		this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::DarkRed);
+
+
 	this->touchToggle->IsOn = TouchControlsEnabled();
 	this->UpdateTextBox(this->leftKeyBox, GetLeftKeyBinding());
 	this->UpdateTextBox(this->rightKeyBox, GetRightKeyBinding());
@@ -122,25 +127,34 @@ SettingsPage::SettingsPage()
 	create_task(DeviceInformation::FindAllAsync(deviceSelector))
 		.then([this](DeviceInformationCollection^ collection)
 	{
-		if (collection->Size > 0)
-		{
+		
 			//VID_045E = microsoft
 			this->HIDDeviceList = ref new Vector<DeviceInformation^>();
-			Vector<String^>^ deviceID = ref new Vector<String^>();
+			Vector<String^>^ deviceIDs = ref new Vector<String^>();
 			for (int i = 0; i < collection->Size; i++)
 			{
 				DeviceInformation^ device = collection->GetAt(i);
-				//device->
-				//if (device->Properties)
+				
+				//ignore microsoft xbox controller
+				wstring deviceid(device->Id->Begin(), device->Id->End());
+				if (deviceid.find(L"VID_045E") != string::npos)
+					continue;
+
 				this->HIDDeviceList->Append(device);
-				deviceID->Append(device->Name);
+				deviceIDs->Append(device->Name);
 			}
 
-			this->txtHIDGamepad->Text = collection->Size + " HID gamepad(s) detected:";
-			this->vsControllerList->Source = deviceID;
+		if (this->HIDDeviceList->Size > 0)
+		{
+			this->vsControllerList->Source = deviceIDs;
 			this->lbHIDGamepad->SelectedItem = nullptr;
 			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Visible;
 			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Visible;
+
+			if (EventHandlerForDevice::Current->IsDeviceConnected)
+				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
+			else
+				this->txtHIDGamepad->Text = this->HIDDeviceList->Size + " HID gamepad(s) detected:";
 		}
 		else
 		{
@@ -160,6 +174,9 @@ SettingsPage::SettingsPage()
 
 void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	if (this->HIDDeviceList->Size == 0)
+		return;
+
 	int index = lbHIDGamepad->SelectedIndex;
 
 	if (this->HIDDeviceList->Size > 1 && index < 0)
@@ -172,8 +189,10 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 		index = 0;
 
 
-	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index))).then([this](task<bool> openDeviceTask)
+	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index)))
+		.then([this](task<bool> openDeviceTask)
 	{
+		//TODO: fix crash when hit configure while connected to another device
 		bool openSuccess = openDeviceTask.get();
 
 		this->Frame->Navigate(
@@ -182,34 +201,70 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 			ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
 	});
 
-	//create_task(HidDevice::FromIdAsync(this->HIDDeviceList->GetAt(index)->Id, FileAccessMode::Read))
-	//	.then([this](task<HidDevice^> deviceTask)
-	//{
-	//	bool successfullyOpenedDevice = false;
-	//	//NotifyType notificationStatus;
-	//	//String^ notificationMessage = nullptr;
-
-	//	//// This may throw an exception or return null if we could not open the device
-
-	//	emulator->HidInput->Device = deviceTask.get();
-
-	//	this->Frame->Navigate(
-	//		TypeName(HIDGamepadConfig::typeid),
-	//		nullptr,
-	//		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
-
-	//});
 
 	
 }
 
+
+void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	int index = lbHIDGamepad->SelectedIndex;
+
+	if (this->HIDDeviceList->Size > 1 && index < 0)
+	{
+		MessageDialog ^dialog = ref new MessageDialog("Please select a HID gamepad.");
+		dialog->ShowAsync();
+		return;
+	}
+	else if (this->HIDDeviceList->Size == 1)
+		index = 0;
+
+	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index)))
+		.then([this, index](task<bool> openDeviceTask)
+	{
+		bool openSuccess = openDeviceTask.get();
+
+		if (openSuccess)
+		{
+			this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
+
+			create_task(emulator->RestoreHidConfig())
+				.then([this](bool restoreSuccess)
+			{
+				if (!restoreSuccess)
+				{
+					//open dialog
+					MessageDialog ^dialog = ref new MessageDialog("Looks like this is the first time you connect this gamepad. Click OK to configure it.");
+					
+					UICommand ^confirm = ref new UICommand("OK",
+						ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+					{
+						this->Frame->Navigate(
+							TypeName(HIDGamepadConfig::typeid),
+							nullptr,
+							ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+					}));
+
+					dialog->Commands->Append(confirm);
+					dialog->ShowAsync();
+				}
+			});
+		}
+		else
+		{
+			this->txtHIDGamepad->Text = "Failed to connect to " + this->HIDDeviceList->GetAt(index)->Name;
+		}
+
+
+	}, task_continuation_context::use_current());
+}
 
 void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	//reset xbox controller timer
 
 	this->emulator->ResetXboxTimer();
-	
+	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
 
 	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
 	dialog->ShowAsync();
@@ -545,6 +600,9 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		}
 	}
 }
+
+
+
 
 
 

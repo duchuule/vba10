@@ -3037,6 +3037,15 @@ namespace VBA10
 					break;
 				}
 			}
+		}).then([](task<void> t)
+		{
+			try
+			{
+				t.get();
+			}
+			catch (Platform::Exception^)
+			{
+			}
 		});
 	}
 }

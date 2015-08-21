@@ -297,6 +297,11 @@ namespace VBA10
 		this->xboxElapsed = 0.0f;
 	}
 
+	float EmulatorGame::GetXboxTimer()
+	{
+		return this->xboxElapsed;
+	}
+
 	void EmulatorGame::UpdateAsync(void)
 	{
 		WaitForSingleObjectEx(this->updateEvent, INFINITE, false);
@@ -359,5 +364,94 @@ namespace VBA10
 		GFX.Pitch = rowPitch;*/
 
 		SetEvent(this->updateEvent);
+	}
+
+	task<bool> EmulatorGame::RestoreHidConfig() 
+	{
+
+		return create_task(LoadHidConfig())
+			.then([this] 
+		{
+			//initialize boolean button map
+			this->HidInput->booleanControlMapping = ref new Map <int, Platform::String^ >();
+
+			//create list of numeric controls
+			this->HidInput->allNumericControls = ref new Vector < HidNumericControlExt^>();
+
+			if (hidConfigs->HasKey(EventHandlerForDevice::Current->DeviceInformation->Id))
+			{
+				auto config = hidConfigs->Lookup(EventHandlerForDevice::Current->DeviceInformation->Id);
+
+				//transfer boolean control
+				for (auto bpair : config->booleanControlMapping)
+				{
+					int bid = bpair->Key;
+					String^ function = bpair->Value;
+
+					this->HidInput->booleanControlMapping->Insert(bid, function);
+				}
+
+				//transfer numeric control
+				for (auto ncontrol2 : config->allNumericControls)
+				{
+					HidNumericControlExt^ ncontrol = ref new HidNumericControlExt(ncontrol2->UsagePage, ncontrol2->UsageId);
+
+					//transfer the value
+					ncontrol->Type = ncontrol2->Type;
+					ncontrol->DefaultValue = ncontrol2->DefaultValue;
+					ncontrol->MaximumValue = ncontrol2->MaximumValue;
+					for (auto npair : ncontrol2->Mapping)
+					{
+						int nid = npair->Key;
+						String^ function = npair->Value;
+						ncontrol->Mapping->Insert(nid, function);
+					}
+
+					this->HidInput->allNumericControls->Append(ncontrol);
+				}
+
+
+
+				////transfer boolean control
+				//for (auto bpair : config->booleanControlMapping)
+				//{
+				//	int bid = bpair->Key;
+				//	String^ function = bpair->Value;
+
+				//	this->HidInput->booleanControlMapping->Insert(bid, function);
+				//}
+
+				////transfer numeric control
+				//for (auto ncontrol : this->HidInput->allNumericControls)
+				//{
+				//	for (auto ncontrol2 : config->allNumericControls)
+				//	{
+				//		if (ncontrol->UsagePage == ncontrol2->UsagePage && ncontrol->UsageId == ncontrol2->UsageId)  //find the match
+				//		{
+				//			//transfer the value
+				//			ncontrol->Type = ncontrol2->Type;
+				//			ncontrol->DefaultValue = ncontrol2->DefaultValue;
+				//			ncontrol->MaximumValue = ncontrol2->MaximumValue;
+				//			for (auto npair : ncontrol2->Mapping)
+				//			{
+				//				int nid = npair->Key;
+				//				String^ function = npair->Value;
+				//				ncontrol->Mapping->Insert(nid, function);
+				//			}
+
+				//			break;
+				//		}
+
+
+				//	}
+				//}
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}, task_continuation_context::use_current());
 	}
 }
