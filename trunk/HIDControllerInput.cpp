@@ -102,17 +102,7 @@ namespace VBA10
 		//LeaveCriticalSection(&inputSync);
 
 		//set all to false
-		this->state.TurboTogglePressed = false;
-		this->state.StartPressed = false;
-		this->state.SelectPressed = false;
-		this->state.APressed = false;
-		this->state.BPressed = false;
-		this->state.LPressed = false;
-		this->state.RPressed = false;
-		this->state.LeftPressed = false;
-		this->state.RightPressed = false;
-		this->state.UpPressed = false;
-		this->state.DownPressed = false;
+		ZeroMemory(&state, sizeof(ControllerState));
 
 		if (this->shouldUpdate == false)
 			return;
@@ -128,7 +118,7 @@ namespace VBA10
 
 			if (booleanControlMapping->HasKey(id))
 				GetMapping(booleanControlMapping->Lookup(id), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-					&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboPressed);
+					&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
 		}
 
 		//check numeric control
@@ -145,25 +135,25 @@ namespace VBA10
 			{
 				if (controlExt->Mapping->HasKey(1))
 					GetMapping(controlExt->Mapping->Lookup(1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboPressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
 			}
 			else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue < -0.25 * controlExt->DefaultValue) //axis-
 			{
 				if (controlExt->Mapping->HasKey(-1))
 					GetMapping(controlExt->Mapping->Lookup(-1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboPressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
 			}
 			else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue > 0.25 * controlExt->DefaultValue) //axis+
 			{
 				if (controlExt->Mapping->HasKey(1))
 					GetMapping(controlExt->Mapping->Lookup(1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboPressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
 			}
 			else if (controlExt->Type == 2 && control->Value != controlExt->DefaultValue) //hat d-pad
 			{
 				if (controlExt->Mapping->HasKey(control->Value))
 					GetMapping(controlExt->Mapping->Lookup(control->Value), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboPressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
 			}
 		}
 

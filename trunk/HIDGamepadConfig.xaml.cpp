@@ -59,81 +59,23 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 		this->txtNotification->Text = "First press Start button.";
 
 
-		//initialize boolean button map
-		emulator->HidInput->booleanControlMapping = ref new Map <int, Platform::String^ >();
 
-		//create list of numeric controls
-		emulator->HidInput->allNumericControls = ref new Vector < HidNumericControlExt^>();
-		for (unsigned short usagePage = 1; usagePage <= 5; usagePage++)
+
+		//Read stored configuration and display
+		create_task(emulator->RestoreHidConfig())
+			.then([this] (bool success) 
 		{
-			for (unsigned short usageId = 1; usageId < 255; usageId++)
+			RegisterForInputReportEvents();
+
+			EventHandlerForDevice::Current->OnDeviceConnected =
+				ref new TypedEventHandler<EventHandlerForDevice^, OnDeviceConnectedEventArgs^>(this, &HIDGamepadConfig::OnDeviceConnected);
+
+			EventHandlerForDevice::Current->OnDeviceClose =
+				ref new TypedEventHandler<EventHandlerForDevice^, DeviceInformation^>(this, &HIDGamepadConfig::OnDeviceClosing);
+
+
+			if (success)
 			{
-
-
-				auto numDescs = EventHandlerForDevice::Current->Device->GetNumericControlDescriptions(HidReportType::Input, usagePage, usageId);
-
-				if (numDescs->Size == 1)  //only this is the real control
-				{
-					HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
-					emulator->HidInput->allNumericControls->Append(control);
-
-					if (usagePage == 0x01 && usageId == 0x39)  //this gamepad has hatswitch
-					{
-						hasHatSwitch = true;
-						txtLeft1->Text = "D-pad Left";
-						txtUp1->Text = "D-pad Up";
-						txtRight1->Text = "D-pad Right";
-						txtDown1->Text = "D-pad Down";
-						txtLeft1->IsEnabled = false;
-						txtUp1->IsEnabled = false;
-						txtRight1->IsEnabled = false;
-						txtDown1->IsEnabled = false;
-					}
-				}
-			}
-		}
-
-		//Read stored configuration and transfer config to current one
-		create_task(LoadHidConfig())
-			.then([this] {
-			if (hidConfigs->HasKey(EventHandlerForDevice::Current->DeviceInformation->Id))
-			{
-				auto config = hidConfigs->Lookup(EventHandlerForDevice::Current->DeviceInformation->Id);
-
-				//transfer boolean control
-				for (auto bpair : config->booleanControlMapping)
-				{
-					int bid = bpair->Key;
-					String^ function = bpair->Value;
-
-					emulator->HidInput->booleanControlMapping->Insert(bid, function);
-				}
-
-				//transfer numeric control
-				for (auto ncontrol : emulator->HidInput->allNumericControls)
-				{
-					for (auto ncontrol2 : config->allNumericControls)
-					{
-						if (ncontrol->UsagePage == ncontrol2->UsagePage && ncontrol->UsageId == ncontrol2->UsageId)  //find the match
-						{
-							//transfer the value
-							ncontrol->Type = ncontrol2->Type;
-							ncontrol->DefaultValue = ncontrol2->DefaultValue;
-							ncontrol->MaximumValue = ncontrol2->MaximumValue;
-							for (auto npair : ncontrol2->Mapping)
-							{
-								int nid = npair->Key;
-								String^ function = npair->Value;
-								ncontrol->Mapping->Insert(nid, function);
-							}
-
-							break;
-						}
-
-
-					}
-				}
-
 
 				//display boolean control
 				for (auto bpair : emulator->HidInput->booleanControlMapping)
@@ -151,7 +93,20 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 				for (auto ncontrol : emulator->HidInput->allNumericControls)
 				{
 					if (ncontrol->UsagePage == 0x01 && ncontrol->UsageId == 0x39)  //text for hat switch has already been printed
+					{
+
+						hasHatSwitch = true;
+						txtLeft1->Text = "D-pad Left";
+						txtUp1->Text = "D-pad Up";
+						txtRight1->Text = "D-pad Right";
+						txtDown1->Text = "D-pad Down";
+						txtLeft1->IsEnabled = false;
+						txtUp1->IsEnabled = false;
+						txtRight1->IsEnabled = false;
+						txtDown1->IsEnabled = false;
+
 						continue;
+					}
 
 					for (auto npair : ncontrol->Mapping)
 					{
@@ -176,16 +131,40 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 					}
 				}
 			}
+			else //does not find stored configuration for this device
+			{
+				//get the list of numeric control
+				for (unsigned short usagePage = 1; usagePage <= 5; usagePage++)
+				{
+					for (unsigned short usageId = 1; usageId < 255; usageId++)
+					{
+						auto numDescs = EventHandlerForDevice::Current->Device->GetNumericControlDescriptions(HidReportType::Input, usagePage, usageId);
+
+						if (numDescs->Size == 1)  //only this is the real control
+						{
+							HidNumericControlExt^ control = ref new HidNumericControlExt(usagePage, usageId);
+							emulator->HidInput->allNumericControls->Append(control);
+
+							if (usagePage == 0x01 && usageId == 0x39)  //this gamepad has hatswitch
+							{
+								hasHatSwitch = true;
+								txtLeft1->Text = "D-pad Left";
+								txtUp1->Text = "D-pad Up";
+								txtRight1->Text = "D-pad Right";
+								txtDown1->Text = "D-pad Down";
+								txtLeft1->IsEnabled = false;
+								txtUp1->IsEnabled = false;
+								txtRight1->IsEnabled = false;
+								txtDown1->IsEnabled = false;
+							}
+						}
+					}
+				}
+			}
 		}, task_continuation_context::use_current());
 
 
-		RegisterForInputReportEvents();
-
-		EventHandlerForDevice::Current->OnDeviceConnected = 
-			ref new TypedEventHandler<EventHandlerForDevice^, OnDeviceConnectedEventArgs^>(this, &HIDGamepadConfig::OnDeviceConnected);
-
-		EventHandlerForDevice::Current->OnDeviceClose =
-			ref new TypedEventHandler<EventHandlerForDevice^, DeviceInformation^>(this, &HIDGamepadConfig::OnDeviceClosing);
+		
 	}
 
 

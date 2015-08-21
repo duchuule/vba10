@@ -45,6 +45,9 @@ namespace VBA10
 		ControllerInput *GetControllerInput(void) const;
 #endif
 		HIDControllerInput ^GetHidControllerInput(void) const;
+
+		
+
 		int GetWidth(void);
 		int GetHeight(void);
 		void FocusChanged(bool focus);
@@ -59,10 +62,11 @@ namespace VBA10
 		void StartEmulatorThread();
 		void StopEmulatorThread();
 		void ResetXboxTimer();
+		float GetXboxTimer();
 
 		HIDControllerInput ^HidInput;
 
-	
+		task<bool> RestoreHidConfig();
 
 	private:
 		static EmulatorGame *instance;
