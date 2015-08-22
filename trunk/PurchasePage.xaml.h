@@ -7,6 +7,7 @@
 
 #include "PurchasePage.g.h"
 
+
 namespace VBA10
 {
 	/// <summary>
@@ -17,5 +18,21 @@ namespace VBA10
 	{
 	public:
 		PurchasePage();
+	protected:
+		virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+	private:
+		void Purchasebtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+	};
+
+	[Windows::UI::Xaml::Data::BindableAttribute]
+	public ref class ProductItem sealed
+	{
+	public:
+		property Platform::String^ imgLink;
+		property Platform::String^ Status;
+		property Platform::String^ Name;
+		property Platform::String^ key;
+		property Windows::UI::Xaml::Visibility BuyNowButtonVisible;
 	};
 }

@@ -26,10 +26,13 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::ApplicationModel::Store;
 
 ROMDatabase^ VBA10::App::ROMDB = nullptr;
 live::live_client* VBA10::App::LiveClient = nullptr;
 Platform::String^ VBA10::App::ExportFolderID = "";
+bool VBA10::App::HasAds = true;
+bool VBA10::App::IsPremium = false;
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code
@@ -44,6 +47,28 @@ App::App()
 
 	ROMDB = ref new ROMDatabase();
 	LiveClient = new live::live_client();
+}
+
+void App::CheckProductLicense()
+{
+	HasAds = true;
+	IsPremium = false;
+
+
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("noads_premium")->IsActive)
+	{
+		HasAds = false;
+		IsPremium = true;
+		return; //no need to check for other 2 licenses
+	}
+
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("removeads")->IsActive)
+		HasAds = false;
+
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("premiumfeatures")->IsActive)
+		IsPremium = true;
+
+
 }
 
 /// <summary>
@@ -65,6 +90,8 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
 	ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
 
+	//check license
+	CheckProductLicense();
 
 	App::ROMDB->Initialize().then([this, e] {
 		if (m_directXPage == nullptr)

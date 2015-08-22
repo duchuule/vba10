@@ -302,7 +302,7 @@ task<void> DirectXPage::CopyDemoROMAsync(void)
 
 		entry->Folder = ApplicationData::Current->LocalFolder; //store pointer to folder
 
-
+		
 
 
 		App::ROMDB->AllROMDBEntries->Append(entry);
