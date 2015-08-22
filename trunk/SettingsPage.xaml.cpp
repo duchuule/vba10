@@ -11,6 +11,9 @@
 #include <Xinput.h>
 #include <HIDGamepadConfig.xaml.h>
 #include "EventHandlerForDevice.h"
+#include "DirectXPage.xaml.h"
+#include "App.xaml.h"
+#include "AdControl.xaml.h"
 
 using namespace VBA10;
 
@@ -37,10 +40,26 @@ SettingsPage::SettingsPage()
 	: initdone(false), emulator(EmulatorGame::GetInstance())
 {
 	InitializeComponent();
-	//notice text about watch video
-	if (emulator->GetXboxTimer() >= 3600.0f)
-		this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::DarkRed);
 
+	//create ad control
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
+
+	//notice text about watch video
+	if (App::IsPremium)
+	{
+		panelGamepadActivate->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		this->runBuyNotice->Text = "";
+	}
+	else
+	{
+		if (emulator->GetXboxTimer() >= 3600.0f)
+			this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::DarkRed);
+	}
 
 	this->touchToggle->IsOn = TouchControlsEnabled();
 	this->UpdateTextBox(this->leftKeyBox, GetLeftKeyBinding());
@@ -158,7 +177,7 @@ SettingsPage::SettingsPage()
 		}
 		else
 		{
-			this->txtHIDGamepad->Text = "No HID gamepads detected.";
+			this->txtHIDGamepad->Text = "No HID gamepad detected.";
 			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		}
@@ -170,7 +189,10 @@ SettingsPage::SettingsPage()
 }
 
 
-
+void SettingsPage::purchaseBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	DirectXPage::Current->GoToPage(4);
+}
 
 void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -192,7 +214,6 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index)))
 		.then([this](task<bool> openDeviceTask)
 	{
-		//TODO: fix crash when hit configure while connected to another device
 		bool openSuccess = openDeviceTask.get();
 
 		this->Frame->Navigate(
@@ -600,12 +621,6 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		}
 	}
 }
-
-
-
-
-
-
 
 
 

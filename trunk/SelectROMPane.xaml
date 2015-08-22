@@ -12,7 +12,8 @@
     >
 
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -234,8 +235,7 @@
         </ScrollViewer>
 
 
-        <local:AdControl Grid.Row="2">
-        </local:AdControl>
+
      
 
     </Grid>

@@ -28,13 +28,13 @@ namespace VBA10
 		static Platform::String^ ExportFolderID;
 		static bool HasAds;
 		static bool IsPremium;
-
+		static void CheckProductLicense();
 		
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
 		void OnResuming(Platform::Object ^sender, Platform::Object ^args);
-		void CheckProductLicense();
+		
 		DirectXPage^ m_directXPage;
 
 

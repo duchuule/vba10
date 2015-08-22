@@ -3,9 +3,11 @@
 // Implementation of the HelpPage class
 //
 
-
+#include "pch.h"
+#include "App.xaml.h"
 #include "HelpPage.xaml.h"
 #include <ppltasks.h>
+#include "AdControl.xaml.h"
 
 using namespace VBA10;
 
@@ -25,6 +27,14 @@ using namespace Windows::UI::Xaml::Navigation;
 HelpPage::HelpPage()
 {
 	InitializeComponent();
+
+	//create ad control
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
 
 	//get version
 	auto myPackage = Windows::ApplicationModel::Package::Current;

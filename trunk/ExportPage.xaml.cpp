@@ -9,6 +9,7 @@
 #include "SelectFilesPane.xaml.h"
 #include "Definitions.h"
 #include "ppltasks_extra.h"
+#include "AdControl.xaml.h"
 
 
 using namespace VBA10;
@@ -31,6 +32,14 @@ using namespace Windows::UI::Popups;
 ExportPage::ExportPage()
 {
 	InitializeComponent();
+
+	//create ad control
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
 }
 
 

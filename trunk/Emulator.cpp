@@ -6,6 +6,7 @@
 #include <GBA.h>
 #include <Util.h>
 #include <SoundDriver.h>
+#include "App.xaml.h"
 
 
 using namespace Platform;
@@ -328,7 +329,7 @@ namespace VBA10
 		this->xboxElapsed += timeDelta;
 
 #ifndef NO_XBOX
-		if (xboxElapsed < 3600.0f)
+		if (xboxElapsed < 3600.0f || App::IsPremium)
 		{
 			this->p1Controller->Update();
 			this->HidInput->Update(true);

@@ -11,7 +11,7 @@
     d:DesignWidth="600">
 
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    >
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -209,7 +209,6 @@
             </RelativePanel>
         </ScrollViewer>
 
-        <local:AdControl Grid.Row="2">
-        </local:AdControl>
+
     </Grid>
 </Page>
