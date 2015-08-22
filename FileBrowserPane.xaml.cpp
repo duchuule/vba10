@@ -7,6 +7,7 @@
 #include "FileBrowserPane.xaml.h"
 #include "App.xaml.h"
 #include "stringhelper.h"
+#include <algorithm>
 
 using namespace VBA10;
 
@@ -111,7 +112,7 @@ void FileBrowserPane::client_GetCompleted(web::json::value v)
 			//get extension
 			int index = name.find_last_of('.');
 			wstring ext = name.substr(index + 1);
-
+			transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
 			a->Type = GetOneDriveItemType(ext);  //default, will change below
 		}
 
@@ -372,6 +373,7 @@ void FileBrowserPane::OnNavigatingFrom(Windows::UI::Xaml::Navigation::Navigating
 
 OneDriveItemType FileBrowserPane::GetOneDriveItemType(wstring ext)
 {
+	
 	if (ext == L"zip" || ext == L"zib")
 	{
 		return OneDriveItemType::Zip;

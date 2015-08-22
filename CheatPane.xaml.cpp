@@ -10,6 +10,8 @@
 #include "stringhelper.h"
 #include <string>
 #include <sstream>
+#include "AdControl.xaml.h"
+#include "App.xaml.h"
 
 using namespace std;
 
@@ -35,7 +37,14 @@ using namespace Windows::UI::Popups;
 CheatPane::CheatPane()
 {
 	InitializeComponent();
-
+	
+	//create ad control
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
 
 	if (IsROMLoaded())
 	{

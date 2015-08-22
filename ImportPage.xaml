@@ -10,7 +10,8 @@
     Loaded="Page_Loaded"
     d:DesignWidth="320">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -100,7 +101,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <local:AdControl Grid.Row="2">
-        </local:AdControl>
+
     </Grid>
 </Page>

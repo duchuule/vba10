@@ -10,6 +10,7 @@
 #include "SelectFilesPane.xaml.h"
 #include "App.xaml.h"
 #include "FileBrowserPane.xaml.h"
+#include "AdControl.xaml.h"
 
 #include "stringhelper.h"
 
@@ -40,6 +41,14 @@ using namespace Concurrency;
 ImportPage::ImportPage()
 {
 	InitializeComponent();
+
+	//create ad control
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
 }
 
 

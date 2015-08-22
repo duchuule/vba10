@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     d:DesignWidth="280">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -35,8 +36,24 @@
                            Margin="0,8,0,0"
                                   />-->
                 <TextBlock TextWrapping="Wrap"
-                           Text="The ability to purchase products will come in a future release. NOTE: there will be a way for paid users and users with unlock codes of VBA8, VBA8+ and VGBC8 to unlock VBA10 features without paying again. Stay tune!"                                
+                           Text="To VBA8, VBA8+ and VGBC8 users: if you have paid or have received unlocked codes for one of these apps, please go to the Purchase page of the respective app and follow instruction to get VBA10 unlock codes."                                
                                  Margin=" 0, 4, 0, 4" />
+
+                <TextBlock Text="Loading production list. Please wait..." 
+                       TextWrapping="Wrap"
+                       Margin="0,48,0,12"
+                           Visibility="Visible"
+                           x:Name="txtLoading"
+                           
+                       />
+
+                <TextBlock Text="Error! No Internet connection or Microsoft server error. Please try again later." 
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,12"
+                           Foreground="Red"
+                           Visibility="Collapsed"
+                           x:Name="txtError"
+                       />
 
                 <!--<Grid>
                     <Grid.ColumnDefinitions>
@@ -103,7 +120,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <local:AdControl Grid.Row="2">
-        </local:AdControl>
+
     </Grid>
 </Page>

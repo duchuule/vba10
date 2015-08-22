@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="LayoutRoot"  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -70,7 +70,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <local:AdControl Grid.Row="2">
-        </local:AdControl>
+
     </Grid>
 </Page>

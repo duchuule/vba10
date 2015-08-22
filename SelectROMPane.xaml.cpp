@@ -14,6 +14,7 @@
 #include "Database\ROMDBEntry.h"
 #include "Converter.h"
 #include "App.xaml.h"
+#include "AdControl.xaml.h"
 
 
 
@@ -53,6 +54,12 @@ SelectROMPane::SelectROMPane()
 
 	this->InitializeComponent();
 
+	if (App::HasAds)
+	{
+		AdControl^ adControl = ref new AdControl();
+		LayoutRoot->Children->Append(adControl);
+		adControl->SetValue(Grid::RowProperty, 2);
+	}
 
 	//bind list of ROM to display
 	cvsAllROMEntries->Source = App::ROMDB->AllROMDBEntries;
