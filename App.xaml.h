@@ -26,13 +26,15 @@ namespace VBA10
 		static ROMDatabase^ ROMDB;
 		static live::live_client* LiveClient;
 		static Platform::String^ ExportFolderID;
-
+		static bool HasAds;
+		static bool IsPremium;
 
 		
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
 		void OnResuming(Platform::Object ^sender, Platform::Object ^args);
+		void CheckProductLicense();
 		DirectXPage^ m_directXPage;
 
 

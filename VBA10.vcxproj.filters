@@ -823,5 +823,14 @@
     <Image Include="Assets\StoreLogo.scale-400.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\noad_icon.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\noad_plus_icon.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\plus_sign.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

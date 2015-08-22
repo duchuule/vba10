@@ -5,7 +5,8 @@
     xmlns:local="using:VBA10"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DesignWidth="280">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -37,18 +38,67 @@
                            Text="The ability to purchase products will come in a future release. NOTE: there will be a way for paid users and users with unlock codes of VBA8, VBA8+ and VGBC8 to unlock VBA10 features without paying again. Stay tune!"                                
                                  Margin=" 0, 4, 0, 4" />
 
-                <!--<TextBlock Text="OneDrive"
-                           VerticalAlignment="Center"
-                           FontSize="23"
-                           Margin="0,8,0,0"
-                                  />
-                <TextBlock TextWrapping="Wrap"
-                           Text="If for any reason you cannot access the rom folder or the rom is copied to the app's private storage, use this option to export save files to OneDrive."                                
-                                 Margin=" 0, 4, 0, 4" />
-
-                <TextBlock TextWrapping="Wrap"
-                           Text="This option is only useful on Windows 10 Mobile, which is not released yet, so it will be added later."                                
-                                 Margin=" 0, 4, 0, 4" />-->
+                <!--<Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image VerticalAlignment="Center"
+                           MaxHeight="90"
+                           Source="Assets\noad_plus_icon.png"/>
+                    <Grid Grid.Column="1" 
+                                          Margin="12,0,0,0"
+                                          >
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Remove ads and enable premium features" 
+                                        TextWrapping="Wrap"
+                                       Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock FontWeight="Normal" 
+                                        Text="$1.92"
+                                        TextWrapping="Wrap"
+                                       />
+                            <Button Content="Purchase" 
+                                                    />
+                        </StackPanel>
+                    </Grid>
+                </Grid>-->
+                
+                
+                <ItemsControl x:Name="pics">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,8,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image VerticalAlignment="Center"
+                                           MaxHeight="100"
+                                           Source="{Binding imgLink}"/>
+                                    <Grid Grid.Column="1" 
+                                          Margin="12,0,0,0"
+                                          >
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" 
+                                                       TextWrapping="Wrap"
+                                                       Style="{ThemeResource BaseTextBlockStyle}"/>
+                                            <TextBlock Text="{Binding Status}"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,2,0,2"
+                                                      />
+                                            <Button Content="Purchase" 
+                                                    Visibility="{Binding BuyNowButtonVisible}" 
+                                                    Click="ButtonBuyNow_Clicked" 
+                                                    Tag="{Binding key}"
+                                                    />
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
             </StackPanel>
         </ScrollViewer>
