@@ -24,7 +24,7 @@ namespace VBA10
 		EmulatorGame *emulator;
 		bool initdone;
 		Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ HIDDeviceList;
-
+		Microsoft::Advertising::WinRT::UI::InterstitialAd^ MyVideoAd;
 
 		//input
 		void ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -71,5 +71,11 @@ namespace VBA10
 		
 		void ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void purchaseBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+
+		void OnAdReady(Platform::Object ^sender, Platform::Object ^args);
+		void OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^args);
+		void OnCancelled(Platform::Object ^sender, Platform::Object ^args);
+		void OnCompleted(Platform::Object ^sender, Platform::Object ^args);
 	};
 }
