@@ -28,6 +28,12 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
-    <DeviceCapability Name="humaninterfacedevice" />
+    <DeviceCapability Name="humaninterfacedevice">
+      <Device Id="any">
+        <Function Type="usage:0001 0004" />        <!--joy stick-->
+        <Function Type="usage:0001 0005" />        <!--gamepad-->
+      </Device>
+    </DeviceCapability>
   </Capabilities>
+  
 </Package>
