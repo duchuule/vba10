@@ -33,6 +33,7 @@ using namespace Windows::Globalization;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::Devices::Enumeration;
 using namespace Windows::Devices::HumanInterfaceDevice;
+using namespace Microsoft::Advertising::WinRT::UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -194,6 +195,58 @@ void SettingsPage::purchaseBtn_Click(Platform::Object^ sender, Windows::UI::Xaml
 	DirectXPage::Current->GoToPage(4);
 }
 
+void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//reset xbox controller timer
+
+	
+
+	this->MyVideoAd = ref new InterstitialAd();
+
+	MyVideoAd->AdReady += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &SettingsPage::OnAdReady);
+	MyVideoAd->ErrorOccurred += ref new Windows::Foundation::EventHandler<Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^>(this, &VBA10::SettingsPage::OnErrorOccurred);
+	MyVideoAd->Cancelled += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCancelled);
+	MyVideoAd->Completed += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCompleted);
+	MyVideoAd->RequestAd(AdType::Video, "c6ee4c5e-e2b6-4b79-99e6-672f765f0ae0", "11533083");
+	//MyVideoAd->RequestAd(AdType::Video, "d25517cb-12d4-4699-8bdc-52040c712cab", "11389925");  //TEST MODE
+
+	
+}
+
+void SettingsPage::OnAdReady(Platform::Object ^sender, Platform::Object ^args)
+{
+	if (InterstitialAdState::Ready == MyVideoAd->State)
+	{
+		MyVideoAd->Show();
+
+		
+	}
+
+}
+
+void SettingsPage::OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^args)
+{
+	this->emulator->ResetXboxTimer();
+	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
+	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
+	dialog->ShowAsync();
+}
+
+
+void SettingsPage::OnCancelled(Platform::Object ^sender, Platform::Object ^args)
+{
+	MessageDialog ^dialog = ref new MessageDialog("You need to watch the whole video to activate the feature.");
+	dialog->ShowAsync();
+}
+
+void SettingsPage::OnCompleted(Platform::Object ^sender, Platform::Object ^args)
+{
+	this->emulator->ResetXboxTimer();
+	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
+	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
+	dialog->ShowAsync();
+}
+
 void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	if (this->HIDDeviceList->Size == 0)
@@ -280,16 +333,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 	}, task_continuation_context::use_current());
 }
 
-void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	//reset xbox controller timer
 
-	this->emulator->ResetXboxTimer();
-	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
-
-	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
-	dialog->ShowAsync();
-}
 
 void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -621,6 +665,18 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
