@@ -83,35 +83,42 @@ void ExportPage::signin_Completed(bool isLoggedIn)
 		if (App::ExportFolderID == "")
 		{
 			App::LiveClient->get(L"/me/skydrive/files")
-				.then([this](web::json::value v)
+				.then([this](task<web::json::value> tv)
 			{
-				//int test = v[L"data"].as_array().size();
-				for (const auto& it : (v[L"data"]).as_array())
+				try
 				{
-					auto album = it;
+					auto v = tv.get();
 
-					wstring name = album[L"name"].as_string();
-					wstring type = album[L"type"].as_string();
-					if (name == EXPORT_FOLDER && (type == L"folder" || type == L"album"))
+					//int test = v[L"data"].as_array().size();
+					for (const auto& it : (v[L"data"]).as_array())
 					{
-						App::ExportFolderID = ref new String(album[L"id"].as_string().c_str());
-						break;
+						auto album = it;
+
+						wstring name = album[L"name"].as_string();
+						wstring type = album[L"type"].as_string();
+						if (name == EXPORT_FOLDER && (type == L"folder" || type == L"album"))
+						{
+							App::ExportFolderID = ref new String(album[L"id"].as_string().c_str());
+							break;
+						}
+
 					}
-	
-				}
 
-				if (App::ExportFolderID == "")  //need to create the folder
-				{
-					web::json::value data;
-					data[U("name")] = web::json::value::string(EXPORT_FOLDER);
-
-					create_task(App::LiveClient->post(L"/me/skydrive", data))
-						.then([](web::json::value v)
+					if (App::ExportFolderID == "")  //need to create the folder
 					{
+						web::json::value data;
+						data[U("name")] = web::json::value::string(EXPORT_FOLDER);
+
+						create_task(App::LiveClient->post(L"/me/skydrive", data))
+							.then([](web::json::value v)
+						{
 							App::ExportFolderID = ref new String(v[L"id"].as_string().c_str());
 
-					});
+						});
+					}
 				}
+				//catch (const concurrency::task_canceled &) {}
+				catch (...) {}
 			});
 		}
 	}
@@ -196,10 +203,16 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 								
 
 							}
-							catch (Platform::Exception^ e)
+
+							catch (const std::exception &) 
 							{
-								// We'll handle the specific errors below.
+								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+								{
+									MessageDialog ^dialog = ref new MessageDialog("Network error.");
+									dialog->ShowAsync();
+								}));
 							}
+							catch (Exception^) {}
 
 						});
 

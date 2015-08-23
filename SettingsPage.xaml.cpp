@@ -207,7 +207,8 @@ void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xa
 	MyVideoAd->ErrorOccurred += ref new Windows::Foundation::EventHandler<Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^>(this, &VBA10::SettingsPage::OnErrorOccurred);
 	MyVideoAd->Cancelled += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCancelled);
 	MyVideoAd->Completed += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCompleted);
-	MyVideoAd->RequestAd(AdType::Video, "c6ee4c5e-e2b6-4b79-99e6-672f765f0ae0", "11533083");
+	MyVideoAd->RequestAd(AdType::Video, "90156e70-3263-4775-8d1e-918443468f13", "11533084");  //mobile
+	//MyVideoAd->RequestAd(AdType::Video, "c6ee4c5e-e2b6-4b79-99e6-672f765f0ae0", "11533083");  //PC/tablet
 	//MyVideoAd->RequestAd(AdType::Video, "d25517cb-12d4-4699-8bdc-52040c712cab", "11389925");  //TEST MODE
 
 	
@@ -267,12 +268,17 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index)))
 		.then([this](task<bool> openDeviceTask)
 	{
-		bool openSuccess = openDeviceTask.get();
+		try
+		{
+			bool openSuccess = openDeviceTask.get();
 
-		this->Frame->Navigate(
-			TypeName(HIDGamepadConfig::typeid),
-			nullptr,
-			ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+			this->Frame->Navigate(
+				TypeName(HIDGamepadConfig::typeid),
+				nullptr,
+				ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+		}
+		catch (const std::exception &) {}
+		catch (Exception^) {}
 	});
 
 
@@ -296,38 +302,43 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 	create_task(EventHandlerForDevice::Current->OpenDeviceAsync(this->HIDDeviceList->GetAt(index)))
 		.then([this, index](task<bool> openDeviceTask)
 	{
-		bool openSuccess = openDeviceTask.get();
-
-		if (openSuccess)
+		try
 		{
-			this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
+			bool openSuccess = openDeviceTask.get();
 
-			create_task(emulator->RestoreHidConfig())
-				.then([this](bool restoreSuccess)
+			if (openSuccess)
 			{
-				if (!restoreSuccess)
-				{
-					//open dialog
-					MessageDialog ^dialog = ref new MessageDialog("Looks like this is the first time you connect this gamepad. Click OK to configure it.");
-					
-					UICommand ^confirm = ref new UICommand("OK",
-						ref new UICommandInvokedHandler([this](IUICommand ^cmd)
-					{
-						this->Frame->Navigate(
-							TypeName(HIDGamepadConfig::typeid),
-							nullptr,
-							ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
-					}));
+				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
 
-					dialog->Commands->Append(confirm);
-					dialog->ShowAsync();
-				}
-			});
+				create_task(emulator->RestoreHidConfig())
+					.then([this](bool restoreSuccess)
+				{
+					if (!restoreSuccess)
+					{
+						//open dialog
+						MessageDialog ^dialog = ref new MessageDialog("Looks like this is the first time you connect this gamepad. Click OK to configure it.");
+
+						UICommand ^confirm = ref new UICommand("OK",
+							ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+						{
+							this->Frame->Navigate(
+								TypeName(HIDGamepadConfig::typeid),
+								nullptr,
+								ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+						}));
+
+						dialog->Commands->Append(confirm);
+						dialog->ShowAsync();
+					}
+				});
+			}
+			else
+			{
+				this->txtHIDGamepad->Text = "Failed to connect to " + this->HIDDeviceList->GetAt(index)->Name;
+			}
 		}
-		else
-		{
-			this->txtHIDGamepad->Text = "Failed to connect to " + this->HIDDeviceList->GetAt(index)->Name;
-		}
+		catch (const std::exception &) {}
+		catch (Exception^) {}
 
 
 	}, task_continuation_context::use_current());
