@@ -1274,6 +1274,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0" />
     <SDKReference Include="SQLite.UAP.2015, Version=3.8.11.1" />
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0" />
   </ItemGroup>
