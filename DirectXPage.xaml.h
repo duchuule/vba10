@@ -131,7 +131,7 @@ namespace VBA10
 		Rect _togglePaneButtonRect;
 
 		static DirectXPage^ _current;
-		
+		Windows::System::Display::DisplayRequest^ g_DisplayRequest;
 	
 		void TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

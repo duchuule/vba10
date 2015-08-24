@@ -49,6 +49,7 @@ using namespace Windows::Storage::FileProperties;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::Graphics::Imaging;
 using namespace Windows::Globalization; //to get date time
+using namespace Windows::System::Display;
 
 
 using namespace std;
@@ -592,10 +593,43 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	m_main->emulator->Unpause();
 
 	m_main->emulator->HidInput->StartListening();
+
+
+	//prevent screen lock when game is playing
+	try
+	{
+		if (g_DisplayRequest == nullptr) {
+			// This call creates an instance of the displayRequest object 
+			g_DisplayRequest = ref new DisplayRequest();
+		}
+
+		if (g_DisplayRequest != nullptr) 
+		{
+				// This call activates a display-required request. If successful,  
+				// the screen is guaranteed not to turn off automatically due to user inactivity. 
+				g_DisplayRequest->RequestActive();
+
+		}
+	}
+	catch (...) {}
 }
 
 void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+
+	//enable screen lock again
+	try
+	{
+		if (g_DisplayRequest != nullptr)
+		{
+			// This call activates a display-required request. If successful,  
+			// the screen is guaranteed not to turn off automatically due to user inactivity. 
+			g_DisplayRequest->RequestRelease();
+
+		}
+	}
+	catch (...) {}
+
 	m_main->emulator->HidInput->StopListening();
 
 	//pause emulator
