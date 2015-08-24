@@ -41,7 +41,9 @@ PurchasePage::PurchasePage()
 
 void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 {
-	create_task(CurrentAppSimulator::LoadListingInformationAsync())
+	return;
+
+	create_task(CurrentApp::LoadListingInformationAsync())
 		.then([this](task<ListingInformation^> tli)
 	{
 		try
@@ -62,8 +64,8 @@ void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
-				buyButtonVisibility = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
@@ -88,8 +90,8 @@ void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
-				buyButtonVisibility = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
@@ -114,8 +116,8 @@ void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
-				buyButtonVisibility = CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
@@ -157,20 +159,20 @@ void PurchasePage::ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::X
 	String^ key = (String^)btn->Tag;
 
 
-	if (!CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
+	if (!CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
 	{
 
-		create_task(CurrentAppSimulator::RequestProductPurchaseAsync(key))
+		create_task(CurrentApp::RequestProductPurchaseAsync(key))
 			.then([key, this](task<PurchaseResults^> tresult) 
 		{
 			try
 			{
 				PurchaseResults^ result = tresult.get();
-
+				//int test = result->Status;
 				//reread license
 				App::CheckProductLicense();
 
-				if (CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
+				if (CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
 				{
 					//prompt user to restart app if it's ad removal
 					if (key == "removeads" || key == "noads_premium")

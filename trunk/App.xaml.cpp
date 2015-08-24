@@ -54,18 +54,21 @@ void App::CheckProductLicense()
 	HasAds = true;
 	IsPremium = false;
 
+	//bool IsActive = CurrentApp::LicenseInformation->IsActive;
+	//bool IsTrial = CurrentApp::LicenseInformation->IsTrial;
+	//auto expiredate = CurrentApp::LicenseInformation->ExpirationDate.UniversalTime;
 
-	if (CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup("noads_premium")->IsActive)
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("noads_premium")->IsActive)
 	{
 		HasAds = false;
 		IsPremium = true;
 		return; //no need to check for other 2 licenses
 	}
 
-	if (CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup("removeads")->IsActive)
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("removeads")->IsActive)
 		HasAds = false;
 
-	if (CurrentAppSimulator::LicenseInformation->ProductLicenses->Lookup("premiumfeatures")->IsActive)
+	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("premiumfeatures")->IsActive)
 		IsPremium = true;
 
 

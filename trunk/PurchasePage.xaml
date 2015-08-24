@@ -35,14 +35,25 @@
                            FontSize="23"
                            Margin="0,8,0,0"
                                   />-->
-                <TextBlock TextWrapping="Wrap"
+                <!--<TextBlock TextWrapping="Wrap"
                            Text="To VBA8, VBA8+ and VGBC8 users: if you have paid or have received unlocked codes for one of these apps, please go to the Purchase page of the respective app and follow instruction to get VBA10 unlock codes."                                
-                                 Margin=" 0, 4, 0, 4" />
-
+                                 Margin=" 0, 4, 0, 4" />-->
+                <TextBlock TextWrapping="Wrap"
+                                                          
+                                 Margin=" 0, 4, 0, 4" >
+                    <Run Text="Dear VBA10 users:" />
+                    <LineBreak/>
+                    <Run Text="As much as I'd love to offer you the ability to pay to enable premium features and get rid of ads, in-app purchase in Windows 10 is *broken* at the moment. " />
+                    <Run Text="I tested paying for my own app and now I cannot even download VBA10 on my own computer anymore. " />
+                    <Run Text="The store just gives me error 0x803F7002 when I try to download the app. " />
+                    <LineBreak/>
+                    <LineBreak/>
+                    <Run Text="I will keep you posted and enable in-app purchase as soon as this issue is resolved." />
+                </TextBlock>
                 <TextBlock Text="Loading production list. Please wait..." 
                        TextWrapping="Wrap"
                        Margin="0,48,0,12"
-                           Visibility="Visible"
+                           Visibility="Collapsed"
                            x:Name="txtLoading"
                            
                        />
