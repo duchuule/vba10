@@ -20,6 +20,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Core;
 
+
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 AdControl::AdControl()
@@ -35,7 +36,10 @@ void AdControl::MSAdControl_ErrorOccurred(Platform::Object^ sender, Microsoft::A
 	this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
 	{
 		MSAdControl->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-		AdDuplexAdControl->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		AdDuplex::AdControl^ AdDuplexAdControl = ref new AdDuplex::AdControl();
+		AdDuplexAdControl->AdUnitId = "166555";
+		AdDuplexAdControl->AppKey = "53f0124b-fa9c-40be-a364-4589d505adcd";
+		adGrid->Children->Append(AdDuplexAdControl);
 		
 	}));
 }
@@ -45,7 +49,17 @@ void AdControl::MSAdControl_AdRefreshed(Platform::Object^ sender, Windows::UI::X
 {
 	this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
 	{
-		AdDuplexAdControl->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		
 		MSAdControl->Visibility = Windows::UI::Xaml::Visibility::Visible;
+
+		//AdDuplexAdControl->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		//AdDuplexAdControl->IsEnabled = false;  //set to false to stop checking for ad
 	}));
+}
+
+
+void AdControl::AdDuplexAdControl_AdCovered(Platform::Object^ sender, AdDuplex::Banners::Core::AdCoveredEventArgs^ e)
+{
+	String^ test = e->CulpritElement->GetType()->FullName;
+	String^ test2 = e->CulpritElement->Name;
 }
