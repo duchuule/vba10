@@ -102,21 +102,23 @@
 
                 <!-- OnNavigatingToPage we synchronize the selected item in the nav menu with the current page.
                  OnNavigatedToPage we move keyboard focus to the first item on the page after it's loaded. -->
-                <Frame x:Name="frame" Margin="-1,0,0,0">
-                   <!--Navigating="OnNavigatingToPage"
-                   Navigated="OnNavigatedToPage"-->
-                    
-                    <Frame.ContentTransitions>
-                        <TransitionCollection>
-                            <NavigationThemeTransition>
-                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
-                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                            </NavigationThemeTransition>
-                        </TransitionCollection>
-                    </Frame.ContentTransitions>
-               
-            </Frame>
+                <SplitView.Content>
+                    <Frame x:Name="frame" Margin="-1,0,0,0">
+                        <!--Navigating="OnNavigatingToPage"
+                       Navigated="OnNavigatedToPage"-->
+
+                        <Frame.ContentTransitions>
+                            <TransitionCollection>
+                                <NavigationThemeTransition>
+                                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                        <EntranceNavigationTransitionInfo/>
+                                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                </NavigationThemeTransition>
+                            </TransitionCollection>
+                        </Frame.ContentTransitions>
+
+                    </Frame>
+                </SplitView.Content>
             </SplitView>
 
             <!-- Declared last to have it rendered above everything else, but it needs to be the first item in the tab sequence. -->
