@@ -116,7 +116,7 @@ SettingsPage::SettingsPage()
 	this->saveConfirmationToggle->IsOn = IsSaveConfirmationDisabled();
 	this->soundToggle->IsOn = SoundEnabled();
 	this->soundSyncToggle->IsOn = SynchronizeAudio();
-
+	this->cboTheme->SelectedIndex = EmulatorSettings::Current->Theme;
 
 	//check xbox controller connection
 	XINPUT_STATE state;
@@ -679,15 +679,15 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+void SettingsPage::cboTheme_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+		if (this->cboTheme->SelectedIndex != EmulatorSettings::Current->Theme)
+		{
+			EmulatorSettings::Current->Theme = this->cboTheme->SelectedIndex;
+			MessageDialog ^dialog = ref new MessageDialog("The theme will be applied the next time the app starts.");
+			dialog->ShowAsync();
+		}
+	}
+}

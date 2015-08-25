@@ -77,5 +77,6 @@ namespace VBA10
 		void OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^args);
 		void OnCancelled(Platform::Object ^sender, Platform::Object ^args);
 		void OnCompleted(Platform::Object ^sender, Platform::Object ^args);
+		void cboTheme_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
 	};
 }
