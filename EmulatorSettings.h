@@ -130,7 +130,18 @@ namespace VBA10
 			}
 		}
 
-
+		//0: light, 1: dark
+		property int Theme
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(ThemeKey, ThemeDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(ThemeKey, value);
+			}
+		}
 
 #pragma region Button positions
 
@@ -568,7 +579,7 @@ namespace VBA10
 		Platform::String^ EnableTurboKey = "EnableTurboKey";
 		Platform::String^ FullScreenKey = "FullScreenKey";
 		Platform::String^ SignedInKey = "SignedInKey";  
-
+		Platform::String^ ThemeKey = "ThemeKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -619,6 +630,7 @@ namespace VBA10
 		const bool EnableTurboDefault = false;
 		const bool FullScreenDefault = false;
 		const bool SignedInDefault = false;
+		const int ThemeDefault = 0; 
 
 
 

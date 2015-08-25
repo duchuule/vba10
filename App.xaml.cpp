@@ -41,6 +41,12 @@ bool VBA10::App::IsPremium = false;
 
 App::App()
 {
+	//determine theme
+	if (EmulatorSettings::Current->Theme == 0)
+		this->RequestedTheme = ApplicationTheme::Light;
+	else if (EmulatorSettings::Current->Theme == 1)
+		this->RequestedTheme = ApplicationTheme::Dark;
+
 	InitializeComponent();
 	Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 	Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);

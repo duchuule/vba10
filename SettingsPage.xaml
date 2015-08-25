@@ -394,7 +394,16 @@
                                       IsOn="False" 
                                       Name="loadConfirmationToggle" 
                                       Toggled="loadConfirmationToggle_Toggled_1"/>
-                        
+
+                        <ComboBox Name="cboTheme" HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                   SelectedIndex="0" 
+                                  SelectionChanged="cboTheme_SelectionChanged"
+                                  Header="Theme">
+                            <ComboBoxItem>Light</ComboBoxItem>
+                            <ComboBoxItem>Dark</ComboBoxItem>
+                        </ComboBox>
+
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

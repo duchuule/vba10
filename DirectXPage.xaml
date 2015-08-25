@@ -24,9 +24,9 @@
             <FontIcon x:Name="Glyph" FontSize="16" Glyph="{x:Bind SymbolAsChar}" 
                       VerticalAlignment="Center" HorizontalAlignment="Center"
                       ToolTipService.ToolTip="{x:Bind Label}"
-                      Foreground="White"/>
+                     />
             <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}"
-                       Foreground="White"
+
                        />
         </Grid>
     </DataTemplate>
@@ -77,8 +77,8 @@
                        Background="Transparent"
                        >
                 <SplitView.Pane  >
-                    <RelativePanel Background="#FF4D3A89">
-                        <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
+                <RelativePanel >
+                    <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
                         <controls:NavMenuListView x:Name="NavMenuList"
                                               IsTabStop="False"
                                               Margin="0,48,0,0"
