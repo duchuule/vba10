@@ -112,7 +112,7 @@ namespace VBA10
 
 		for (int i = 0; i < bcontrols->Size; i++)
 		{
-			auto control = bcontrols->GetAt(1);
+			auto control = bcontrols->GetAt(i);
 
 			int id = control->Id;
 

@@ -97,6 +97,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
+                      Margin="0,0,0,0"
                       >
             <StackPanel x:Name="Container"
                          >
@@ -111,7 +112,7 @@
                     HorizontalAlignment="Stretch"
                       Tapped="lastRomImage_Tapped"
                         Background="Transparent"
-                        Margin="0" Padding="0" 
+                        Margin="12,12,12,0" Padding="0" 
                         Style="{StaticResource ImageButtonStyle}"
 
                     >
@@ -153,10 +154,12 @@
                      SelectionChanged="romList_SelectionChanged"
                      ItemsSource="{Binding Source={StaticResource cvsAllROMEntries}}"
                          Padding="0"
+                         Margin="12,12,12,0"
+                         Background="Transparent"
                     >
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="12"/>
+                            <Setter Property="Padding" Value="0,12,0,12"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
@@ -203,7 +206,7 @@
                                         VerticalContentAlignment="Bottom"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                        Margin="0,-12,-12,-12"
+                                        Margin="0,-12,0,-12"
                                         Padding="0,0,0,0"
                                         BorderThickness="0"
                                         FontSize="24"

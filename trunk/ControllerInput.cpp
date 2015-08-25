@@ -36,9 +36,7 @@ namespace VBA10
 			this->state.SelectPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
 
 			this->state.APressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
-			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
-			this->state.YPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
-			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
+			this->state.BPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X) || (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
 			this->state.LPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) || state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 			this->state.RPressed = ( (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) || state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 
