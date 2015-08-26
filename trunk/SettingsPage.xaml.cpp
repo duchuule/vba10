@@ -207,8 +207,8 @@ void SettingsPage::watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xa
 	MyVideoAd->ErrorOccurred += ref new Windows::Foundation::EventHandler<Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^>(this, &VBA10::SettingsPage::OnErrorOccurred);
 	MyVideoAd->Cancelled += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCancelled);
 	MyVideoAd->Completed += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &VBA10::SettingsPage::OnCompleted);
-	MyVideoAd->RequestAd(AdType::Video, "90156e70-3263-4775-8d1e-918443468f13", "11533084");  //mobile
-	//MyVideoAd->RequestAd(AdType::Video, "c6ee4c5e-e2b6-4b79-99e6-672f765f0ae0", "11533083");  //PC/tablet
+	//MyVideoAd->RequestAd(AdType::Video, "90156e70-3263-4775-8d1e-918443468f13", "11533084");  //mobile
+	MyVideoAd->RequestAd(AdType::Video, "c6ee4c5e-e2b6-4b79-99e6-672f765f0ae0", "11533083");  //PC/tablet
 	//MyVideoAd->RequestAd(AdType::Video, "d25517cb-12d4-4699-8bdc-52040c712cab", "11389925");  //TEST MODE
 
 	
