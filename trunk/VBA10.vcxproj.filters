@@ -724,48 +724,6 @@
     <Image Include="Assets\AppList.scale-400.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\AppList.targetsize-16.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-20.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-24.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-30.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-32.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-36.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-40.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-48.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-60.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-64.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-72.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-80.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-96.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-256.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\MediumTile.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
@@ -830,6 +788,69 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\plus_sign.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-16_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-20_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-30_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-32_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-36_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-40_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-48_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-60_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-64_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-72_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-80_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-96_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AppList.targetsize-256_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-24.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-48.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-256.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-32.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-64.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Extension.targetsize-96.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

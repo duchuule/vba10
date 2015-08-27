@@ -39,6 +39,7 @@ void AdControl::MSAdControl_ErrorOccurred(Platform::Object^ sender, Microsoft::A
 		AdDuplex::AdControl^ AdDuplexAdControl = ref new AdDuplex::AdControl();
 		AdDuplexAdControl->AdUnitId = "166555";
 		AdDuplexAdControl->AppKey = "53f0124b-fa9c-40be-a364-4589d505adcd";
+		AdDuplexAdControl->IsTest = false;
 		adGrid->Children->Append(AdDuplexAdControl);
 		
 	}));
