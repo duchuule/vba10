@@ -253,24 +253,20 @@
     <Image Include="Assets\AppList.scale-150.png" />
     <Image Include="Assets\AppList.scale-200.png" />
     <Image Include="Assets\AppList.scale-400.png" />
-    <Image Include="Assets\AppList.targetsize-16.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-20.png" />
-    <Image Include="Assets\AppList.targetsize-24.png" />
-    <Image Include="Assets\AppList.targetsize-256.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\AppList.targetsize-30.png" />
-    <Image Include="Assets\AppList.targetsize-32.png" />
-    <Image Include="Assets\AppList.targetsize-36.png" />
-    <Image Include="Assets\AppList.targetsize-40.png" />
-    <Image Include="Assets\AppList.targetsize-48.png" />
-    <Image Include="Assets\AppList.targetsize-60.png" />
-    <Image Include="Assets\AppList.targetsize-64.png" />
-    <Image Include="Assets\AppList.targetsize-72.png" />
-    <Image Include="Assets\AppList.targetsize-80.png" />
-    <Image Include="Assets\AppList.targetsize-96.png" />
+    <Image Include="Assets\AppList.targetsize-16_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-20_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-24_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-256_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-30_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-32_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-36_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-40_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-48_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-60_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-64_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-72_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-80_altform-unplated.png" />
+    <Image Include="Assets\AppList.targetsize-96_altform-unplated.png" />
     <Image Include="Assets\Direct3D\divider.dds" />
     <Image Include="Assets\Direct3D\pad_a_button.dds" />
     <Image Include="Assets\Direct3D\pad_a_button_color.dds" />
@@ -304,6 +300,13 @@
     <Image Include="Assets\Direct3D\thumbstickcenter.dds" />
     <Image Include="Assets\Direct3D\thumbstick_color.dds" />
     <Image Include="Assets\Direct3D\thumbstick_gbasp.dds" />
+    <Image Include="Assets\Extension.targetsize-16.png" />
+    <Image Include="Assets\Extension.targetsize-24.png" />
+    <Image Include="Assets\Extension.targetsize-256.png" />
+    <Image Include="Assets\Extension.targetsize-32.png" />
+    <Image Include="Assets\Extension.targetsize-48.png" />
+    <Image Include="Assets\Extension.targetsize-64.png" />
+    <Image Include="Assets\Extension.targetsize-96.png" />
     <Image Include="Assets\MediumTile.scale-100.png" />
     <Image Include="Assets\MediumTile.scale-125.png" />
     <Image Include="Assets\MediumTile.scale-150.png" />

@@ -24,6 +24,22 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#4D3A89" />
       </uap:VisualElements>
+
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="gameboyfile">
+            <uap:DisplayName>Gameboy ROM file</uap:DisplayName>
+            <uap:EditFlags OpenIsSafe="true" />
+            <uap:Logo>Assets\Extension.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.gba</uap:FileType>
+              <uap:FileType>.gbc</uap:FileType>
+              <uap:FileType>.gb</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+      
     </Application>
   </Applications>
   <Capabilities>
