@@ -25,64 +25,67 @@ using namespace VBA10;
 
 
 
-ROMDatabase::ROMDatabase()
+ROMDatabase::ROMDatabase() : initialized(false)
 {
 }
 
 
 task<void> ROMDatabase::Initialize(void)
 {
-
-	return create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(ROMDB_FILE_NAME, CreationCollisionOption::OpenIfExists))
+	if (initialized)
+		return create_task([] {});
+	else
+		return create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(ROMDB_FILE_NAME, CreationCollisionOption::OpenIfExists))
 		.then([this](StorageFile^ file)
-	{
-		db = ref new SQLiteWinRT::Database(file);
-
-		//open database
-		return db->OpenAsync(SQLiteWinRT::SqliteOpenMode::OpenReadWrite);
-			
-	}).then([this]
-	{
-		//create table if not exist
-		return db->ExecuteStatementAsync("CREATE TABLE IF NOT EXISTS  ROMTABLE ( "\
-			"LOCATIONTYPE           INT    NOT NULL,"\
-			"DISPLAYNAME           TEXT    NOT NULL,"\
-			"FILENAME            TEXT     NOT NULL,"\
-			"FOLDERPATH            TEXT     NOT NULL,"\
-			"TOKEN            TEXT     NOT NULL,"\
-			"LASTPLAYED         INT  NOT NULL,"\
-			"LASTSAVEINDEX    INT  NOT NULL, "\
-			"AUTOSAVEINDEX    INT  NOT NULL, "\
-			"SNAPSHOTURI      TEXT NOT NULL );");
-	}).then([this]
-	{
-		return db->PrepareStatementAsync("SELECT * FROM ROMTABLE ORDER BY DISPLAYNAME ASC;");
-			
-	}).then([this](SQLiteWinRT::Statement^ stmt)
-	{
-		statement = stmt;
-		return RetrieveQuerry();
-
-	}).then([this] (Vector<ROMDBEntry^>^ ret)
-	{
-		_allROMDBEntries = ret;
-
-		//load rom entry
-		return LoadSnapshotImage();
-	}).then([this](task<void> t)
-	{
-		//check to see if any entry failed to load (due to deleted folder)
-		for (int i = 0; i < _allROMDBEntries->Size; i++)
 		{
-			auto entry = _allROMDBEntries->GetAt(i);
-			if (!entry->Folder)
+			db = ref new SQLiteWinRT::Database(file);
+
+			//open database
+			return db->OpenAsync(SQLiteWinRT::SqliteOpenMode::OpenReadWrite);
+			
+		}).then([this]
+		{
+			//create table if not exist
+			return db->ExecuteStatementAsync("CREATE TABLE IF NOT EXISTS  ROMTABLE ( "\
+				"LOCATIONTYPE           INT    NOT NULL,"\
+				"DISPLAYNAME           TEXT    NOT NULL,"\
+				"FILENAME            TEXT     NOT NULL,"\
+				"FOLDERPATH            TEXT     NOT NULL,"\
+				"TOKEN            TEXT     NOT NULL,"\
+				"LASTPLAYED         INT  NOT NULL,"\
+				"LASTSAVEINDEX    INT  NOT NULL, "\
+				"AUTOSAVEINDEX    INT  NOT NULL, "\
+				"SNAPSHOTURI      TEXT NOT NULL );");
+		}).then([this]
+		{
+			return db->PrepareStatementAsync("SELECT * FROM ROMTABLE ORDER BY DISPLAYNAME ASC;");
+			
+		}).then([this](SQLiteWinRT::Statement^ stmt)
+		{
+			statement = stmt;
+			return RetrieveQuerry();
+
+		}).then([this] (Vector<ROMDBEntry^>^ ret)
+		{
+			_allROMDBEntries = ret;
+
+			//load rom entry
+			return LoadSnapshotImage();
+		}).then([this](task<void> t)
+		{
+			//check to see if any entry failed to load (due to deleted folder)
+			for (int i = 0; i < _allROMDBEntries->Size; i++)
 			{
-				_allROMDBEntries->RemoveAt(i);
-				i--;
+				auto entry = _allROMDBEntries->GetAt(i);
+				if (!entry->Folder)
+				{
+					_allROMDBEntries->RemoveAt(i);
+					i--;
+				}
 			}
-		}
-		return t.get();
-	});
+			initialized = true;
+			return t.get();
+		});
 
 
 

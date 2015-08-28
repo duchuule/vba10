@@ -139,10 +139,10 @@ namespace VBA10
 
 	task<void> ParseVBAIniAsync()
 	{
-		//if(iniParsed)
-		//{
-		//	return create_task([](){}); //this will make make the operation continue on another thread!!!!
-		//}
+		if(iniParsed)
+		{
+			return create_task([](){}); //this will launch on another thread!!!
+		}
 
 		auto reader = make_shared<DataReader ^>();
 
@@ -412,7 +412,7 @@ namespace VBA10
 		return ParseVBAIniAsync().then([emulator]()
 		{
 			return emulator->StopROMAsync();
-		}).then([file]()
+		}, task_continuation_context::use_current()).then([file]()
 		{
 			return GetBytesFromFileAsync(file);
 		})

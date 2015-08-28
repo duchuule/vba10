@@ -140,18 +140,32 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 						Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
 
 
-						//create rom entry
-						ROMDBEntry^ entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, (*tmpfolder)->Path,
-							*tmptoken, psnapshotname);
+						//create rom entry or just return the original
+						bool exist = false;
+						ROMDBEntry^ entry = nullptr;
+						for (int j = 0; j < App::ROMDB->AllROMDBEntries->Size; j++)
+						{
+							entry = App::ROMDB->AllROMDBEntries->GetAt(j);
+							if (entry->FileName == file->Name && entry->Token == *tmptoken)
+							{
+								exist = true;
+								break;
+							}
+						}
 
-						entry->Folder = *tmpfolder;
+						if (!exist)
+						{
+							entry = ref new ROMDBEntry(1, pfilenamenoext, file->Name, (*tmpfolder)->Path,
+								*tmptoken, psnapshotname);
 
-						App::ROMDB->AllROMDBEntries->Append(entry);
+							entry->Folder = *tmpfolder;
+
+							App::ROMDB->AllROMDBEntries->Append(entry);
 
 
 
-						tasks.emplace_back(  
-							create_task(App::ROMDB->AddAsync(entry)).then([entry] {
+							tasks.emplace_back(
+								create_task(App::ROMDB->AddAsync(entry)).then([entry] {
 								//copy the default snapshot file over
 								StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
 								return installDir->GetFolderAsync("Assets/");
@@ -180,14 +194,15 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 								try
 								{
 									t.get();
-								
+
 								}
-								catch (Platform::Exception ^ex)
+								catch (...)
 								{
 								}
-							})					
-							
-						);  //end of tasks.emplace_back
+							})
+
+								);  //end of tasks.emplace_back
+						}
 					}
 
 					when_all(begin(tasks), end(tasks)).then([this](task<void> t)
@@ -203,7 +218,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 							}));
 
 						}
-						catch (Platform::Exception^ e)
+						catch (...)
 						{
 							// We'll handle the specific errors below.
 						}
@@ -230,10 +245,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 
 }
 
-void ImportPage::ImportFile(StorageFile^ file)
-{
 
-}
 
 
 

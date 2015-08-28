@@ -19,7 +19,7 @@ namespace VBA10
 	{
 	public:
 		ImportPage();
-		void ImportFile(Windows::Storage::StorageFile^ file);
+
 
 
 

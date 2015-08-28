@@ -30,10 +30,15 @@ namespace VBA10
 		static bool IsPremium;
 		static void CheckProductLicense();
 		
+	protected:
+		virtual void OnFileActivated(Windows::ApplicationModel::Activation::FileActivatedEventArgs^ args) override;
 
 	private:
 		void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
 		void OnResuming(Platform::Object ^sender, Platform::Object ^args);
+		
+		void LaunchApp(Windows::ApplicationModel::Activation::ApplicationExecutionState previousState,
+			Windows::ApplicationModel::Activation::FileActivatedEventArgs^ args);
 		
 		DirectXPage^ m_directXPage;
 

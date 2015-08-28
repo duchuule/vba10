@@ -50,6 +50,7 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::Graphics::Imaging;
 using namespace Windows::Globalization; //to get date time
 using namespace Windows::System::Display;
+using namespace Windows::ApplicationModel::Activation;
 
 
 using namespace std;
@@ -61,10 +62,6 @@ using namespace VBA10::Controls;
 
 DirectXPage^ DirectXPage::_current;
 
-Frame^ DirectXPage::AppFrame::get()
-{
-	return frame;
-}
 
 DirectXPage::DirectXPage():
 	m_windowVisible(true),
@@ -229,15 +226,16 @@ DirectXPage::DirectXPage():
 	CopyDemoROMAsync()
 		.then([this]   //NOTE: this let CopyDemonROM to run on UI thread
 	{
-		//open menu, need dispatcher to move it to UI thread, otherwise exception
-		this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-		{
-			RootSplitView->IsPaneOpen = true;
-		}));
+		RootSplitView->IsPaneOpen = true;
 		
-	});
+	}, task_continuation_context::use_current());
 	
 
+}
+
+
+void DirectXPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) 
+{
 }
 
 void DirectXPage::OnHardwareBackButtonPressed(Platform::Object^ sender,
@@ -890,4 +888,30 @@ task<void> DirectXPage::UpdateDBEntry()
 
 }
 
+void DirectXPage::ImportRomFromFile(FileActivatedEventArgs^ args)
+{
+	StorageFile^ file = (StorageFile^)(args->Files->GetAt(0));
 
+	//calculate folder path and  snapshot name
+	Platform::String ^file_path = file->Path;
+	wstring wfilepath(file_path->Begin(), file_path->End());
+
+	wstring folderpath;
+	wstring filename;
+	wstring filenamenoext;
+	wstring ext;
+	splitFilePath(wfilepath, folderpath, filename, filenamenoext, ext);
+
+	wstring snapshotname = filenamenoext + L".jpg";
+	Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
+	Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
+
+	//calculate token
+	replace(folderpath.begin(), folderpath.end(), ':', '_');
+	replace(folderpath.begin(), folderpath.end(), '/', '_');
+	replace(folderpath.begin(), folderpath.end(), '\\', '_');
+	Platform::String^ ptoken = ref new Platform::String(folderpath.c_str());
+
+
+
+}

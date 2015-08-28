@@ -37,13 +37,16 @@ namespace VBA10
 		DirectXPage();
 		virtual ~DirectXPage();
 
-		
+
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 
 		//from AppShell
 		property Windows::UI::Xaml::Controls::Frame^ AppFrame
 		{
-			Windows::UI::Xaml::Controls::Frame^ get();
+			Windows::UI::Xaml::Controls::Frame^ get()
+			{
+				return this->contentFrame;  //contentFrame is defined in xaml
+			};
 		}
 		void GoToPage(int pageindex);
 
@@ -52,10 +55,10 @@ namespace VBA10
 		void LoadState();
 		void Reset();
 		void SelectSaveState(int slot);
-		
-		
 
-	//from AppShell
+
+
+		//from AppShell
 	internal:
 
 		static property DirectXPage^ Current
@@ -73,7 +76,12 @@ namespace VBA10
 		task<void> SaveSnapshot();
 		task<void> UpdateDBEntry();
 		task<void> SaveBeforeStop();
+		void ImportRomFromFile(Windows::ApplicationModel::Activation::FileActivatedEventArgs^ args);
 		
+
+	protected:
+		virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+
 	private:
 		//variables
 		bool loadingDialogOpen;
@@ -82,7 +90,7 @@ namespace VBA10
 
 		//function
 		task<void> CopyDemoROMAsync(void);
-		
+
 
 		// XAML low-level rendering event handler.
 		void OnRendering(Platform::Object^ sender, Platform::Object^ args);
@@ -110,7 +118,7 @@ namespace VBA10
 		Windows::Foundation::EventRegistrationToken m_eventToken;
 
 		//back button
-		void OnHardwareBackButtonPressed(Platform::Object^ sender,	Windows::Phone::UI::Input::BackPressedEventArgs ^args);
+		void OnHardwareBackButtonPressed(Platform::Object^ sender, Windows::Phone::UI::Input::BackPressedEventArgs ^args);
 
 		// Independent input handling functions.
 		void OnPointerPressed(CoreWindow ^window, PointerEventArgs ^args);
@@ -119,7 +127,7 @@ namespace VBA10
 
 		// Resources used to render the DirectX content in the XAML page background.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
-		std::unique_ptr<VBA10Main> m_main; 
+		std::unique_ptr<VBA10Main> m_main;
 		bool m_windowVisible;
 
 		//from AppShell
@@ -132,10 +140,11 @@ namespace VBA10
 
 		static DirectXPage^ _current;
 		Windows::System::Display::DisplayRequest^ g_DisplayRequest;
-	
+
+
 		void TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void CloseMenu();
-};
+	};
 }
 
