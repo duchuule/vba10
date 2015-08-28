@@ -95,6 +95,13 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 
 void App::LaunchApp(ApplicationExecutionState previousState,FileActivatedEventArgs^ args)
 {
+#if _DEBUG
+	if (IsDebuggerPresent())
+	{
+		//DebugSettings->EnableFrameRateCounter = true;
+	}
+#endif
+
 	//change minimum suze to 320 px
 	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
 	ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
