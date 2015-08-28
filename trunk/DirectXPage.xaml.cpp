@@ -680,7 +680,7 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 
 	//GoToPage(0);
 	int test = NavMenuList->SelectedIndex;
-	if (!IsROMLoaded())  //always go to page 0 if no rom has been started
+	if (!IsROMLoaded() || NavMenuList->SelectedIndex < 0)  //always go to page 0 if no rom has been started
 		GoToPage(0);
 	else //reload current page
 		GoToPage(NavMenuList->SelectedIndex); //even when ROM is loaded, we force the Pane to reload
