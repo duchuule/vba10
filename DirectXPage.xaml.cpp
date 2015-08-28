@@ -51,7 +51,7 @@ using namespace Windows::Graphics::Imaging;
 using namespace Windows::Globalization; //to get date time
 using namespace Windows::System::Display;
 using namespace Windows::ApplicationModel::Activation;
-
+using namespace Windows::Storage::AccessCache;
 
 using namespace std;
 using namespace VBA10;
@@ -264,14 +264,14 @@ task<void> DirectXPage::CopyDemoROMAsync(void)
 	auto settings = ApplicationData::Current->LocalSettings->Values;
 
 	if (settings->HasKey("FIRSTSTART"))
-		return create_task([] {});
+		return concurrency::create_task([] {});
 		
 
 
 	settings->Insert("FIRSTSTART", dynamic_cast<PropertyValue^>(PropertyValue::CreateBoolean(false)));
 
 	StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
-	return create_task(installDir->GetFolderAsync("Assets/"))
+	return concurrency::create_task(installDir->GetFolderAsync("Assets/"))
 		.then([this](StorageFolder^ folder)
 	{
 		
@@ -370,13 +370,13 @@ task<void> DirectXPage::SaveInternalState(IPropertySet^ state)
 		return SaveBeforeStop();
 	}
 	else
-		return create_task([] {});
+		return concurrency::create_task([] {});
 }
 
 
 task<void> DirectXPage::SaveBeforeStop()
 {
-	return create_task([this] {
+	return concurrency::create_task([this] {
 		//move saving stuff from StopROMAsync over here + add save snapshot
 		if (IsROMLoaded())
 		{
@@ -731,14 +731,14 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 	//create_task(SaveBeforeStop())
 
 	//create task like this will put the task on background thread
-	create_task([this, entry] {
+	concurrency::create_task([this, entry] {
 		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName != ROMFile->Path)  //different rom, save old rom state
 		{
 			return SaveBeforeStop();
 
 		}
 		else
-			return create_task([] {});
+			return concurrency::create_task([] {});
 	}).then([entry] {
 		return entry->Folder->GetFileAsync(entry->FileName);
 
@@ -749,7 +749,7 @@ void DirectXPage::LoadROM(ROMDBEntry^ entry)
 		if (entry->AutoLoadLastState)
 			return LoadStateAsync(AUTOSAVESTATE_SLOT);
 		else
-			return create_task([] {});
+			return concurrency::create_task([] {});
 	});
 	//this is OK after we fixed the ParseVBAiniAsync so that it does not branch to another thread but it makes the UI unreponsive
 	//LoadROMAsync(file, folder).then([this]
@@ -856,7 +856,7 @@ task<void> DirectXPage::SaveSnapshot()
 
 	
 
-	return create_task(ROMFolder->CreateFileAsync(psnapshotname, CreationCollisionOption::OpenIfExists)
+	return concurrency::create_task(ROMFolder->CreateFileAsync(psnapshotname, CreationCollisionOption::OpenIfExists)
 		).then([this, width, height, pixels](StorageFile ^file)
 	{
 		tmpfile = file;
@@ -905,6 +905,7 @@ void DirectXPage::ImportRomFromFile(FileActivatedEventArgs^ args)
 	wstring snapshotname = filenamenoext + L".jpg";
 	Platform::String^ psnapshotname = ref new Platform::String(snapshotname.c_str());
 	Platform::String^ pfilenamenoext = ref new Platform::String(filenamenoext.c_str());
+	Platform::String^ pfolderpath = ref new Platform::String(folderpath.c_str());
 
 	//calculate token
 	replace(folderpath.begin(), folderpath.end(), ':', '_');
@@ -912,6 +913,155 @@ void DirectXPage::ImportRomFromFile(FileActivatedEventArgs^ args)
 	replace(folderpath.begin(), folderpath.end(), '\\', '_');
 	Platform::String^ ptoken = ref new Platform::String(folderpath.c_str());
 
+	//add folder to future accesslist
+	int locationType = 0; //default to private storage
+	if (StorageApplicationPermissions::FutureAccessList->ContainsItem(ptoken))
+		locationType = 1; //set to user accessible storage
 
+	//check to see if this file is already in the database
+	bool exist = false;
+	ROMDBEntry^ entry = nullptr;
+	for (int j = 0; j < App::ROMDB->AllROMDBEntries->Size; j++)
+	{
+		entry = App::ROMDB->AllROMDBEntries->GetAt(j);
+		if ( (locationType == 0 && entry->FileName == file->Name)
+			|| (locationType == 1 && entry->FileName == file->Name && entry->Token == ptoken))
+		{
+			exist = true;
+			break;
+		}
+	}
+	//=====create rom entry
+	if (!exist)
+	{
+		if (locationType == 0)
+			entry = ref new ROMDBEntry(locationType, pfilenamenoext, file->Name, ApplicationData::Current->LocalFolder->Path, "none", psnapshotname);
+		else
+			entry = ref new ROMDBEntry(locationType, pfilenamenoext, file->Name, pfolderpath, ptoken, psnapshotname);
+		App::ROMDB->AllROMDBEntries->Append(entry);
+	}
+
+	vector<task<void>> tasks;
+	
+
+	//copy rom file over if we store in private storage (no matter if rom already exists)
+	if (locationType == 0)
+		tasks.emplace_back(
+			concurrency::create_task(file->CopyAsync(ApplicationData::Current->LocalFolder, file->Name, NameCollisionOption::ReplaceExisting))
+			.then([](task<StorageFile^> t)
+		{
+			try
+			{
+				t.get();
+
+			}
+			catch (...)
+			{
+			}
+		}));
+
+	if (!exist)
+	{
+		//=====copy snapshot over
+		
+		tasks.emplace_back(
+			concurrency::create_task([locationType, ptoken, entry]	
+			{
+				if (locationType == 0)
+				{
+					entry->Folder = ApplicationData::Current->LocalFolder;
+					return create_task([] {});
+				}
+				else
+				{
+					return concurrency::create_task([ptoken]() {
+						return StorageApplicationPermissions::FutureAccessList->GetFolderAsync(ptoken);
+					}).then([entry](StorageFolder^ folder) {
+						entry->Folder = folder;
+					});
+				}
+
+			}).then([entry] ()
+			{
+				StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
+				return installDir->GetFolderAsync("Assets/");
+			}, task_continuation_context::use_current()).then([entry](StorageFolder^ assetFolder)
+			{
+				return assetFolder->GetFileAsync("no_snapshot.png");
+			}).then([entry](StorageFile ^file)
+			{
+				//copy snapshot file to would be location
+				return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
+
+			}).then([entry](StorageFile ^file)
+			{
+				//open file
+				return file->OpenAsync(FileAccessMode::Read);
+			}).then([entry](IRandomAccessStream^ stream)
+			{
+				//load bitmap image for snapshot
+				entry->Snapshot = ref new BitmapImage();
+				return entry->Snapshot->SetSourceAsync(stream);
+
+
+			}).then([](task<void> t)
+			{
+				try
+				{
+					t.get();
+
+				}
+				catch (...)
+				{
+				}
+			})
+
+		);//end of tasks.emplace_back
+
+		
+
+		//auto tmpentry = make_shared<ROMDBEntry^>(entry);
+
+
+		//====write to database file
+		tasks.emplace_back(	concurrency::create_task(App::ROMDB->AddAsync(entry))
+		.then([](task<void> t)
+			{
+				try
+				{
+					t.get();
+
+				}
+				catch (...)
+				{
+				}
+			})
+
+		);  //end of tasks.emplace_back
+
+
+		
+	}
+
+	//when all finish
+	when_all(begin(tasks), end(tasks)).then([this, entry](task<void> t)
+	{
+		try
+		{
+			t.get();
+			LoadROM(entry);
+
+		}
+		catch (...)
+		{
+			// We'll handle the specific errors below.
+		}
+
+
+	}, task_continuation_context::use_current());
+
+	
+	
+	
 
 }
