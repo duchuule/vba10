@@ -16,13 +16,12 @@ namespace VBA10
 	}
 
 	VirtualControllerInput::VirtualControllerInput(void)
-		: emulator(EmulatorGame::GetInstance()), 
-		pointers(ref new Map<unsigned int, PointerPoint ^>()), 
-		stickFingerDown(false)
+		: emulator(EmulatorGame::GetInstance()),
+		stickFingerDown(false), isEditMode(false)
 	{ 
 		ZeroMemory(&state, sizeof(ControllerState));
 		InitializeCriticalSectionEx(&this->cs, 0, 0);
-		this->pointers = ref new Platform::Collections::Map<unsigned int, PointerPoint ^>();
+		this->pointers = new map<unsigned int, PointerInfo*>();
 		instance = this;
 	}
 
@@ -42,7 +41,7 @@ namespace VBA10
 		this->visibleStickOffset.x = 0;
 		this->visibleStickOffset.y = 0;
 
-		this->pointers->Clear();
+		this->pointers->clear();
 	}
 
 	const ControllerState *VirtualControllerInput::GetControllerState(void)
@@ -53,38 +52,47 @@ namespace VBA10
 	void VirtualControllerInput::PointerPressed(PointerPoint ^point)
 	{
 		EnterCriticalSection(&this->cs);
-		this->pointers->Insert(point->PointerId, point);
+
+		PointerInfo* pinfo = new PointerInfo();
+		pinfo->point = point;
+		pinfo->description = "";
+		pinfo->IsMoved = false;
+		this->pointers->insert(pair<unsigned int, PointerInfo*>(point->PointerId, pinfo));
+
 		LeaveCriticalSection(&this->cs);
 
 		this->ptest = point->Position;
 
-		int dpad = EmulatorSettings::Current->DPadStyle;
-		if(dpad >= 1)
+		if (!isEditMode)
 		{
-			Windows::Foundation::Point p = point->Position;
-			
-
-			if(this->stickBoundaries.Contains(p) && !stickFingerDown && !this->lRect.Contains(p))
+			int dpad = EmulatorSettings::Current->DPadStyle;
+			if (dpad >= 1)
 			{
-				float scale = (int) Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-				if(dpad == 2)
+				Windows::Foundation::Point p = point->Position;
+
+
+				if (this->stickBoundaries.Contains(p) && !stickFingerDown && !this->lRect.Contains(p))
 				{
-					this->stickPos = p;
+					float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+					if (dpad == 2)
+					{
+						this->stickPos = p;
+					}
+					if (dpad == 2)
+					{
+						this->visibleStickPos.x = this->stickPos.X * scale;
+						this->visibleStickPos.y = this->stickPos.Y * scale;
+					}
+
+					this->stickFingerID = point->PointerId;
+					this->stickFingerDown = true;
+
+					this->stickOffset.X = p.X - this->stickPos.X;
+					this->stickOffset.Y = p.Y - this->stickPos.Y;
+
+					this->visibleStickOffset.x = this->stickOffset.X * scale;
+					this->visibleStickOffset.y = this->stickOffset.Y * scale;
 				}
-				if(dpad == 2)
-				{
-					this->visibleStickPos.x = this->stickPos.X * scale;
-					this->visibleStickPos.y = this->stickPos.Y * scale;
-				}
-
-				this->stickFingerID = point->PointerId;
-				this->stickFingerDown = true;
-
-				this->stickOffset.X = p.X - this->stickPos.X;
-				this->stickOffset.Y = p.Y - this->stickPos.Y;
-
-				this->visibleStickOffset.x = this->stickOffset.X * scale;
-				this->visibleStickOffset.y = this->stickOffset.Y * scale;
 			}
 		}
 	}
@@ -92,36 +100,53 @@ namespace VBA10
 	void VirtualControllerInput::PointerMoved(PointerPoint ^point)
 	{
 		EnterCriticalSection(&this->cs);
-		if(this->pointers->HasKey(point->PointerId))
+		std::map<unsigned int, PointerInfo*>::iterator iter = this->pointers->find(point->PointerId);
+		
+
+		if (isEditMode)  //edit position mode
 		{
-			this->pointers->Insert(point->PointerId, point);
+
 		}
-		LeaveCriticalSection(&this->cs);
-
-		int dpad = EmulatorSettings::Current->DPadStyle;
-		if(dpad >= 1)
+		else  //regular mode
 		{
-			if(this->stickFingerDown && point->PointerId == this->stickFingerID)
+			if (iter != this->pointers->end())  //update the current pointer position
 			{
-				Windows::Foundation::Point p = point->Position;
+				PointerInfo* pinfo = new PointerInfo();
+				pinfo->point = point;
+				pinfo->description = "";
+				pinfo->IsMoved = false;
 
-				float scale = (int) Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+				iter->second = pinfo;
+			}
+			int dpad = EmulatorSettings::Current->DPadStyle;
+			if (dpad >= 1)
+			{
+				if (this->stickFingerDown && point->PointerId == this->stickFingerID)
+				{
+					Windows::Foundation::Point p = point->Position;
 
-				stickOffset.X = p.X - this->stickPos.X;
-				stickOffset.Y = p.Y - this->stickPos.Y;
+					float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
 
-				this->visibleStickOffset.x = this->stickOffset.X * scale;
-				this->visibleStickOffset.y = this->stickOffset.Y * scale;
+					stickOffset.X = p.X - this->stickPos.X;
+					stickOffset.Y = p.Y - this->stickPos.Y;
+
+					this->visibleStickOffset.x = this->stickOffset.X * scale;
+					this->visibleStickOffset.y = this->stickOffset.Y * scale;
+				}
 			}
 		}
+
+		LeaveCriticalSection(&this->cs);
 	}
 
 	void VirtualControllerInput::PointerReleased(PointerPoint ^point)
 	{
 		EnterCriticalSection(&this->cs);
-		if(this->pointers->HasKey(point->PointerId))
+
+		std::map<unsigned int, PointerInfo*>::iterator iter = this->pointers->find(point->PointerId);
+		if (iter != this->pointers->end())
 		{
-			this->pointers->Remove(point->PointerId);
+			this->pointers->erase(iter);
 		}
 		LeaveCriticalSection(&this->cs);
 
@@ -140,6 +165,139 @@ namespace VBA10
 				this->visibleStickOffset.y = 0;
 			}
 		}
+	}
+
+
+	void VirtualControllerInput::Update(void)
+	{
+		ZeroMemory(&this->state, sizeof(ControllerState));
+
+		int dpad = EmulatorSettings::Current->DPadStyle;
+
+		EnterCriticalSection(&this->cs);
+
+		for (auto i = this->pointers->begin(); i != this->pointers->end(); i++)
+		{
+			PointerPoint ^p = i->second->point;
+			Windows::Foundation::Point point = Windows::Foundation::Point(p->Position.X, p->Position.Y);
+			bool stickFinger = false;
+
+			if (dpad == 0)
+			{
+				if (this->leftRect.Contains(point))
+				{
+					state.LeftPressed = true;
+				}
+				if (this->upRect.Contains(point))
+				{
+					state.UpPressed = true;
+				}
+				if (this->rightRect.Contains(point))
+				{
+					state.RightPressed = true;
+				}
+				if (this->downRect.Contains(point))
+				{
+					state.DownPressed = true;
+				}
+			}
+			else
+			{
+				if (this->stickFingerDown && p->PointerId == this->stickFingerID)
+				{
+					stickFinger = true;
+					float deadzone = GetDeadzone();
+					float controllerScale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
+					float length = (float)sqrt(this->stickOffset.X * this->stickOffset.X + this->stickOffset.Y * this->stickOffset.Y);
+					float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+					if (length >= deadzone * scale * controllerScale)
+					{
+						// Deadzone of 15
+						float unitX = 1.0f;
+						float unitY = 0.0f;
+						float normX = this->stickOffset.X / length;
+						float normY = this->stickOffset.Y / length;
+
+						float dot = unitX * normX + unitY * normY;
+						float rad = (float)acos(dot);
+
+						if (normY > 0.0f)
+						{
+							rad = 6.28f - rad;
+						}
+
+						/*rad = (rad + 3.14f / 2.0f);
+						if(rad > 6.28f)
+						{
+						rad -= 6.28f;
+						}*/
+
+						if ((rad >= 0 && rad < 1.046f) || (rad > 5.234f && rad < 6.28f))
+						{
+							state.RightPressed = true;
+						}
+						if (rad >= 0.523f && rad < 2.626f)
+						{
+							state.UpPressed = true;
+						}
+						if (rad >= 2.093f && rad < 4.186f)
+						{
+							state.LeftPressed = true;
+						}
+						if (rad >= 3.663f && rad < 5.756f)
+						{
+							state.DownPressed = true;
+						}
+					}
+				}
+			}
+
+			if (!stickFinger)
+			{
+				if (this->startRect.Contains(point))
+				{
+					this->state.StartPressed = true;
+				}
+				if (this->selectRect.Contains(point))
+				{
+					this->state.SelectPressed = true;
+				}
+				if (this->lRect.Contains(point))
+				{
+					this->state.LPressed = true;
+				}
+				if (this->rRect.Contains(point))
+				{
+					this->state.RPressed = true;
+				}
+				if (this->aRect.Contains(point))
+				{
+					this->state.APressed = true;
+				}
+				if (this->bRect.Contains(point))
+				{
+					this->state.BPressed = true;
+				}
+				if (this->turboRect.Contains(point))
+				{
+					this->state.TurboTogglePressed = true;
+				}
+				if (this->comboRect.Contains(point))
+				{
+					this->state.APressed = true;
+					this->state.BPressed = true;
+				}
+				/*if(this->xRect.Contains(point))
+				{
+				this->state.XPressed = true;
+				}
+				if(this->yRect.Contains(point))
+				{
+				this->state.YPressed = true;
+				}*/
+			}
+		}
+		LeaveCriticalSection(&this->cs);
 	}
 
 	void VirtualControllerInput::CreateRenderRectangles(void)
@@ -430,135 +588,7 @@ namespace VBA10
 
 
 
-	void VirtualControllerInput::Update(void)
-	{
-		ZeroMemory(&this->state, sizeof(ControllerState));
 
-		int dpad = EmulatorSettings::Current->DPadStyle;
-
-		EnterCriticalSection(&this->cs);
-		for (auto i = this->pointers->First(); i->HasCurrent; i->MoveNext())
-		{
-			PointerPoint ^p = i->Current->Value;
-			Windows::Foundation::Point point = Windows::Foundation::Point(p->Position.X, p->Position.Y);
-			bool stickFinger = false;
-
-			if(dpad == 0)
-			{
-				if(this->leftRect.Contains(point))
-				{
-					state.LeftPressed = true;
-				}
-				if(this->upRect.Contains(point))
-				{
-					state.UpPressed = true;
-				}
-				if(this->rightRect.Contains(point))
-				{
-					state.RightPressed = true;
-				}
-				if(this->downRect.Contains(point))
-				{
-					state.DownPressed = true;
-				}
-			}else
-			{
-				if(this->stickFingerDown && p->PointerId == this->stickFingerID)
-				{
-					stickFinger = true;
-					float deadzone = GetDeadzone();
-					float controllerScale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
-					float length = (float) sqrt(this->stickOffset.X * this->stickOffset.X + this->stickOffset.Y * this->stickOffset.Y);
-					float scale = (int) Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-					if(length >= deadzone * scale * controllerScale)
-					{
-						// Deadzone of 15
-						float unitX = 1.0f;
-						float unitY = 0.0f;
-						float normX = this->stickOffset.X / length;
-						float normY = this->stickOffset.Y / length;
-
-						float dot = unitX * normX + unitY * normY;
-						float rad = (float) acos(dot);
-
-						if(normY > 0.0f)
-						{
-							rad = 6.28f - rad;
-						}
-
-						/*rad = (rad + 3.14f / 2.0f);
-						if(rad > 6.28f)
-						{
-							rad -= 6.28f;
-						}*/
-
-						if((rad >= 0 && rad < 1.046f) || (rad > 5.234f && rad < 6.28f))
-						{
-							state.RightPressed = true;
-						}
-						if(rad >= 0.523f && rad < 2.626f)
-						{
-							state.UpPressed = true;
-						}
-						if(rad >= 2.093f && rad < 4.186f)
-						{
-							state.LeftPressed = true;
-						}
-						if(rad >= 3.663f && rad < 5.756f)
-						{
-							state.DownPressed = true;
-						}
-					}
-				}
-			}
-
-			if(!stickFinger)
-			{
-				if(this->startRect.Contains(point))
-				{
-					this->state.StartPressed = true;
-				}
-				if(this->selectRect.Contains(point))
-				{
-					this->state.SelectPressed = true;
-				}
-				if(this->lRect.Contains(point))
-				{
-					this->state.LPressed = true;
-				}
-				if(this->rRect.Contains(point))
-				{
-					this->state.RPressed = true;
-				}
-				if(this->aRect.Contains(point))
-				{
-					this->state.APressed = true;
-				}
-				if(this->bRect.Contains(point))
-				{
-					this->state.BPressed = true;
-				}
-				if (this->turboRect.Contains(point))
-				{
-					this->state.TurboTogglePressed = true;
-				}
-				if (this->comboRect.Contains(point))
-				{
-					this->state.APressed = true;
-					this->state.BPressed = true;
-				}
-				/*if(this->xRect.Contains(point))
-				{
-					this->state.XPressed = true;
-				}
-				if(this->yRect.Contains(point))
-				{
-					this->state.YPressed = true;
-				}*/
-			}
-		}
-		LeaveCriticalSection(&this->cs);
-	}
 	
 	void VirtualControllerInput::GetStickRectangle(RECT *rect)
 	{
@@ -585,5 +615,15 @@ namespace VBA10
 	bool VirtualControllerInput::StickFingerDown(void)
 	{
 		return this->stickFingerDown;
+	}
+
+	void VirtualControllerInput::EnterEditMode()
+	{
+		isEditMode = true;
+	}
+
+	void VirtualControllerInput::LeaveEditMode(bool accept)
+	{
+		isEditMode = false;
 	}
 }
