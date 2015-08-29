@@ -13,6 +13,15 @@ namespace VBA10
 {
 	class EmulatorGame;
 
+	struct PointerInfo
+	{
+		Windows::UI::Input::PointerPoint^ point;
+		bool IsMoved;
+		Platform::String^ description;
+	};
+
+
+
 	class VirtualControllerInput
 		: public EmulatorInput
 	{
@@ -46,11 +55,14 @@ namespace VBA10
 		void GetRRectangle(RECT *rect);
 		void Update(void);
 
+		void EnterEditMode();
+		void LeaveEditMode(bool accept); 
+
 	private:
 		static VirtualControllerInput *instance;
 		float physicalWidth, physicalHeight; //in inch
 		
-		Map<unsigned int, Windows::UI::Input::PointerPoint ^> ^pointers;
+		std::map<unsigned int, PointerInfo*> *pointers;
 
 		bool stickFingerDown;
 		int stickFingerID;
@@ -115,5 +127,6 @@ namespace VBA10
 		void CreateRenderRectangles(void);
 		void CreateTouchRectangles(void);
 
+		bool isEditMode;
 	};
 }
