@@ -14,6 +14,7 @@
 #include "stringhelper.h"
 #include "App.xaml.h"
 
+
 #include "NavMenuItem.h"
 #include "NavMenuListView.h"
 #include "SelectROMPane.xaml.h"
@@ -23,6 +24,7 @@
 #include "ExportPage.xaml.h"
 #include "ImportPage.xaml.h"
 #include "PurchasePage.xaml.h"
+#include "BlankPage.xaml.h"
 
 
 
@@ -572,8 +574,13 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	//disable AppFrame so that it does not receive input accidentally
 	AppFrame->IsEnabled = false;
 
+	//navigate to a blank page to avoid ad control reload
+	AppFrame->Navigate(TypeName(BlankPage::typeid));
+
 	//change the size of app frame to zero to hide content
 	AppFrame->Width = 0.0f;
+
+	
 
 	//unselect item
 	//NavMenuList->SetSelectedItem(nullptr);
@@ -1059,9 +1066,12 @@ void DirectXPage::ImportRomFromFile(FileActivatedEventArgs^ args)
 
 
 	}, task_continuation_context::use_current());
+}
 
-	
-	
-	
 
+void DirectXPage::EditButtonLayout()
+{
+	this->m_main->emulator->EnterButtonEditMode();
+	CloseMenu();
+	
 }

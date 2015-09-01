@@ -350,6 +350,9 @@
     <ClInclude Include="AdControl.xaml.h">
       <DependentUpon>AdControl.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="BlankPage.xaml.h">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="CheatPane.xaml.h">
       <DependentUpon>CheatPane.xaml</DependentUpon>
     </ClInclude>
@@ -486,6 +489,9 @@
   <ItemGroup>
     <ClCompile Include="AdControl.xaml.cpp">
       <DependentUpon>AdControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="BlankPage.xaml.cpp">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="CheatPane.xaml.cpp">
       <DependentUpon>CheatPane.xaml</DependentUpon>
@@ -1191,6 +1197,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AdControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BlankPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CheatPane.xaml" />

@@ -77,8 +77,8 @@
                        Background="Transparent"
                        >
                 <SplitView.Pane  >
-                <RelativePanel >
-                    <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
+                    <RelativePanel >
+                        <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
                         <controls:NavMenuListView x:Name="NavMenuList"
                                               IsTabStop="False"
                                               Margin="0,48,0,0"
@@ -87,7 +87,9 @@
                                               ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                               ItemInvoked="NavMenuList_ItemInvoked">
                             <!--<controls:NavMenuListView.Header>
-                                --><!-- Using this custom back navigation button until the system-provided back button is enabled. --><!--
+                                -->
+                            <!-- Using this custom back navigation button until the system-provided back button is enabled. -->
+                            <!--
                                 <Button x:Name="BackButton"
                                     TabIndex="2"
                                     Style="{StaticResource NavigationBackButtonStyle}"
@@ -131,7 +133,7 @@
                       AutomationProperties.Name="Menu"
                       ToolTipService.ToolTip="Menu" 
                         />
-        <!---->
+            <!---->
    
 
     </SwapChainPanel>

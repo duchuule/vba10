@@ -422,12 +422,12 @@ namespace VBA10
 			this->MeasureTime();
 		}*/
 
-		if(!emulator->IsPaused())
-		{			
+		if (!emulator->IsPaused())
+		{
 			this->elapsedTime += timeDelta;
 
 			this->lastElapsed = timeDelta;
-			
+
 			systemFrameSkip = 0;
 
 			turboSkip = EmulatorSettings::Current->TurboFrameSkip;
@@ -459,6 +459,10 @@ namespace VBA10
 			this->Autosave();
 
 
+			this->emulator->Update(timeDelta);
+		}
+		else if (this->emulator->IsButtonEditMode())
+		{
 			this->emulator->Update(timeDelta);
 		}
 		this->FPSCounter();
