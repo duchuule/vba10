@@ -55,7 +55,7 @@ namespace VBA10
 		void LoadState();
 		void Reset();
 		void SelectSaveState(int slot);
-
+		void EditButtonLayout();
 
 
 		//from AppShell

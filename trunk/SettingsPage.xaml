@@ -124,13 +124,20 @@
                                   VerticalAlignment="Top" 
                                   SelectedIndex="1"
                                   SelectionChanged="dpadComboBox_SelectionChanged_1"
-                                  Header="D-Pad Style">
+                                  Header="D-Pad Style"
+                                  Margin =" 0, 0, 0, 12">
                             <ComboBoxItem>8-way</ComboBoxItem>
                             <ComboBoxItem>fixed analogue stick</ComboBoxItem>
                             <ComboBoxItem>dynamic analogue stick</ComboBoxItem>
                         </ComboBox>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button x:Name="editButonLayoutBtn" 
+                                Content="Edit button layout" 
+                                    HorizontalAlignment="Stretch"
+                                    Click="editButonLayoutBtn_Click"
+                                Margin =" 0, 0, 0, 12"/>
+
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock Name="deadzoneLabel2" >Deadzone (analogue stick):</TextBlock>
                             <TextBlock Name="deadzoneLabel"   Text="10.0" />
                         </StackPanel>
@@ -139,7 +146,7 @@
                                 Name="deadzoneSlider" 
                                 ValueChanged="deadzoneSlider_ValueChanged_1"
                                 />
-
+                        
 
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock >Virtual Joystick Scale:</TextBlock>
@@ -171,6 +178,8 @@
                                  ValueChanged="controllerOpacitySlider_ValueChanged_1"
                                 />
 
+                        
+                        
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="16" 
                                    Text="Key Bindings"
                                    VerticalAlignment="Top"/>

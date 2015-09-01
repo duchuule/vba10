@@ -78,5 +78,6 @@ namespace VBA10
 		void OnCancelled(Platform::Object ^sender, Platform::Object ^args);
 		void OnCompleted(Platform::Object ^sender, Platform::Object ^args);
 		void cboTheme_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
+		void editButonLayoutBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

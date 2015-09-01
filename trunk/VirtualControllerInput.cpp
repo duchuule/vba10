@@ -105,7 +105,76 @@ namespace VBA10
 
 		if (isEditMode)  //edit position mode
 		{
+			if (iter != this->pointers->end())  //update the current pointer position
+			{
+				PointerInfo* pinfo = iter->second;
+				pinfo->IsMoved = true;
 
+
+				//move the control
+				float dx = 0;
+				float dy = 0;
+				float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+
+				dx = (point->Position.X - pinfo->point->Position.X) * scale;
+				dy = - (point->Position.Y - pinfo->point->Position.Y) * scale;
+
+				if (pinfo->description == "joystick")
+				{
+					this->PadLeft += dx;
+					this->PadBottom += dy;
+				}
+				else if (pinfo->description == "l")
+				{
+					this->lLeft += dx;
+					this->LCenterY += dy;
+				}
+				else if (pinfo->description == "r")
+				{
+					this->rRight -= dx;
+					this->RCenterY += dy;
+				}
+				else if (pinfo->description == "a")
+				{
+					this->ACenterX -= dx;
+					this->ACenterY += dy;
+				}
+				else if (pinfo->description == "b")
+				{
+					this->BCenterX -= dx;
+					this->BCenterY += dy;
+				}
+				else if (pinfo->description == "select")
+				{
+					this->selectCenterX += dx;
+					this->selectBottom += dy;
+				}
+				else if (pinfo->description == "start")
+				{
+					this->startCenterX += dx;
+					this->startBottom += dy;
+				}
+				else if (pinfo->description == "turbo")
+				{
+					this->TurboCenterX -= dx;
+					this->TurboCenterY += dy;
+				}
+				else if (pinfo->description == "combo")
+				{
+					this->ComboCenterX -= dx;
+					this->ComboCenterY += dy;
+				}
+
+
+				//record new touch position
+				pinfo->point = point;
+
+				//update controller position on screen
+				this->CreateRenderRectangles();
+
+				//update touh region on screen
+				this->CreateTouchRectangles();
+			}
 		}
 		else  //regular mode
 		{
@@ -143,6 +212,7 @@ namespace VBA10
 	{
 		EnterCriticalSection(&this->cs);
 
+
 		std::map<unsigned int, PointerInfo*>::iterator iter = this->pointers->find(point->PointerId);
 		if (iter != this->pointers->end())
 		{
@@ -150,19 +220,22 @@ namespace VBA10
 		}
 		LeaveCriticalSection(&this->cs);
 
-		int dpad = EmulatorSettings::Current->DPadStyle;
-		if(dpad >= 1)
+		if (!isEditMode)
 		{
-			if(this->stickFingerDown && point->PointerId == this->stickFingerID)
+			int dpad = EmulatorSettings::Current->DPadStyle;
+			if (dpad >= 1)
 			{
-				this->stickFingerDown = false;
-				this->stickFingerID = 0;
+				if (this->stickFingerDown && point->PointerId == this->stickFingerID)
+				{
+					this->stickFingerDown = false;
+					this->stickFingerID = 0;
 
-				this->stickOffset.X = 0;
-				this->stickOffset.Y = 0;
+					this->stickOffset.X = 0;
+					this->stickOffset.Y = 0;
 
-				this->visibleStickOffset.x = 0;
-				this->visibleStickOffset.y = 0;
+					this->visibleStickOffset.x = 0;
+					this->visibleStickOffset.y = 0;
+				}
 			}
 		}
 	}
@@ -181,6 +254,11 @@ namespace VBA10
 			PointerPoint ^p = i->second->point;
 			Windows::Foundation::Point point = Windows::Foundation::Point(p->Position.X, p->Position.Y);
 			bool stickFinger = false;
+
+			if (this->stickBoundaries.Contains(point))
+			{
+				i->second->description = "joystick";
+			}
 
 			if (dpad == 0)
 			{
@@ -257,35 +335,43 @@ namespace VBA10
 				if (this->startRect.Contains(point))
 				{
 					this->state.StartPressed = true;
+					i->second->description = "start";
 				}
 				if (this->selectRect.Contains(point))
 				{
 					this->state.SelectPressed = true;
+					i->second->description = "select";
 				}
 				if (this->lRect.Contains(point))
 				{
 					this->state.LPressed = true;
+					i->second->description = "l";
 				}
 				if (this->rRect.Contains(point))
 				{
 					this->state.RPressed = true;
+					i->second->description = "r";
 				}
 				if (this->aRect.Contains(point))
 				{
 					this->state.APressed = true;
+					i->second->description = "a";
 				}
 				if (this->bRect.Contains(point))
 				{
 					this->state.BPressed = true;
+					i->second->description = "b";
 				}
 				if (this->turboRect.Contains(point))
 				{
 					this->state.TurboTogglePressed = true;
+					i->second->description = "turbo";
 				}
 				if (this->comboRect.Contains(point))
 				{
 					this->state.APressed = true;
 					this->state.BPressed = true;
+					i->second->description = "combo";
 				}
 				/*if(this->xRect.Contains(point))
 				{
@@ -300,17 +386,15 @@ namespace VBA10
 		LeaveCriticalSection(&this->cs);
 	}
 
-	void VirtualControllerInput::CreateRenderRectangles(void)
+	void VirtualControllerInput::SetControllerPositionFromSettings()
 	{
-		
-
 		EmulatorSettings ^settings = EmulatorSettings::Current;
 
 
 
 		//IMPORTANT: hscale used to be 1.0 on 480p device. Now hscale is 1.5 on 480p devices, which makes the device effectively 320p
 		// so now all the number are based on 320p
-		float rawDpiX =  Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
+		float rawDpiX = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
 		if (rawDpiX > 0 && rawDpiX < 1000) //if the monitor reports dimension
 			this->physicalWidth = this->emulator->GetWidth() / rawDpiX;
 		else
@@ -322,15 +406,15 @@ namespace VBA10
 		else
 			this->physicalHeight = 8.0f;
 
-		
 
-		
+
+
 		//get setting info
 		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
 		{
 			//scale is the ratio between real physical size and design physical size
-			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.5f); 
-			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.5f); 
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.5f);
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.5f);
 
 			PadLeft = settings->PadLeftP * vscale / 2.54f * rawDpiX;
 			PadBottom = settings->PadBottomP * vscale / 2.54f * rawDpiY;
@@ -375,6 +459,13 @@ namespace VBA10
 			ComboCenterX = settings->ComboCenterXL * vscale / 2.54f * rawDpiX;
 			ComboCenterY = settings->ComboCenterYL * vscale / 2.54f * rawDpiY;
 		}
+	}
+
+	void VirtualControllerInput::CreateRenderRectangles(void)
+	{
+		
+		float rawDpiX = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
+		float rawDpiY = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiY;
 
 		//setting to scale the size of the button
 		float value = EmulatorSettings::Current->ControllerScale / 100.0f * rawDpiX / 122.0f; //122.0f is dpi of 14'' laptop
@@ -536,7 +627,7 @@ namespace VBA10
 
 	void VirtualControllerInput::UpdateVirtualControllerRectangles(void)
 	{
-
+		SetControllerPositionFromSettings();
 		CreateRenderRectangles();
 		CreateTouchRectangles();
 	}
@@ -622,8 +713,15 @@ namespace VBA10
 		isEditMode = true;
 	}
 
+	bool VirtualControllerInput::IsEditMode()
+	{
+		return isEditMode;
+	}
+
 	void VirtualControllerInput::LeaveEditMode(bool accept)
 	{
 		isEditMode = false;
 	}
+
+	
 }

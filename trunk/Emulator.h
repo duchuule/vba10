@@ -68,6 +68,10 @@ namespace VBA10
 
 		task<bool> RestoreHidConfig();
 
+		void EnterButtonEditMode();
+		bool IsButtonEditMode();
+		void LeaveButtonEditMode(bool accept);
+
 	private:
 		static EmulatorGame *instance;
 
@@ -98,7 +102,6 @@ namespace VBA10
 		void DeInitSound(void);
 		void FlipBuffers(void *buffer, size_t rowPitch);
 		
-
 	
 	};
 }

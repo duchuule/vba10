@@ -455,4 +455,20 @@ namespace VBA10
 			}
 		}, task_continuation_context::use_current());
 	}
+
+
+	void EmulatorGame::EnterButtonEditMode()
+	{
+		this->virtualInput->EnterEditMode();
+	}
+
+	bool EmulatorGame::IsButtonEditMode()
+	{
+		return this->virtualInput->IsEditMode();
+	}
+
+	void EmulatorGame::LeaveButtonEditMode(bool accept)
+	{
+		this->virtualInput->LeaveEditMode(accept);
+	}
 }

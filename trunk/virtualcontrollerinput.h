@@ -55,7 +55,9 @@ namespace VBA10
 		void GetRRectangle(RECT *rect);
 		void Update(void);
 
+		
 		void EnterEditMode();
+		bool IsEditMode();
 		void LeaveEditMode(bool accept); 
 
 	private:
@@ -123,7 +125,7 @@ namespace VBA10
 		float hscale, vscale;
 
 
-
+		void SetControllerPositionFromSettings();
 		void CreateRenderRectangles(void);
 		void CreateTouchRectangles(void);
 

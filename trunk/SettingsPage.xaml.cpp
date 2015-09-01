@@ -353,6 +353,7 @@ void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xa
 		EnableTouchControls(this->touchToggle->IsOn);
 	}
 	this->controllerScaleSlider->IsEnabled = this->touchToggle->IsOn;
+	this->buttonScaleSlider->IsEnabled = this->touchToggle->IsOn;
 	this->controllerOpacitySlider->IsEnabled = this->touchToggle->IsOn;
 	this->deadzoneSlider->IsEnabled = this->touchToggle->IsOn;
 	this->dpadComboBox->IsEnabled = this->touchToggle->IsOn;
@@ -529,7 +530,10 @@ void SettingsPage::deadzoneSlider_ValueChanged_1(Platform::Object^ sender, Windo
 	}
 }
 
-
+void SettingsPage::editButonLayoutBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	DirectXPage::Current->EditButtonLayout();
+}
 
 //###########VIDEO SETTINGS 
 
@@ -691,3 +695,6 @@ void SettingsPage::cboTheme_SelectionChanged(Platform::Object^ sender, Windows::
 		}
 	}
 }
+
+
+
