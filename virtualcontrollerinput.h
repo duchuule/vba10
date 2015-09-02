@@ -124,7 +124,7 @@ namespace VBA10
 
 		float hscale, vscale;
 
-
+		void SaveControllerPositionSettings();
 		void SetControllerPositionFromSettings();
 		void CreateRenderRectangles(void);
 		void CreateTouchRectangles(void);

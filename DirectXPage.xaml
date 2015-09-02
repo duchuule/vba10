@@ -135,6 +135,31 @@
                         />
             <!---->
    
+            <!-- buttons to accept/cancel button position configuration-->
+        <StackPanel x:Name="panelEditButton" 
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal"
+                    Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+                    Padding="12, 8, 12, 8">
+            <Button Grid.Column="2"   
+                    x:Name="CancelPositionBtn"
+                    Content="&#xE106;"
+                    Margin="0, 0, 28, 0"
+                    Click="CancelPositionBtn_Click"
+                Style="{StaticResource AppBarButtonStyleLarge}"
+                />
+            
+            <Button Grid.Column="2"   
+                    x:Name="AcceptPositionBtn"
+                    Content="&#xE10B;"
+                    Click="AcceptPositionBtn_Click"
+                Style="{StaticResource AppBarButtonStyleLarge}"
+                    
+                />
+            
+        </StackPanel>
 
     </SwapChainPanel>
 

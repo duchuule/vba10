@@ -135,7 +135,7 @@
                                 Content="Edit button layout" 
                                     HorizontalAlignment="Stretch"
                                     Click="editButonLayoutBtn_Click"
-                                Margin =" 0, 0, 0, 12"/>
+                                Margin =" 0, 4, 0, 16"/>
 
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Name="deadzoneLabel2" >Deadzone (analogue stick):</TextBlock>
