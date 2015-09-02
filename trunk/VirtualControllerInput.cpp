@@ -255,133 +255,165 @@ namespace VBA10
 			Windows::Foundation::Point point = Windows::Foundation::Point(p->Position.X, p->Position.Y);
 			bool stickFinger = false;
 
-			if (this->stickBoundaries.Contains(point))
+			if (isEditMode)
 			{
-				i->second->description = "joystick";
-			}
-
-			if (dpad == 0)
-			{
-				if (this->leftRect.Contains(point))
+				if (this->stickBoundaries.Contains(point))
 				{
-					state.LeftPressed = true;
+					i->second->description = "joystick";
 				}
-				if (this->upRect.Contains(point))
-				{
-					state.UpPressed = true;
-				}
-				if (this->rightRect.Contains(point))
-				{
-					state.RightPressed = true;
-				}
-				if (this->downRect.Contains(point))
-				{
-					state.DownPressed = true;
-				}
-			}
-			else
-			{
-				if (this->stickFingerDown && p->PointerId == this->stickFingerID)
-				{
-					stickFinger = true;
-					float deadzone = GetDeadzone();
-					float controllerScale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
-					float length = (float)sqrt(this->stickOffset.X * this->stickOffset.X + this->stickOffset.Y * this->stickOffset.Y);
-					float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
-					if (length >= deadzone * scale * controllerScale)
-					{
-						// Deadzone of 15
-						float unitX = 1.0f;
-						float unitY = 0.0f;
-						float normX = this->stickOffset.X / length;
-						float normY = this->stickOffset.Y / length;
-
-						float dot = unitX * normX + unitY * normY;
-						float rad = (float)acos(dot);
-
-						if (normY > 0.0f)
-						{
-							rad = 6.28f - rad;
-						}
-
-						/*rad = (rad + 3.14f / 2.0f);
-						if(rad > 6.28f)
-						{
-						rad -= 6.28f;
-						}*/
-
-						if ((rad >= 0 && rad < 1.046f) || (rad > 5.234f && rad < 6.28f))
-						{
-							state.RightPressed = true;
-						}
-						if (rad >= 0.523f && rad < 2.626f)
-						{
-							state.UpPressed = true;
-						}
-						if (rad >= 2.093f && rad < 4.186f)
-						{
-							state.LeftPressed = true;
-						}
-						if (rad >= 3.663f && rad < 5.756f)
-						{
-							state.DownPressed = true;
-						}
-					}
-				}
-			}
-
-			if (!stickFinger)
-			{
 				if (this->startRect.Contains(point))
 				{
-					this->state.StartPressed = true;
 					i->second->description = "start";
 				}
 				if (this->selectRect.Contains(point))
 				{
-					this->state.SelectPressed = true;
 					i->second->description = "select";
 				}
 				if (this->lRect.Contains(point))
 				{
-					this->state.LPressed = true;
 					i->second->description = "l";
 				}
 				if (this->rRect.Contains(point))
 				{
-					this->state.RPressed = true;
 					i->second->description = "r";
 				}
 				if (this->aRect.Contains(point))
 				{
-					this->state.APressed = true;
 					i->second->description = "a";
 				}
 				if (this->bRect.Contains(point))
 				{
-					this->state.BPressed = true;
 					i->second->description = "b";
 				}
 				if (this->turboRect.Contains(point))
 				{
-					this->state.TurboTogglePressed = true;
 					i->second->description = "turbo";
 				}
 				if (this->comboRect.Contains(point))
 				{
-					this->state.APressed = true;
-					this->state.BPressed = true;
 					i->second->description = "combo";
 				}
-				/*if(this->xRect.Contains(point))
-				{
-				this->state.XPressed = true;
-				}
-				if(this->yRect.Contains(point))
-				{
-				this->state.YPressed = true;
-				}*/
 			}
+			else
+			{
+
+
+				if (dpad == 0)
+				{
+					if (this->leftRect.Contains(point))
+					{
+						state.LeftPressed = true;
+					}
+					if (this->upRect.Contains(point))
+					{
+						state.UpPressed = true;
+					}
+					if (this->rightRect.Contains(point))
+					{
+						state.RightPressed = true;
+					}
+					if (this->downRect.Contains(point))
+					{
+						state.DownPressed = true;
+					}
+				}
+				else
+				{
+					if (this->stickFingerDown && p->PointerId == this->stickFingerID)
+					{
+						stickFinger = true;
+						float deadzone = GetDeadzone();
+						float controllerScale = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
+						float length = (float)sqrt(this->stickOffset.X * this->stickOffset.X + this->stickOffset.Y * this->stickOffset.Y);
+						float scale = (int)Windows::Graphics::Display::DisplayProperties::ResolutionScale / 100.0f;
+						if (length >= deadzone * scale * controllerScale)
+						{
+							// Deadzone of 15
+							float unitX = 1.0f;
+							float unitY = 0.0f;
+							float normX = this->stickOffset.X / length;
+							float normY = this->stickOffset.Y / length;
+
+							float dot = unitX * normX + unitY * normY;
+							float rad = (float)acos(dot);
+
+							if (normY > 0.0f)
+							{
+								rad = 6.28f - rad;
+							}
+
+							/*rad = (rad + 3.14f / 2.0f);
+							if(rad > 6.28f)
+							{
+							rad -= 6.28f;
+							}*/
+
+							if ((rad >= 0 && rad < 1.046f) || (rad > 5.234f && rad < 6.28f))
+							{
+								state.RightPressed = true;
+							}
+							if (rad >= 0.523f && rad < 2.626f)
+							{
+								state.UpPressed = true;
+							}
+							if (rad >= 2.093f && rad < 4.186f)
+							{
+								state.LeftPressed = true;
+							}
+							if (rad >= 3.663f && rad < 5.756f)
+							{
+								state.DownPressed = true;
+							}
+						}
+					}
+				}
+
+				if (!stickFinger)
+				{
+					if (this->startRect.Contains(point))
+					{
+						this->state.StartPressed = true;
+					}
+					if (this->selectRect.Contains(point))
+					{
+						this->state.SelectPressed = true;
+					}
+					if (this->lRect.Contains(point))
+					{
+						this->state.LPressed = true;
+					}
+					if (this->rRect.Contains(point))
+					{
+						this->state.RPressed = true;
+					}
+					if (this->aRect.Contains(point))
+					{
+						this->state.APressed = true;
+					}
+					if (this->bRect.Contains(point))
+					{
+						this->state.BPressed = true;
+					}
+					if (this->turboRect.Contains(point))
+					{
+						this->state.TurboTogglePressed = true;
+					}
+					if (this->comboRect.Contains(point))
+					{
+						this->state.APressed = true;
+						this->state.BPressed = true;
+					}
+					/*if(this->xRect.Contains(point))
+					{
+					this->state.XPressed = true;
+					}
+					if(this->yRect.Contains(point))
+					{
+					this->state.YPressed = true;
+					}*/
+				}
+
+			}  //isEditMode == false
 		}
 		LeaveCriticalSection(&this->cs);
 	}
@@ -458,6 +490,80 @@ namespace VBA10
 			TurboCenterY = settings->TurboCenterYL * vscale / 2.54f * rawDpiY;
 			ComboCenterX = settings->ComboCenterXL * vscale / 2.54f * rawDpiX;
 			ComboCenterY = settings->ComboCenterYL * vscale / 2.54f * rawDpiY;
+		}
+	}
+
+
+	void VirtualControllerInput::SaveControllerPositionSettings()
+	{
+		EmulatorSettings ^settings = EmulatorSettings::Current;
+
+		//IMPORTANT: hscale used to be 1.0 on 480p device. Now hscale is 1.5 on 480p devices, which makes the device effectively 320p
+		// so now all the number are based on 320p
+		float rawDpiX = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiX;
+		if (rawDpiX > 0 && rawDpiX < 1000) //if the monitor reports dimension
+			this->physicalWidth = this->emulator->GetWidth() / rawDpiX;
+		else
+			this->physicalWidth = 8.0f;
+
+		float rawDpiY = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->RawDpiY;
+		if (rawDpiY > 0 && rawDpiY < 1000) //if the monitor reports dimension
+			this->physicalHeight = this->emulator->GetHeight() / rawDpiY;
+		else
+			this->physicalHeight = 8.0f;
+
+
+
+
+		//save setting
+		if (this->emulator->GetHeight() > this->emulator->GetWidth())  //portrait
+		{
+			//scale is the ratio between real physical size and design physical size
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.5f);
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.5f);
+
+			settings->PadLeftP = PadLeft / vscale * 2.54f / rawDpiX;
+			settings->PadBottomP = PadBottom / vscale * 2.54f / rawDpiY;
+			settings->ACenterXP = ACenterX / vscale * 2.54f / rawDpiX;
+			settings->ACenterYP = ACenterY / vscale * 2.54f / rawDpiY;
+			settings->BCenterXP = BCenterX / vscale * 2.54f / rawDpiX;
+			settings->BCenterYP = BCenterY / vscale * 2.54f / rawDpiY;
+			settings->startCenterXP = startCenterX / vscale * 2.54f / rawDpiX;
+			settings->startBottomP = startBottom / vscale * 2.54f / rawDpiY;
+			settings->selectCenterXP = selectCenterX / vscale * 2.54f / rawDpiX;
+			settings->selectBottomP = selectBottom / vscale * 2.54f / rawDpiY;
+			settings->LLeftP = lLeft / vscale * 2.54f / rawDpiX;
+			settings->LCenterYP = LCenterY / vscale * 2.54f / rawDpiY;
+			settings->RRightP = rRight / vscale * 2.54f / rawDpiX;
+			settings->RCenterYP = RCenterY / vscale * 2.54f / rawDpiY;
+			settings->TurboCenterXP = TurboCenterX / vscale * 2.54f / rawDpiX;
+			settings->TurboCenterYP = TurboCenterY / vscale * 2.54f / rawDpiY;
+			settings->ComboCenterXP = ComboCenterX / vscale * 2.54f / rawDpiX;
+			settings->ComboCenterYP = ComboCenterY / vscale * 2.54f / rawDpiY;
+		}
+		else
+		{
+			this->hscale = pow(this->physicalWidth * 2.54f / 8.0f, 0.75f);
+			this->vscale = pow(this->physicalHeight * 2.54f / 8.0f, 0.75f);
+
+			settings->PadLeftL = PadLeft / vscale * 2.54f / rawDpiX;
+			settings->PadBottomL = PadBottom / vscale * 2.54f / rawDpiY;
+			settings->ACenterXL = ACenterX / vscale * 2.54f / rawDpiX;
+			settings->ACenterYL = ACenterY / vscale * 2.54f / rawDpiY;
+			settings->BCenterXL = BCenterX / vscale * 2.54f / rawDpiX;
+			settings->BCenterYL = BCenterY / vscale * 2.54f / rawDpiY;
+			settings->startCenterXL = startCenterX / vscale * 2.54f / rawDpiX;
+			settings->startBottomL = startBottom / vscale * 2.54f / rawDpiY;
+			settings->selectCenterXL = selectCenterX / vscale * 2.54f / rawDpiX;
+			settings->selectBottomL = selectBottom / vscale * 2.54f / rawDpiY;
+			settings->LLeftL = lLeft / vscale * 2.54f / rawDpiX;
+			settings->LCenterYL = LCenterY / vscale * 2.54f / rawDpiY;
+			settings->RRightL = rRight / vscale * 2.54f / rawDpiX;
+			settings->RCenterYL = RCenterY / vscale * 2.54f / rawDpiY;
+			settings->TurboCenterXL = TurboCenterX / vscale * 2.54f / rawDpiX;
+			settings->TurboCenterYL = TurboCenterY / vscale * 2.54f / rawDpiY;
+			settings->ComboCenterXL = ComboCenterX / vscale * 2.54f / rawDpiX;
+			settings->ComboCenterYL = ComboCenterY / vscale * 2.54f / rawDpiY;
 		}
 	}
 
@@ -720,7 +826,20 @@ namespace VBA10
 
 	void VirtualControllerInput::LeaveEditMode(bool accept)
 	{
+		if (accept) //accept, so store the settings
+		{
+			SaveControllerPositionSettings();
+		}
+		else //not accept, restore the old value
+		{
+			SetControllerPositionFromSettings();
+			CreateRenderRectangles();
+			CreateTouchRectangles();
+		}
+
 		isEditMode = false;
+		
+		
 	}
 
 	

@@ -1073,5 +1073,19 @@ void DirectXPage::EditButtonLayout()
 {
 	this->m_main->emulator->EnterButtonEditMode();
 	CloseMenu();
+	this->panelEditButton->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	
+}
+
+void DirectXPage::CancelPositionBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->m_main->emulator->LeaveButtonEditMode(false);
+	this->panelEditButton->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+}
+
+
+void DirectXPage::AcceptPositionBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->m_main->emulator->LeaveButtonEditMode(true);
+	this->panelEditButton->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 }
