@@ -512,6 +512,8 @@ namespace VBA10
 			{
 				delete [] data.ROM;
 			}
+			//try to auto detect save type
+			utilGBAFindSave(romSize);
 
 			// read from vba-over.ini
 			Map<String ^, ROMConfig> ^configs = romConfigs;

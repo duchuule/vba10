@@ -1,4 +1,3 @@
-//r1225, don't use r1226 because Dragon Ball Z cannot run even when we change Savetype to EEPROM
 #ifndef GBAINLINE_H
 #define GBAINLINE_H
 
