@@ -68,8 +68,7 @@ static inline u32 CPUReadMemory(u32 address)
 				value = READ32LE(((u32 *)&biosProtected));
 			}
 			else goto unreadable;
-		}
-		else
+    } else
 			value = READ32LE(((u32 *)&bios[address & 0x3FFC]));
 		break;
 	case 2:
@@ -84,8 +83,7 @@ static inline u32 CPUReadMemory(u32 address)
 				value = READ32LE(((u32 *)&ioMem[address & 0x3fC]));
 				if ((address & 0x3fc) == COMM_JOY_RECV_L)
 					UPDATE_REG(COMM_JOYSTAT, READ16LE(&ioMem[COMM_JOYSTAT]) & ~JOYSTAT_RECV);
-			}
-			else {
+      } else {
 				value = READ16LE(((u16 *)&ioMem[address & 0x3fc]));
 			}
 		}
@@ -143,12 +141,10 @@ static inline u32 CPUReadMemory(u32 address)
 #endif
 			   if (cpuDmaHack) {
 				   value = cpuDmaLast;
-			   }
-			   else {
+	} else {
 				   if (armState) {
 					   return CPUReadMemoryQuick(reg[15].I);
-				   }
-				   else {
+      } else {
 					   return CPUReadHalfWordQuick(reg[15].I) |
 						   CPUReadHalfWordQuick(reg[15].I) << 16;
 				   }
@@ -211,10 +207,8 @@ static inline u32 CPUReadHalfWord(u32 address)
 				}
 #endif
 				value = READ16LE(((u16 *)&biosProtected[address & 2]));
-			}
-			else goto unreadable;
-		}
-		else
+      } else goto unreadable;
+    } else
 			value = READ16LE(((u16 *)&bios[address & 0x3FFE]));
 		break;
 	case 2:
@@ -296,16 +290,13 @@ static inline u32 CPUReadHalfWord(u32 address)
 	unreadable :
 		if (cpuDmaHack) {
 		value = cpuDmaLast & 0xFFFF;
-		}
-		else {
-			if (armState) {
-				value = CPUReadMemoryQuick(reg[15].I);
+	} else {
+		if(armState) {
+			value = CPUReadHalfWordQuick(reg[15].I + (address & 2));
+		} else {
+			value = CPUReadHalfWordQuick(reg[15].I);
 			}
-			else {
-				value = CPUReadHalfWordQuick(reg[15].I) |
-					CPUReadHalfWordQuick(reg[15].I) << 16;
 			}
-		}
 #ifdef GBA_LOGGING
 		if (systemVerbose & VERBOSE_ILLEGAL_READ) {
 			log("Illegal halfword read: %08x at %08x (%08x)\n", oldAddress, reg[15].I, value);
@@ -355,9 +346,8 @@ static inline u8 CPUReadByte(u32 address)
 				}
 #endif
 				return biosProtected[address & 3];
+      } else goto unreadable;
 			}
-			else goto unreadable;
-		}
 		return bios[address & 0x3FFF];
 	case 2:
 		return workRAM[address & 0x3FFFF];
@@ -415,17 +405,14 @@ static inline u8 CPUReadByte(u32 address)
 #endif
 			   if (cpuDmaHack) {
 				   return cpuDmaLast & 0xFF;
-			   }
-			   else {
-				   if (armState) {
-					   return CPUReadMemoryQuick(reg[15].I);
-				   }
-				   else {
-					   return CPUReadHalfWordQuick(reg[15].I) |
-						   CPUReadHalfWordQuick(reg[15].I) << 16;
-				   }
-			   }
+	} else {
+		if(armState) {
+			return CPUReadByteQuick(reg[15].I + (address & 3));
+		} else {
+			return CPUReadByteQuick(reg[15].I + (address & 1));
+		}
 	}
+  }
 }
 
 static inline void CPUWriteMemory(u32 address, u32 value)
@@ -467,8 +454,7 @@ static inline void CPUWriteMemory(u32 address, u32 value)
 		if (address < 0x4000400) {
 			CPUUpdateRegister((address & 0x3FC), value & 0xFFFF);
 			CPUUpdateRegister((address & 0x3FC) + 2, (value >> 16));
-		}
-		else goto unwritable;
+    } else goto unwritable;
 		break;
 	case 0x05:
 #ifdef BKPT_SUPPORT
@@ -606,8 +592,7 @@ static inline void CPUWriteHalfWord(u32 address, u16 value)
 		if (address == 0x80000c4 || address == 0x80000c6 || address == 0x80000c8) {
 			if (!rtcWrite(address, value))
 				goto unwritable;
-		}
-		else if (!agbPrintWrite(address, value)) goto unwritable;
+    } else if(!agbPrintWrite(address, value)) goto unwritable;
 		break;
 	case 13:
 		if (cpuEEPROMEnabled) {
@@ -711,14 +696,12 @@ static inline void CPUWriteByte(u32 address, u8 b)
 				u32 lowerBits = address & 0x3fe;
 				if (address & 1) {
 					CPUUpdateRegister(lowerBits, (READ16LE(&ioMem[lowerBits]) & 0x00FF) | (b << 8));
-				}
-				else {
+        } else {
 					CPUUpdateRegister(lowerBits, (READ16LE(&ioMem[lowerBits]) & 0xFF00) | b);
 				}
 			}
 			break;
-		}
-		else goto unwritable;
+    } else goto unwritable;
 		break;
 	case 5:
 		// no need to switch
