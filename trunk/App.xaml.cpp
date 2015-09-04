@@ -106,6 +106,33 @@ void App::LaunchApp(ApplicationExecutionState previousState,FileActivatedEventAr
 	Windows::Foundation::Size minsize = { 320.0f, 320.0f };
 	ApplicationView::GetForCurrentView()->SetPreferredMinSize(minsize);
 
+	//apply theme to title bar
+	auto titleBar = ApplicationView::GetForCurrentView()->TitleBar;
+
+	// set up our brushes
+	SolidColorBrush^ bkgColor = (SolidColorBrush^)(Current->Resources->Lookup("TitleBarBackgroundThemeBrush"));
+	SolidColorBrush^ btnHoverColor = (SolidColorBrush^)(Current->Resources->Lookup("TitleBarButtonHoverThemeBrush"));   
+	SolidColorBrush^ btnPressedColor = (SolidColorBrush^)(Current->Resources->Lookup("TitleBarButtonPressedThemeBrush"));    
+	Windows::UI::Color foregroundColor = (Windows::UI::Color)(Current->Resources->Lookup("TitleBarForegroundColor"));
+	Windows::UI::Color inactiveForegroundColor = (Windows::UI::Color)(Current->Resources->Lookup("TitleBarInactiveForegroundColor"));
+
+	// override colors!
+	titleBar->BackgroundColor = bkgColor->Color;
+	titleBar->ForegroundColor = foregroundColor;
+	titleBar->ButtonBackgroundColor = bkgColor->Color;
+	titleBar->ButtonForegroundColor = foregroundColor;
+	titleBar->ButtonHoverBackgroundColor = btnHoverColor->Color;
+	titleBar->ButtonHoverForegroundColor = foregroundColor;
+	titleBar->ButtonPressedBackgroundColor = btnPressedColor->Color;
+	titleBar->ButtonPressedForegroundColor = foregroundColor;
+
+	titleBar->InactiveBackgroundColor = bkgColor->Color;
+	titleBar->InactiveForegroundColor = inactiveForegroundColor;
+	titleBar->ButtonInactiveBackgroundColor = bkgColor->Color;
+	titleBar->ButtonInactiveForegroundColor = inactiveForegroundColor;
+
+
+
 	//check license
 	CheckProductLicense();
 

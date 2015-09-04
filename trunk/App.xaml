@@ -12,6 +12,25 @@
                 <ResourceDictionary Source="StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="#FF171717" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverThemeBrush" Color="#FF343434" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedThemeBrush" Color="#FF4C4C4C" />
+                    <Color x:Key="TitleBarForegroundColor">#FFFFFF</Color>
+                    <Color x:Key="TitleBarInactiveForegroundColor">#A0A0A0</Color>
+                </ResourceDictionary>
+                
+               
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="#FFF2F2F2" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverThemeBrush" Color="#FFCECECE" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedThemeBrush" Color="#FFB8B8B8" />
+                    <Color x:Key="TitleBarForegroundColor">#000000</Color>
+                    <Color x:Key="TitleBarInactiveForegroundColor">#909090</Color>
+                </ResourceDictionary>
+                
+            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </Application.Resources>
     
