@@ -59,6 +59,15 @@ ControllerState oldControllerState;
 ControllerState oldvControllerState;
 ControllerState oldHidState;
 
+long long AUnpressedTime = 9999999999;
+long long BUnpressedTime = 9999999999;
+long long LUnpressedTime = 9999999999;
+long long RUnpressedTime = 9999999999;
+long long LeftUnpressedTime = 9999999999;
+long long RightUnpressedTime = 9999999999;
+long long UpUnpressedTime = 9999999999;
+long long DownUnpressedTime = 9999999999;
+
 u32 systemReadJoypad(int gamepad) 
 { 
 	u32 res = 0;
@@ -93,26 +102,116 @@ u32 systemReadJoypad(int gamepad)
 
 	const ControllerState *vControllerState = vController->GetControllerState();
 
+	int smoothButton = EmulatorSettings::Current->SmoothButton;
+
 	if(keyboardState->APressed || controllerState->APressed || vControllerState->APressed || hidState->APressed)
+	{
 		res |= 1;
-	if(keyboardState->BPressed || controllerState->BPressed || vControllerState->BPressed || hidState->BPressed)
+		AUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (AUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 1;
+
+		AUnpressedTime++;
+	}
+
+	if (keyboardState->BPressed || controllerState->BPressed || vControllerState->BPressed || hidState->BPressed)
+	{
 		res |= 2;
+		BUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (BUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 2;
+
+		BUnpressedTime++;
+	}
+
 	if(keyboardState->SelectPressed || controllerState->SelectPressed || vControllerState->SelectPressed || hidState->SelectPressed)
 		res |= 4;
 	if(keyboardState->StartPressed || controllerState->StartPressed || vControllerState->StartPressed || hidState->StartPressed)
 		res |= 8;
+
 	if(keyboardState->RightPressed || controllerState->RightPressed || vControllerState->RightPressed || hidState->RightPressed)
+	{
 		res |= 16;
+		RightUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (RightUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 16;
+
+		RightUnpressedTime++;
+	}
+
 	if(keyboardState->LeftPressed || controllerState->LeftPressed || vControllerState->LeftPressed || hidState->LeftPressed)
+	{
 		res |= 32;
+		LeftUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (LeftUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 32;
+
+		LeftUnpressedTime++;
+	}
+
 	if(keyboardState->UpPressed || controllerState->UpPressed || vControllerState->UpPressed || hidState->UpPressed)
+	{
 		res |= 64;
+		UpUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (UpUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 64;
+
+		UpUnpressedTime++;
+	}
+
 	if(keyboardState->DownPressed || controllerState->DownPressed || vControllerState->DownPressed || hidState->DownPressed)
+	{
 		res |= 128;
+		DownUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (DownUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 128;
+
+		DownUnpressedTime++;
+	}
+
 	if(keyboardState->RPressed || controllerState->RPressed || vControllerState->RPressed || hidState->RPressed)
+	{
 		res |= 256;
+		RUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (RUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 256;
+
+		RUnpressedTime++;
+	}
+
 	if(keyboardState->LPressed || controllerState->LPressed || vControllerState->LPressed || hidState->LPressed)
+	{
 		res |= 512;
+		LUnpressedTime = 0; //reset to 0
+	}
+	else
+	{
+		if (LUnpressedTime < smoothButton) //if not pressed for less than 3 frames
+			res |= 512;
+
+		LUnpressedTime++;
+	}
 
 	// disallow L+R or U+D of being pressed at the same time
 	if((res & 48) == 48)
