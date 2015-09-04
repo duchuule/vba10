@@ -143,6 +143,18 @@ namespace VBA10
 			}
 		}
 
+		property int SmoothButton
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(SmoothButtonKey, SmoothButtonDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(SmoothButtonKey, value);
+			}
+		}
+
 #pragma region Button positions
 
 		property double PadLeftP
@@ -580,6 +592,7 @@ namespace VBA10
 		Platform::String^ FullScreenKey = "FullScreenKey";
 		Platform::String^ SignedInKey = "SignedInKey";  
 		Platform::String^ ThemeKey = "ThemeKey";
+		Platform::String^ SmoothButtonKey = "SmoothButtonKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -631,6 +644,7 @@ namespace VBA10
 		const bool FullScreenDefault = false;
 		const bool SignedInDefault = false;
 		const int ThemeDefault = 0; 
+		const int SmoothButtonDefault = 3;
 
 
 
