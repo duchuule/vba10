@@ -6,7 +6,8 @@
     xmlns:ctl="using:VBA10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DesignWidth="320">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           x:Name="LayoutRoot">
@@ -24,15 +25,18 @@
         </Grid>
 
         
-        <Pivot Grid.Row="1">
+        <Pivot Grid.Row="1" >
             <PivotItem  Header="Input"
+                        Margin="0"
                         >
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
+                              
                       >
                     <StackPanel Orientation="Vertical" x:Name="InputStackPanel" 
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440">
+                                MaxWidth="440"
+                                Margin="12,0">
                         <StackPanel.Resources>
                             <CollectionViewSource x:Name="vsControllerList"/>
                         </StackPanel.Resources>
@@ -137,46 +141,135 @@
                                     Click="editButonLayoutBtn_Click"
                                 Margin =" 0, 4, 0, 16"/>
 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Name="deadzoneLabel2" >Deadzone (analogue stick):</TextBlock>
-                            <TextBlock Name="deadzoneLabel"   Text="10.0" />
-                        </StackPanel>
-                        <Slider Minimum="0.0" 
-                                Maximum="50.0" Value="10.0" 
-                                Name="deadzoneSlider" 
-                                ValueChanged="deadzoneSlider_ValueChanged_1"
-                                />
-                        
 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock >Virtual Joystick Scale:</TextBlock>
-                            <TextBlock Name="valueLabel"  Text="100" />
-                            <TextBlock Text="%" />
-                        </StackPanel>
-                        <Slider  Minimum="50" Maximum="150" Value="100" 
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+
+                            <Slider Minimum="0.0" 
+                                    Maximum="50.0" Value="10.0" 
+                                    Name="deadzoneSlider" 
+                                    ValueChanged="deadzoneSlider_ValueChanged_1"
+                                    IsEnabled="{Binding IsChecked,  ElementName=deadzoneToggle}"
+                                    >
+                                <Slider.Header>
+                                    <TextBlock >
+                                    <Run Text="Deadzone (analogue stick): "/>
+                                    <Run Text="{Binding Value ,ElementName=deadzoneSlider}" />
+                                    </TextBlock>
+                                </Slider.Header>
+                            </Slider>
+
+                            <ToggleButton  x:Name="deadzoneToggle"
+                                Grid.Column="2"
+                                        FontSize="20"
+                                        Style="{ThemeResource LockButtonStyle}"
+                                           Margin="0,8,0,0"
+                                           IsChecked="False"
+                                           >
+                            </ToggleButton>
+
+                        </Grid>
+
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+
+                            <Slider  Minimum="50" Maximum="150" Value="100" 
                                  Name="controllerScaleSlider" 
                                  ValueChanged="controllerScaleSlider_ValueChanged_1"
-                                 />
+                                    IsEnabled="{Binding IsChecked,  ElementName=controllerScaleToggle}"
+                                    >
+                                <Slider.Header>
+                                    <TextBlock >
+                                    <Run Text="Virtual Joystick Scale: "/>
+                                    <Run Text="{Binding Value ,ElementName=controllerScaleSlider}" />
+                                    <Run Text="%"/>
+                                    </TextBlock>
+                                </Slider.Header>
+                            </Slider>
 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock >Virtual Button Scale:</TextBlock>
-                            <TextBlock Name="valueLabel2"  Text="100" />
-                            <TextBlock Text="%" />
-                        </StackPanel>
-                        <Slider  Minimum="50" Maximum="150" Value="100" 
+                            <ToggleButton  x:Name="controllerScaleToggle"
+                                Grid.Column="2"
+                                        FontSize="20"
+                                        Style="{ThemeResource LockButtonStyle}"
+                                           Margin="0,8,0,0"
+                                           IsChecked="False"
+                                           >
+                            </ToggleButton>
+
+                        </Grid>
+
+
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+
+                            <Slider  Minimum="50" Maximum="150" Value="100" 
                                  Name="buttonScaleSlider" 
                                  ValueChanged="buttonScaleSlider_ValueChanged_1"
-                                 />
+                                    IsEnabled="{Binding IsChecked,  ElementName=buttonScaleToggle}"
+                                    >
+                                <Slider.Header>
+                                    <TextBlock >
+                                        <Run Text="Virtual Button Scale: "/>
+                                        <Run Text="{Binding Value ,ElementName=buttonScaleSlider}" />
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                </Slider.Header>
+                            </Slider>
 
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock   >Virtual controller opacity:</TextBlock>
-                            <TextBlock Name="opacityValueLabel"  Text="50" />
-                            <TextBlock  Text="%" />
-                        </StackPanel>
-                        <Slider  Minimum="10" Maximum="100" Value="50" 
+                            <ToggleButton  x:Name="buttonScaleToggle"
+                                Grid.Column="2"
+                                        FontSize="20"
+                                        Style="{ThemeResource LockButtonStyle}"
+                                           Margin="0,8,0,0"
+                                           IsChecked="False"
+                                           >
+                            </ToggleButton>
+
+                        </Grid>
+
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+
+                            <Slider  Minimum="10" Maximum="100" Value="50" 
                                  Name="controllerOpacitySlider" 
                                  ValueChanged="controllerOpacitySlider_ValueChanged_1"
-                                />
+                                    IsEnabled="{Binding IsChecked,  ElementName=controllerOpacityToggle}"
+                                    >
+                                <Slider.Header>
+                                    <TextBlock >
+                                        <Run Text="Virtual controller opacity: "/>
+                                        <Run Text="{Binding Value ,ElementName=controllerOpacitySlider}" />
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                </Slider.Header>
+                            </Slider>
+
+                            <ToggleButton  x:Name="controllerOpacityToggle"
+                                Grid.Column="2"
+                                        FontSize="20"
+                                        Style="{ThemeResource LockButtonStyle}"
+                                           Margin="0,8,0,0"
+                                           IsChecked="False"
+                                           >
+                            </ToggleButton>
+
+                        </Grid>
+
 
                         
                         
@@ -272,13 +365,15 @@
                 </ScrollViewer>
             </PivotItem>
             
-            <PivotItem Header="Video">
+            <PivotItem Header="Video"
+                       Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440">
+                                MaxWidth="440"
+                                Margin="12,0">
                         <!--<ToggleSwitch Toggled="hzToggle_Toggled" Header="30 Hz mode for displays with 30 Hz" Name="hzToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
                         
@@ -367,13 +462,15 @@
                 </ScrollViewer>
             </PivotItem>
 
-            <PivotItem Header="General">
+            <PivotItem Header="General"
+                       Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440">
+                                MaxWidth="440"
+                                Margin="12,0">
                         
                         
                         

@@ -352,11 +352,12 @@ void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xa
 	{
 		EnableTouchControls(this->touchToggle->IsOn);
 	}
-	this->controllerScaleSlider->IsEnabled = this->touchToggle->IsOn;
-	this->buttonScaleSlider->IsEnabled = this->touchToggle->IsOn;
-	this->controllerOpacitySlider->IsEnabled = this->touchToggle->IsOn;
-	this->deadzoneSlider->IsEnabled = this->touchToggle->IsOn;
+	//this->controllerScaleSlider->IsEnabled = this->touchToggle->IsOn;
+	//this->buttonScaleSlider->IsEnabled = this->touchToggle->IsOn;
+	//this->controllerOpacitySlider->IsEnabled = this->touchToggle->IsOn;
+	//this->deadzoneSlider->IsEnabled = this->touchToggle->IsOn;
 	this->dpadComboBox->IsEnabled = this->touchToggle->IsOn;
+	this->editButonLayoutBtn->IsEnabled = this->touchToggle->IsOn;
 }
 
 void SettingsPage::UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, VirtualKey vk)
@@ -457,51 +458,51 @@ void SettingsPage::turboModeBox_KeyUp_1(Platform::Object^ sender, Windows::UI::X
 
 void SettingsPage::controllerScaleSlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
-	if (this->valueLabel)
-	{
-		wstringstream wss;
-		wss << (int)e->NewValue;
+	//if (this->valueLabel)
+	//{
+	//	wstringstream wss;
+	//	wss << (int)e->NewValue;
 
-		this->valueLabel->Text = ref new String(wss.str().c_str());
+	//	this->valueLabel->Text = ref new String(wss.str().c_str());
 
 		if (initdone)
 		{
 			EmulatorSettings::Current->ControllerScale = (int)e->NewValue;
 		}
-	}
+	//}
 }
 
 
 void SettingsPage::buttonScaleSlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
-	if (this->valueLabel2)
-	{
-		wstringstream wss;
-		wss << (int)e->NewValue;
+	//if (this->valueLabel2)
+	//{
+	//	wstringstream wss;
+	//	wss << (int)e->NewValue;
 
-		this->valueLabel2->Text = ref new String(wss.str().c_str());
+	//	this->valueLabel2->Text = ref new String(wss.str().c_str());
 
 		if (initdone)
 		{
 			EmulatorSettings::Current->ButtonScale = (int)e->NewValue;
 		}
-	}
+	//}
 }
 
 void SettingsPage::controllerOpacitySlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
-	if (this->opacityValueLabel)
-	{
-		wstringstream wss;
-		wss << (int)e->NewValue;
+	//if (this->opacityValueLabel)
+	//{
+	//	wstringstream wss;
+	//	wss << (int)e->NewValue;
 
-		this->opacityValueLabel->Text = ref new String(wss.str().c_str());
+	//	this->opacityValueLabel->Text = ref new String(wss.str().c_str());
 
 		if (initdone)
 		{
 			SetControllerOpacity((int)e->NewValue);
 		}
-	}
+	//}
 }
 
 
@@ -516,18 +517,18 @@ void SettingsPage::dpadComboBox_SelectionChanged_1(Platform::Object^ sender, Win
 
 void SettingsPage::deadzoneSlider_ValueChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
-	if (this->deadzoneLabel)
-	{
-		wstringstream wss;
-		wss << (((int)(e->NewValue * 10.0)) / 10.0f);
+	//if (this->deadzoneLabel)
+	//{
+	//	wstringstream wss;
+	//	wss << (((int)(e->NewValue * 10.0)) / 10.0f);
 
-		this->deadzoneLabel->Text = ref new Platform::String(wss.str().c_str());
+	//	this->deadzoneLabel->Text = ref new Platform::String(wss.str().c_str());
 
 		if (initdone)
 		{
 			SetDeadzone((float)e->NewValue);
 		}
-	}
+	//}
 }
 
 void SettingsPage::editButonLayoutBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)

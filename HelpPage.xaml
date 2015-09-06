@@ -24,13 +24,15 @@
         </Grid>
 
         <Pivot Grid.Row="1" >
-            <PivotItem Header="How to">
+            <PivotItem Header="How to"
+                       Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                       HorizontalAlignment="Left" 
-                                    MaxWidth="440">
+                                    MaxWidth="440"
+                                Margin="12,0">
                         <TextBlock Text="How to restore saves" Style="{ThemeResource BaseTextBlockStyle}" />
                         <TextBlock TextWrapping="Wrap"
                                  Margin=" 0, 0, 0, 4" 
@@ -45,13 +47,15 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Header="About">
+            <PivotItem Header="About"
+                       Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >
                     <StackPanel Orientation="Vertical"
                                       HorizontalAlignment="Left" 
                                     MaxWidth="440"
+                                Margin="12,0"
                                 >
                         <TextBlock TextWrapping="Wrap" >
                             <Run Text="VBA10"/>

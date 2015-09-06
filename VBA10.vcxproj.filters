@@ -282,6 +282,7 @@
     </ClCompile>
     <ClCompile Include="HIDGamepadConfig.xaml.cpp" />
     <ClCompile Include="EventHandlerForDevice.cpp" />
+    <ClCompile Include="BlankPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -543,6 +544,7 @@
     </ClInclude>
     <ClInclude Include="HIDGamepadConfig.xaml.h" />
     <ClInclude Include="EventHandlerForDevice.h" />
+    <ClInclude Include="BlankPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

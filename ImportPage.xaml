@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    d:DesignWidth="320">
+    d:DesignWidth="700">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           x:Name="LayoutRoot">
@@ -33,72 +33,72 @@
         </Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      Margin="12,0,12,0"
                       Grid.Row="1"
-                      MaxWidth="500"
-                      HorizontalAlignment="Left"
                       >
-            <StackPanel >
-                <TextBlock Text="Local storage"
+            <RelativePanel>
+                <StackPanel Margin="12,0"
+                        MaxWidth="500">
+                    <TextBlock Text="Local storage"
                                 VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
-                <TextBlock TextWrapping="Wrap"
+                    <TextBlock TextWrapping="Wrap"
                            Text="Use this option to import a file already present on your phone or PC. NOTE: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing. Just select the folder containing the rom and will be presented with a list of rom to import."                                
                                  Margin=" 0, 4, 0, 4" />
 
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                             Margin="0,4,0,4">
-                    <Button x:Name="chooseFolderbtn" Content="Import ROM" 
+                        <Button x:Name="chooseFolderbtn" Content="Import ROM" 
                             Click="chooseFolderbtn_Click"
                             Width="120"
                             Margin =" 0, 0, 8, 0"/>
 
-                    <Button x:Name="importSavbtn" Content="Import Save" 
+                        <Button x:Name="importSavbtn" Content="Import Save" 
                             Width="120"
                             Margin ="0" 
                             Click="importSavbtn_Click"/>
-                </StackPanel>
+                    </StackPanel>
 
-                <TextBlock Text="OneDrive"
+                    <TextBlock Text="OneDrive"
                            VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
-                <TextBlock TextWrapping="Wrap"
+                    <TextBlock TextWrapping="Wrap"
                            Text="Use this option to import roms and save files from OneDrive, which will be copied to the app's private storage. NOTE: It is recommended that you store the roms on an user-accessible folder and use the Local Storage option to import them, which will prevent loss of progress if you the app every becomes corrupted."                                
                                  Margin=" 0, 4, 0, 4" />
 
-                
-                <!--<TextBlock x:Name="txtSignedIn"
+
+                    <!--<TextBlock x:Name="txtSignedIn"
                            Text="You are signed in. Manage app permissions at https://account.live.com/consent/Manage."
                            Style="{ThemeResource CaptionTextBlockStyle}"
                            Visibility="Collapsed"
                            />-->
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                              Margin="0,4,0,12">
-                    <Button x:Name="SignInbtn" Content="Sign in" 
+                        <Button x:Name="SignInbtn" Content="Sign in" 
                             Click="SignInbtn_Click"
                             Width="120"
                             Margin =" 0, 0, 8, 0"/>
-                    
-                    <Button x:Name="importOneDriveROMbtn" Content="Import R/S" 
+
+                        <Button x:Name="importOneDriveROMbtn" Content="Import R/S" 
                             Click="importOneDriveROMbtn_Click"
                             Width="120"
                             IsEnabled="False"
                             Margin =" 0, 0, 0, 0"/>
 
-                    <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
+                        <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
                             Width="120"
                             Margin ="0" 
                             Click="importSavbtn_Click"/>-->
-                </StackPanel>
-                <!--<TextBlock TextWrapping="Wrap"
+                    </StackPanel>
+                    <!--<TextBlock TextWrapping="Wrap"
                            Text="This function will be added in a future release. In the mean time, please store roms on your phone's SD Card or documents folder and use the Local Storage option."                                
                                  Margin=" 0, 4, 0, 4" />-->
 
-            </StackPanel>
+                </StackPanel>
+            </RelativePanel>
         </ScrollViewer>
 
 
