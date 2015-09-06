@@ -41,7 +41,70 @@ PurchasePage::PurchasePage()
 
 void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 {
-	return;
+
+	
+}
+
+
+
+
+void PurchasePage::ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Button^ btn = (Button^)sender;
+
+	String^ key = (String^)btn->Tag;
+
+
+	if (!CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
+	{
+
+		create_task(CurrentApp::RequestProductPurchaseAsync(key))
+			.then([key, this](task<PurchaseResults^> tresult) 
+		{
+			try
+			{
+				PurchaseResults^ result = tresult.get();
+				//int test = result->Status;
+				//reread license
+				App::CheckProductLicense();
+
+				if (CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
+				{
+					//prompt user to restart app if it's ad removal
+					if (key == "removeads" || key == "noads_premium")
+					{
+						MessageDialog ^dialog = ref new MessageDialog("Purchase successful, ads will not be shown the next time you start the app.");
+						dialog->ShowAsync();
+					}
+
+					if (key == "premiumfeatures")
+					{
+						MessageDialog ^dialog = ref new MessageDialog("Purchase successful.");
+						dialog->ShowAsync();
+					}
+
+					this->OnNavigatedTo(nullptr);
+				}
+				
+			}
+			catch (Exception^)
+			{ }
+			
+		}, task_continuation_context::use_current());
+
+
+
+			
+
+
+
+	}
+}
+
+
+void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->txtLoading->Visibility = Windows::UI::Xaml::Visibility::Visible;
 
 	create_task(CurrentApp::LoadListingInformationAsync())
 		.then([this](task<ListingInformation^> tli)
@@ -137,7 +200,7 @@ void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 
 
 			this->pics->ItemsSource = picItems;
-			
+
 		}
 		catch (Exception^)
 		{
@@ -147,60 +210,4 @@ void PurchasePage::OnNavigatedTo(NavigationEventArgs^ /* e */)
 		txtLoading->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 
 	}, task_continuation_context::use_current());
-}
-
-
-
-
-void PurchasePage::ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	Button^ btn = (Button^)sender;
-
-	String^ key = (String^)btn->Tag;
-
-
-	if (!CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
-	{
-
-		create_task(CurrentApp::RequestProductPurchaseAsync(key))
-			.then([key, this](task<PurchaseResults^> tresult) 
-		{
-			try
-			{
-				PurchaseResults^ result = tresult.get();
-				//int test = result->Status;
-				//reread license
-				App::CheckProductLicense();
-
-				if (CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
-				{
-					//prompt user to restart app if it's ad removal
-					if (key == "removeads" || key == "noads_premium")
-					{
-						MessageDialog ^dialog = ref new MessageDialog("Purchase successful, ads will not be shown the next time you start the app.");
-						dialog->ShowAsync();
-					}
-
-					if (key == "premiumfeatures")
-					{
-						MessageDialog ^dialog = ref new MessageDialog("Purchase successful.");
-						dialog->ShowAsync();
-					}
-
-					this->OnNavigatedTo(nullptr);
-				}
-				
-			}
-			catch (Exception^)
-			{ }
-			
-		}, task_continuation_context::use_current());
-
-
-
-			
-
-
-
-	}
 }

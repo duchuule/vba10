@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    d:DesignWidth="700"
     Loaded="Page_Loaded">
 
     <Grid x:Name="LayoutRoot"  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -25,49 +26,49 @@
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      Margin="12,0,12,0"
-                      Grid.Row="1"
-                      MaxWidth="500"
-                      HorizontalAlignment="Left">
-            <StackPanel >
-                <TextBlock Text="Local storage"
+                      Grid.Row="1">
+            <RelativePanel>
+                <StackPanel MaxWidth="500"
+                        Margin="12,0">
+                    <TextBlock Text="Local storage"
                                 VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
-                <TextBlock TextWrapping="Wrap"
+                    <TextBlock TextWrapping="Wrap"
                            Text="If you import the rom using local storage option, then all save files are stored in the same folder as the rom; you just need to go there and copy them to wherever you need. Better yet, if you are on Desktop/Tablet and store the rom in OneDrive folder, all your saves are automatically synced to the cloud."                                
                                  Margin=" 0, 4, 0, 4" />
 
-                <TextBlock Text="OneDrive"
+                    <TextBlock Text="OneDrive"
                            VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
                                   />
-                <TextBlock TextWrapping="Wrap"
+                    <TextBlock TextWrapping="Wrap"
                            Text="If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive."                                
                                  Margin=" 0, 4, 0, 4"  />
 
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                              Margin="0,4,0,12">
-                    <Button x:Name="SignInbtn" Content="Sign in" 
+                        <Button x:Name="SignInbtn" Content="Sign in" 
                             Click="SignInbtn_Click"
                             Width="120"
                             Margin =" 0, 0, 8, 0"/>
 
-                    <Button x:Name="exportOneDrivebtn" Content="Export" 
+                        <Button x:Name="exportOneDrivebtn" Content="Export" 
                             Click="exportOneDrivebtn_Click"
                             Width="120"
                             IsEnabled="False"
                             Margin =" 0, 0, 0, 0"/>
 
-                    <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
+                        <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
                             Width="120"
                             Margin ="0" 
                             Click="importSavbtn_Click"/>-->
-                </StackPanel>
+                    </StackPanel>
 
-            </StackPanel>
+                </StackPanel>
+            </RelativePanel>
         </ScrollViewer>
 
 

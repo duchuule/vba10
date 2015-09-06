@@ -61,7 +61,7 @@ void App::CheckProductLicense()
 	IsPremium = false;
 
 	//bool IsActive = CurrentApp::LicenseInformation->IsActive;
-	//bool IsTrial = CurrentApp::LicenseInformation->IsTrial;
+	bool IsTrial = CurrentApp::LicenseInformation->IsTrial;
 	//auto expiredate = CurrentApp::LicenseInformation->ExpirationDate.UniversalTime;
 
 	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("noads_premium")->IsActive)

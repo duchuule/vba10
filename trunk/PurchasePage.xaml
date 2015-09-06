@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignWidth="280">
+    d:DesignWidth="900">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           x:Name="LayoutRoot">
@@ -23,22 +23,26 @@
                      Style="{StaticResource PageTitleTextBlockStyle}" Text="PURCHASE"/>
         </Grid>
 
+        <!--<TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
+                               Height="0"
+                               />-->
+        
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      Margin="12,0,12,0"
                       Grid.Row="1"
-                      MaxWidth="500"
-                      HorizontalAlignment="Left">
-            <StackPanel >
-                <!--<TextBlock Text="Local storage"
+                      >
+            <RelativePanel>
+                <StackPanel MaxWidth="500"
+                            Margin="12,0">
+                    <!--<TextBlock Text="Local storage"
                                 VerticalAlignment="Center"
                            FontSize="23"
                            Margin="0,8,0,0"
                                   />-->
-                <!--<TextBlock TextWrapping="Wrap"
+                    <!--<TextBlock TextWrapping="Wrap"
                            Text="To VBA8, VBA8+ and VGBC8 users: if you have paid or have received unlocked codes for one of these apps, please go to the Purchase page of the respective app and follow instruction to get VBA10 unlock codes."                                
                                  Margin=" 0, 4, 0, 4" />-->
-                <TextBlock TextWrapping="Wrap"
+                    <TextBlock TextWrapping="Wrap"
                                                           
                                  Margin=" 0, 4, 0, 4" >
                     <Run Text="Dear VBA10 users:" />
@@ -48,9 +52,17 @@
                     <Run Text="The store just gives me error 0x803F7002 when I try to download the app. " />
                     <LineBreak/>
                     <LineBreak/>
-                    <Run Text="I will keep you posted and enable in-app purchase as soon as this issue is resolved." />
-                </TextBlock>
-                <TextBlock Text="Loading production list. Please wait..." 
+                        <Run Text="If you want to take risk, click on the button below to load the products. " />
+                        <Run Text="Keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work." />
+                        <Run Text="To current VBA8 paid users: an update will be available soon which lets you request unlock codes, but be aware: using an unlock code has all the same bugs as paying for the products, except you won't lose money."/>
+                    </TextBlock>
+                    
+                    <Button x:Name="loadProductsBtn"
+                            Content="Load products"
+                            Margin="0,4,0,12"
+                            Click="loadProductsBtn_Click"
+                            />
+                    <TextBlock Text="Loading production list. Please wait..." 
                        TextWrapping="Wrap"
                        Margin="0,48,0,12"
                            Visibility="Collapsed"
@@ -58,7 +70,7 @@
                            
                        />
 
-                <TextBlock Text="Error! No Internet connection or Microsoft server error. Please try again later." 
+                    <TextBlock Text="Error! No Internet connection or Microsoft server error. Please try again later." 
                        TextWrapping="Wrap"
                        Margin="0,0,0,12"
                            Foreground="Red"
@@ -66,7 +78,7 @@
                            x:Name="txtError"
                        />
 
-                <!--<Grid>
+                    <!--<Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -90,45 +102,46 @@
                         </StackPanel>
                     </Grid>
                 </Grid>-->
-                
-                
-                <ItemsControl x:Name="pics">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,8,0,0">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image VerticalAlignment="Center"
+
+
+                    <ItemsControl x:Name="pics">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,8,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image VerticalAlignment="Center"
                                            MaxHeight="100"
                                            Source="{Binding imgLink}"/>
-                                    <Grid Grid.Column="1" 
+                                        <Grid Grid.Column="1" 
                                           Margin="12,0,0,0"
                                           >
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding Name}" 
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Name}" 
                                                        TextWrapping="Wrap"
                                                        Style="{ThemeResource BaseTextBlockStyle}"/>
-                                            <TextBlock Text="{Binding Status}"
+                                                <TextBlock Text="{Binding Status}"
                                                        TextWrapping="Wrap"
                                                        Margin="0,2,0,2"
                                                       />
-                                            <Button Content="Purchase" 
+                                                <Button Content="Purchase" 
                                                     Visibility="{Binding BuyNowButtonVisible}" 
                                                     Click="ButtonBuyNow_Clicked" 
                                                     Tag="{Binding key}"
                                                     />
-                                        </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
-            </StackPanel>
+                </StackPanel>
+            </RelativePanel>
         </ScrollViewer>
 
 
