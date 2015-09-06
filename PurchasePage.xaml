@@ -45,11 +45,12 @@
                     <TextBlock TextWrapping="Wrap"
                                                           
                                  Margin=" 0, 4, 0, 4" >
-                    <Run Text="Dear VBA10 users:" />
-                    <LineBreak/>
-                    <Run Text="As much as I'd love to offer you the ability to pay to enable premium features and get rid of ads, in-app purchase in Windows 10 is *broken* at the moment. " />
-                    <Run Text="I tested paying for my own app and now I cannot even download VBA10 on my own computer anymore. " />
-                    <Run Text="The store just gives me error 0x803F7002 when I try to download the app. " />
+                        <Run Text="Dear VBA10 users:" />
+                        <LineBreak/>
+                        <Run Text="As much as I'd love to offer you the ability to pay to enable premium features and get rid of ads, in-app purchase in Windows 10 is *broken* at the moment. " />
+                        <Run Text="I tested paying for my own app and now I cannot even download VBA10 on my own computer anymore. " />
+                        <Run Text="The store just gives me error 0x803F7002 when I try to download the app. " />
+                        <Run Text="Even if I sideload the app, the store still reports the product as *not purchased*. " />
                     <LineBreak/>
                     <LineBreak/>
                         <Run Text="If you want to take risk, click on the button below to load the products. " />
