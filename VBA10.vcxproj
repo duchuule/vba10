@@ -408,6 +408,7 @@
       <DependentUpon>PurchasePage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SampleFpsTextRenderer.h" />
     <ClInclude Include="SelectFilePane.xaml.h">
       <DependentUpon>SelectFilePane.xaml</DependentUpon>
@@ -1187,6 +1188,7 @@
     <None Include="Assets\vba-over.ini">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
     <None Include="packages.config" />
     <None Include="SpriteBatch.hlsli" />
     <None Include="VBA10_StoreKey.pfx" />
@@ -1296,6 +1298,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VBA10.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

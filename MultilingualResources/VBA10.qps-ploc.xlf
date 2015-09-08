@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="VBA10_Multilingual.prilog.xml" tool-id="MultilingualAppToolkit" product-name="VBA10" product-version="1.0.0.0" build-num="0">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="3.1.1250.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="Resources">
+        <trans-unit id="Resources\StartARom\Text" translate="yes" xml:space="preserve">
+          <source>Please start a rom first.</source>
+          <target state="new">Please start a rom first.</target>
+        </trans-unit>
+        <trans-unit id="Resources\SelectState\Label" translate="yes" xml:space="preserve">
+          <source>Select State</source>
+          <target state="new">Select State</target>
+        </trans-unit>
+        <trans-unit id="Resources\Save\Label" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="Resources\Reset\Label" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="new">Reset</target>
+        </trans-unit>
+        <trans-unit id="Resources\NoCheat\Text" translate="yes" xml:space="preserve">
+          <source>No cheat code has been entered.</source>
+          <target state="new">No cheat code has been entered.</target>
+        </trans-unit>
+        <trans-unit id="Resources\Load\Label" translate="yes" xml:space="preserve">
+          <source>Load</source>
+          <target state="new">Load</target>
+        </trans-unit>
+        <trans-unit id="Resources\Description\Text" translate="yes" xml:space="preserve">
+          <source>Description:</source>
+          <target state="new">Description:</target>
+        </trans-unit>
+        <trans-unit id="Resources\Code\Text" translate="yes" xml:space="preserve">
+          <source>Code:</source>
+          <target state="new">Code:</target>
+        </trans-unit>
+        <trans-unit id="Resources\CHEATS\Text" translate="yes" xml:space="preserve">
+          <source>CHEATS</source>
+          <target state="new">CHEATS</target>
+        </trans-unit>
+        <trans-unit id="Resources\CheatInstruction\Text" translate="yes" xml:space="preserve">
+          <source>This emulator supports Gameshark, CodeBreaker and GameGenie codes.</source>
+          <target state="new">This emulator supports Gameshark, CodeBreaker and GameGenie codes.</target>
+        </trans-unit>
+        <trans-unit id="Resources\AddROM\Content" translate="yes" xml:space="preserve">
+          <source>Add ROM</source>
+          <target state="new">Add ROM</target>
+        </trans-unit>
+        <trans-unit id="Resources\Add\Content" translate="yes" xml:space="preserve">
+          <source>Add</source>
+          <target state="new">Add</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
