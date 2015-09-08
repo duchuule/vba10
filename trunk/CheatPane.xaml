@@ -56,12 +56,15 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="CHEATS"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" 
+                       Text="CHEATS"
+                       x:Uid="CHEATS"/>
         </Grid>
         <TextBlock x:Name="txtNoROM" Visibility="Collapsed"
                    Grid.Row="1"
                    Margin="12,8,12,4"
-                 Text="Please start a rom first." />
+                 Text="Please start a rom first."
+                   x:Uid="StartARom"/>
         
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -77,9 +80,10 @@
                         >
 
 
-                    <TextBlock Grid.Row="0" Text="Add" 
+                    <TextBlock Grid.Row="0" Text="**Add" 
                                Style="{ThemeResource TitleTextBlockStyle}"
                                Margin="0,8,0,4"
+                               x:Uid="Add"
                                />
                     <TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
                                Height="0"
@@ -89,7 +93,8 @@
                            Margin="0,4,0,4" 
                            x:Name="descLabel"
                                HorizontalAlignment="Left"
-                                Text="This emulator supports Gameshark, CodeBreaker and GameGenie codes." />
+                                Text="**This emulator supports Gameshark, CodeBreaker and GameGenie codes." 
+                               x:Uid="CheatInstruction"/>
 
                     <Grid>
                         <Grid.RowDefinitions>
@@ -103,15 +108,17 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" 
-                                    Text="Description:"
+                                    Text="**Description:"
                                    VerticalAlignment="Center"
+                                   x:Uid="Description"
                                     />
                         <TextBox Grid.Row="0" Grid.Column="1"
                                  Name="descBox" Margin="0,4,0,4" 
                                />
                         <TextBlock Grid.Row="1" Grid.Column="0"
-                                    Text="Code:" VerticalAlignment="Top"
-                                   Margin="0,4,0,0"/>
+                                    Text="**Code:" VerticalAlignment="Top"
+                                   Margin="0,4,0,0"
+                                   x:Uid="Code"/>
 
                         <TextBox 
                                     Name="codeBox" AcceptsReturn="True" 
@@ -120,10 +127,11 @@
                             />
 
 
-                        <Button Grid.Row="3" Content="Add" 
+                        <Button Grid.Row="3" Content="**Add" 
                                 HorizontalAlignment="Stretch" 
                                 Margin="0,4,0,4" Name="addButton"
-                                Click="addButton_Click" />
+                                Click="addButton_Click"
+                                x:Uid="AddBtn"/>
                     </Grid>
 
 
@@ -139,12 +147,15 @@
                         <CollectionViewSource x:Name="cvsAllCheats"/>
                     </StackPanel.Resources>
 
-                    <TextBlock Text="List" 
+                    <TextBlock Text="**List" 
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,4"
+                               x:Uid="List"
                            />
                     
-                    <TextBlock x:Name="txtNoCheat" Text="No cheat code has been entered." 
+                    <TextBlock x:Name="txtNoCheat" 
+                               Text="No cheat code has been entered." 
+                               x:Uid="NoCheat"
                                Visibility="Collapsed" 
                                Margin="0,4,0,4" />
 

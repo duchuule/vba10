@@ -50,6 +50,15 @@
     <Filter Include="Assets\Direct3D">
       <UniqueIdentifier>{5714a47e-204a-4cb0-b924-59d08eaefc07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings">
+      <UniqueIdentifier>{51f11100-f717-4d42-ab5f-f722b898d146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\en-US">
+      <UniqueIdentifier>{4161b0c5-0444-4edc-bb8a-4d05c8f81b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\vi-VN">
+      <UniqueIdentifier>{ee6b53a2-ada2-480d-bf25-1efbbf8cc743}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -545,6 +554,7 @@
     <ClInclude Include="HIDGamepadConfig.xaml.h" />
     <ClInclude Include="EventHandlerForDevice.h" />
     <ClInclude Include="BlankPage.xaml.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -563,6 +573,7 @@
     <None Include="Package.StoreAssociation.xml" />
     <None Include="VBA10_StoreKey.pfx" />
     <None Include="packages.config" />
+    <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
@@ -856,5 +867,13 @@
     <Image Include="Assets\Extension.targetsize-96.png">
       <Filter>Assets</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VBA10.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw">
+      <Filter>Strings\en-US</Filter>
+    </PRIResource>
   </ItemGroup>
 </Project>
