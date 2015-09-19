@@ -155,6 +155,19 @@ namespace VBA10
 			}
 		}
 
+		property bool HideHamburger
+		{
+			bool get()
+			{
+				return GetValueOrDefault<bool>(HideHamburgerKey, HideHamburgerDefault);
+			}
+			void set(bool value)
+			{
+				AddOrUpdateValue(HideHamburgerKey, value);
+			}
+		}
+
+
 #pragma region Button positions
 
 		property double PadLeftP
@@ -593,6 +606,7 @@ namespace VBA10
 		Platform::String^ SignedInKey = "SignedInKey";  
 		Platform::String^ ThemeKey = "ThemeKey";
 		Platform::String^ SmoothButtonKey = "SmoothButtonKey";
+		Platform::String^ HideHamburgerKey = "HideHamburgerKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -645,6 +659,7 @@ namespace VBA10
 		const bool SignedInDefault = false;
 		const int ThemeDefault = 0; 
 		const int SmoothButtonDefault = 3;
+		const bool HideHamburgerDefault = false;
 
 
 

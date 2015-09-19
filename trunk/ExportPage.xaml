@@ -21,7 +21,9 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="EXPORT"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" 
+                       Text="**EXPORT"
+                       x:Uid="EXPORT"/>
         </Grid>
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -30,14 +32,16 @@
             <RelativePanel>
                 <StackPanel MaxWidth="500"
                         Margin="12,0">
-                    <TextBlock Text="Local storage"
+                    <TextBlock Text="**Local storage"
                                 VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
+                               x:Uid="LocalStorage"
                                   />
                     <TextBlock TextWrapping="Wrap"
-                           Text="If you import the rom using local storage option, then all save files are stored in the same folder as the rom; you just need to go there and copy them to wherever you need. Better yet, if you are on Desktop/Tablet and store the rom in OneDrive folder, all your saves are automatically synced to the cloud."                                
-                                 Margin=" 0, 4, 0, 4" />
+                           Text="**If you import the rom using ..."                                
+                                 Margin=" 0, 4, 0, 4"
+                               x:Uid="ExportLocalInstruction"/>
 
                     <TextBlock Text="OneDrive"
                            VerticalAlignment="Center"
@@ -45,21 +49,24 @@
                            Margin="0,8,0,0"
                                   />
                     <TextBlock TextWrapping="Wrap"
-                           Text="If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive."                                
-                                 Margin=" 0, 4, 0, 4"  />
+                           Text="**If for any reason ..."                                
+                                 Margin=" 0, 4, 0, 4"
+                               x:Uid="ExportOneDriveInstruction"/>
 
                     <StackPanel Orientation="Horizontal"
                              Margin="0,4,0,12">
-                        <Button x:Name="SignInbtn" Content="Sign in" 
+                        <Button x:Name="SignInbtn" Content="**Sign in" 
                             Click="SignInbtn_Click"
                             Width="120"
-                            Margin =" 0, 0, 8, 0"/>
+                            Margin =" 0, 0, 8, 0"
+                                x:Uid="SignInBtn"/>
 
-                        <Button x:Name="exportOneDrivebtn" Content="Export" 
+                        <Button x:Name="exportOneDrivebtn" Content="**Export" 
                             Click="exportOneDrivebtn_Click"
                             Width="120"
                             IsEnabled="False"
-                            Margin =" 0, 0, 0, 0"/>
+                            Margin =" 0, 0, 0, 0"
+                                x:Uid="ExportBtn"/>
 
                         <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 
                             Width="120"

@@ -40,7 +40,8 @@
         </StackPanel>
 
         <TextBlock x:Name="txtLoading" Grid.Row="1"
-                   Text="Loading..." 
+                   Text="***Loading..." 
+                   x:Uid="Loading"
                    Margin="12,8,0,8"
                    Visibility="Collapsed"
                    FontSize="18"/>
@@ -79,11 +80,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
         
-        <Button Content="Close" Grid.Row="2"
+        <Button Content="**Close" Grid.Row="2"
                 Width="120"
                 HorizontalAlignment="Center"
                 Margin="0,0,0,4"
                 x:Name="closeBtn"
-                Click="closeBtn_Click"/>
+                Click="closeBtn_Click"
+                x:Uid="CloseBtn"/>
     </Grid>
 </Page>

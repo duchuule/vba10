@@ -57,7 +57,7 @@
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
                      Style="{StaticResource PageTitleTextBlockStyle}" 
-                       Text="CHEATS"
+                       Text="**CHEATS"
                        x:Uid="CHEATS"/>
         </Grid>
         <TextBlock x:Name="txtNoROM" Visibility="Collapsed"

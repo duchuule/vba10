@@ -118,6 +118,13 @@ SettingsPage::SettingsPage()
 	this->soundSyncToggle->IsOn = SynchronizeAudio();
 	this->cboTheme->SelectedIndex = EmulatorSettings::Current->Theme;
 
+	//hamburger
+	if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+	{
+		this->hideHamburgerToggle->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	}
+	this->hideHamburgerToggle->IsOn = EmulatorSettings::Current->HideHamburger;
+
 	//check xbox controller connection
 	XINPUT_STATE state;
 	ZeroMemory(&state, sizeof(XINPUT_STATE));
@@ -699,3 +706,12 @@ void SettingsPage::cboTheme_SelectionChanged(Platform::Object^ sender, Windows::
 
 
 
+
+
+void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
+	}
+}
