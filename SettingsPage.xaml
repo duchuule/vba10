@@ -131,8 +131,19 @@
                                   Header="D-Pad Style"
                                   Margin =" 0, 0, 0, 12">
                             <ComboBoxItem>8-way</ComboBoxItem>
-                            <ComboBoxItem>fixed analogue stick</ComboBoxItem>
-                            <ComboBoxItem>dynamic analogue stick</ComboBoxItem>
+                            <ComboBoxItem>Fixed analogue stick</ComboBoxItem>
+                            <ComboBoxItem>Dynamic analogue stick</ComboBoxItem>
+                        </ComboBox>
+
+                        <ComboBox Name="cboTurboBehavior" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                  SelectedIndex="0"
+                                  Header="Turbo Button Behavior"
+                                  Margin =" 0, 0, 0, 12"
+                                  SelectionChanged="cboTurboBehavior_SelectionChanged">
+                            <ComboBoxItem>Toggle turbo on/off</ComboBoxItem>
+                            <ComboBoxItem>Hold to activate</ComboBoxItem>
                         </ComboBox>
 
                         <Button x:Name="editButonLayoutBtn" 

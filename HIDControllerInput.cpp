@@ -1,4 +1,5 @@
 #include "HIDControllerInput.h"
+#include "EmulatorSettings.h"
 
 using namespace Windows::Devices::HumanInterfaceDevice;
 using namespace Platform::Collections;
@@ -107,6 +108,8 @@ namespace VBA10
 		if (this->shouldUpdate == false)
 			return;
 
+		bool turboButtonPressed = false;
+
 		//check buttons
 		auto bcontrols = inputReport->ActivatedBooleanControls;
 
@@ -118,7 +121,7 @@ namespace VBA10
 
 			if (booleanControlMapping->HasKey(id))
 				GetMapping(booleanControlMapping->Lookup(id), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-					&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
+					&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &turboButtonPressed);
 		}
 
 		//check numeric control
@@ -135,28 +138,34 @@ namespace VBA10
 			{
 				if (controlExt->Mapping->HasKey(1))
 					GetMapping(controlExt->Mapping->Lookup(1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &turboButtonPressed);
 			}
 			else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue < -0.25 * controlExt->DefaultValue) //axis-
 			{
 				if (controlExt->Mapping->HasKey(-1))
 					GetMapping(controlExt->Mapping->Lookup(-1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &turboButtonPressed);
 			}
 			else if (controlExt->Type == 1 && control->Value - controlExt->DefaultValue > 0.25 * controlExt->DefaultValue) //axis+
 			{
 				if (controlExt->Mapping->HasKey(1))
 					GetMapping(controlExt->Mapping->Lookup(1), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &turboButtonPressed);
 			}
 			else if (controlExt->Type == 2 && control->Value != controlExt->DefaultValue) //hat d-pad
 			{
 				if (controlExt->Mapping->HasKey(control->Value))
 					GetMapping(controlExt->Mapping->Lookup(control->Value), &state.LeftPressed, &state.RightPressed, &state.UpPressed, &state.DownPressed,
-						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &state.TurboTogglePressed);
+						&state.APressed, &state.BPressed, &state.LPressed, &state.RPressed, &state.SelectPressed, &state.StartPressed, &turboButtonPressed);
 			}
 		}
 
+
+		//transfer turbo button press to appropriate turbo behavior
+		if (EmulatorSettings::Current->TurboBehavior == 0)
+			state.TurboTogglePressed = turboButtonPressed;
+		else
+			state.TurboPressed = turboButtonPressed;
 
 	}
 

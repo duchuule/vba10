@@ -1,5 +1,6 @@
 #ifndef NO_XBOX
 #include "ControllerInput.h"
+#include "EmulatorSettings.h"
 
 namespace VBA10
 {
@@ -25,7 +26,10 @@ namespace VBA10
 		{
 			XINPUT_STATE state = this->xboxPad->GetState();
 
-			this->state.TurboTogglePressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
+			if (EmulatorSettings::Current->TurboBehavior == 0)
+				this->state.TurboTogglePressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
+			else
+				this->state.TurboPressed = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
 
 			this->state.LeftPressed = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) || (state.Gamepad.sThumbLX < (-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));
 			this->state.RightPressed = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) || (state.Gamepad.sThumbLX > (XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)));

@@ -79,6 +79,7 @@ SettingsPage::SettingsPage()
 	this->controllerOpacitySlider->Value = (double)GetControllerOpacity();
 	this->deadzoneSlider->Value = (double)GetDeadzone();
 	this->dpadComboBox->SelectedIndex = EmulatorSettings::Current->DPadStyle;
+	this->cboTurboBehavior->SelectedIndex = EmulatorSettings::Current->TurboBehavior;
 
 	//change the settings that depend on enabletouchcontrol
 	touchToggle_Toggled(nullptr, nullptr);
@@ -713,5 +714,14 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 	if (initdone)
 	{
 		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
+	}
+}
+
+
+void SettingsPage::cboTurboBehavior_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->TurboBehavior = this->cboTurboBehavior->SelectedIndex;
 	}
 }
