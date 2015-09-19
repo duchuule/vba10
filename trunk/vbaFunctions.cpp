@@ -254,16 +254,22 @@ u32 systemReadJoypad(int gamepad)
 		}
 	}
 
-	if(EmulatorSettings::Current->EnableTurbo &&
-		(oldKeyboardState.TurboPressed && !keyboardState->TurboPressed) ||
-		(oldControllerState.TurboPressed && !controllerState->TurboPressed) ||
-		(oldvControllerState.TurboPressed && !vControllerState->TurboPressed) ||
-		(oldHidState.TurboPressed && !hidState->TurboPressed))
-	{
-		EmulatorSettings::Current->EnableTurbo = false;
-	}
+	//if(EmulatorSettings::Current->EnableTurbo &&
+	//	(oldKeyboardState.TurboPressed && !keyboardState->TurboPressed) ||
+	//	(oldControllerState.TurboPressed && !controllerState->TurboPressed) ||
+	//	(oldvControllerState.TurboPressed && !vControllerState->TurboPressed) ||
+	//	(oldHidState.TurboPressed && !hidState->TurboPressed))
+	//{
+	//	EmulatorSettings::Current->EnableTurbo = false;
+	//}
 
-	if(EmulatorSettings::Current->EnableTurbo || keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed || hidState->TurboPressed)
+	bool useTurbo = EmulatorSettings::Current->EnableTurbo;
+
+	//reverse function if turbopressed
+	if (keyboardState->TurboPressed || controllerState->TurboPressed || vControllerState->TurboPressed || hidState->TurboPressed)
+		useTurbo = !useTurbo;
+
+	if(useTurbo )
 		res |= 1024;
 	
 	oldControllerState = *controllerState;

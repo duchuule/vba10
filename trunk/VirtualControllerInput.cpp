@@ -396,7 +396,10 @@ namespace VBA10
 					}
 					if (this->turboRect.Contains(point))
 					{
-						this->state.TurboTogglePressed = true;
+						if (EmulatorSettings::Current->TurboBehavior == 0)
+							this->state.TurboTogglePressed = true;
+						else 
+							this->state.TurboPressed = true;
 					}
 					if (this->comboRect.Contains(point))
 					{

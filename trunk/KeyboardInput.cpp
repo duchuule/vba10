@@ -24,7 +24,10 @@ namespace VBA10
 	{
 		ZeroMemory(&state, sizeof(ControllerState));
 
-		this->state.TurboTogglePressed = (bool)(window->GetKeyState(GetTurboKeyBinding()) & CoreVirtualKeyStates::Down);
+		if (EmulatorSettings::Current->TurboBehavior == 0)
+			this->state.TurboTogglePressed = (bool)(window->GetKeyState(GetTurboKeyBinding()) & CoreVirtualKeyStates::Down);
+		else
+			this->state.TurboPressed = (bool)(window->GetKeyState(GetTurboKeyBinding()) & CoreVirtualKeyStates::Down);
 
 		this->state.StartPressed = (bool)(window->GetKeyState(GetStartKeyBinding()) & CoreVirtualKeyStates::Down);
 		this->state.SelectPressed = (bool)(window->GetKeyState(GetSelectKeyBinding()) & CoreVirtualKeyStates::Down);

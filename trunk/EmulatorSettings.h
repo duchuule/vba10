@@ -167,6 +167,18 @@ namespace VBA10
 			}
 		}
 
+		property int TurboBehavior
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(TurboBehaviorKey, TurboBehaviorDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(TurboBehaviorKey, value);
+			}
+		}
+
 
 #pragma region Button positions
 
@@ -607,6 +619,7 @@ namespace VBA10
 		Platform::String^ ThemeKey = "ThemeKey";
 		Platform::String^ SmoothButtonKey = "SmoothButtonKey";
 		Platform::String^ HideHamburgerKey = "HideHamburgerKey";
+		Platform::String^ TurboBehaviorKey = "TurboBehaviorKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -660,6 +673,7 @@ namespace VBA10
 		const int ThemeDefault = 0; 
 		const int SmoothButtonDefault = 3;
 		const bool HideHamburgerDefault = false;
+		const int TurboBehaviorDefault = 0;
 
 
 
