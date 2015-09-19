@@ -159,4 +159,34 @@
   <data name="List.Text" xml:space="preserve">
     <value>List</value>
   </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>EXPORT</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>If you import the rom using local storage option, then all save files are stored in the same folder as the rom; you just need to go there and copy them to wherever you need. Better yet, if you are on Desktop/Tablet and store the rom in OneDrive folder, all your saves are automatically synced to the cloud.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>If for any reason you cannot access the rom folder, e.g., the rom is stored in the app's private storage, use this option to export save files to OneDrive.</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>HELP</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>How to</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Local storage</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
 </root>

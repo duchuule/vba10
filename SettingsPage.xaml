@@ -485,18 +485,14 @@
                         <ToggleSwitch Header="Synchronize audio (better quality)" 
                                       Toggled="soundSyncToggle_Toggled_1" 
                                       Name="soundSyncToggle" 
-                                      IsOn="True" HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top"/>
+                                      IsOn="True"/>
                         
                         <ToggleSwitch Header="Disable save confirmation" 
-                                      HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top" 
                                       IsOn="False" 
                                       Name="saveConfirmationToggle" 
                                       Toggled="saveConfirmationToggle_Toggled_1"/>
+                        
                         <ToggleSwitch Header="Disable load confirmation" 
-                                      HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top" 
                                       IsOn="False" 
                                       Name="loadConfirmationToggle" 
                                       Toggled="loadConfirmationToggle_Toggled_1"/>
@@ -509,6 +505,13 @@
                             <ComboBoxItem>Light</ComboBoxItem>
                             <ComboBoxItem>Dark</ComboBoxItem>
                         </ComboBox>
+
+                        <ToggleSwitch Header="Hide hamburger button" 
+                                      IsOn="False" 
+                                      Name="hideHamburgerToggle" 
+                                      Toggled="hideHamburgerToggle_Toggled"
+                                      Visibility="Collapsed"
+                                      />
 
                     </StackPanel>
                 </ScrollViewer>

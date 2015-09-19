@@ -20,12 +20,15 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="HELP"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="**HELP"
+                       x:Uid="HELP"/>
         </Grid>
 
         <Pivot Grid.Row="1" >
-            <PivotItem Header="How to"
-                       Margin="0">
+            <PivotItem Header="**How to"
+                       x:Uid="HowTo"
+                       Margin="0"
+                       >
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       >

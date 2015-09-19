@@ -580,6 +580,9 @@ void DirectXPage::TogglePaneButton_UnChecked(Platform::Object^ sender, Windows::
 	//change the size of app frame to zero to hide content
 	AppFrame->Width = 0.0f;
 
+	//hide the hamburger button
+	if (EmulatorSettings::Current->HideHamburger)
+		this->TogglePaneButton->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	
 
 	//unselect item
@@ -680,6 +683,8 @@ void DirectXPage::TogglePaneButton_Checked(Platform::Object^ sender, Windows::UI
 	AppFrame->Width = NAN;
 
 
+	//show hamburber button
+	this->TogglePaneButton->Visibility = Windows::UI::Xaml::Visibility::Visible;
 
 
 

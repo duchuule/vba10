@@ -70,6 +70,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
+
             <!-- Top-level navigation menu + app content -->
             <SplitView x:Name="RootSplitView"
                    DisplayMode="Inline"
@@ -82,10 +83,12 @@
                         <controls:NavMenuListView x:Name="NavMenuList"
                                               IsTabStop="False"
                                               Margin="0,48,0,0"
+                                                  VerticalAlignment="Bottom"
                                               ContainerContentChanging="NavMenuItemContainerContentChanging"
                                               ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                               ItemTemplate="{StaticResource NavMenuItemTemplate}"
-                                              ItemInvoked="NavMenuList_ItemInvoked">
+                                              ItemInvoked="NavMenuList_ItemInvoked"
+                                                  >
                             <!--<controls:NavMenuListView.Header>
                                 -->
                             <!-- Using this custom back navigation button until the system-provided back button is enabled. -->
@@ -132,6 +135,7 @@
                           Checked="TogglePaneButton_Checked"
                       AutomationProperties.Name="Menu"
                       ToolTipService.ToolTip="Menu" 
+                          VerticalAlignment="Top"
                         />
             <!---->
    
