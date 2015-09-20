@@ -449,6 +449,9 @@
     <ClInclude Include="VBAM\common\RingBuffer.h" />
     <ClInclude Include="VBAM\common\SoundDriver.h" />
     <ClInclude Include="VBAM\common\Types.h" />
+    <ClInclude Include="VBAM\filters\hq2x.h" />
+    <ClInclude Include="VBAM\filters\interp.h" />
+    <ClInclude Include="VBAM\filters\lq2x.h" />
     <ClInclude Include="VBAM\gba\agbprint.h" />
     <ClInclude Include="VBAM\gba\armdis.h" />
     <ClInclude Include="VBAM\gba\bios.h" />
@@ -858,6 +861,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="VBAM\common\XAudio2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="VBAM\filters\hq2x.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>

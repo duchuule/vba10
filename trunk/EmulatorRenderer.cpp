@@ -7,6 +7,7 @@
 #include <sstream>
 #include "Vector4.h"
 #include "TextureLoader.h"
+//#include "VBAM\filters\hq2x.h"
 
 
 #define CROSS_TEXTURE_FILE_NAME						L"Assets/Direct3D/pad_cross.dds"
@@ -61,6 +62,11 @@ bool monitorTypeSkipped = false;
 
 int turboSkip;
 
+extern u8 *pix;
+size_t gbaPitch;
+extern void hq2x32(u8*, u32, u8*, u8*, u32, int, int);
+
+
 void ContinueEmulation(void)
 {
 	if(swapEvent && updateEvent)
@@ -70,8 +76,7 @@ void ContinueEmulation(void)
 	}
 }
 
-extern u8 *pix;
-size_t gbaPitch;
+
 
 inline void cpyImg32( unsigned char *dst, unsigned int dstPitch, unsigned char *src, unsigned int srcPitch, unsigned short width, unsigned short height )
 {
@@ -267,8 +272,8 @@ namespace VBA10
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		//desc.Format = DXGI_FORMAT_B5G6R5_UNORM;
 		desc.Format = DXGI_FORMAT_B8G8R8X8_UNORM;
-		desc.Width = 241;//EXT_WIDTH;
-		desc.Height = 162;//EXT_HEIGHT;
+		desc.Width = 961; //241;//DL: use 4 times the regular size to account for pixel filter
+		desc.Height = 642;// 162;//DL: use 4 times the regular size to account for pixel filter
 		desc.MipLevels = 1;
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
@@ -507,15 +512,40 @@ namespace VBA10
 					framesNotRendered = 0;
 					WaitForSingleObjectEx(swapEvent, INFINITE, false);
 
+					//<<<<<< apply filter to the back buffer
+					u8 *delta[1];
+					//copy pix to temporary memory
+					u8* pixtmp = (u8 *)malloc(4 * this->pitch * 162);
+
+					if (pixtmp)
+						cpyImg32(pixtmp, this->pitch, pix, this->pitch, 241, 162);
+					
+
+					//for (int i = 0; i < 4 * this->pitch * 162; i++)
+					//{
+					//	*(pixtmp + i) = *(pix + i);
+					//}
+
+					//apply filter from pixtmp to pix
+					//cpyImg32(pix, this->pitch, pixtmp, this->pitch, 241, 162);
+					hq2x32(pixtmp, this->pitch, (u8*)delta, pix, this->pitch, 241, 162);
+
+					//end of apply filter >>>>>>>>>>>>>>>>
+
+					//flip the buffer
 					int backbuffer = this->frontbuffer;
 					this->frontbuffer = (this->frontbuffer + 1) % 2;
 
+					//get the address of the new back buffer
 					uint8 *buffer = (uint8 *) this->MapBuffer(backbuffer, &gbaPitch);
 					this->backbufferPtr = buffer;
 					this->pitch = gbaPitch;
 
+					//assign pix to the address of the new back buffer, pix will be modified by GBA.cpp
 					pix = buffer;
 
+
+					//release the memory of new front buffer to the gpu
 					m_deviceResources->GetD3DDeviceContext()->Unmap(this->buffers[this->frontbuffer].Get(), 0);
 
 					SetEvent(updateEvent);
@@ -589,9 +619,9 @@ namespace VBA10
 		if(gbaROMLoaded)
 		{
 			source.left = 0;
-			source.right = 240;
-			source.top = 2;
-			source.bottom = 161;
+			source.right = 480; //240;
+			source.top = 3;//2;
+			source.bottom = 322; //161;
 		}else
 		{
 			source.left = 0;

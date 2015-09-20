@@ -3748,7 +3748,7 @@ void CPULoop(int ticks)
                 {
 					extern size_t gbaPitch;
 					size_t rowPitch = gbaPitch / 4;
-                  //u32 *dest = (u32 *)pix + 241 * (VCOUNT+1);
+                  //u32 *dest = (u32 *)pix + 241 * (VCOUNT+1);  //DL: rowPitch == 256 due to direct3d cache
                   u32 *dest = (u32 *)pix + rowPitch * (VCOUNT+1);
 
                   for(int x = 0; x < 240; ) {
