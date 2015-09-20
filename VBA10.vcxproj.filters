@@ -59,6 +59,9 @@
     <Filter Include="Strings\vi-VN">
       <UniqueIdentifier>{ee6b53a2-ada2-480d-bf25-1efbbf8cc743}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VBAM\filters">
+      <UniqueIdentifier>{f9a8ee27-227a-4136-9aee-3bd9361fcdca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -292,6 +295,9 @@
     <ClCompile Include="HIDGamepadConfig.xaml.cpp" />
     <ClCompile Include="EventHandlerForDevice.cpp" />
     <ClCompile Include="BlankPage.xaml.cpp" />
+    <ClCompile Include="VBAM\filters\hq2x.cpp">
+      <Filter>VBAM\filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -555,6 +561,15 @@
     <ClInclude Include="EventHandlerForDevice.h" />
     <ClInclude Include="BlankPage.xaml.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="VBAM\filters\hq2x.h">
+      <Filter>VBAM\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\filters\interp.h">
+      <Filter>VBAM\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="VBAM\filters\lq2x.h">
+      <Filter>VBAM\filters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
