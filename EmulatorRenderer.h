@@ -53,6 +53,7 @@ namespace VBA10
 		u8* pixtmp; //to store pix before applying filter
 		u8* delta[1];
 
+
 		GameTime ^gameTime;
 		VirtualControllerInput				*controller;
 		RECT aRectangle;

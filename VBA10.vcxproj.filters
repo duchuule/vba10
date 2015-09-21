@@ -298,6 +298,9 @@
     <ClCompile Include="VBAM\filters\hq2x.cpp">
       <Filter>VBAM\filters</Filter>
     </ClCompile>
+    <ClCompile Include="VBAM\filters\scanline.cpp">
+      <Filter>VBAM\filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />

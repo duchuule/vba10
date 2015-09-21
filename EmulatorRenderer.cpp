@@ -64,8 +64,12 @@ int turboSkip;
 
 extern u8 *pix;
 size_t gbaPitch;
-extern void hq2x32(u8*, u32, u8*, u8*, u32, int, int);
 
+void(*filterFunction)(u8*, u32, u8*, u8*, u32, int, int);
+
+extern void hq2x32(u8*, u32, u8*, u8*, u32, int, int);
+extern void Scanlines32(u8*, u32, u8*, u8*, u32, int, int);
+extern void ScanlinesTV32(u8*, u32, u8*, u8*, u32, int, int);
 
 void ContinueEmulation(void)
 {
@@ -529,8 +533,15 @@ namespace VBA10
 					WaitForSingleObjectEx(swapEvent, INFINITE, false);
 
 					//<<<<<< apply filter to the back buffer
-					if (EmulatorSettings::Current->PixelFilter > 1)
+					if (EmulatorSettings::Current->PixelFilter != 0)
 					{
+						//set filter function
+						if (EmulatorSettings::Current->PixelFilter == 1) //hq2x
+							filterFunction = hq2x32;
+						else if (EmulatorSettings::Current->PixelFilter == 2)  //TV Mode
+							filterFunction = ScanlinesTV32;
+						else if (EmulatorSettings::Current->PixelFilter == 3)  //Scanlines
+							filterFunction = Scanlines32;
 
 						////copy pix to temporary memory
 						if (pixtmp)
@@ -538,7 +549,8 @@ namespace VBA10
 
 
 						//apply filter from pixtmp to pix
-						hq2x32(this->pixtmp, 240 * 4, (u8*)this->delta, pix, this->pitch, 240, 160);
+						filterFunction(this->pixtmp, 240 * 4, (u8*)this->delta, pix, this->pitch, 240, 160);
+
 					}
 					//end of apply filter >>>>>>>>>>>>>>>>
 
@@ -627,21 +639,21 @@ namespace VBA10
 
 		RECT source;
 
-		if (EmulatorSettings::Current->PixelFilter <= 1)
+		if (EmulatorSettings::Current->PixelFilter == 0)
 		{
 			if (gbaROMLoaded)
 			{
 				source.left = 0;
-				source.right = 240;
-				source.top = 1;
-				source.bottom = 161;
+				source.right = 239;
+				source.top = 2;
+				source.bottom = 160;
 			}
 			else
 			{
 				source.left = 0;
-				source.right = 160;
-				source.top = 1;
-				source.bottom = 145;
+				source.right = 159;
+				source.top = 2;
+				source.bottom = 144;
 			}
 		}
 		else
@@ -689,10 +701,8 @@ namespace VBA10
 
 		XMMATRIX x = XMLoadFloat4x4(&this->outputTransform);
 
-		if (EmulatorSettings::Current->PixelFilter == 1)
-			this->dxSpriteBatch->Begin(x, true);
-		else
-			this->dxSpriteBatch->Begin(x, false);
+
+		this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
 
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
