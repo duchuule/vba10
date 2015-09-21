@@ -109,7 +109,7 @@ SettingsPage::SettingsPage()
 		this->aspectComboBox->SelectedIndex = 4;
 		break;
 	}
-	this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
+	this->cboPixelFilter->SelectedIndex = EmulatorSettings::Current->PixelFilter;
 	this->fullscreenToggle->IsOn = EmulatorSettings::Current->FullScreen;
 
 	//general
@@ -352,7 +352,13 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 	}, task_continuation_context::use_current());
 }
 
-
+void SettingsPage::cboTurboBehavior_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->TurboBehavior = this->cboTurboBehavior->SelectedIndex;
+	}
+}
 
 void SettingsPage::touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -601,6 +607,14 @@ void SettingsPage::aspectComboBox_SelectionChanged_1(Platform::Object^ sender, W
 	}
 }
 
+void SettingsPage::cboPixelFilter_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->PixelFilter = this->cboPixelFilter->SelectedIndex;
+	}
+}
+
 void SettingsPage::fpsToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	if (initdone)
@@ -648,13 +662,7 @@ void SettingsPage::soundSyncToggle_Toggled_1(Platform::Object^ sender, Windows::
 
 
 
-void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	if (initdone)
-	{
-		EmulatorSettings::Current->LinearFilterEnabled = this->linearFilterToggle->IsOn;
-	}
-}
+
 
 
 void SettingsPage::enableTurboToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -718,10 +726,7 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 }
 
 
-void SettingsPage::cboTurboBehavior_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
-{
-	if (initdone)
-	{
-		EmulatorSettings::Current->TurboBehavior = this->cboTurboBehavior->SelectedIndex;
-	}
-}
+
+
+
+

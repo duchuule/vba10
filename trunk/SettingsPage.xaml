@@ -111,11 +111,22 @@
 
                             </StackPanel>
                         </StackPanel>
-                        
+
+                        <ComboBox Name="cboTurboBehavior" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                  SelectedIndex="0"
+                                  Header="Turbo Button Behavior"
+                                  Margin =" 0, 0, 0, 10"
+                                  SelectionChanged="cboTurboBehavior_SelectionChanged">
+                            <ComboBoxItem>Toggle turbo on/off</ComboBoxItem>
+                            <ComboBoxItem>Hold to activate</ComboBoxItem>
+                        </ComboBox>
 
                         <ToggleSwitch Header="Show Virtual Buttons" 
                                       Name="touchToggle" HorizontalAlignment="Left" 
-                                      Toggled="touchToggle_Toggled"/>
+                                      Toggled="touchToggle_Toggled"
+                                      />
 
                         <!--<ToggleSwitch Header="Virtual Controller Position" 
                                       OffContent="Bottom"
@@ -135,16 +146,7 @@
                             <ComboBoxItem>Dynamic analogue stick</ComboBoxItem>
                         </ComboBox>
 
-                        <ComboBox Name="cboTurboBehavior" 
-                                  HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Top" 
-                                  SelectedIndex="0"
-                                  Header="Turbo Button Behavior"
-                                  Margin =" 0, 0, 0, 12"
-                                  SelectionChanged="cboTurboBehavior_SelectionChanged">
-                            <ComboBoxItem>Toggle turbo on/off</ComboBoxItem>
-                            <ComboBoxItem>Hold to activate</ComboBoxItem>
-                        </ComboBox>
+                        
 
                         <Button x:Name="editButonLayoutBtn" 
                                 Content="Edit button layout" 
@@ -415,7 +417,8 @@
                                   VerticalAlignment="Top" 
                                   SelectedIndex="0" 
                                   SelectionChanged="turboSkipComboBox_SelectionChanged_1"
-                                  Header="Frame skip (turbo mode)">
+                                  Header="Frame skip (turbo mode)"
+                                  Margin="0,0,0,10">
                             <ComboBoxItem>1</ComboBoxItem>
                             <ComboBoxItem>2</ComboBoxItem>
                             <ComboBoxItem>3</ComboBoxItem>
@@ -431,7 +434,8 @@
                                   VerticalAlignment="Top" 
                                    SelectedIndex="1" 
                                   SelectionChanged="monitorComboBox_SelectionChanged_1"
-                                  Header="Display Type">
+                                  Header="Display Type"
+                                  Margin="0,0,0,10">
                             <ComboBoxItem>30 Hz</ComboBoxItem>
                             <ComboBoxItem>60 Hz (default)</ComboBoxItem>
                             <ComboBoxItem>120 Hz</ComboBoxItem>
@@ -443,6 +447,7 @@
                                   SelectedIndex="0" 
                                   SelectionChanged="aspectComboBox_SelectionChanged_1"
                                   Header="Aspect Ratio"
+                                  Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>Original</ComboBoxItem>
                             <ComboBoxItem>Stretch</ComboBoxItem>
@@ -451,12 +456,20 @@
                             <ComboBoxItem>1:1</ComboBoxItem>
                         </ComboBox>
 
-                        <ToggleSwitch Header="Use bilinear filter" 
-                                      Name="linearFilterToggle" 
-                                      IsOn="True" Toggled="linearFilterToggle_Toggled"
-                                      />
 
-                        
+                        <ComboBox Name="cboPixelFilter" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top"
+                                  SelectedIndex="1" 
+                                  SelectionChanged="cboPixelFilter_SelectionChanged"
+                                  Header="Pixel Filter (require powerful CPU)"
+                                  Margin="0,0,0,10"
+                                  >
+                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>Bilinear</ComboBoxItem>
+                            <ComboBoxItem>hq2x</ComboBoxItem>
+
+                        </ComboBox>
 
                         <ToggleSwitch Header="Show FPS" 
                                       Name="fpsToggle" 
