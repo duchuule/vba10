@@ -35,7 +35,7 @@
                       >
                     <StackPanel Orientation="Vertical" x:Name="InputStackPanel" 
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440"
+                                MaxWidth="500"
                                 Margin="12,0">
                         <StackPanel.Resources>
                             <CollectionViewSource x:Name="vsControllerList"/>
@@ -385,7 +385,7 @@
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440"
+                                MaxWidth="500"
                                 Margin="12,0">
                         <!--<ToggleSwitch Toggled="hzToggle_Toggled" Header="30 Hz mode for displays with 30 Hz" Name="hzToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
@@ -460,16 +460,23 @@
                         <ComboBox Name="cboPixelFilter" 
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top"
-                                  SelectedIndex="1" 
+                                  SelectedIndex="0" 
                                   SelectionChanged="cboPixelFilter_SelectionChanged"
-                                  Header="Pixel Filter (require powerful CPU)"
+                                  Header="Pixel Filter"
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>None</ComboBoxItem>
-                            <ComboBoxItem>Bilinear</ComboBoxItem>
-                            <ComboBoxItem>hq2x</ComboBoxItem>
+                            <ComboBoxItem>HQ2x (CPU intensive)</ComboBoxItem>
+                            <ComboBoxItem>TV Mode</ComboBoxItem>
+                            <ComboBoxItem>Scanlines</ComboBoxItem>
 
                         </ComboBox>
+
+                        <ToggleSwitch Header="Use bilinear filter" 
+                                      Name="linearFilterToggle" 
+                                      IsOn="True" 
+                                      Toggled="linearFilterToggle_Toggled"
+                                      />
 
                         <ToggleSwitch Header="Show FPS" 
                                       Name="fpsToggle" 
@@ -493,7 +500,7 @@
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="440"
+                                MaxWidth="500"
                                 Margin="12,0">
                         
                         
@@ -506,10 +513,14 @@
                                       HorizontalAlignment="Left" 
                                       VerticalAlignment="Top"/>
 
-                        <ToggleSwitch Header="Synchronize audio (better quality)" 
-                                      Toggled="soundSyncToggle_Toggled_1" 
+                        <ToggleSwitch Toggled="soundSyncToggle_Toggled_1" 
                                       Name="soundSyncToggle" 
-                                      IsOn="True"/>
+                                      IsOn="True">
+                            <ToggleSwitch.Header>
+                                <TextBlock Text="Synchronize audio (better quality, CPU intensive)"
+                                           TextWrapping="Wrap"/>
+                            </ToggleSwitch.Header>
+                        </ToggleSwitch>
                         
                         <ToggleSwitch Header="Disable save confirmation" 
                                       IsOn="False" 
