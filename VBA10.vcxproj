@@ -213,7 +213,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions);METRO_APP;__WIN32__;C_CORE;NO_ASM;NO_OGL;NO_OAL;NO_LINK;NO_PNG;_CRT_SECURE_NO_WARNINGS;DNO_DEFLATE;FINAL_VERSION;NO_DEFLATE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions);METRO_APP;__WIN32__;C_CORE;NO_ASM;NO_OGL;NO_OAL;NO_LINK;NO_PNG;_CRT_SECURE_NO_WARNINGS;DNO_DEFLATE;FINAL_VERSION;NO_DEFLATE;TILED_RENDERING</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -1299,6 +1299,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">SPRITEBATCH_VS</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">SpriteBatch_VS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SpriteBatch_VS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">SpriteBatch_VS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SpriteBatch_VS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SPRITEBATCH_VS</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">SPRITEBATCH_VS</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">SPRITEBATCH_VS</VariableName>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

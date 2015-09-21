@@ -92,6 +92,20 @@ inline void cpyImg32( unsigned char *dst, unsigned int dstPitch, unsigned char *
 	}
 }
 
+inline void cpyImg32(unsigned char *dst, unsigned int dstPitch, unsigned char *src, unsigned int srcPitch, unsigned short width, unsigned short height, unsigned short srcStart)
+{
+	//srcStart == 0 if want to copy from the top row
+	src += srcPitch * srcStart;
+
+	register unsigned short lineSize = width << 2;
+
+	while (height--) {
+		memcpy(dst, src, lineSize);
+		src += srcPitch;
+		dst += dstPitch;
+	}
+}
+
 namespace VBA10
 {
 	//extern bool timeMeasured;
@@ -110,6 +124,8 @@ namespace VBA10
 
 		swapEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
 		updateEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
+
+		this->pixtmp = (u8 *)malloc(4 * 240 * 160);  //240 x 160 is size of gba screen
 
 		/*this->stopThread = false;
 		this->autosaveDoneEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
@@ -272,8 +288,8 @@ namespace VBA10
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		//desc.Format = DXGI_FORMAT_B5G6R5_UNORM;
 		desc.Format = DXGI_FORMAT_B8G8R8X8_UNORM;
-		desc.Width = 961; //241;//DL: use 4 times the regular size to account for pixel filter
-		desc.Height = 642;// 162;//DL: use 4 times the regular size to account for pixel filter
+		desc.Width = 960; //241;//DL: use 4 times the regular size to account for pixel filter
+		desc.Height = 640;//161;//DL: use 4 times the regular size to account for pixel filter
 		desc.MipLevels = 1;
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
@@ -513,23 +529,17 @@ namespace VBA10
 					WaitForSingleObjectEx(swapEvent, INFINITE, false);
 
 					//<<<<<< apply filter to the back buffer
-					u8 *delta[1];
-					//copy pix to temporary memory
-					u8* pixtmp = (u8 *)malloc(4 * this->pitch * 162);
+					if (EmulatorSettings::Current->PixelFilter > 1)
+					{
 
-					if (pixtmp)
-						cpyImg32(pixtmp, this->pitch, pix, this->pitch, 241, 162);
-					
+						////copy pix to temporary memory
+						if (pixtmp)
+							cpyImg32(this->pixtmp, 240*4, pix, this->pitch, 240, 160, 1); //skip 1 line (garbage)
 
-					//for (int i = 0; i < 4 * this->pitch * 162; i++)
-					//{
-					//	*(pixtmp + i) = *(pix + i);
-					//}
 
-					//apply filter from pixtmp to pix
-					//cpyImg32(pix, this->pitch, pixtmp, this->pitch, 241, 162);
-					hq2x32(pixtmp, this->pitch, (u8*)delta, pix, this->pitch, 241, 162);
-
+						//apply filter from pixtmp to pix
+						hq2x32(this->pixtmp, 240 * 4, (u8*)this->delta, pix, this->pitch, 240, 160);
+					}
 					//end of apply filter >>>>>>>>>>>>>>>>
 
 					//flip the buffer
@@ -616,18 +626,40 @@ namespace VBA10
 		}
 
 		RECT source;
-		if(gbaROMLoaded)
+
+		if (EmulatorSettings::Current->PixelFilter <= 1)
 		{
-			source.left = 0;
-			source.right = 480; //240;
-			source.top = 3;//2;
-			source.bottom = 322; //161;
-		}else
+			if (gbaROMLoaded)
+			{
+				source.left = 0;
+				source.right = 240;
+				source.top = 1;
+				source.bottom = 161;
+			}
+			else
+			{
+				source.left = 0;
+				source.right = 160;
+				source.top = 1;
+				source.bottom = 145;
+			}
+		}
+		else
 		{
-			source.left = 0;
-			source.right = 160;
-			source.top = 2;
-			source.bottom = 144;
+			if (gbaROMLoaded)
+			{
+				source.left = 0;
+				source.right = 480;
+				source.top = 0;
+				source.bottom = 320;
+			}
+			else
+			{
+				source.left = 0;
+				source.right = 320;
+				source.top = 0;
+				source.bottom = 288;
+			}
 		}
 
 		this->controller->GetARectangle(&aRectangle);
@@ -657,7 +689,10 @@ namespace VBA10
 
 		XMMATRIX x = XMLoadFloat4x4(&this->outputTransform);
 
-		this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
+		if (EmulatorSettings::Current->PixelFilter == 1)
+			this->dxSpriteBatch->Begin(x, true);
+		else
+			this->dxSpriteBatch->Begin(x, false);
 
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);

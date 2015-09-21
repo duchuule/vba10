@@ -64,7 +64,7 @@ namespace VBA10
 		void loadConfirmationToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void soundToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void soundSyncToggle_Toggled_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
 		
 		
 		
@@ -81,5 +81,6 @@ namespace VBA10
 		void editButonLayoutBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void cboTurboBehavior_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
+		void cboPixelFilter_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
 	};
 }

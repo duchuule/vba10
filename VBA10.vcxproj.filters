@@ -575,7 +575,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="VBA10_TemporaryKey.pfx" />
     <None Include="Assets\Bunny Advance (Demo).gba">
       <Filter>Assets</Filter>
     </None>
@@ -586,9 +585,10 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Package.StoreAssociation.xml" />
-    <None Include="VBA10_StoreKey.pfx" />
     <None Include="packages.config" />
     <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
+    <None Include="VBA10_StoreKey.pfx" />
+    <None Include="VBA10_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />

@@ -50,6 +50,8 @@ namespace VBA10
 		float elapsedTimeMeasure;
 		size_t pitch;
 		u8 *backbufferPtr;
+		u8* pixtmp; //to store pix before applying filter
+		u8* delta[1];
 
 		GameTime ^gameTime;
 		VirtualControllerInput				*controller;

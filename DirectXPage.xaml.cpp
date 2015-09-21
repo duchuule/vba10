@@ -146,7 +146,7 @@ DirectXPage::DirectXPage():
 	//});
 
 	//App::ESettings->LinearFilterEnabled = true;
-	bool test = EmulatorSettings::Current->LinearFilterEnabled;
+	
 	
 
 	//// Run task on a dedicated high priority background thread.

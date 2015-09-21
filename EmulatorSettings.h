@@ -29,17 +29,17 @@ namespace VBA10
 		}
 
 		
-		property bool LinearFilterEnabled
-		{
-			bool get()
-			{
-				return GetValueOrDefault<bool> (LinearFilterKey, LinearFilterDefault);
-			}
-			void set (bool value)
-			{
-				AddOrUpdateValue(LinearFilterKey, value);
-			}
-		}
+		//property bool LinearFilterEnabled
+		//{
+		//	bool get()
+		//	{
+		//		return GetValueOrDefault<bool> (LinearFilterKey, LinearFilterDefault);
+		//	}
+		//	void set (bool value)
+		//	{
+		//		AddOrUpdateValue(LinearFilterKey, value);
+		//	}
+		//}
 
 		property int ControllerScale
 		{
@@ -176,6 +176,18 @@ namespace VBA10
 			void set(int value)
 			{
 				AddOrUpdateValue(TurboBehaviorKey, value);
+			}
+		}
+
+		property int PixelFilter
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(PixelFilterKey, PixelFilterDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(PixelFilterKey, value);
 			}
 		}
 
@@ -620,6 +632,7 @@ namespace VBA10
 		Platform::String^ SmoothButtonKey = "SmoothButtonKey";
 		Platform::String^ HideHamburgerKey = "HideHamburgerKey";
 		Platform::String^ TurboBehaviorKey = "TurboBehaviorKey";
+		Platform::String^ PixelFilterKey = "PixelFilterKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -674,6 +687,7 @@ namespace VBA10
 		const int SmoothButtonDefault = 3;
 		const bool HideHamburgerDefault = false;
 		const int TurboBehaviorDefault = 0;
+		const int PixelFilterDefault = 1; //1: bilinear
 
 
 
