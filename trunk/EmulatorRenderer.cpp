@@ -96,19 +96,19 @@ inline void cpyImg32( unsigned char *dst, unsigned int dstPitch, unsigned char *
 	}
 }
 
-inline void cpyImg32(unsigned char *dst, unsigned int dstPitch, unsigned char *src, unsigned int srcPitch, unsigned short width, unsigned short height, unsigned short srcStart)
-{
-	//srcStart == 0 if want to copy from the top row
-	src += srcPitch * srcStart;
-
-	register unsigned short lineSize = width << 2;
-
-	while (height--) {
-		memcpy(dst, src, lineSize);
-		src += srcPitch;
-		dst += dstPitch;
-	}
-}
+//inline void cpyImg32(unsigned char *dst, unsigned int dstPitch, unsigned char *src, unsigned int srcPitch, unsigned short width, unsigned short height, unsigned short srcStart)
+//{
+//	//srcStart == 0 if want to copy from the top row
+//	src += srcPitch * srcStart;
+//
+//	register unsigned short lineSize = width << 2;
+//
+//	while (height--) {
+//		memcpy(dst, src, lineSize);
+//		src += srcPitch;
+//		dst += dstPitch;
+//	}
+//}
 
 namespace VBA10
 {
@@ -130,6 +130,7 @@ namespace VBA10
 		updateEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
 
 		this->pixtmp = (u8 *)malloc(4 * 240 * 160);  //240 x 160 is size of gba screen
+		//this->pixtmp2 = (u8 *)malloc(4 * 480 * 320);  //double the size for filter
 
 		/*this->stopThread = false;
 		this->autosaveDoneEvent = CreateEventEx(NULL, NULL, NULL, EVENT_ALL_ACCESS);
@@ -292,8 +293,8 @@ namespace VBA10
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		//desc.Format = DXGI_FORMAT_B5G6R5_UNORM;
 		desc.Format = DXGI_FORMAT_B8G8R8X8_UNORM;
-		desc.Width = 960; //241;//DL: use 4 times the regular size to account for pixel filter
-		desc.Height = 640;//161;//DL: use 4 times the regular size to account for pixel filter
+		desc.Width = 480;//241;  //DL: 2 times regular size to use in pixel filter
+		desc.Height = 320;  // 161;
 		desc.MipLevels = 1;
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
@@ -305,6 +306,13 @@ namespace VBA10
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateTexture2D(&desc, nullptr, this->buffers[1].GetAddressOf())
 			);
+
+		//pixel filter resource
+		//desc.Width = 480; //2 times regular size to use in pixel filter
+		//desc.Height = 320;
+		//DX::ThrowIfFailed(
+		//	m_deviceResources->GetD3DDevice()->CreateTexture2D(&desc, nullptr, this->bufferBig.GetAddressOf())
+		//	);
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 		ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
@@ -319,6 +327,9 @@ namespace VBA10
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateShaderResourceView(this->buffers[1].Get(), &srvDesc, this->bufferSRVs[1].GetAddressOf())
 			);
+		//DX::ThrowIfFailed(
+		//	m_deviceResources->GetD3DDevice()->CreateShaderResourceView(this->bufferBig.Get(), &srvDesc, this->bufferSRVBig.GetAddressOf())
+		//	);
 
 		// Map backbuffer so it can be unmapped on first update
 		int backbuffer = (this->frontbuffer + 1) % 2;
@@ -545,8 +556,28 @@ namespace VBA10
 
 						////copy pix to temporary memory
 						if (pixtmp)
-							cpyImg32(this->pixtmp, 240*4, pix, this->pitch, 240, 160, 1); //skip 1 line (garbage)
+							cpyImg32(this->pixtmp, 240*4, pix + this->pitch, this->pitch, 240, 160); //skip 1 line of sources (garbage)
 
+						//get pointer to buffer memory
+						//D3D11_MAPPED_SUBRESOURCE map;
+						//ZeroMemory(&map, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+						//DX::ThrowIfFailed(
+						//	m_deviceResources->GetD3DDeviceContext()->Map(this->bufferBig.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &map)
+						//	);
+
+
+
+						//apply filter from buffers[backbuffer] to bufferBig
+						//filterFunction(pix, this->pitch, (u8*)this->delta, (u8*)map.pData, map.RowPitch, 240, 160);
+						//filterFunction(pixtmp, 240*4, (u8*)this->delta, (u8*)map.pData, map.RowPitch, 240, 160);
+						//filterFunction(pixtmp, 240 * 4, (u8*)this->delta, pixtmp2, 480*4, 240, 160);
+
+						//copy back to gpu memory
+						//cpyImg32((u8*)map.pData, map.RowPitch, this->pixtmp2, 480 * 4, 480, 320);
+
+						//release the memory of new front buffer to the gpu
+						/*m_deviceResources->GetD3DDeviceContext()->Unmap(this->bufferBig.Get(), 0);*/
 
 						//apply filter from pixtmp to pix
 						filterFunction(this->pixtmp, 240 * 4, (u8*)this->delta, pix, this->pitch, 240, 160);
@@ -707,7 +738,10 @@ namespace VBA10
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 
-		this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVs[this->frontbuffer].Get(), this->buffers[this->frontbuffer].Get(), white);
+		//if (EmulatorSettings::Current->PixelFilter == 0)
+			this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVs[this->frontbuffer].Get(), this->buffers[this->frontbuffer].Get(), white);
+		//else
+			//this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVBig.Get(), this->bufferBig.Get(), white);
 
 		//divider
 		Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);
