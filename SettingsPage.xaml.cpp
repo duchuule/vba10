@@ -612,7 +612,14 @@ void SettingsPage::cboPixelFilter_SelectionChanged(Platform::Object^ sender, Win
 {
 	if (initdone)
 	{
+
 		EmulatorSettings::Current->PixelFilter = this->cboPixelFilter->SelectedIndex;
+
+		if (!App::IsPremium)
+		{
+			MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. You can use the feature now but the setting will revert to None the next time the app starts.");
+			dialog->ShowAsync();
+		}
 	}
 }
 

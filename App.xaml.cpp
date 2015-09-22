@@ -77,6 +77,11 @@ void App::CheckProductLicense()
 	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("premiumfeatures")->IsActive)
 		IsPremium = true;
 
+	//revert pixel filter if not premium
+	if (!App::IsPremium)
+	{
+		EmulatorSettings::Current->PixelFilter = 0;
+	}
 
 }
 

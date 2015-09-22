@@ -434,7 +434,7 @@
                                   VerticalAlignment="Top" 
                                    SelectedIndex="1" 
                                   SelectionChanged="monitorComboBox_SelectionChanged_1"
-                                  Header="Display Type"
+                                  Header="Display type"
                                   Margin="0,0,0,10">
                             <ComboBoxItem>30 Hz</ComboBoxItem>
                             <ComboBoxItem>60 Hz (default)</ComboBoxItem>
@@ -446,7 +446,7 @@
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="aspectComboBox_SelectionChanged_1"
-                                  Header="Aspect Ratio"
+                                  Header="Aspect ratio"
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>Original</ComboBoxItem>
@@ -462,7 +462,7 @@
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="cboPixelFilter_SelectionChanged"
-                                  Header="Pixel Filter"
+                                  Header="Pixel filter (experimental)"
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>None</ComboBoxItem>
