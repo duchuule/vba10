@@ -50,7 +50,7 @@ namespace VBA10
 		float elapsedTimeMeasure;
 		size_t pitch;
 		u8 *backbufferPtr;
-		u8* pixtmp; //to store pix before applying filter
+		u8* pixtmp;  // , *pixtmp2; //to store pix for applying filter
 		u8* delta[1];
 
 
@@ -74,6 +74,10 @@ namespace VBA10
 		
 		ComPtr<ID3D11Texture2D>				buffers[2];
 		ComPtr<ID3D11ShaderResourceView>	bufferSRVs[2];
+
+		//ComPtr<ID3D11Texture2D>				bufferBig;  //use for pixel filtering
+		//ComPtr<ID3D11ShaderResourceView>	bufferSRVBig;
+
 		ComPtr<ID3D11BlendState>			alphablend;
 		
 		ComPtr<ID3D11Resource>				dividerResource;
