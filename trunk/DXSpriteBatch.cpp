@@ -366,7 +366,7 @@ namespace Engine
 
 		this->QueueSprite(info);
 		
-		this->FlushBatch();
+		//this->FlushBatch();
 	}
 	
 	void DXSpriteBatch::Draw(const Rectangle &target, const Rectangle *source, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, Color &color)
@@ -445,7 +445,7 @@ namespace Engine
 			return;
 		}
 
-		sort_heap(this->queuedSprites.begin(), this->queuedSprites.end(), this->heapSort);
+		//sort_heap(this->queuedSprites.begin(), this->queuedSprites.end(), this->heapSort);
 
 		this->FlushBatch();
 

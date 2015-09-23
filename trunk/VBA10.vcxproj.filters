@@ -59,7 +59,7 @@
     <Filter Include="Strings\vi-VN">
       <UniqueIdentifier>{ee6b53a2-ada2-480d-bf25-1efbbf8cc743}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VBAM\filters">
+    <Filter Include="Filters">
       <UniqueIdentifier>{f9a8ee27-227a-4136-9aee-3bd9361fcdca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -295,11 +295,14 @@
     <ClCompile Include="HIDGamepadConfig.xaml.cpp" />
     <ClCompile Include="EventHandlerForDevice.cpp" />
     <ClCompile Include="BlankPage.xaml.cpp" />
-    <ClCompile Include="VBAM\filters\hq2x.cpp">
-      <Filter>VBAM\filters</Filter>
+    <ClCompile Include="Filter\hq2x.cpp">
+      <Filter>Filters</Filter>
     </ClCompile>
-    <ClCompile Include="VBAM\filters\scanline.cpp">
-      <Filter>VBAM\filters</Filter>
+    <ClCompile Include="Filter\scanline.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Filter\ShaderManager.cpp">
+      <Filter>Filters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -564,14 +567,20 @@
     <ClInclude Include="EventHandlerForDevice.h" />
     <ClInclude Include="BlankPage.xaml.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="VBAM\filters\hq2x.h">
-      <Filter>VBAM\filters</Filter>
+    <ClInclude Include="OnFrameBuffer.h">
+      <Filter>Emulator</Filter>
     </ClInclude>
-    <ClInclude Include="VBAM\filters\interp.h">
-      <Filter>VBAM\filters</Filter>
+    <ClInclude Include="Filter\hq2x.h">
+      <Filter>Filters</Filter>
     </ClInclude>
-    <ClInclude Include="VBAM\filters\lq2x.h">
-      <Filter>VBAM\filters</Filter>
+    <ClInclude Include="Filter\interp.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter\lq2x.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter\ShaderManager.h">
+      <Filter>Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -618,6 +627,9 @@
     </FxCompile>
     <FxCompile Include="SpriteBatch_VS.hlsl">
       <Filter>Emulator</Filter>
+    </FxCompile>
+    <FxCompile Include="Filter\xBR5_v37a_PS.hlsl">
+      <Filter>Filters</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
