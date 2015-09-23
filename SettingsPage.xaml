@@ -457,16 +457,31 @@
                         </ComboBox>
 
 
+                        <ComboBox Name="cboPixelShader" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top"
+                                  SelectedIndex="0" 
+                                  SelectionChanged="cboPixelShader_SelectionChanged"
+                                  Header="GPU pixel filter (fast)"
+                                  Margin="0,0,0,10"
+                                  >
+                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>xBr2x</ComboBoxItem>
+                            <ComboBoxItem>xBr5x</ComboBoxItem>
+
+
+                        </ComboBox>
+                        
                         <ComboBox Name="cboPixelFilter" 
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="cboPixelFilter_SelectionChanged"
-                                  Header="Pixel filter (experimental)"
+                                  Header="CPU pixel filter (slow)"
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>None</ComboBoxItem>
-                            <ComboBoxItem>HQ2x (CPU intensive)</ComboBoxItem>
+                            <ComboBoxItem>HQ2x</ComboBoxItem>
                             <ComboBoxItem>TV Mode</ComboBoxItem>
                             <ComboBoxItem>Scanlines</ComboBoxItem>
 

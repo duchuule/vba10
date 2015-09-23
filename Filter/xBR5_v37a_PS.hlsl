@@ -24,11 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 Texture2D<float4> Texture : register(t0);
 sampler TextureSampler : register(s0);
+const static float2 texture_size = float2(480.0, 320.0);  //size is the same as size in CreateDeviceDependentResources()
 
 
 const static float coef = 2.0;
 const static float3 yuv_weighted = float3(14.352, 28.176, 5.472);
-const static float2 texture_size = float2(480.0, 320.0);  //size is the same as size in CreateDeviceDependentResources()
 
 
 float4 df(float4 A, float4 B)

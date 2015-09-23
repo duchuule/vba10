@@ -14,6 +14,7 @@
 #include "DirectXPage.xaml.h"
 #include "App.xaml.h"
 #include "AdControl.xaml.h"
+#include "Filter/ShaderManager.h"
 
 using namespace VBA10;
 
@@ -110,6 +111,7 @@ SettingsPage::SettingsPage()
 		break;
 	}
 	this->cboPixelFilter->SelectedIndex = EmulatorSettings::Current->PixelFilter;
+	this->cboPixelShader->SelectedIndex = EmulatorSettings::Current->PixelShader;
 	this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
 	this->fullscreenToggle->IsOn = EmulatorSettings::Current->FullScreen;
 
@@ -623,6 +625,24 @@ void SettingsPage::cboPixelFilter_SelectionChanged(Platform::Object^ sender, Win
 	}
 }
 
+
+void SettingsPage::cboPixelShader_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+
+		EmulatorSettings::Current->PixelShader = this->cboPixelShader->SelectedIndex;
+
+		if (this->cboPixelShader->SelectedIndex != 0)
+			ShaderManager::GetInstance()->LoadShader(this->cboPixelShader->SelectedIndex);
+		//if (!App::IsPremium)
+		//{
+		//	MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. You can use the feature now but the setting will revert to None the next time the app starts.");
+		//	dialog->ShowAsync();
+		//}
+	}
+}
+
 void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	if (initdone)
@@ -740,6 +760,9 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
 	}
 }
+
+
+
 
 
 
