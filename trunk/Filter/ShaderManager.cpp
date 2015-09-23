@@ -1,4 +1,5 @@
 #include "ShaderManager.h"
+#include "xBR2_PS.h"
 #include "xBR5_PS.h"
 
 using namespace VBA10;
@@ -19,13 +20,28 @@ ShaderManager *ShaderManager::GetInstance()
 void ShaderManager::LoadShader(int selection)
 {
 	HRESULT test;
+	const BYTE* shaderByteCode;
+	size_t shaderSize;
+	if (selection == 1)
+	{
+		shaderByteCode = XBR2_PS;
+		shaderSize = sizeof(XBR2_PS);
+	}
+	else
+	{
+		shaderByteCode = XBR5_PS;
+		shaderSize = sizeof(XBR5_PS);
+	}
+
+
 	if (FAILED(test = this->device->CreatePixelShader(
-		XBR5_PS,
-		sizeof(XBR5_PS),
+		shaderByteCode,
+		shaderSize,
 		NULL,
 		&this->ps)))
 	{
-
+		int test = sizeof(*shaderByteCode);
+		test++;
 	}
 
 	

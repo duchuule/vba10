@@ -199,7 +199,7 @@ namespace VBA10
 	{
 		//intialize the shader loader
 		this->shaderManager = new ShaderManager(m_deviceResources->GetD3DDevice());
-		this->shaderManager->LoadShader(0);
+		this->shaderManager->LoadShader(EmulatorSettings::Current->PixelShader);
 
 		//this does not seem neccessary 
 		m_deviceResources->GetD3DDevice()->GetImmediateContext2(m_deviceResources->GetD3DDeviceContextAddress());
@@ -562,26 +562,6 @@ namespace VBA10
 						if (pixtmp)
 							cpyImg32(this->pixtmp, 240*4, pix + this->pitch, this->pitch, 240, 160); //skip 1 line of sources (garbage)
 
-						//get pointer to buffer memory
-						//D3D11_MAPPED_SUBRESOURCE map;
-						//ZeroMemory(&map, sizeof(D3D11_MAPPED_SUBRESOURCE));
-
-						//DX::ThrowIfFailed(
-						//	m_deviceResources->GetD3DDeviceContext()->Map(this->bufferBig.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &map)
-						//	);
-
-
-
-						//apply filter from buffers[backbuffer] to bufferBig
-						//filterFunction(pix, this->pitch, (u8*)this->delta, (u8*)map.pData, map.RowPitch, 240, 160);
-						//filterFunction(pixtmp, 240*4, (u8*)this->delta, (u8*)map.pData, map.RowPitch, 240, 160);
-						//filterFunction(pixtmp, 240 * 4, (u8*)this->delta, pixtmp2, 480*4, 240, 160);
-
-						//copy back to gpu memory
-						//cpyImg32((u8*)map.pData, map.RowPitch, this->pixtmp2, 480 * 4, 480, 320);
-
-						//release the memory of new front buffer to the gpu
-						/*m_deviceResources->GetD3DDeviceContext()->Unmap(this->bufferBig.Get(), 0);*/
 
 						//apply filter from pixtmp to pix
 						filterFunction(this->pixtmp, 240 * 4, (u8*)this->delta, pix, this->pitch, 240, 160);
@@ -736,20 +716,25 @@ namespace VBA10
 
 		XMMATRIX x = XMLoadFloat4x4(&this->outputTransform);
 
+		//force linear filter to disabled if using pixel shader
+		if (EmulatorSettings::Current->LinearFilterEnabled == false || EmulatorSettings::Current->PixelShader > 0 )
+			this->dxSpriteBatch->Begin(x, false);
+		else
+			this->dxSpriteBatch->Begin(x, true);
 
-		this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
-		this->dxSpriteBatch->SetCustomPixelShader(this->shaderManager->GetCurrentShader());
+		if (EmulatorSettings::Current->PixelShader != 0)
+			this->dxSpriteBatch->SetCustomPixelShader(this->shaderManager->GetCurrentShader());
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 
-		//if (EmulatorSettings::Current->PixelFilter == 0)
-			this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVs[this->frontbuffer].Get(), this->buffers[this->frontbuffer].Get(), white);
-		//else
-			//this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVBig.Get(), this->bufferBig.Get(), white);
+
+		this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVs[this->frontbuffer].Get(), this->buffers[this->frontbuffer].Get(), white);
 
 
-		this->dxSpriteBatch->End();
 
+		this->dxSpriteBatch->End(); //end of drawing main game picture
+
+		//drawing virtual buttons
 		this->dxSpriteBatch->Begin(x, true);
 		//divider
 		Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);

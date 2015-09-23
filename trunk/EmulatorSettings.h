@@ -191,6 +191,17 @@ namespace VBA10
 			}
 		}
 
+		property int PixelShader
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(PixelShaderKey, PixelShaderDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(PixelShaderKey, value);
+			}
+		}
 
 #pragma region Button positions
 
@@ -633,6 +644,7 @@ namespace VBA10
 		Platform::String^ HideHamburgerKey = "HideHamburgerKey";
 		Platform::String^ TurboBehaviorKey = "TurboBehaviorKey";
 		Platform::String^ PixelFilterKey = "PixelFilterKey";
+		Platform::String^ PixelShaderKey = "PixelShaderKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -688,7 +700,7 @@ namespace VBA10
 		const bool HideHamburgerDefault = false;
 		const int TurboBehaviorDefault = 0;
 		const int PixelFilterDefault = 0; //0: none
-
+		const int PixelShaderDefault = 0; //0: none
 
 
 #pragma region button positions (in cm based on 6x10cm phone)
