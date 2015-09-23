@@ -4,6 +4,7 @@
 #include "Emulator.h"
 #include "VirtualControllerInput.h"
 #include "DXSpriteBatch.h"
+#include "Filter\ShaderManager.h"
 
 #include "..\Common\DeviceResources.h"
 #include "..\Common\StepTimer.h"
@@ -35,7 +36,7 @@ namespace VBA10
 	private:
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
-
+		ShaderManager* shaderManager;
 
 		HANDLE waitEvent;
 

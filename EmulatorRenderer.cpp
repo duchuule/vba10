@@ -197,6 +197,10 @@ namespace VBA10
 
 	void EmulatorRenderer::CreateDeviceDependentResources()
 	{
+		//intialize the shader loader
+		this->shaderManager = new ShaderManager(m_deviceResources->GetD3DDevice());
+		this->shaderManager->LoadShader(0);
+
 		//this does not seem neccessary 
 		m_deviceResources->GetD3DDevice()->GetImmediateContext2(m_deviceResources->GetD3DDeviceContextAddress());
 		
@@ -734,7 +738,7 @@ namespace VBA10
 
 
 		this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
-
+		this->dxSpriteBatch->SetCustomPixelShader(this->shaderManager->GetCurrentShader());
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 
@@ -743,6 +747,10 @@ namespace VBA10
 		//else
 			//this->dxSpriteBatch->Draw(targetRect, &sourceRect, this->bufferSRVBig.Get(), this->bufferBig.Get(), white);
 
+
+		this->dxSpriteBatch->End();
+
+		this->dxSpriteBatch->Begin(x, true);
 		//divider
 		Color dividerColor(86.0f / 255, 105.0f / 255, 108.0f / 255, 1.0f);
 		if (this->height > this->width)
