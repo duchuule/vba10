@@ -26,7 +26,7 @@ namespace Engine
 	DXSpriteBatch::DXSpriteBatch(ID3D11Device1 *device, ID3D11DeviceContext1 *context, float width, float height)
 		: device(device), context(context),
 		batchedSprites(0), beginCalled(false), 
-		customPS(nullptr), _useFilter(false)
+		customPS(nullptr), _useFilter(false), customSRV(nullptr)
 	{ 
 		this->queuedSprites.reserve(MAX_BATCH_SIZE);
 		this->LoadShaders();
@@ -269,6 +269,11 @@ namespace Engine
 		this->customPS = (ID3D11PixelShader *) customPS;
 	}
 
+	void DXSpriteBatch::SetCustomShaderResourceView(void *customSRV)
+	{
+		this->customSRV = (ID3D11ShaderResourceView *)customSRV;
+	}
+
 	void DXSpriteBatch::Begin(XMMATRIX &world, bool useFilter)
 	{
 		if (_useFilter != useFilter)
@@ -441,7 +446,8 @@ namespace Engine
 		this->beginCalled = false;
 		if(this->batchedSprites == 0)
 		{
-			this->SetCustomPixelShader(nullptr);
+			this->customPS = nullptr;
+			this->customSRV = nullptr;
 			return;
 		}
 
@@ -449,7 +455,9 @@ namespace Engine
 
 		this->FlushBatch();
 
-		this->SetCustomPixelShader(nullptr);
+		this->customPS = nullptr;
+		this->customSRV = nullptr;
+
 	}
 
 	void DXSpriteBatch::FlushBatch(void)
@@ -624,6 +632,8 @@ namespace Engine
 		this->context->RSSetState(this->rasterizerState.Get());
 		this->context->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
 
+
+
 		// Shaders
 		this->context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		this->context->IASetInputLayout(this->inputLayout.Get());
@@ -636,6 +646,15 @@ namespace Engine
 			this->context->PSSetShader(this->ps.Get(), nullptr, 0);
 		}
 		this->context->PSSetShaderResources(0, 1, &srv);
+		if (this->customSRV)  //custom shader resource
+		{
+			ID3D11ShaderResourceView *customsrv = nullptr;
+			customsrv = this->customSRV.Get();
+			this->context->PSSetShaderResources(1, 1, &customsrv);
+
+			//IMPORTANT: the following line does *NOT* work, even though it compile
+			//this->context->PSSetShaderResources(1, 1, &this->customSRV);
+		}
 
 		// Buffers
 		UINT stride = sizeof(SpriteVertex);

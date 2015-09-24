@@ -412,6 +412,26 @@
                                       />
 
 
+                        <ComboBox Name="skipComboBox" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                  SelectedIndex="1" 
+                                  SelectionChanged="skipComboBox_SelectionChanged"
+                                  Header="Frame skip (non-turbo mode)"
+                                  Margin="0,0,0,10">
+                            <ComboBoxItem>auto</ComboBoxItem>
+                            <ComboBoxItem>0</ComboBoxItem>
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>4</ComboBoxItem>
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem>8</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
+                        </ComboBox>
+                        
                         <ComboBox Name="turboSkipComboBox" 
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top" 
@@ -466,6 +486,7 @@
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>HQ2x</ComboBoxItem>
                             <ComboBoxItem>xBr2x</ComboBoxItem>
                             <ComboBoxItem>xBr5x</ComboBoxItem>
 

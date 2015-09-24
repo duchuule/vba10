@@ -87,7 +87,7 @@ SettingsPage::SettingsPage()
 
 	//video
 	this->enableTurboToggle->IsOn = EmulatorSettings::Current->EnableTurbo;
-	//this->skipComboBox->SelectedIndex = (GetFrameSkip() + 1 < this->skipComboBox->Items->Size) ? (GetFrameSkip() + 1) : (this->skipComboBox->Items->Size - 1);
+	this->skipComboBox->SelectedIndex = (EmulatorSettings::Current->FrameSkip + 1 < this->skipComboBox->Items->Size) ? (EmulatorSettings::Current->FrameSkip + 1) : (this->skipComboBox->Items->Size - 1);
 	this->turboSkipComboBox->SelectedIndex = (EmulatorSettings::Current->TurboFrameSkip - 1 < this->turboSkipComboBox->Items->Size) ? (EmulatorSettings::Current->TurboFrameSkip - 1) : (this->turboSkipComboBox->Items->Size - 1);
 	this->monitorComboBox->SelectedIndex = GetMonitorType();
 	this->fpsToggle->IsOn = ShowingFPS();
@@ -565,13 +565,13 @@ void SettingsPage::monitorComboBox_SelectionChanged_1(Platform::Object^ sender, 
 
 
 
-//void SettingsPage::skipComboBox_SelectionChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
-//{
-//	if (initdone)
-//	{
-//		SetFrameSkip(this->skipComboBox->SelectedIndex - 1);
-//	}
-//}
+void SettingsPage::skipComboBox_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+		EmulatorSettings::Current->FrameSkip = this->skipComboBox->SelectedIndex - 1;
+	}
+}
 
 
 void SettingsPage::turboSkipComboBox_SelectionChanged_1(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
@@ -760,13 +760,6 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
 	}
 }
-
-
-
-
-
-
-
 
 
 

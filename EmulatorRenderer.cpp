@@ -198,7 +198,7 @@ namespace VBA10
 	void EmulatorRenderer::CreateDeviceDependentResources()
 	{
 		//intialize the shader loader
-		this->shaderManager = new ShaderManager(m_deviceResources->GetD3DDevice());
+		this->shaderManager = new ShaderManager(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext());
 		this->shaderManager->LoadShader(EmulatorSettings::Current->PixelShader);
 
 		//this does not seem neccessary 
@@ -472,29 +472,30 @@ namespace VBA10
 
 			turboSkip = EmulatorSettings::Current->TurboFrameSkip;
 
-			//systemFrameSkip = GetPowerFrameSkip();
-			//float targetFPS = 60.0f;
-			//if(GetMonitorType() == 0)
-			//{
-			//	systemFrameSkip = systemFrameSkip * 2 + 1;
-			//	targetFPS = 30.0f;
-			//}
-			//if(GetFrameSkip() == -1 && GetPowerFrameSkip() == 0)
-			//{
-			//	if(!lastSkipped && (this->lastElapsed * 1.0f) > (1.0f / targetFPS))
-			//	{
-			//		int skip = (int)((this->lastElapsed * 1.0f) / (1.0f / targetFPS));				
-			//		systemFrameSkip += (skip < 2) ? skip : 2;
-			//		//systemFrameSkip++;
-			//		lastSkipped = true;
-			//	}else
-			//	{
-			//		lastSkipped = false;
-			//	}
-			//}else if(GetFrameSkip() >= 0)
-			// {
-			//	systemFrameSkip += GetFrameSkip();
-			// }
+			systemFrameSkip = 0; //GetPowerFrameSkip();
+			float targetFPS = 60.0f;
+			if(GetMonitorType() == 0)
+			{
+				systemFrameSkip = systemFrameSkip * 2 + 1;
+				targetFPS = 30.0f;
+			}
+			if(EmulatorSettings::Current->FrameSkip == -1 ) //&& GetPowerFrameSkip() == 0)
+			{
+				if(!lastSkipped && (this->lastElapsed * 1.0f) > (1.0f / targetFPS))
+				{
+					int skip = (int)((this->lastElapsed * 1.0f) / (1.0f / targetFPS));				
+					systemFrameSkip += (skip < 2) ? skip : 2;
+					//systemFrameSkip++;
+					lastSkipped = true;
+				}else
+				{
+					lastSkipped = false;
+				}
+			}
+			else if (EmulatorSettings::Current->FrameSkip >= 0)
+			{
+				systemFrameSkip += EmulatorSettings::Current->FrameSkip;
+			}
 
 			this->Autosave();
 
@@ -704,26 +705,30 @@ namespace VBA10
 		//XMVECTOR colorv = XMLoadFloat4A(&colorf);
 		//XMVECTOR colorv2 = XMLoadFloat4A(&colorf2);
 		
-		// Render last frame to screen
+		// Render current frame to screen
 		Color white(1.0f, 1.0f, 1.0f, 1.0f);
 
 		Color color(1.0f, 1.0f, 1.0f, 1.0f);
 		if (this->width > this->height) //landscape
 			color = Color(1.0f, 1.0f, 1.0f, GetControllerOpacity()/100.0f);
 		
-
-		
+	
 
 		XMMATRIX x = XMLoadFloat4x4(&this->outputTransform);
 
+		//<-------begin drawing main picture
+
 		//force linear filter to disabled if using pixel shader
-		if (EmulatorSettings::Current->LinearFilterEnabled == false || EmulatorSettings::Current->PixelShader > 0 )
+		if (EmulatorSettings::Current->PixelShader > 0 )
 			this->dxSpriteBatch->Begin(x, false);
 		else
-			this->dxSpriteBatch->Begin(x, true);
+			this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
 
 		if (EmulatorSettings::Current->PixelShader != 0)
 			this->dxSpriteBatch->SetCustomPixelShader(this->shaderManager->GetCurrentShader());
+
+		if (EmulatorSettings::Current->PixelShader == 1) //hq2x
+			this->dxSpriteBatch->SetCustomShaderResourceView(this->shaderManager->GetLookUpTable());
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 
@@ -732,7 +737,8 @@ namespace VBA10
 
 
 
-		this->dxSpriteBatch->End(); //end of drawing main game picture
+		this->dxSpriteBatch->End(); 
+		//-------> end of drawing main game picture
 
 		//drawing virtual buttons
 		this->dxSpriteBatch->Begin(x, true);

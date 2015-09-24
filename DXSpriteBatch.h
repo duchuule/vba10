@@ -62,6 +62,8 @@ namespace Engine
 		ComPtr<ID3D11RasterizerState> rasterizerState;
 		ComPtr<ID3D11SamplerState> samplerState;
 
+		ComPtr<ID3D11ShaderResourceView> customSRV; //use for look up table or anything
+
 		bool beginCalled;
 		UINT batchedSprites;
 		vector<SpriteInfo> queuedSprites;
@@ -82,6 +84,7 @@ namespace Engine
 
 		void OnResize(float width, float height);
 		void SetCustomPixelShader(void *customPS);
+		void SetCustomShaderResourceView(void *customSRV);
 
 		void Begin(XMMATRIX &world, bool filter);
 		void Draw(const Rectangle &targetArea, const Rectangle *sourceArea, ID3D11ShaderResourceView *textureSRV, ID3D11Texture2D *texture, float depth, float rotation, Color &color);
