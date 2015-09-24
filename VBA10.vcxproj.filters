@@ -646,6 +646,12 @@
     <FxCompile Include="Filter\hq4x_PS.hlsl">
       <Filter>Filters</Filter>
     </FxCompile>
+    <FxCompile Include="Filter\xBR3_v38d_PS.hlsl">
+      <Filter>Filters</Filter>
+    </FxCompile>
+    <FxCompile Include="Filter\xBR4_v340_PS.hlsl">
+      <Filter>Filters</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\no_snapshot.png">

@@ -631,15 +631,23 @@ void SettingsPage::cboPixelShader_SelectionChanged(Platform::Object^ sender, Win
 	if (initdone)
 	{
 
-		EmulatorSettings::Current->PixelShader = this->cboPixelShader->SelectedIndex;
 
-		if (this->cboPixelShader->SelectedIndex != 0)
-			ShaderManager::GetInstance()->LoadShader(this->cboPixelShader->SelectedIndex);
-		//if (!App::IsPremium)
-		//{
-		//	MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. You can use the feature now but the setting will revert to None the next time the app starts.");
-		//	dialog->ShowAsync();
-		//}
+		if (!App::IsPremium && this->cboPixelShader->SelectedIndex > 2)  //only 0, 1, 2 is free
+		{
+			//revert the choice
+			this->cboPixelShader->SelectedIndex = EmulatorSettings::Current->PixelShader;
+
+			MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. Free users can use None, Bilinear or HQ2x. ");
+			dialog->ShowAsync();
+			return;
+		}
+		else
+		{
+			EmulatorSettings::Current->PixelShader = this->cboPixelShader->SelectedIndex;
+
+			if (this->cboPixelShader->SelectedIndex > 1)  //not nearest neighbor or linear filter
+				ShaderManager::GetInstance()->LoadShader(this->cboPixelShader->SelectedIndex);
+		}
 	}
 }
 

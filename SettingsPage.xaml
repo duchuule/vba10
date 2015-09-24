@@ -477,10 +477,12 @@
                             <ComboBoxItem>None</ComboBoxItem>
                             <ComboBoxItem>Bilinear</ComboBoxItem>
                             <ComboBoxItem>HQ2x</ComboBoxItem>
-                            <ComboBoxItem>xBr2x</ComboBoxItem>
+                            <ComboBoxItem>xBR2x</ComboBoxItem>
                             <ComboBoxItem>HQ3x</ComboBoxItem>
-                            <ComboBoxItem>xBr3x</ComboBoxItem>
+                            <ComboBoxItem>xBR3x</ComboBoxItem>
                             <ComboBoxItem>HQ4x</ComboBoxItem>
+                            <ComboBoxItem>xBR4x</ComboBoxItem>
+                            <ComboBoxItem>xBR5x</ComboBoxItem>
                         </ComboBox>
                         <!--<ToggleSwitch Header="Use bilinear filter" 
                                       Name="linearFilterToggle" 
