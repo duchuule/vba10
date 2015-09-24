@@ -1275,17 +1275,17 @@
   <ItemGroup>
     <FxCompile Include="Filter\hq2x_PS.hlsl">
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Filter\hq2x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Filter\hq2x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Filter\hq2x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter\hq2x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Filter\hq2x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">HQ2X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Filter\hq2x_PS.h</HeaderFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -1301,17 +1301,17 @@
     </FxCompile>
     <FxCompile Include="Filter\hq3x_PS.hlsl">
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">hq3x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Filter\hq3x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">hq3x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Filter\hq3x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hq3x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Filter\hq3x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter\hq3x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Filter\hq3x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">HQ3X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hq2x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Filter\hq3x_PS.h</HeaderFileOutput>
       <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableOptimizations>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</DisableOptimizations>
@@ -1327,11 +1327,11 @@
     </FxCompile>
     <FxCompile Include="Filter\hq4x_PS.hlsl">
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Filter\hq4x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Filter\hq4x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Filter\hq4x_PS.h</HeaderFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0_level_9_3</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Pixel</ShaderType>
@@ -1345,11 +1345,11 @@
       <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter\hq4x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Filter\hq4x_PS.h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">HQ4X_PS</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hq4x_PS.h</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Filter\hq4x_PS.h</HeaderFileOutput>
     </FxCompile>
     <FxCompile Include="Filter\xBR2_v38d_PS.hlsl">
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">XBR2_PS</VariableName>

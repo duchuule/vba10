@@ -450,6 +450,46 @@
                             <ComboBoxItem>9</ComboBoxItem>
                         </ComboBox>
 
+
+
+                        <ComboBox Name="cboPixelFilter" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top"
+                                  SelectedIndex="0" 
+                                  SelectionChanged="cboPixelFilter_SelectionChanged"
+                                  Header="CPU filter (slow)"
+                                  Margin="0,0,0,10"
+                                  >
+                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>HQ2x</ComboBoxItem>
+                            <ComboBoxItem>TV Mode</ComboBoxItem>
+                            <ComboBoxItem>Scanlines</ComboBoxItem>
+                        </ComboBox>
+
+                        <ComboBox Name="cboPixelShader" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top"
+                                  SelectedIndex="0" 
+                                  SelectionChanged="cboPixelShader_SelectionChanged"
+                                  Header="GPU filter (fast)"
+                                  Margin="0,0,0,10"
+                                  >
+                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem>Bilinear</ComboBoxItem>
+                            <ComboBoxItem>HQ2x</ComboBoxItem>
+                            <ComboBoxItem>xBr2x</ComboBoxItem>
+                            <ComboBoxItem>HQ3x</ComboBoxItem>
+                            <ComboBoxItem>xBr3x</ComboBoxItem>
+                            <ComboBoxItem>HQ4x</ComboBoxItem>
+                        </ComboBox>
+                        <!--<ToggleSwitch Header="Use bilinear filter" 
+                                      Name="linearFilterToggle" 
+                                      IsOn="True" 
+                                      Toggled="linearFilterToggle_Toggled"
+                                      />-->
+
+                        
+
                         <ComboBox Name="monitorComboBox" HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top" 
                                    SelectedIndex="1" 
@@ -477,43 +517,7 @@
                         </ComboBox>
 
 
-                        <ComboBox Name="cboPixelShader" 
-                                  HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Top"
-                                  SelectedIndex="0" 
-                                  SelectionChanged="cboPixelShader_SelectionChanged"
-                                  Header="GPU pixel filter (fast)"
-                                  Margin="0,0,0,10"
-                                  >
-                            <ComboBoxItem>None</ComboBoxItem>
-                            <ComboBoxItem>HQ2x</ComboBoxItem>
-                            <ComboBoxItem>xBr2x</ComboBoxItem>
-                            <ComboBoxItem>xBr5x</ComboBoxItem>
-
-
-                        </ComboBox>
-                        
-                        <ComboBox Name="cboPixelFilter" 
-                                  HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Top"
-                                  SelectedIndex="0" 
-                                  SelectionChanged="cboPixelFilter_SelectionChanged"
-                                  Header="CPU pixel filter (slow)"
-                                  Margin="0,0,0,10"
-                                  >
-                            <ComboBoxItem>None</ComboBoxItem>
-                            <ComboBoxItem>HQ2x</ComboBoxItem>
-                            <ComboBoxItem>TV Mode</ComboBoxItem>
-                            <ComboBoxItem>Scanlines</ComboBoxItem>
-
-                        </ComboBox>
-
-                        <ToggleSwitch Header="Use bilinear filter" 
-                                      Name="linearFilterToggle" 
-                                      IsOn="True" 
-                                      Toggled="linearFilterToggle_Toggled"
-                                      />
-
+                       
                         <ToggleSwitch Header="Show FPS" 
                                       Name="fpsToggle" 
                                       IsOn="True"

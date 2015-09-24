@@ -112,7 +112,7 @@ SettingsPage::SettingsPage()
 	}
 	this->cboPixelFilter->SelectedIndex = EmulatorSettings::Current->PixelFilter;
 	this->cboPixelShader->SelectedIndex = EmulatorSettings::Current->PixelShader;
-	this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
+	//this->linearFilterToggle->IsOn = EmulatorSettings::Current->LinearFilterEnabled;
 	this->fullscreenToggle->IsOn = EmulatorSettings::Current->FullScreen;
 
 	//general
@@ -643,13 +643,13 @@ void SettingsPage::cboPixelShader_SelectionChanged(Platform::Object^ sender, Win
 	}
 }
 
-void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-	if (initdone)
-	{
-		EmulatorSettings::Current->LinearFilterEnabled = this->linearFilterToggle->IsOn;
-	}
-}
+//void SettingsPage::linearFilterToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+//{
+//	if (initdone)
+//	{
+//		EmulatorSettings::Current->LinearFilterEnabled = this->linearFilterToggle->IsOn;
+//	}
+//}
 
 void SettingsPage::fpsToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {

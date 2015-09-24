@@ -718,17 +718,23 @@ namespace VBA10
 
 		//<-------begin drawing main picture
 
-		//force linear filter to disabled if using pixel shader
-		if (EmulatorSettings::Current->PixelShader > 0 )
-			this->dxSpriteBatch->Begin(x, false);
-		else
-			this->dxSpriteBatch->Begin(x, EmulatorSettings::Current->LinearFilterEnabled);
+		
+		if (EmulatorSettings::Current->PixelShader == 1 )    //bilinear filtering
+			this->dxSpriteBatch->Begin(x, true);
 
-		if (EmulatorSettings::Current->PixelShader != 0)
+		else  //force linear filter to disabled if using pixel shader or when using nearest neighbor
+			this->dxSpriteBatch->Begin(x, false);
+
+
+		if (EmulatorSettings::Current->PixelShader > 1) 
+		{
+			//custom pixel shader
 			this->dxSpriteBatch->SetCustomPixelShader(this->shaderManager->GetCurrentShader());
 
-		if (EmulatorSettings::Current->PixelShader == 1) //hq2x
+			//set look up table (for hqnx)
 			this->dxSpriteBatch->SetCustomShaderResourceView(this->shaderManager->GetLookUpTable());
+		}
+
 		Engine::Rectangle sourceRect(source.left, source.top, source.right - source.left, source.bottom - source.top);
 		Engine::Rectangle targetRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 

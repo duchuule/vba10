@@ -29,17 +29,17 @@ namespace VBA10
 		}
 
 		
-		property bool LinearFilterEnabled
-		{
-			bool get()
-			{
-				return GetValueOrDefault<bool> (LinearFilterKey, LinearFilterDefault);
-			}
-			void set (bool value)
-			{
-				AddOrUpdateValue(LinearFilterKey, value);
-			}
-		}
+		//property bool LinearFilterEnabled
+		//{
+		//	bool get()
+		//	{
+		//		return GetValueOrDefault<bool> (LinearFilterKey, LinearFilterDefault);
+		//	}
+		//	void set (bool value)
+		//	{
+		//		AddOrUpdateValue(LinearFilterKey, value);
+		//	}
+		//}
 
 		property int ControllerScale
 		{
@@ -716,7 +716,7 @@ namespace VBA10
 		const bool HideHamburgerDefault = false;
 		const int TurboBehaviorDefault = 0;
 		const int PixelFilterDefault = 0; //0: none
-		const int PixelShaderDefault = 0; //0: none
+		const int PixelShaderDefault = 1; //0: nearest neighbor, 1: bilinear
 
 
 #pragma region button positions (in cm based on 6x10cm phone)
