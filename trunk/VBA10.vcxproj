@@ -1377,6 +1377,58 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">4.0_level_9_3</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Filter\xBR3_v38d_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0_level_9_3</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">4.0_level_9_3</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Filter/xBR3_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Filter/xBR3_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Filter/xBR3_PS.h</HeaderFileOutput>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter/xBR3_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Filter/xBR3_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">XBR3_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Filter/xBR3_PS.h</HeaderFileOutput>
+    </FxCompile>
+    <FxCompile Include="Filter\xBR4_v340_PS.hlsl">
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Filter/xBR4_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Filter/xBR4_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Filter/xBR4_PS.h</HeaderFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0_level_9_3</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">4.0_level_9_3</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter/xBR4_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Filter/xBR4_PS.h</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">XBR4_PS</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Filter/xBR4_PS.h</HeaderFileOutput>
+    </FxCompile>
     <FxCompile Include="Filter\xBR5_v40_noblend_PS.hlsl">
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">XBR5_PS</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Filter/xBR5_PS.h</HeaderFileOutput>
