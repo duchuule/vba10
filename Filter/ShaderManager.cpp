@@ -3,6 +3,8 @@
 #include "xBR2_PS.h"
 #include "xBR5_PS.h"
 #include "hq2x_PS.h"
+#include "hq3x_PS.h"
+#include "hq4x_PS.h"
 
 using namespace VBA10;
 using namespace Microsoft::WRL;
@@ -21,73 +23,75 @@ ShaderManager *ShaderManager::GetInstance()
 
 void ShaderManager::LoadShader(int selection)
 {
-	HRESULT test;
 	
-	//load the Look up table (texture)
-	LoadTextureFromFile(
-		this->device.Get(),
-		L"Filter/hq2x.dds",
-		this->lutResource.GetAddressOf(),
-		this->lutSRV.GetAddressOf()
-		);
+	
+	
+	HRESULT test;
+	const BYTE* shaderByteCode;
+	size_t shaderSize;
+	this->lutSRV = nullptr;
 
-
-	//create sampler
-	//D3D11_SAMPLER_DESC samplerDesc;
-	//ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
-
-	//samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-
-	//samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	//samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	//samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-
-	//samplerDesc.MaxLOD = FLT_MAX;
-	//samplerDesc.MaxAnisotropy = 1;
-	//samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-
-	//if (FAILED(this->device->CreateSamplerState(&samplerDesc, this->sampler.GetAddressOf())))
-	//{
-	//	int test = 1;
-	//}
-
-	//this->context->PSSetSamplers(1, 1, this->sampler.GetAddressOf());
-
-
-	if (selection == 1)
+	if (selection == 2)
 	{
-		if (FAILED(test = this->device->CreatePixelShader(
-			HQ2X_PS,
-			sizeof(HQ2X_PS),
-			NULL,
-			&this->ps)))
-		{
-		}
+		shaderByteCode = HQ2X_PS;
+		shaderSize = sizeof(HQ2X_PS);
 
-		
-
+		//load the Look up table (texture)
+		LoadTextureFromFile(
+			this->device.Get(),
+			L"Filter/hq2x.dds",
+			this->lutResource.GetAddressOf(),
+			this->lutSRV.GetAddressOf()
+			);
 	}
-	else if (selection == 2)  //2xbr
+	else if (selection == 3)
 	{
-		if (FAILED(test = this->device->CreatePixelShader(
-			XBR2_PS,
-			sizeof(XBR2_PS),
-			NULL,
-			&this->ps)))
-		{
-		}
+		shaderByteCode = XBR2_PS;
+		shaderSize = sizeof(XBR2_PS);
 	}
-	else if (selection == 3)  //5xbr
+	else if (selection == 4)
 	{
-		if (FAILED(test = this->device->CreatePixelShader(
-			XBR5_PS,
-			sizeof(XBR5_PS),
-			NULL,
-			&this->ps)))
-		{
-		}
+		shaderByteCode = HQ3X_PS;
+		shaderSize = sizeof(HQ3X_PS);
+
+		//load the Look up table (texture)
+		LoadTextureFromFile(
+			this->device.Get(),
+			L"Filter/hq3x.dds",
+			this->lutResource.GetAddressOf(),
+			this->lutSRV.GetAddressOf()
+			);
+	}
+	else if (selection == 5)
+	{
+		shaderByteCode = XBR5_PS;
+		shaderSize = sizeof(XBR5_PS);
+	}
+	else
+	{
+		shaderByteCode = HQ4X_PS;
+		shaderSize = sizeof(HQ4X_PS);
+
+		//load the Look up table (texture)
+		LoadTextureFromFile(
+			this->device.Get(),
+			L"Filter/hq4x.dds",
+			this->lutResource.GetAddressOf(),
+			this->lutSRV.GetAddressOf()
+			);
+	}
+	
+
+	if (FAILED(test = this->device->CreatePixelShader(
+		shaderByteCode,
+		shaderSize,
+		NULL,
+		&this->ps)))
+	{
 	}
 
+
+	
 	
 
 	
