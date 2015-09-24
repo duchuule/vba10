@@ -601,6 +601,9 @@
     <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
     <None Include="VBA10_StoreKey.pfx" />
     <None Include="VBA10_TemporaryKey.pfx" />
+    <None Include="Filter\hqx.inc">
+      <Filter>Filters</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
@@ -628,13 +631,19 @@
     <FxCompile Include="SpriteBatch_VS.hlsl">
       <Filter>Emulator</Filter>
     </FxCompile>
-    <FxCompile Include="Filter\xBR5_v37a_PS.hlsl">
-      <Filter>Filters</Filter>
-    </FxCompile>
     <FxCompile Include="Filter\xBR5_v40_noblend_PS.hlsl">
       <Filter>Filters</Filter>
     </FxCompile>
     <FxCompile Include="Filter\xBR2_v38d_PS.hlsl">
+      <Filter>Filters</Filter>
+    </FxCompile>
+    <FxCompile Include="Filter\hq2x_PS.hlsl">
+      <Filter>Filters</Filter>
+    </FxCompile>
+    <FxCompile Include="Filter\hq3x_PS.hlsl">
+      <Filter>Filters</Filter>
+    </FxCompile>
+    <FxCompile Include="Filter\hq4x_PS.hlsl">
       <Filter>Filters</Filter>
     </FxCompile>
   </ItemGroup>
@@ -902,6 +911,15 @@
     </Image>
     <Image Include="Assets\Extension.targetsize-96.png">
       <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Filter\hq2x.dds">
+      <Filter>Filters</Filter>
+    </Image>
+    <Image Include="Filter\hq3x.dds">
+      <Filter>Filters</Filter>
+    </Image>
+    <Image Include="Filter\hq4x.dds">
+      <Filter>Filters</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

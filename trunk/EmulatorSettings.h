@@ -81,6 +81,20 @@ namespace VBA10
 			}
 		}
 
+
+		property int FrameSkip
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(FrameSkipKey, FrameSkipDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(FrameSkipKey, value);
+			}
+		}
+
+
 		property int TurboFrameSkip
 		{
 			int get()
@@ -635,6 +649,7 @@ namespace VBA10
 		Platform::String^ ControllerScaleKey = "ControllerScaleKey";
 		Platform::String^ ButtonScaleKey = "ButtonScaleKey";
 		Platform::String^ DPadStyleKey = "DPadStyleKey";
+		Platform::String^ FrameSkipKey = "FrameSkipKey";
 		Platform::String^ TurboFrameSkipKey = "TurboFrameSkipKey";
 		Platform::String^ EnableTurboKey = "EnableTurboKey";
 		Platform::String^ FullScreenKey = "FullScreenKey";
@@ -691,7 +706,8 @@ namespace VBA10
 		const int ControllerScaleDefault = 100;
 		const int ButtonScaleDefault = 100;
 		const int DPadStyleDefault = 0;
-		const int TurboFrameSkipDefault = 2;
+		const int FrameSkipDefault = 0; //skip 0 frame
+		const int TurboFrameSkipDefault = 2; //skip 2 frame
 		const bool EnableTurboDefault = false;
 		const bool FullScreenDefault = false;
 		const bool SignedInDefault = false;
