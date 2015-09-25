@@ -70,16 +70,18 @@ void PurchasePage::ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::X
 
 				if (CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
 				{
+					auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 					//prompt user to restart app if it's ad removal
 					if (key == "removeads" || key == "noads_premium")
 					{
-						MessageDialog ^dialog = ref new MessageDialog("Purchase successful, ads will not be shown the next time you start the app.");
+						MessageDialog ^dialog = ref new MessageDialog(loader->GetString("PurchaseSuccessNoAdsText"));
 						dialog->ShowAsync();
 					}
 
 					if (key == "premiumfeatures")
 					{
-						MessageDialog ^dialog = ref new MessageDialog("Purchase successful.");
+						MessageDialog ^dialog = ref new MessageDialog(loader->GetString("PurchaseSuccessText"));
 						dialog->ShowAsync();
 					}
 
@@ -111,6 +113,8 @@ void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::
 	{
 		try
 		{
+			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 			ListingInformation^ li = tli.get();
 
 			Vector<ProductItem^>^ picItems = ref new Vector<ProductItem^>();
@@ -127,13 +131,13 @@ void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? loader->GetString("PurchasedThankText") : pListing->FormattedPrice;
 				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
 			{
-				status = "Product is not available at the moment.";
+				status = loader->GetString("ProductNotAvailableText");
 				buyButtonVisibility = Windows::UI::Xaml::Visibility::Collapsed;
 				pname = "No Ads + Premium Features";
 			}
@@ -153,13 +157,13 @@ void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? loader->GetString("PurchasedThankText") : pListing->FormattedPrice;
 				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
 			{
-				status = "Product is not available at the moment.";
+				status = loader->GetString("ProductNotAvailableText");
 				buyButtonVisibility = Windows::UI::Xaml::Visibility::Collapsed;
 				pname = "Remove ads";
 			}
@@ -179,13 +183,13 @@ void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::
 			if (li->ProductListings->HasKey(key))
 			{
 				auto pListing = li->ProductListings->Lookup(key);
-				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? "Purchased, thank you!" : pListing->FormattedPrice;
+				status = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? loader->GetString("PurchasedThankText") : pListing->FormattedPrice;
 				buyButtonVisibility = CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive ? Windows::UI::Xaml::Visibility::Collapsed : Windows::UI::Xaml::Visibility::Visible;
 				pname = pListing->Name;
 			}
 			else
 			{
-				status = "Product is not available at the moment.";
+				status = loader->GetString("ProductNotAvailableText");
 				buyButtonVisibility = Windows::UI::Xaml::Visibility::Collapsed;
 				pname = "Premium Features";
 			}

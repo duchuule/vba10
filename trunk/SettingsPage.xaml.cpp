@@ -722,23 +722,49 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 {
 	if (initdone)
 	{
-		//save setting
-		EmulatorSettings::Current->FullScreen = this->fullscreenToggle->IsOn;
+		
 
 		//try enter/exit full screenmode
 		ApplicationView^ view = ApplicationView::GetForCurrentView();
 
-
-		if (this->fullscreenToggle->IsOn)
+		if (!this->fullscreenToggle->IsOn) // switch to windows mode
 		{
+			//this does not crash, so do everything
+			view->ExitFullScreenMode();
+			view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::Auto;
+
+			EmulatorSettings::Current->FullScreen = this->fullscreenToggle->IsOn;
+		}
+		else if (this->fullscreenToggle->IsOn)
+		{
+			//this can crash, so try enter full screen first
 			view->TryEnterFullScreenMode();
-			view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::FullScreen;
+
+
+			//open dialog if not crash
+			MessageDialog ^dialog = ref new MessageDialog("Successfully switched to full screen mode.");
+
+			//save settings if not crash
+			UICommand ^confirm = ref new UICommand("OK",
+				ref new UICommandInvokedHandler([view, this](IUICommand ^cmd)
+			{
+				//save setting 
+				view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::FullScreen;
+				EmulatorSettings::Current->FullScreen = this->fullscreenToggle->IsOn;
+			}));
+
+			dialog->Commands->Append(confirm);
+			dialog->ShowAsync();
+
+			
 		}
 		else
 		{
-			view->ExitFullScreenMode();
-			view->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::Auto;
+			
 		}
+
+		
+		
 	}
 }
 

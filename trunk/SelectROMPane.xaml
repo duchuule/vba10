@@ -76,16 +76,16 @@
                     ClosedDisplayMode="Compact">
 
             <!--<AppBarSeparator/>-->
-            <AppBarButton Icon="Save" Label="Save"  x:Name="saveBtn" 
+            <AppBarButton Icon="Save" Label="**Save"  x:Name="saveBtn" 
                           Click="saveBtn_Click" IsTabStop="False"
                           x:Uid="Save"/>
-            <AppBarButton Icon="AllApps" Label="Select State" x:Name="selectStateBtn"
+            <AppBarButton Icon="AllApps" Label="**Select State" x:Name="selectStateBtn"
                           Click="selectStateBtn_Click" IsTabStop="False"
                           x:Uid="SelectState"/>
-            <AppBarButton Icon="Sync" Label="Reset" x:Name="resetBtn" 
+            <AppBarButton Icon="Sync" Label="**Reset" x:Name="resetBtn" 
                           Click="resetBtn_Click" IsTabStop="False"
                           x:Uid="Reset"/>
-            <AppBarButton Icon="Undo" Label="Load" x:Name="loadBtn" 
+            <AppBarButton Icon="Undo" Label="**Load" x:Name="loadBtn" 
                           Click="loadBtn_Click"  IsTabStop="False"
                           x:Uid="Load"/>
             <AppBarButton x:Name="spacerBtn" IsEnabled="False" Width="1000"/>
@@ -233,8 +233,8 @@
 
                 <Button x:Name="addROMbtn" 
                         HorizontalAlignment="Center" 
-                        x:Uid="AddROM"
-                    Content="Add ROM"
+                        x:Uid="AddROMBtn"
+                    Content="**Add ROM"
                     Width="120" Height="40"
                     Margin="0,12,0,12"
                     Click="addROMbtn_Click"/>

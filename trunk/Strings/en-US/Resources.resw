@@ -120,7 +120,7 @@
   <data name="Add.Text" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="AddROM.Content" xml:space="preserve">
+  <data name="AddROMBtn.Content" xml:space="preserve">
     <value>Add ROM</value>
   </data>
   <data name="CheatInstruction.Text" xml:space="preserve">
@@ -291,17 +291,65 @@
   <data name="VersionText" xml:space="preserve">
     <value>Version: </value>
   </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Aspect ratio</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>auto</value>
+  </data>
   <data name="AxisText" xml:space="preserve">
     <value>Axis</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Virtual controller opacity: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Virtual button scale: </value>
   </data>
   <data name="ButtonText" xml:space="preserve">
     <value>Button</value>
   </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU filter (slow)</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (analog stick): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Dear VBA10 Users:</value>
+  </data>
   <data name="DeviceConnectionFailText" xml:space="preserve">
     <value>Error, device connection failed.</value>
   </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Display type</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-way</value>
+  </data>
   <data name="DpadDownText" xml:space="preserve">
     <value>D-pad Down</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Dynamic analog stick</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Fixed analog stick</value>
   </data>
   <data name="DpadLeftText" xml:space="preserve">
     <value>D-pad Left</value>
@@ -312,11 +360,41 @@
   <data name="DpadRightText" xml:space="preserve">
     <value>D-pad Right</value>
   </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>D-pad style</value>
+  </data>
   <data name="DpadUpText" xml:space="preserve">
     <value>D-pad Up</value>
   </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Edit button layout</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Enable turbo mode</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Files imported successfully.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frame skip (non-turbo mode)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frame skip (turbo mode)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Both Xbox and generic HID gamepads are supported.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value> Buy premium feature package or watch a short video to enable this feature.</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU filter (fast)</value>
+  </data>
   <data name="HIDConfigInstruction" xml:space="preserve">
     <value>You can now assign buttons as you wish. Up to two buttons can be assigned for each function.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Hold to activate</value>
   </data>
   <data name="IMPORT.Text" xml:space="preserve">
     <value>IMPORT</value>
@@ -324,7 +402,148 @@
   <data name="ImportLocalInstruction.Text" xml:space="preserve">
     <value>Use this option to import a file already present on your phone or PC. NOTE: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing. Just select the folder containing the rom and will be presented with a list of rom to import.</value>
   </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Use this option to import roms and save files from OneDrive, which will be copied to the app's private storage. NOTE: It is recommended that you store the roms on an user-accessible folder and use the Local Storage option to import them, which will prevent loss of progress if you the app every becomes corrupted.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>Import ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>Import R/S</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Import Save</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Virtual joystick scale: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Key Bindings</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Loading production list. Please wait...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Error! No Internet connection or Microsoft server error. Please try again later.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Load products</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>You have to select at least one file.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>No supported file found!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>No supported file found!</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
   <data name="PressStartPrompt" xml:space="preserve">
     <value>First press Start button.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>Product is not available at the moment.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Purchased, thank you!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Purchase successful, ads will not be shown the next time you start the app.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Purchase successful.</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>This is a *warning* about in-app purchase in Windows 10. For a small percentage of Microsoft accounts, mine included, after you purchase the in-app products, you will experience the following problems: (1) app crashes upon opening, (2) app can no longer be downloaded from store due to error 0x803F7002, and (3) even if you sideload the app, the store still reports the product as not purchased.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>If you want to take risk, click on the button below to load the products. Keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work. I can, however, provide you with the .appx to sideload if you can no longer download the app. To current VBA8 paid users: version 2.27 is now availalbe which lets you request VBA10 unlock codes, but be aware: using an unlock code has all the same bugs as paying for the products, except you won't lose money.</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Save file imported successfully.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Savestate 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Savestate 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Savestate 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Savestate 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Savestate 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Savestate 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Savestate 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Savestate 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Savestate 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Savestate 9 (auto)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Scanlines</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Select file(s) to import</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>Select ROM Directory</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>Show FPS</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Stretch</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Show virtual buttons</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Turbo button behavior</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Toggle turbo on/off</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV mode</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Use fullscreen mode</value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Watch Video</value>
   </data>
 </root>

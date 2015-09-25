@@ -52,15 +52,17 @@
 
                     <StackPanel Orientation="Horizontal"
                             Margin="0,4,0,4">
-                        <Button x:Name="chooseFolderbtn" Content="Import ROM" 
+                        <Button x:Name="chooseFolderbtn" Content="**Import ROM" 
                             Click="chooseFolderbtn_Click"
                             Width="120"
-                            Margin =" 0, 0, 8, 0"/>
+                            Margin =" 0, 0, 8, 0"
+                                x:Uid="ImportROMBtn"/>
 
-                        <Button x:Name="importSavbtn" Content="Import Save" 
+                        <Button x:Name="importSavbtn" Content="**Import Save" 
                             Width="120"
                             Margin ="0" 
-                            Click="importSavbtn_Click"/>
+                            Click="importSavbtn_Click"
+                                x:Uid="ImportSaveBtn"/>
                     </StackPanel>
 
                     <TextBlock Text="OneDrive"
@@ -69,8 +71,9 @@
                            Margin="0,8,0,0"
                                   />
                     <TextBlock TextWrapping="Wrap"
-                           Text="Use this option to import roms and save files from OneDrive, which will be copied to the app's private storage. NOTE: It is recommended that you store the roms on an user-accessible folder and use the Local Storage option to import them, which will prevent loss of progress if you the app every becomes corrupted."                                
-                                 Margin=" 0, 4, 0, 4" />
+                           Text="**Use this option to"                                
+                                 Margin=" 0, 4, 0, 4" 
+                               x:Uid="ImportOneDriveInstruction"/>
 
 
                     <!--<TextBlock x:Name="txtSignedIn"
@@ -80,15 +83,17 @@
                            />-->
                     <StackPanel Orientation="Horizontal"
                              Margin="0,4,0,12">
-                        <Button x:Name="SignInbtn" Content="Sign in" 
+                        <Button x:Name="SignInbtn" Content="**Sign in" 
                             Click="SignInbtn_Click"
                             Width="120"
+                                x:Uid="SignInBtn"
                             Margin =" 0, 0, 8, 0"/>
 
-                        <Button x:Name="importOneDriveROMbtn" Content="Import R/S" 
+                        <Button x:Name="importOneDriveROMbtn" Content="**Import R/S" 
                             Click="importOneDriveROMbtn_Click"
                             Width="120"
                             IsEnabled="False"
+                                x:Uid="ImportRSBtn"
                             Margin =" 0, 0, 0, 0"/>
 
                         <!--<Button x:Name="importOneDriveSavebtn" Content="Import Save" 

@@ -21,7 +21,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::Storage;
 using namespace Windows::UI::Popups;
-
+using namespace Windows::ApplicationModel::Resources;
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::String^ title) :initdone(false)
@@ -42,7 +42,7 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 	{
 		this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
-		this->txtNoFile->Text = "No supported file found.";
+		this->txtNoFile->Text = ResourceLoader::GetForCurrentView()->GetString("NoSupportedFileText");
 	}
 	initdone = true;
 
@@ -60,7 +60,7 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 {
 	if (this->fileList->SelectedItems->Size == 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog("You have to select at least one file.");
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("NoFileSelectedText"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -68,7 +68,7 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	this->OkBtn->IsEnabled = false;
-	this->txtNoFile->Text = "Processing...";
+	this->txtNoFile->Text = ResourceLoader::GetForCurrentView()->GetString("ProcessingText");
 
 
 	Vector<int>^ selectedIndices = ref new Vector<int>  ();
