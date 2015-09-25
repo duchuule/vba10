@@ -34,17 +34,19 @@ SelectStatePane::SelectStatePane(int selectedSlot):initdone(false)
 
 void SelectStatePane::Init(void)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	this->savestateVector = ref new Platform::Collections::Vector<Platform::String ^>();
-	this->savestateVector->Append("Savestate 0");
-	this->savestateVector->Append("Savestate 1");
-	this->savestateVector->Append("Savestate 2");
-	this->savestateVector->Append("Savestate 3");
-	this->savestateVector->Append("Savestate 4");
-	this->savestateVector->Append("Savestate 5");
-	this->savestateVector->Append("Savestate 6");
-	this->savestateVector->Append("Savestate 7");
-	this->savestateVector->Append("Savestate 8");
-	this->savestateVector->Append("Savestate 9 (auto)");
+	this->savestateVector->Append(loader->GetString("Savestate0Text"));
+	this->savestateVector->Append(loader->GetString("Savestate1Text"));
+	this->savestateVector->Append(loader->GetString("Savestate2Text"));
+	this->savestateVector->Append(loader->GetString("Savestate3Text"));
+	this->savestateVector->Append(loader->GetString("Savestate4Text"));
+	this->savestateVector->Append(loader->GetString("Savestate5Text"));
+	this->savestateVector->Append(loader->GetString("Savestate6Text"));
+	this->savestateVector->Append(loader->GetString("Savestate7Text"));
+	this->savestateVector->Append(loader->GetString("Savestate8Text"));
+	this->savestateVector->Append(loader->GetString("Savestate9Text"));
 
 	this->savestateList->ItemsSource = this->savestateVector->GetView();
 

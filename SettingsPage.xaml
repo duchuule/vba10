@@ -26,7 +26,8 @@
 
         
         <Pivot Grid.Row="1" >
-            <PivotItem  Header="Input"
+            <PivotItem  Header="**Input"
+                        x:Uid="Input"
                         Margin="0"
                         >
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -43,23 +44,27 @@
 
                         <TextBlock TextWrapping="Wrap" 
                                    Margin="0,0,0,8">
-                            <Run Text="Both Xbox and generic HID gamepads are supported." />
-                            <Run Text=" Buy premium feature package or watch a short video to enable this feature."
+                            <Run Text="**Both Xbox and generic HID gamepads"
+                                 x:Uid="GamepadInstruction1"/>
+                            <Run Text="** Buy premium feature package"
+                                 x:Uid="GamepadInstruction2"
                                  x:Name="runBuyNotice"/>
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,0,0,8"
                                     x:Name="panelGamepadActivate">
-                            <Button x:Name="purchaseBtn" Content="Buy" 
+                            <Button x:Name="purchaseBtn" Content="**Buy" 
                             Click="purchaseBtn_Click"
                             Width="120"
+                                    x:Uid="BuyBtn"
                             Margin =" 0, 0, 8, 0"/>
 
-                            <Button x:Name="watchVideoBtn" Content="Watch Video" 
+                            <Button x:Name="watchVideoBtn" Content="**Watch Video" 
                             Width="120"
                             Margin =" 0, 0, 0, 0" 
-                            Click="watchVideobtn_Click"/>
+                            Click="watchVideobtn_Click"
+                                    x:Uid="WatchVideoBtn"/>
 
 
                         </StackPanel>
@@ -98,12 +103,14 @@
                             <StackPanel Orientation="Horizontal"
                                     Margin =" 0, 0, 0, 12"
                                         x:Name="panelHIDConnect">
-                                <Button x:Name="ConfigureBtn" Content="Configure" 
+                                <Button x:Name="ConfigureBtn" Content="**Configure" 
                                     Width="120"
                                     Margin =" 0, 0, 8, 0"
+                                        x:Uid="ConfigureBtn"
                                         Click="ConfigureBtn_Click"/>
 
-                                    <Button x:Name="ConnectBtn" Content="Connect" 
+                                    <Button x:Name="ConnectBtn" Content="**Connect" 
+                                            x:Uid="ConnectBtn"
                                 Width="120"
                                 Margin =" 0, 0, 0, 0" 
                                 Click="ConnectBtn_Click"/>
@@ -116,16 +123,20 @@
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top" 
                                   SelectedIndex="0"
-                                  Header="Turbo Button Behavior"
+                                  Header="**Turbo Button Behavior"
                                   Margin =" 0, 0, 0, 10"
+                                  x:Uid="TurboBehavior"
                                   SelectionChanged="cboTurboBehavior_SelectionChanged">
-                            <ComboBoxItem>Toggle turbo on/off</ComboBoxItem>
-                            <ComboBoxItem>Hold to activate</ComboBoxItem>
+                            <ComboBoxItem Content="**Toggle turbo on/off"
+                                          x:Uid="TurboToggleCbi"/>
+                            <ComboBoxItem Content="Hold to activate"
+                                          x:Uid="HoldActivateCbi"/>
                         </ComboBox>
 
-                        <ToggleSwitch Header="Show Virtual Buttons" 
+                        <ToggleSwitch Header="**Show Virtual Buttons" 
                                       Name="touchToggle" HorizontalAlignment="Left" 
                                       Toggled="touchToggle_Toggled"
+                                      x:Uid="TouchToggle"
                                       />
 
                         <!--<ToggleSwitch Header="Virtual Controller Position" 
@@ -139,20 +150,22 @@
                                   VerticalAlignment="Top" 
                                   SelectedIndex="1"
                                   SelectionChanged="dpadComboBox_SelectionChanged_1"
-                                  Header="D-Pad Style"
+                                  Header="**D-Pad Style"
+                                  x:Uid="DpadStyle"
                                   Margin =" 0, 0, 0, 12">
-                            <ComboBoxItem>8-way</ComboBoxItem>
-                            <ComboBoxItem>Fixed analogue stick</ComboBoxItem>
-                            <ComboBoxItem>Dynamic analogue stick</ComboBoxItem>
+                            <ComboBoxItem Content="**8-way" x:Uid="Dpad8wayCbi"/>
+                            <ComboBoxItem Content="**Fixed analogue stick" x:Uid="DpadFixedStickCbi"/>
+                            <ComboBoxItem Content="**Dynamic analogue stick" x:Uid="DpadDynamicStickCbi"/>
                         </ComboBox>
 
                         
 
                         <Button x:Name="editButonLayoutBtn" 
-                                Content="Edit button layout" 
+                                Content="**Edit button layout" 
                                     HorizontalAlignment="Stretch"
                                     Click="editButonLayoutBtn_Click"
-                                Margin =" 0, 4, 0, 16"/>
+                                Margin =" 0, 4, 0, 16"
+                                x:Uid="EditLayoutBtn"/>
 
 
                         <Grid>
@@ -169,7 +182,8 @@
                                     >
                                 <Slider.Header>
                                     <TextBlock >
-                                    <Run Text="Deadzone (analogue stick): "/>
+                                    <Run Text="**Deadzone (analogue stick): "
+                                         x:Uid="Deadzone"/>
                                     <Run Text="{Binding Value ,ElementName=deadzoneSlider}" />
                                     </TextBlock>
                                 </Slider.Header>
@@ -200,7 +214,8 @@
                                     >
                                 <Slider.Header>
                                     <TextBlock >
-                                    <Run Text="Virtual Joystick Scale: "/>
+                                    <Run Text="**Virtual Joystick Scale: "
+                                         x:Uid="JoystickScale"/>
                                     <Run Text="{Binding Value ,ElementName=controllerScaleSlider}" />
                                     <Run Text="%"/>
                                     </TextBlock>
@@ -233,7 +248,8 @@
                                     >
                                 <Slider.Header>
                                     <TextBlock >
-                                        <Run Text="Virtual Button Scale: "/>
+                                        <Run Text="**Virtual Button Scale: "
+                                             x:Uid="ButtonScale"/>
                                         <Run Text="{Binding Value ,ElementName=buttonScaleSlider}" />
                                         <Run Text="%"/>
                                     </TextBlock>
@@ -265,7 +281,8 @@
                                     >
                                 <Slider.Header>
                                     <TextBlock >
-                                        <Run Text="Virtual controller opacity: "/>
+                                        <Run Text="**Virtual controller opacity: "
+                                             x:Uid="ButtonOpacity"/>
                                         <Run Text="{Binding Value ,ElementName=controllerOpacitySlider}" />
                                         <Run Text="%"/>
                                     </TextBlock>
@@ -288,6 +305,7 @@
                         
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="16" 
                                    Text="Key Bindings"
+                                   x:Uid="KeyBindings"
                                    VerticalAlignment="Top"/>
 
                         <Grid Margin="0,4,0,0">
@@ -309,25 +327,25 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap"
-                                                Text="Left" VerticalAlignment="Center" />
+                                                Text="**Left" x:Uid="Left" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1" Name="leftKeyBox" AcceptsReturn="False" 
                                              KeyDown="keyDown" KeyUp="leftKeyBox_KeyUp" TextWrapping="Wrap" Text="Left"  Margin="0,4,0,4"
                                              VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Up" VerticalAlignment="Center" />
+                                               Text="**Up" x:Uid="Up" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1" x:Name="upKeyBox" Margin="0,4,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown" KeyUp="upKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Up" VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Right" VerticalAlignment="Center"/>
+                                               Text="**Right" x:Uid="Right" VerticalAlignment="Center"/>
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1" x:Name="rightKeyBox" Margin="0,0,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown"    KeyUp="rightKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Right" VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Down" VerticalAlignment="Center" />
+                                               Text="**Down" x:Uid="Down" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" x:Name="downKeyBox" Margin="0,4,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown" KeyUp="downKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Down" VerticalAlignment="Top" />
@@ -357,19 +375,19 @@
                                              Text="R" VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Start" VerticalAlignment="Center" />
+                                               Text="**Start" x:Uid="Start" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="8" Grid.Column="1" x:Name="startKeyBox" Margin="0,4,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown" KeyUp="startKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Start" VerticalAlignment="Top"/>
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="9" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Select" VerticalAlignment="Center" />
+                                               Text="**Select" x:Uid="Select" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="9" Grid.Column="1" x:Name="selectKeyBox" Margin="0,4,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown" KeyUp="selectKeyBox_KeyUp" TextWrapping="Wrap" 
                                              Text="Select" VerticalAlignment="Top" />
 
                             <TextBlock HorizontalAlignment="Left" Grid.Row="10" Grid.Column="0" TextWrapping="Wrap" 
-                                               Text="Turbo Mode" VerticalAlignment="Center" />
+                                               Text="**Turbo Mode" x:Uid="Turbo" VerticalAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Grid.Row="10" Grid.Column="1" x:Name="turboModeBox" Margin="0,4,0,4"
                                              AcceptsReturn="False" KeyDown="keyDown" KeyUp="turboModeBox_KeyUp_1" TextWrapping="Wrap" 
                                              Text="T" VerticalAlignment="Top" />
@@ -378,7 +396,8 @@
                 </ScrollViewer>
             </PivotItem>
             
-            <PivotItem Header="Video"
+            <PivotItem Header="**Video"
+                       x:Uid="Video"
                        Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -405,7 +424,8 @@
                             <ComboBoxItem>3</ComboBoxItem>
                         </ComboBox>-->
 
-                        <ToggleSwitch Header="Enable Turbo Mode" 
+                        <ToggleSwitch Header="**Enable Turbo Mode" 
+                                      x:Uid="EnableTurboMode"
                                       Name="enableTurboToggle" 
                                       IsOn="False" 
                                       Toggled="enableTurboToggle_Toggled"
@@ -417,9 +437,10 @@
                                   VerticalAlignment="Top" 
                                   SelectedIndex="1" 
                                   SelectionChanged="skipComboBox_SelectionChanged"
-                                  Header="Frame skip (non-turbo mode)"
+                                  Header="**Frame skip (non-turbo mode)"
+                                  x:Uid="FrameSkipNonturbo"
                                   Margin="0,0,0,10">
-                            <ComboBoxItem>auto</ComboBoxItem>
+                            <ComboBoxItem Content="**auto" x:Uid="AutoCbi"/> 
                             <ComboBoxItem>0</ComboBoxItem>
                             <ComboBoxItem>1</ComboBoxItem>
                             <ComboBoxItem>2</ComboBoxItem>
@@ -437,7 +458,8 @@
                                   VerticalAlignment="Top" 
                                   SelectedIndex="0" 
                                   SelectionChanged="turboSkipComboBox_SelectionChanged_1"
-                                  Header="Frame skip (turbo mode)"
+                                  Header="**Frame skip (turbo mode)"
+                                  x:Uid="FrameSkipTurbo"
                                   Margin="0,0,0,10">
                             <ComboBoxItem>1</ComboBoxItem>
                             <ComboBoxItem>2</ComboBoxItem>
@@ -457,13 +479,14 @@
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="cboPixelFilter_SelectionChanged"
-                                  Header="CPU filter (slow)"
+                                  Header="**CPU filter (slow)"
+                                  x:Uid="CPUFilter"
                                   Margin="0,0,0,10"
                                   >
-                            <ComboBoxItem>None</ComboBoxItem>
+                            <ComboBoxItem Content="**None" x:Uid="NoneCbi"/>
                             <ComboBoxItem>HQ2x</ComboBoxItem>
-                            <ComboBoxItem>TV Mode</ComboBoxItem>
-                            <ComboBoxItem>Scanlines</ComboBoxItem>
+                            <ComboBoxItem Content="**TV Mode" x:Uid="TVModeCbi"/>
+                            <ComboBoxItem Content="**Scanlines" x:Uid="ScanlinesCbi"/>
                         </ComboBox>
 
                         <ComboBox Name="cboPixelShader" 
@@ -471,11 +494,12 @@
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="cboPixelShader_SelectionChanged"
-                                  Header="GPU filter (fast)"
+                                  Header="**GPU filter (fast)"
+                                  x:Uid="GPUFilter"
                                   Margin="0,0,0,10"
                                   >
-                            <ComboBoxItem>None</ComboBoxItem>
-                            <ComboBoxItem>Bilinear</ComboBoxItem>
+                            <ComboBoxItem Content="**None" x:Uid="NoneCbi"/>
+                            <ComboBoxItem Content="**Bilinear" x:Uid="Bilinear"/>
                             <ComboBoxItem>HQ2x</ComboBoxItem>
                             <ComboBoxItem>xBR2x</ComboBoxItem>
                             <ComboBoxItem>HQ3x</ComboBoxItem>
@@ -496,7 +520,8 @@
                                   VerticalAlignment="Top" 
                                    SelectedIndex="1" 
                                   SelectionChanged="monitorComboBox_SelectionChanged_1"
-                                  Header="Display type"
+                                  Header="**Display type"
+                                  x:Uid="DisplayType"
                                   Margin="0,0,0,10">
                             <ComboBoxItem>30 Hz</ComboBoxItem>
                             <ComboBoxItem>60 Hz (default)</ComboBoxItem>
@@ -508,11 +533,12 @@
                                   VerticalAlignment="Top"
                                   SelectedIndex="0" 
                                   SelectionChanged="aspectComboBox_SelectionChanged_1"
-                                  Header="Aspect ratio"
+                                  Header="**Aspect ratio"
+                                  x:Uid="AspectRatio"
                                   Margin="0,0,0,10"
                                   >
-                            <ComboBoxItem>Original</ComboBoxItem>
-                            <ComboBoxItem>Stretch</ComboBoxItem>
+                            <ComboBoxItem Content="**Original" x:Uid="OriginalCbi"/>
+                            <ComboBoxItem Content="**Stretch" x:Uid="StretchCbi"/>
                             <ComboBoxItem>4:3</ComboBoxItem>
                             <ComboBoxItem>5:4</ComboBoxItem>
                             <ComboBoxItem>1:1</ComboBoxItem>
@@ -520,12 +546,14 @@
 
 
                        
-                        <ToggleSwitch Header="Show FPS" 
+                        <ToggleSwitch Header="**Show FPS" 
+                                      x:Uid="ShowFPS"
                                       Name="fpsToggle" 
                                       IsOn="True"
                                       Toggled="fpsToggle_Toggled"/>
 
-                        <ToggleSwitch Header="Use fullscreen mode" 
+                        <ToggleSwitch Header="**Use fullscreen mode" 
+                                      x:Uid="UseFullscreen"
                                       Name="fullscreenToggle" 
                                       IsOn="False"
                                       Toggled="fullscreenToggle_Toggled"/>

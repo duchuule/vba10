@@ -45,40 +45,39 @@
                     <TextBlock TextWrapping="Wrap"
                                                           
                                  Margin=" 0, 4, 0, 4" >
-                        <Run Text="Dear VBA10 users:" />
+                        <Run Text="**Dear" x:Uid="DearVBA10Users" />
                         <LineBreak/>
-                        <Run Text="This is a *warning* about in-app purchase in Windows 10. " />
-                        <Run Text="For a small percentage of Microsoft accounts, mine included, after you purchase the in-app products, you will experience the following problems: " />
-                        <Run Text="(1) app crashes upon opening, " />
-                        <Run Text="(2) app can no longer be downloaded from store due to error 0x803F7002, " />
-                        <Run Text="and (3) even if you sideload the app, the store still reports the product as not purchased. " />
+                        <Run Text="**This is a *warning*"
+                             x:Uid="PurchaseWarning1"
+                             />
                     <LineBreak/>
                     <LineBreak/>
-                        <Run Text="If you want to take risk, click on the button below to load the products. " />
-                        <Run Text="Keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work." />
-                        <Run Text="I can, however, provide you with the .appx to sideload if you can no longer download the app. " />
-                        <Run Text="To current VBA8 paid users: an update will be available soon which lets you request unlock codes, but be aware: using an unlock code has all the same bugs as paying for the products, except you won't lose money."/>
+                        <Run Text="If you want to take risk**" 
+                             x:Uid="PurchaseWarning2"/>
                     </TextBlock>
                     
                     <Button x:Name="loadProductsBtn"
-                            Content="Load products"
+                            Content="**Load products"
                             Margin="0,4,0,12"
                             Click="loadProductsBtn_Click"
+                            x:Uid="LoadProductBtn"
                             />
-                    <TextBlock Text="Loading production list. Please wait..." 
+                    <TextBlock Text="**Loading production" 
                        TextWrapping="Wrap"
                        Margin="0,48,0,12"
                            Visibility="Collapsed"
                            x:Name="txtLoading"
+                               x:Uid="LoadingProduct"
                            
                        />
 
-                    <TextBlock Text="Error! No Internet connection or Microsoft server error. Please try again later." 
+                    <TextBlock Text="**Error! No Internet " 
                        TextWrapping="Wrap"
                        Margin="0,0,0,12"
                            Foreground="Red"
                            Visibility="Collapsed"
                            x:Name="txtError"
+                               x:Uid="LoadingProductError"
                        />
 
                     <!--<Grid>
@@ -134,6 +133,7 @@
                                                     Visibility="{Binding BuyNowButtonVisible}" 
                                                     Click="ButtonBuyNow_Clicked" 
                                                     Tag="{Binding key}"
+                                                        x:Uid="PurchaseBtn"
                                                     />
                                             </StackPanel>
                                         </Grid>

@@ -36,6 +36,7 @@ using namespace Windows::Storage::Search;
 using namespace Windows::Storage::Streams;
 using namespace Concurrency;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 ImportPage::ImportPage()
@@ -54,6 +55,8 @@ ImportPage::ImportPage()
 
 void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	FolderPicker ^picker = ref new FolderPicker();
 
 	picker->FileTypeFilter->Append(".gba");
@@ -66,9 +69,9 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 	//picker->FileTypeFilter->Append(".7z");
 
 	picker->ViewMode = PickerViewMode::List;
-	picker->CommitButtonText = "Select ROM Directory";
+	picker->CommitButtonText = loader->GetString("SelectROMDirText");
 
-	task<void> t = create_task(picker->PickSingleFolderAsync()).then([this](StorageFolder ^folder)
+	task<void> t = create_task(picker->PickSingleFolderAsync()).then([this, loader](StorageFolder ^folder)
 	{
 		if (folder)
 		{
@@ -100,7 +103,7 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 			options->FileTypeFilter->Append(".gb");
 			//TODO: add support for other file types
 			return create_task(folder->CreateFileQueryWithOptions(options)->GetFilesAsync())
-				.then([this, tmpfolder, tmptoken](IVectorView<StorageFile ^> ^files)
+				.then([this, tmpfolder, tmptoken, loader](IVectorView<StorageFile ^> ^files)
 			{
 
 				//open panel to let user select file
@@ -111,12 +114,12 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 				for (int i = 0; i < files->Size; i++)
 					fileNames->Append(files->GetAt(i)->Name);
 
-				SelectFilesPane ^pane = ref new SelectFilesPane(fileNames, "Select file(s) to import");
+				SelectFilesPane ^pane = ref new SelectFilesPane(fileNames, loader->GetString("SelectFileImportText"));
 				statePopup->Child = pane;
 				pane->Width = titleBar->ActualWidth;//statePopup->Width;
 				pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
 
-				pane->FilesSelectedCallback = ref new FilesSelectedDelegate([this, tmpfolder, tmptoken, files](IVector<int>^ selectedIndices)
+				pane->FilesSelectedCallback = ref new FilesSelectedDelegate([this, tmpfolder, tmptoken, files, loader](IVector<int>^ selectedIndices)
 				{
 
 					vector<task<void>> tasks;
@@ -205,15 +208,15 @@ void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xa
 						}
 					}
 
-					when_all(begin(tasks), end(tasks)).then([this](task<void> t)
+					when_all(begin(tasks), end(tasks)).then([this, loader](task<void> t)
 					{
 						try
 						{
 							t.get();
-							this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+							this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([loader]()
 							{
 								// .get() didn't throw, so we succeeded, print out success message
-								MessageDialog ^dialog = ref new MessageDialog("Files imported successfully.");
+								MessageDialog ^dialog = ref new MessageDialog(loader->GetString("FilesImportSuccessText"));
 								dialog->ShowAsync();
 							}));
 
@@ -261,8 +264,10 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 	picker->ViewMode = PickerViewMode::List;
 	//picker->CommitButtonText = "Select";
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 
-	task<void> t = create_task(picker->PickSingleFileAsync()).then([this](StorageFile ^file)
+
+	task<void> t = create_task(picker->PickSingleFileAsync()).then([this, loader](StorageFile ^file)
 	{
 		if (file)
 		{
@@ -283,7 +288,7 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 			if (entry == nullptr)
 			{
-				MessageDialog ^dialog = ref new MessageDialog("Could not find a matching ROM name.", "Error");
+				MessageDialog ^dialog = ref new MessageDialog(loader->GetString("NoMatchingROMError"), loader->GetString("ErrorText"));
 				dialog->ShowAsync();
 				return create_task([] {});
 			}
@@ -296,16 +301,16 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 			Platform::String^ pfolderpath = ref new Platform::String(folderpath.c_str());
 			if (pfolderpath == entry->Folder->Path)
 			{
-				MessageDialog ^dialog = ref new MessageDialog("Save file imported successfully.");
+				MessageDialog ^dialog = ref new MessageDialog(loader->GetString("SaveFileImportSuccessText"));
 				dialog->ShowAsync();
 				return create_task([] {});
 			}
 			else
 			{
 				return create_task(file->CopyAsync(entry->Folder, file->Name, NameCollisionOption::ReplaceExisting))
-					.then([](StorageFile^ file)
+					.then([loader](StorageFile^ file)
 				{
-					MessageDialog ^dialog = ref new MessageDialog("Save file imported successfully.");
+					MessageDialog ^dialog = ref new MessageDialog(loader->GetString("SaveFileImportSuccessText"));
 					dialog->ShowAsync();
 					return create_task([] {});
 				});
@@ -349,16 +354,18 @@ void ImportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 
 void ImportPage::signin_Completed(bool isLoggedIn)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	if (isLoggedIn)
 	{
-		this->SignInbtn->Content = "Signed in";
+		this->SignInbtn->Content = loader->GetString("SignedInText");
 		this->SignInbtn->IsEnabled = false;
 		this->importOneDriveROMbtn->IsEnabled = true;
 		EmulatorSettings::Current->SignedIn = true;
 	}
 	else
 	{
-		this->SignInbtn->Content = "Sign in";
+		this->SignInbtn->Content = loader->GetString("SignInText");
 		this->SignInbtn->IsEnabled = true;
 		this->importOneDriveROMbtn->IsEnabled = false;
 		EmulatorSettings::Current->SignedIn = false;

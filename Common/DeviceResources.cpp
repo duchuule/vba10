@@ -236,14 +236,17 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 
 	if (m_swapChain != nullptr)
 	{
+
 		// If the swap chain already exists, resize it.
+		//this will crash under full screen on certain graphic cards
 		HRESULT hr = m_swapChain->ResizeBuffers(
-			2, // Double-buffered swap chain.
-			lround(m_d3dRenderTargetSize.Width),
-			lround(m_d3dRenderTargetSize.Height),
-			DXGI_FORMAT_B8G8R8A8_UNORM,
-			0
-			);
+				2, // Double-buffered swap chain.
+				lround(m_d3dRenderTargetSize.Width),
+				lround(m_d3dRenderTargetSize.Height),
+				DXGI_FORMAT_B8G8R8A8_UNORM,
+				0
+				);
+
 
 		if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
 		{
