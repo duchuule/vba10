@@ -72,9 +72,11 @@ void ExportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 
 void ExportPage::signin_Completed(bool isLoggedIn)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	if (isLoggedIn)
 	{
-		this->SignInbtn->Content = "Signed in";
+		this->SignInbtn->Content = loader->GetString("SignedInText");
 		this->SignInbtn->IsEnabled = false;
 		this->exportOneDrivebtn->IsEnabled = true;
 		EmulatorSettings::Current->SignedIn = true;
@@ -124,7 +126,7 @@ void ExportPage::signin_Completed(bool isLoggedIn)
 	}
 	else
 	{
-		this->SignInbtn->Content = "Sign in";
+		this->SignInbtn->Content = loader->GetString("SignInText");
 		this->SignInbtn->IsEnabled = true;
 		this->exportOneDrivebtn->IsEnabled = false;
 		EmulatorSettings::Current->SignedIn = false;
@@ -134,6 +136,8 @@ void ExportPage::signin_Completed(bool isLoggedIn)
 
 void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	//get a list of rom
 	Vector<Platform::String ^> ^romNames = ref new Vector<Platform::String ^>();
 	for (int i = 0; i < App::ROMDB->AllROMDBEntries->Size; i++)
@@ -143,7 +147,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 	Popup ^statePopup = ref new Popup();
 	statePopup->IsLightDismissEnabled = true;
 
-	SelectFilePane ^pane = ref new SelectFilePane(romNames, "Select ROM");
+	SelectFilePane ^pane = ref new SelectFilePane(romNames, loader->GetString("SelectROMText"));
 	statePopup->Child = pane;
 	pane->Width = titleBar->ActualWidth;//statePopup->Width;
 	pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
@@ -158,7 +162,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 		options->IndexerOption = Search::IndexerOption::DoNotUseIndexer;
 		options->UserSearchFilter = entry->DisplayName;
 		create_task(entry->Folder->CreateFileQueryWithOptions(options)->GetFilesAsync())
-			.then([this](IVectorView<StorageFile ^> ^files)
+			.then([this, loader](IVectorView<StorageFile ^> ^files)
 		{
 			//open panel to let user select file
 			Popup ^statePopup = ref new Popup();
@@ -168,7 +172,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 			for (int i = 0; i < files->Size; i++)
 				fileNames->Append(files->GetAt(i)->Name);
 
-			SelectFilesPane ^pane = ref new SelectFilesPane(fileNames, "Select file(s) to export");
+			SelectFilesPane ^pane = ref new SelectFilesPane(fileNames, loader->GetString("SelectFileExportText"));
 			statePopup->Child = pane;
 			pane->Width = titleBar->ActualWidth;//statePopup->Width;
 			pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
@@ -189,14 +193,14 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 							tasks.emplace_back(App::LiveClient->upload(web::uri::encode_uri(path->Data()), file));
 						}
 
-						when_all(begin(tasks), end(tasks)).then([this](task<std::vector<web::json::value>> t)
+						when_all(begin(tasks), end(tasks)).then([this, loader](task<std::vector<web::json::value>> t)
 						{
 							try
 							{
 								t.get();
-								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([loader]()
 								{
-									MessageDialog ^dialog = ref new MessageDialog("Upload completed successfully.");
+									MessageDialog ^dialog = ref new MessageDialog(loader->GetString("UploadSuccessText"));
 									dialog->ShowAsync();
 								}));
 
@@ -206,9 +210,9 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 
 							catch (const std::exception &) 
 							{
-								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+								this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([loader]()
 								{
-									MessageDialog ^dialog = ref new MessageDialog("Network error.");
+									MessageDialog ^dialog = ref new MessageDialog(loader->GetString("NetworkErrorText"));
 									dialog->ShowAsync();
 								}));
 							}
@@ -219,7 +223,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 				}
 				else
 				{
-					MessageDialog ^dialog = ref new MessageDialog("Could not find export folder.", "Error");
+					MessageDialog ^dialog = ref new MessageDialog(loader->GetString("ExportFolderError"), loader->GetString("ErrorText"));
 					dialog->ShowAsync();
 				}
 

@@ -36,15 +36,19 @@
                                       HorizontalAlignment="Left" 
                                     MaxWidth="440"
                                 Margin="12,0">
-                        <TextBlock Text="How to restore saves" Style="{ThemeResource BaseTextBlockStyle}" />
+                        <TextBlock Text="**How to restore saves" 
+                                   Style="{ThemeResource BaseTextBlockStyle}" 
+                                   x:Uid="HowToRestoreSave"/>
                         <TextBlock TextWrapping="Wrap"
                                  Margin=" 0, 0, 0, 4" 
+                                   Text="**Instruction"
+                                   x:Uid="RestoreSaveInstruction"
                                    >
-                            <Run>1. Quit the app completelely.</Run><LineBreak/>
+                            <!--<Run>1. Quit the app completelely.</Run><LineBreak/>
                             <Run>2. Make sure the name of the save file match the name 
                                 of the rom exactly (except the extension).</Run><LineBreak/>
                             <Run>3. Open the app and import the save file.</Run><LineBreak/>
-                            <Run>4. Start the game.</Run><LineBreak/>
+                            <Run>4. Start the game.</Run><LineBreak/>-->
                         </TextBlock>
 
                     </StackPanel>
@@ -70,7 +74,8 @@
                         <TextBlock TextWrapping="Wrap"  Name="contactBlock"
                                Tapped="contactBlock_Tapped"
                                >
-                	        <Run>Contact:&#160; </Run>  
+                	        <Run Text="**Contact: " 
+                                 x:Uid="Contact"/>
                         <Underline>
                             <Run Foreground="#4444D9">store.support@outlook.com</Run>
                         </Underline>

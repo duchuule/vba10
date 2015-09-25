@@ -143,6 +143,8 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 	if (this->loading)
 		return;
 
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	OneDriveFileItem ^ item = (OneDriveFileItem ^)(this->fileList->SelectedItem);
 	if (item == nullptr)
 		return;
@@ -188,7 +190,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 		item->Downloading = true;
 		//download file
-		DownloadFile(item, CreationCollisionOption::GenerateUniqueName).then([this, item](size_t size)
+		DownloadFile(item, CreationCollisionOption::GenerateUniqueName).then([this, item, loader](size_t size)
 		{
 			//update rom dabatase
 			//calculate snapshot name
@@ -218,38 +220,40 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 				StorageFolder ^installDir = Windows::ApplicationModel::Package::Current->InstalledLocation;
 				return installDir->GetFolderAsync("Assets/");
 
-			}).then([entry, item](StorageFolder^ assetFolder)
+			}).then([entry, item, loader](StorageFolder^ assetFolder)
 			{
 				return assetFolder->GetFileAsync("no_snapshot.png");
-			}).then([entry, item](StorageFile ^file)
+			}).then([entry, item, loader](StorageFile ^file)
 			{
 				//copy snapshot file to would be location
 				return file->CopyAsync(entry->Folder, entry->SnapshotUri, NameCollisionOption::ReplaceExisting);
 
-			}).then([entry](StorageFile ^file)
+			}).then([entry, loader](StorageFile ^file)
 			{
 				//open file
 				return file->OpenAsync(FileAccessMode::Read);
-			}).then([entry, item](IRandomAccessStream^ stream)
+			}).then([entry, item, loader](IRandomAccessStream^ stream)
 			{
 				//load bitmap image for snapshot
 				entry->Snapshot = ref new BitmapImage();
 				return entry->Snapshot->SetSourceAsync(stream);
 
 
-			}).then([item](task<void> t)
+			}).then([item, loader](task<void> t)
 			{
 				try
 				{
 					t.get();
 					// .get() didn't throw, so we succeeded, print out success message
 					item->Downloading = false;
-					MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " was imported successfully.");
+
+					
+					MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " " + loader->GetString("ImportedSuccessText"));
 					dialog->ShowAsync();
 				}
 				catch (Platform::Exception ^ex)
 				{
-					MessageDialog ^dialog = ref new MessageDialog("Error: " + ex->Message);
+					MessageDialog ^dialog = ref new MessageDialog(ex->Message);
 					dialog->ShowAsync();
 				}
 			});
@@ -261,6 +265,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 	{
 		if (item->Downloading)  //prevent double downloading of 1 file
 			return;
+
 
 		//get the save name without extension
 		wstring name(item->Name->Begin(), item->Name->End());
@@ -276,14 +281,14 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 
 		if (entry == nullptr)
 		{
-			MessageDialog ^dialog = ref new MessageDialog("Could not find a matching ROM name.", "Error");
+			MessageDialog ^dialog = ref new MessageDialog(loader->GetString("NoMatchingROMError"), loader->GetString("ErrorText"));
 			dialog->ShowAsync();
 		}
 		else
 		{
 			//start download the file
 			item->Downloading = true;
-			DownloadFile(item, CreationCollisionOption::ReplaceExisting).then([item, entry](size_t size)
+			DownloadFile(item, CreationCollisionOption::ReplaceExisting).then([item, entry, loader](size_t size)
 			{
 				item->Downloading = false;
 
@@ -291,14 +296,14 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 				if (item->Type == OneDriveItemType::SRAM)
 					entry->AutoLoadLastState = false;
 
-				MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " was imported successfully.");
+				MessageDialog ^dialog = ref new MessageDialog(item->File->Name + " " + loader->GetString("ImportedSuccessText"));
 				dialog->ShowAsync();
 			});
 		}
 	}
 	else
 	{
-		MessageDialog ^dialog = ref new MessageDialog("This file type is not supported.");
+		MessageDialog ^dialog = ref new MessageDialog(loader->GetString("FileNotSupportedError"));
 		dialog->ShowAsync();
 	}
 
@@ -320,7 +325,7 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item, CreationColli
 		catch (Platform::Exception^ ex)
 		{
 			// We'll handle the specific errors below.
-			MessageDialog ^dialog = ref new MessageDialog("Error: " + ex->Message);
+			MessageDialog ^dialog = ref new MessageDialog(ex->Message);
 			dialog->ShowAsync();
 
 			size_t length = 0;
@@ -334,13 +339,15 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item, CreationColli
 
 void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	//check to see if any thing is downloading
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)
 	{
 		OneDriveFileItem^ item = this->fileVector->GetAt(i);
 		if (item->Downloading)
 		{
-			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			MessageDialog ^dialog = ref new MessageDialog(loader->GetString("PleaseWaitDownloadText"));
 			dialog->ShowAsync();
 			return;
 		}
@@ -356,12 +363,14 @@ void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml
 
 void FileBrowserPane::OnNavigatingFrom(Windows::UI::Xaml::Navigation::NavigatingCancelEventArgs^ e)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)
 	{
 		OneDriveFileItem^ item = this->fileVector->GetAt(i);
 		if (item->Downloading)
 		{
-			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			MessageDialog ^dialog = ref new MessageDialog(loader->GetString("PleaseWaitDownloadText"));
 			dialog->ShowAsync();
 			e->Cancel = true;
 			break;
@@ -411,13 +420,15 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 		return;
 	}
 
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	//check to see if any thing is downloading
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)
 	{
 		OneDriveFileItem^ item = this->fileVector->GetAt(i);
 		if (item->Downloading)
 		{
-			MessageDialog ^dialog = ref new MessageDialog("Please wait until all files have finished downloading.");
+			MessageDialog ^dialog = ref new MessageDialog(loader->GetString("PleaseWaitDownloadText"));
 			dialog->ShowAsync();
 			return;
 		}

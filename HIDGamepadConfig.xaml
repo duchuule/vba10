@@ -23,9 +23,10 @@
                     VerticalAlignment="Stretch"
                     Orientation="Horizontal" >
             
-            <TextBlock Text="HID Gamepad Config" 
+            <TextBlock Text="**HID Gamepad Config" 
                        Style="{ThemeResource TitleTextBlockStyle}"
                        Margin="12,4,0,4"
+                       x:Uid="HIDGamepadConfig"
                        x:Name="txtTitle"
                        />
         </StackPanel>
@@ -68,19 +69,19 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Left" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="**Left" x:Uid="Left"  VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtLeft1" Tag="Left1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtLeft2" Tag="Left2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
-                    
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Right" VerticalAlignment="Center" Margin="0,12,0,4"  />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Right" x:Uid="Right" VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtRight1" Tag="Right1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtRight2" Tag="Right2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Up" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Up" x:Uid="Up" VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtUp1" Tag="Up1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="2" Grid.Column="3" x:Name="txtUp2" Tag="Up2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Down" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Down" x:Uid="Down" VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtDown1" Tag="Down1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="3" Grid.Column="3" x:Name="txtDown2" Tag="Down2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
@@ -100,15 +101,15 @@
                     <TextBox Grid.Row="7" Grid.Column="1" x:Name="txtR1" Tag="R1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="7" Grid.Column="3" x:Name="txtR2" Tag="R2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Start" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Start" x:Uid="Start"  VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="8" Grid.Column="1" x:Name="txtStart1" Tag="Start1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="8" Grid.Column="3" x:Name="txtStart2" Tag="Start2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
-                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Select" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Select" x:Uid="Select"  VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="9" Grid.Column="1" x:Name="txtSelect1" Tag="Select1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="9" Grid.Column="3" x:Name="txtSelect2" Tag="Select2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 
-                    <TextBlock Grid.Row="10" Grid.Column="0" Text="Turbo" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="**Turbo" x:Uid="Turbo" VerticalAlignment="Center" Margin="0,12,0,4"  />
                     <TextBox Grid.Row="10" Grid.Column="1" x:Name="txtTurbo1" Tag="Turbo1" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4"/>
                     <TextBox Grid.Row="10" Grid.Column="3" x:Name="txtTurbo2" Tag="Turbo2" GotFocus="txtLeft1_GotFocus" LostFocus="txtLeft1_LostFocus" IsReadOnly="True" Margin="0,12,0,4" />
 

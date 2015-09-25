@@ -172,9 +172,12 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 
 bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void(*messageCallback)(Platform::String ^))
 {
+	auto loader =  Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+
 	if (codeText == nullptr || codeText->IsEmpty())
 	{
-		messageCallback("You must enter a cheat code first.");
+		messageCallback(loader->GetString("EmptyCheatCodeError"));
 		return false;
 	}
 
@@ -194,13 +197,13 @@ bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void(*messageCallbac
 		{
 			if (!IS_HEX(line.at(i)))
 			{
-				messageCallback("Invalid code format.");
+				messageCallback(loader->GetString("InvalidCheatCodeError"));
 				return false;
 			}
 		}
 		if (line.length() != 6 && line.length() != 9 && line.length() != 8 && line.length() != 12 && line.length() != 16)
 		{
-			messageCallback("Invalid code format.");
+			messageCallback(loader->GetString("InvalidCheatCodeError"));
 			return false;
 		}
 	}

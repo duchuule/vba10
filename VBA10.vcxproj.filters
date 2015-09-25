@@ -56,9 +56,6 @@
     <Filter Include="Strings\en-US">
       <UniqueIdentifier>{4161b0c5-0444-4edc-bb8a-4d05c8f81b40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Strings\vi-VN">
-      <UniqueIdentifier>{ee6b53a2-ada2-480d-bf25-1efbbf8cc743}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Filters">
       <UniqueIdentifier>{f9a8ee27-227a-4136-9aee-3bd9361fcdca}</UniqueIdentifier>
     </Filter>
@@ -598,7 +595,6 @@
     </None>
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
-    <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
     <None Include="VBA10_StoreKey.pfx" />
     <None Include="VBA10_TemporaryKey.pfx" />
     <None Include="Filter\hqx.inc">

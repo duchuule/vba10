@@ -39,7 +39,10 @@ HelpPage::HelpPage()
 	//get version
 	auto myPackage = Windows::ApplicationModel::Package::Current;
 	auto version = myPackage->Id->Version;
-	versionBlock->Text = "Version: " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
+
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+	versionBlock->Text = loader->GetString("VersionText") + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
 
 }
 
