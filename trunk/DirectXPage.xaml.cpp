@@ -155,45 +155,46 @@ DirectXPage::DirectXPage():
 	// Declare the top level nav items
 	navlist = ref new Vector<NavMenuItem^>();
 
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 	navlist->Append(
 		ref new NavMenuItem(
-			"Home",
+			loader->GetString("HomeText"),
 			Symbol::Home,
 			TypeName(SelectROMPane::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Cheats",
+			loader->GetString("CheatsText"),
 			Symbol::ReportHacked,
 			TypeName(CheatPane::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Import",
+			loader->GetString("ImportText"),
 			Symbol::Download,
 			TypeName(ImportPage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Export",
+			loader->GetString("ExportText"),
 			Symbol::Upload,
 			TypeName(ExportPage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Purchase",
+			loader->GetString("PurchaseText"),
 			Symbol::Shop,
 			TypeName(PurchasePage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Settings",
+			loader->GetString("SettingsText"),
 			Symbol::Setting,
 			TypeName(SettingsPage::typeid)));
 
 	navlist->Append(
 		ref new NavMenuItem(
-			"Help",
+			loader->GetString("HelpText"),
 			Symbol::Help,
 			TypeName(HelpPage::typeid)));
 

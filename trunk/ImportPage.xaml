@@ -29,7 +29,8 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="IMPORT"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="**IMPORT"
+                       x:Uid="IMPORT"/>
         </Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -38,14 +39,16 @@
             <RelativePanel>
                 <StackPanel Margin="12,0"
                         MaxWidth="500">
-                    <TextBlock Text="Local storage"
+                    <TextBlock Text="**Local storage"
                                 VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Margin="0,8,0,0"
+                               x:Uid="LocalStorage"
                                   />
                     <TextBlock TextWrapping="Wrap"
-                           Text="Use this option to import a file already present on your phone or PC. NOTE: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing. Just select the folder containing the rom and will be presented with a list of rom to import."                                
-                                 Margin=" 0, 4, 0, 4" />
+                           Text="**Use this option to***"                                
+                                 Margin=" 0, 4, 0, 4" 
+                               x:Uid="ImportLocalInstruction"/>
 
                     <StackPanel Orientation="Horizontal"
                             Margin="0,4,0,4">

@@ -189,4 +189,142 @@
   <data name="SignInBtn.Content" xml:space="preserve">
     <value>Sign in</value>
   </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Cheats</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Contact: </value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>You must enter a cheat code first.</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Could not find export folder.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>This file type is not supported.</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID Gamepad Config</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>How to restore saves</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>was imported successfully.</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Invalid code format.</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Network error.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Could not find a matching ROM name.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Please wait until all files have finished downloading.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Quit the app completelely.
+2. Make sure the name of the save file match the name  of the rom exactly (except the extension).
+3. Open the app and import the save file.
+4. Start the game.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Select file(s) to export</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>SelectROM</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Signed in</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Upload completed successfully.</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Version: </value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Axis</value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Button</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Error, device connection failed.</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Down</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad Left</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>NOTE: the D-pad can only be used for direction and cannot be assigned to other functions.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad Right</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad Up</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>You can now assign buttons as you wish. Up to two buttons can be assigned for each function.</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>IMPORT</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Use this option to import a file already present on your phone or PC. NOTE: due to a bug in Windows 10, you won't be able to see the content of the folder you are browsing. Just select the folder containing the rom and will be presented with a list of rom to import.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>First press Start button.</value>
+  </data>
 </root>

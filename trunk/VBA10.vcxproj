@@ -1222,7 +1222,6 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="Filter\hqx.inc" />
-    <None Include="MultilingualResources\VBA10.vi-VN.xlf" />
     <None Include="packages.config" />
     <None Include="SpriteBatch.hlsli" />
     <None Include="VBA10_StoreKey.pfx" />

@@ -46,24 +46,25 @@ HIDGamepadConfig::HIDGamepadConfig() :
 void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 {
 	navigatedAway = false;
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 	if (!EventHandlerForDevice::Current->IsDeviceConnected) //connection failed
 	{
 		//this->txtNotification->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		//this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-		this->txtNotification->Text = "Error, device connection failed.";
+		this->txtNotification->Text = loader->GetString("DeviceConnectionFailText");
 	}
 	else
 	{
 		//this->txtNotification->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		//this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
-		this->txtNotification->Text = "First press Start button.";
+		this->txtNotification->Text = loader->GetString("PressStartPrompt");
 
 
 
 
 		//Read stored configuration and display
 		create_task(emulator->RestoreHidConfig())
-			.then([this] (bool success) 
+			.then([this, loader] (bool success) 
 		{
 			RegisterForInputReportEvents();
 
@@ -86,7 +87,7 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 					TextBox^ txtbox = FindTextbox(function);
 
 					if (txtbox != nullptr)
-						txtbox->Text = "Button " + bid.ToString();
+						txtbox->Text = loader->GetString("ButtonText") + " " + bid.ToString();
 				}
 
 				//display numeric control
@@ -96,10 +97,10 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 					{
 
 						hasHatSwitch = true;
-						txtLeft1->Text = "D-pad Left";
-						txtUp1->Text = "D-pad Up";
-						txtRight1->Text = "D-pad Right";
-						txtDown1->Text = "D-pad Down";
+						txtLeft1->Text = loader->GetString("DpadLeftText");
+						txtUp1->Text = loader->GetString("DpadUpText");
+						txtRight1->Text = loader->GetString("DpadRightText");
+						txtDown1->Text = loader->GetString("DpadDownText");
 						txtLeft1->IsEnabled = false;
 						txtUp1->IsEnabled = false;
 						txtRight1->IsEnabled = false;
@@ -118,13 +119,13 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 						if (txtbox != nullptr)
 						{
 							if (ncontrol->Type == 0)
-								txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ")";
+								txtbox->Text = loader->GetString("AxisText") + " (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ")";
 							else if (ncontrol->Type == 1)
 							{
 								if (nid == -1)
-									txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") -";
+									txtbox->Text = loader->GetString("AxisText") + " (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") -";
 								else if (nid == 1)
-									txtbox->Text = "Axis (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") +";
+									txtbox->Text = loader->GetString("AxisText") + " (" + ncontrol->UsagePage.ToString() + "," + ncontrol->UsageId.ToString() + ") +";
 							}
 
 						}
@@ -148,10 +149,10 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 							if (usagePage == 0x01 && usageId == 0x39)  //this gamepad has hatswitch
 							{
 								hasHatSwitch = true;
-								txtLeft1->Text = "D-pad Left";
-								txtUp1->Text = "D-pad Up";
-								txtRight1->Text = "D-pad Right";
-								txtDown1->Text = "D-pad Down";
+								txtLeft1->Text = loader->GetString("DpadLeftText");
+								txtUp1->Text = loader->GetString("DpadUpText");
+								txtRight1->Text = loader->GetString("DpadRightText");
+								txtDown1->Text = loader->GetString("DpadDownText");
 								txtLeft1->IsEnabled = false;
 								txtUp1->IsEnabled = false;
 								txtRight1->IsEnabled = false;
@@ -230,6 +231,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 	//check buttons
 	auto bcontrols = inputReport->ActivatedBooleanControls;
 
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 
 	if (configureStage == 0) //record start button and default value of numeric buttons
 	{
@@ -256,14 +258,14 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 		
 
-			this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, item]()
+			this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, item, loader]()
 			{
-				Platform::String^ instruction = "You can now assign buttons as you wish. Up to two buttons can be assigned for each function.";
+				Platform::String^ instruction = loader->GetString("HIDConfigInstruction");
 				if (hasHatSwitch)
-					instruction += " NOTE: the D-pad can only be used for direction and cannot be assigned to other functions.";
+					instruction += " " + loader->GetString("DpadNote");
 				txtNotification->Text = instruction;
 				
-				txtStart1->Text = "Button " + startbuttonID.ToString();
+				txtStart1->Text = loader->GetString("ButtonText") + " " + startbuttonID.ToString();
 				emulator->HidInput->booleanControlMapping->Insert( startbuttonID, "Start1");
 
 				this->gridMain->Visibility = Windows::UI::Xaml::Visibility::Visible;
@@ -338,7 +340,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 
 
 
-				this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control]()
+				this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, loader]()
 				{
 					//remove the tag if it has been asiggned to a different button
 					for (auto pair : emulator->HidInput->booleanControlMapping)
@@ -371,7 +373,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 					}
 
 					emulator->HidInput->booleanControlMapping->Insert(control->Id, (String^)focusTextbox->Tag);
-					focusTextbox->Text = "Button " + control->Id.ToString();
+					focusTextbox->Text = loader->GetString("ButtonText") + " " + control->Id.ToString();
 				}));
 			}
 
@@ -409,9 +411,9 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				if (controlExt->Type == 0 && control->Value != controlExt->DefaultValue)
 				{
 					
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt, loader]()
 					{
-						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
+						focusTextbox->Text = loader->GetString("AxisText") + " (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ")";
 
 
 						//remove the tag if it has been asiggned to a different button value
@@ -453,9 +455,9 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				{
 					
 
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt, loader]()
 					{
-						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
+						focusTextbox->Text = loader->GetString("AxisText") + " (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") -";
 						
 						//remove the tag if it has been asiggned to a different button value
 						for (auto pair : controlExt->Mapping)
@@ -495,9 +497,9 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 				{
 					
 
-					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt]()
+					this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, control, controlExt, loader]()
 					{
-						focusTextbox->Text = "Axis (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
+						focusTextbox->Text = loader->GetString("AxisText") + " (" + control->UsagePage.ToString() + "," + control->UsageId.ToString() + ") +";
 						
 						//remove the function if it has been asiggned to a different button value
 						for (auto pair : controlExt->Mapping)
