@@ -54,7 +54,8 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Header="About"
+            <PivotItem Header="**About"
+                       x:Uid="About"
                        Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -68,7 +69,7 @@
                             <Run Text="VBA10"/>
                         </TextBlock>
                         <TextBlock TextWrapping="Wrap" Name="versionBlock"
-                               Text="Version: check .cpp">
+                               Text="**Version: check .cpp">
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap"  Name="contactBlock"
@@ -82,13 +83,13 @@
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap" >
+
                     	    <LineBreak />
-                    	    <Run  Text="Feel free to report bugs or broken games."/>
-                    	    <LineBreak />
-                    	    <LineBreak />
-                            <Run  Text="Credits:"/>
+                            <Run  Text="**Credits:" x:Uid="Credits"/>
                     	    <LineBreak />
                             <Run  Text="- Eddi Bento for logo design."/>
+                    	    <LineBreak />
+                            <Run  Text="- 汉化-智机网abc2419."/>
                     	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
