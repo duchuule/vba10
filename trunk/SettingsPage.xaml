@@ -499,7 +499,7 @@
                                   Margin="0,0,0,10"
                                   >
                             <ComboBoxItem Content="**None" x:Uid="NoneCbi"/>
-                            <ComboBoxItem Content="**Bilinear" x:Uid="Bilinear"/>
+                            <ComboBoxItem Content="**Bilinear" x:Uid="BilinearCbi"/>
                             <ComboBoxItem>HQ2x</ComboBoxItem>
                             <ComboBoxItem>xBR2x</ComboBoxItem>
                             <ComboBoxItem>HQ3x</ComboBoxItem>
@@ -563,7 +563,8 @@
                 </ScrollViewer>
             </PivotItem>
 
-            <PivotItem Header="General"
+            <PivotItem Header="**General"
+                       x:Uid="General"
                        Margin="0">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -576,7 +577,8 @@
                         
                         
                         
-                        <ToggleSwitch Header="Sound" 
+                        <ToggleSwitch Header="**Sound" 
+                                      x:Uid="Sound"
                                       Toggled="soundToggle_Toggled" 
                                       Name="soundToggle" 
                                       IsOn="True"
@@ -587,17 +589,20 @@
                                       Name="soundSyncToggle" 
                                       IsOn="True">
                             <ToggleSwitch.Header>
-                                <TextBlock Text="Synchronize audio (better quality, CPU intensive)"
-                                           TextWrapping="Wrap"/>
+                                <TextBlock Text="**Synchronize audio (better quality, CPU intensive)"
+                                           TextWrapping="Wrap"
+                                           x:Uid="SyncAudio"/>
                             </ToggleSwitch.Header>
                         </ToggleSwitch>
                         
-                        <ToggleSwitch Header="Disable save confirmation" 
+                        <ToggleSwitch Header="**Disable save confirmation" 
+                                      x:Uid="DisableSaveConfirm"
                                       IsOn="False" 
                                       Name="saveConfirmationToggle" 
                                       Toggled="saveConfirmationToggle_Toggled_1"/>
                         
-                        <ToggleSwitch Header="Disable load confirmation" 
+                        <ToggleSwitch Header="**Disable load confirmation" 
+                                      x:Uid="DisableLoadConfirm"
                                       IsOn="False" 
                                       Name="loadConfirmationToggle" 
                                       Toggled="loadConfirmationToggle_Toggled_1"/>
@@ -606,12 +611,28 @@
                                   VerticalAlignment="Top" 
                                    SelectedIndex="0" 
                                   SelectionChanged="cboTheme_SelectionChanged"
-                                  Header="Theme">
-                            <ComboBoxItem>Light</ComboBoxItem>
-                            <ComboBoxItem>Dark</ComboBoxItem>
+                                  Header="Theme"
+                                  x:Uid="Theme"
+                                  Margin="0,0,0,10">
+                            <ComboBoxItem Content="Light" x:Uid="LightCbi"/>
+                            <ComboBoxItem Content="Dark" x:Uid="DarkCbi"/> 
                         </ComboBox>
 
-                        <ToggleSwitch Header="Hide hamburger button" 
+                        <ComboBox Name="cboCommandButtonPosition" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Top" 
+                                   SelectedIndex="0" 
+                                  Header="Command button position"
+                                  Margin="0,0,0,10" 
+                                  SelectionChanged="cboCommandButtonPosition_SelectionChanged"
+                                  >
+                            <ComboBoxItem Content="Auto" x:Uid="AutoCbi"/>
+                            <ComboBoxItem Content="Top" x:Uid="TopCbi"/>
+                            <ComboBoxItem Content="Bottom" x:Uid="BottomCbi"/>
+                        </ComboBox>
+
+                        <ToggleSwitch Header="**Hide hamburger button" 
+                                      x:Uid="HideHamburger"
                                       IsOn="False" 
                                       Name="hideHamburgerToggle" 
                                       Toggled="hideHamburgerToggle_Toggled"

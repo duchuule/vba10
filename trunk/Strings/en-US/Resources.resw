@@ -295,7 +295,7 @@
     <value>Aspect ratio</value>
   </data>
   <data name="AutoCbi.Content" xml:space="preserve">
-    <value>auto</value>
+    <value>Auto</value>
   </data>
   <data name="AxisText" xml:space="preserve">
     <value>Axis</value>
@@ -318,8 +318,14 @@
   <data name="CancelBtn.Content" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>You cannot remove a running ROM. Please start another ROM or restart the app.</value>
+  </data>
   <data name="ConfigureBtn.Content" xml:space="preserve">
     <value>Configure</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="ConnectBtn.Content" xml:space="preserve">
     <value>Connect</value>
@@ -327,14 +333,29 @@
   <data name="CPUFilter.Header" xml:space="preserve">
     <value>CPU filter (slow)</value>
   </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
   <data name="Deadzone.Text" xml:space="preserve">
     <value>Deadzone (analog stick): </value>
   </data>
   <data name="DearVBA10Users.Text" xml:space="preserve">
     <value>Dear VBA10 Users:</value>
   </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>This will *delete* the ROM file and save files from the app's private storage. Continue?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DeviceConnectionFailText" xml:space="preserve">
     <value>Error, device connection failed.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Disable load confirmation</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Disable save confirmation</value>
   </data>
   <data name="DisplayType.Header" xml:space="preserve">
     <value>Display type</value>
@@ -372,8 +393,14 @@
   <data name="EnableTurboMode.Header" xml:space="preserve">
     <value>Enable turbo mode</value>
   </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Failed to connect to</value>
+  </data>
   <data name="FilesImportSuccessText" xml:space="preserve">
     <value>Files imported successfully.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Looks like this is the first time you connect this gamepad. Click OK to configure it.</value>
   </data>
   <data name="FrameSkipNonturbo.Header" xml:space="preserve">
     <value>Frame skip (non-turbo mode)</value>
@@ -387,11 +414,20 @@
   <data name="GamepadInstruction2.Text" xml:space="preserve">
     <value> Buy premium feature package or watch a short video to enable this feature.</value>
   </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
   <data name="GPUFilter.Header" xml:space="preserve">
     <value>GPU filter (fast)</value>
   </data>
   <data name="HIDConfigInstruction" xml:space="preserve">
     <value>You can now assign buttons as you wish. Up to two buttons can be assigned for each function.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Hide hamburger button</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>HID gamepad(s) detected.</value>
   </data>
   <data name="HoldActivateCbi.Content" xml:space="preserve">
     <value>Hold to activate</value>
@@ -417,11 +453,20 @@
   <data name="Input.Header" xml:space="preserve">
     <value>Input</value>
   </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>is connected.</value>
+  </data>
   <data name="JoystickScale.Text" xml:space="preserve">
     <value>Virtual joystick scale: </value>
   </data>
   <data name="KeyBindings.Text" xml:space="preserve">
     <value>Key Bindings</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Are you sure you want to load? All unsaved progress will be lost.</value>
   </data>
   <data name="LoadingProduct.Text" xml:space="preserve">
     <value>Loading production list. Please wait...</value>
@@ -435,6 +480,9 @@
   <data name="NoFileSelectedText" xml:space="preserve">
     <value>You have to select at least one file.</value>
   </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>No HID gamepad detected.</value>
+  </data>
   <data name="NoneCbi.Content" xml:space="preserve">
     <value>None</value>
   </data>
@@ -444,11 +492,29 @@
   <data name="NoSupportedFileText" xml:space="preserve">
     <value>No supported file found!</value>
   </data>
+  <data name="NoText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>No XBox controller detected.</value>
+  </data>
   <data name="OKBtn.Content" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="OriginalCbi.Content" xml:space="preserve">
     <value>Original</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Overwrite?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Are you sure you want to save? This will overwrite the selected save state.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>This is a premium feature. You can use the feature now but the setting will revert to None the next time the app starts.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>This is a premium feature. Free users can use None, Bilinear or HQ2x.</value>
   </data>
   <data name="PressStartPrompt" xml:space="preserve">
     <value>First press Start button.</value>
@@ -476,6 +542,12 @@
   </data>
   <data name="PurchaseWarning2.Text" xml:space="preserve">
     <value>If you want to take risk, click on the button below to load the products. Keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work. I can, however, provide you with the .appx to sideload if you can no longer download the app. To current VBA8 paid users: version 2.27 is now availalbe which lets you request VBA10 unlock codes, but be aware: using an unlock code has all the same bugs as paying for the products, except you won't lose money.</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>This will remove the ROM entry from the app's list. Your actual ROM files and save files will not be affected. Continue?</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Are you sure you want to reset the console?</value>
   </data>
   <data name="SaveFileImportSuccessText" xml:space="preserve">
     <value>Save file imported successfully.</value>
@@ -516,14 +588,35 @@
   <data name="SelectFileImportText" xml:space="preserve">
     <value>Select file(s) to import</value>
   </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Please select a HID gamepad.</value>
+  </data>
   <data name="SelectROMDirText" xml:space="preserve">
     <value>Select ROM Directory</value>
   </data>
   <data name="ShowFPS.Header" xml:space="preserve">
     <value>Show FPS</value>
   </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Sound</value>
+  </data>
   <data name="StretchCbi.Content" xml:space="preserve">
     <value>Stretch</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Successfully switched to full screen mode.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Synchronize audio (better quality, CPU intensive)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Thanks! Enjoy your Xbox/HID controller for the next hour. Click this button again after the time expires to continue using Xbox/HID controller.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>The theme will be applied the next time the app starts.</value>
   </data>
   <data name="TouchToggle.Header" xml:space="preserve">
     <value>Show virtual buttons</value>
@@ -537,13 +630,34 @@
   <data name="TVModeCbi.Content" xml:space="preserve">
     <value>TV mode</value>
   </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="UseFullscreen.Header" xml:space="preserve">
     <value>Use fullscreen mode</value>
   </data>
   <data name="Video.Header" xml:space="preserve">
     <value>Video</value>
   </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="WatchVideoBtn.Content" xml:space="preserve">
     <value>Watch Video</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>You need to watch the whole video to activate the feature.</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>XBox controller is connected.</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Top</value>
   </data>
 </root>

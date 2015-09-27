@@ -199,6 +199,11 @@ DirectXPage::DirectXPage():
 			TypeName(HelpPage::typeid)));
 
 	NavMenuList->ItemsSource = navlist;
+
+	//set command position
+	this->ChangeCommandPosition();
+
+
 	//load settings
 	auto settings = ApplicationData::Current->LocalSettings->Values;
 
@@ -236,6 +241,27 @@ DirectXPage::DirectXPage():
 
 }
 
+
+
+void DirectXPage::ChangeCommandPosition()
+{
+
+		//move position of hamburger button to bottom if settings say so
+		if ((EmulatorSettings::Current->CommandButtonPosition == 0 && Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+			|| EmulatorSettings::Current->CommandButtonPosition == 2)
+		{
+			TogglePaneButton->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Bottom;
+			NavMenuList->Margin = Windows::UI::Xaml::Thickness(0, 0, 0, 48);
+			NavMenuList->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Bottom;
+		}
+		else
+		{
+			TogglePaneButton->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Top;
+			NavMenuList->Margin = Windows::UI::Xaml::Thickness(0, 48, 0, 0);
+			NavMenuList->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Top;
+		}
+
+}
 
 void DirectXPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) 
 {
