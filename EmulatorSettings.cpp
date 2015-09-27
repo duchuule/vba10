@@ -18,7 +18,7 @@ using namespace Windows::Foundation;
 #define DEFAULT_DPAD_STYLE		1
 #define DEFAULT_DEADZONE_VALUE	10.0f
 #define DEFAULT_MONITOR_TYPE	MONITOR_60HZ
-#define DEFAULT_SAVE_CONFIRM	false
+#define DEFAULT_SAVE_CONFIRM	true
 #define DEFAULT_LOAD_CONFIRM	false
 #define DEFAULT_LINEAR_FILTER	true
 

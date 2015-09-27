@@ -35,6 +35,7 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::Devices::Enumeration;
 using namespace Windows::Devices::HumanInterfaceDevice;
 using namespace Microsoft::Advertising::WinRT::UI;
+using namespace Windows::ApplicationModel::Resources;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -42,6 +43,8 @@ SettingsPage::SettingsPage()
 	: initdone(false), emulator(EmulatorGame::GetInstance())
 {
 	InitializeComponent();
+
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 
 	//create ad control
 	if (App::HasAds)
@@ -121,6 +124,7 @@ SettingsPage::SettingsPage()
 	this->soundToggle->IsOn = SoundEnabled();
 	this->soundSyncToggle->IsOn = SynchronizeAudio();
 	this->cboTheme->SelectedIndex = EmulatorSettings::Current->Theme;
+	this->cboCommandButtonPosition->SelectedIndex = EmulatorSettings::Current->CommandButtonPosition;
 
 	//hamburger
 	if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
@@ -128,6 +132,9 @@ SettingsPage::SettingsPage()
 		this->hideHamburgerToggle->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 	this->hideHamburgerToggle->IsOn = EmulatorSettings::Current->HideHamburger;
+
+
+	
 
 	//check xbox controller connection
 	XINPUT_STATE state;
@@ -145,18 +152,18 @@ SettingsPage::SettingsPage()
 
 	if (!xboxConnected)
 	{
-		this->txtControllerStatus->Text = "No XBox controller detected.";
+		this->txtControllerStatus->Text = loader->GetString("NoXboxControllerText");
 	}
 	else
 	{
-		this->txtControllerStatus->Text = "XBox controller is connected.";
+		this->txtControllerStatus->Text = loader->GetString("XboxControllerConnectedText");
 	}
 
 	
 	//check hid gamepad connection
 	auto deviceSelector = HidDevice::GetDeviceSelector(0x0001, 0x0005);
 	create_task(DeviceInformation::FindAllAsync(deviceSelector))
-		.then([this](DeviceInformationCollection^ collection)
+		.then([this, loader](DeviceInformationCollection^ collection)
 	{
 		
 			//VID_045E = microsoft
@@ -183,13 +190,13 @@ SettingsPage::SettingsPage()
 			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Visible;
 
 			if (EventHandlerForDevice::Current->IsDeviceConnected)
-				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
+				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " " + loader->GetString("IsConnectedText");
 			else
-				this->txtHIDGamepad->Text = this->HIDDeviceList->Size + " HID gamepad(s) detected:";
+				this->txtHIDGamepad->Text = this->HIDDeviceList->Size + " " + loader->GetString("HIDGamepadDetectedText");
 		}
 		else
 		{
-			this->txtHIDGamepad->Text = "No HID gamepad detected.";
+			this->txtHIDGamepad->Text = loader->GetString("NoHIDGamepadText");
 			this->lbHIDGamepad->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 			this->panelHIDConnect->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		}
@@ -240,14 +247,14 @@ void SettingsPage::OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertis
 {
 	this->emulator->ResetXboxTimer();
 	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
-	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThanksWatchVideoText"));
 	dialog->ShowAsync();
 }
 
 
 void SettingsPage::OnCancelled(Platform::Object ^sender, Platform::Object ^args)
 {
-	MessageDialog ^dialog = ref new MessageDialog("You need to watch the whole video to activate the feature.");
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("WatchWholeVideoError") );
 	dialog->ShowAsync();
 }
 
@@ -255,7 +262,7 @@ void SettingsPage::OnCompleted(Platform::Object ^sender, Platform::Object ^args)
 {
 	this->emulator->ResetXboxTimer();
 	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
-	MessageDialog ^dialog = ref new MessageDialog("Thanks! Enjoy your Xbox controller for the next hour. Click this button again after the time expires to continue using Xbox controller.");
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThanksWatchVideoText"));
 	dialog->ShowAsync();
 }
 
@@ -268,7 +275,7 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 
 	if (this->HIDDeviceList->Size > 1 && index < 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog("Please select a HID gamepad.");
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SelectHIDGamepadPrompt"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -303,7 +310,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 	if (this->HIDDeviceList->Size > 1 && index < 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog("Please select a HID gamepad.");
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SelectHIDGamepadPrompt"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -317,17 +324,19 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 		{
 			bool openSuccess = openDeviceTask.get();
 
+			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 			if (openSuccess)
 			{
-				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " is connected.";
+				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " " + loader->GetString("IsConnectedText");
 
 				create_task(emulator->RestoreHidConfig())
-					.then([this](bool restoreSuccess)
+					.then([this, loader](bool restoreSuccess)
 				{
 					if (!restoreSuccess)
 					{
 						//open dialog
-						MessageDialog ^dialog = ref new MessageDialog("Looks like this is the first time you connect this gamepad. Click OK to configure it.");
+						MessageDialog ^dialog = ref new MessageDialog(loader->GetString("FirstTimeHIDConnectText"));
 
 						UICommand ^confirm = ref new UICommand("OK",
 							ref new UICommandInvokedHandler([this](IUICommand ^cmd)
@@ -345,7 +354,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 			}
 			else
 			{
-				this->txtHIDGamepad->Text = "Failed to connect to " + this->HIDDeviceList->GetAt(index)->Name;
+				this->txtHIDGamepad->Text = loader->GetString("FailedConnectToText") + " " + this->HIDDeviceList->GetAt(index)->Name;
 			}
 		}
 		catch (const std::exception &) {}
@@ -382,7 +391,7 @@ void SettingsPage::UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, Virt
 	auto s = vk.ToString();
 	if (s->Length() >= 20)
 	{
-		s = "Unknown";
+		s = ResourceLoader::GetForCurrentView()->GetString("UnknownText");
 	}
 
 	box->Text = s;
@@ -619,7 +628,7 @@ void SettingsPage::cboPixelFilter_SelectionChanged(Platform::Object^ sender, Win
 
 		if (!App::IsPremium)
 		{
-			MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. You can use the feature now but the setting will revert to None the next time the app starts.");
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("PremiumCPUFilterPrompt"));
 			dialog->ShowAsync();
 		}
 	}
@@ -637,7 +646,7 @@ void SettingsPage::cboPixelShader_SelectionChanged(Platform::Object^ sender, Win
 			//revert the choice
 			this->cboPixelShader->SelectedIndex = EmulatorSettings::Current->PixelShader;
 
-			MessageDialog ^dialog = ref new MessageDialog("This is a premium feature. Free users can use None, Bilinear or HQ2x. ");
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("PremiumGPUFilterPrompt"));
 			dialog->ShowAsync();
 			return;
 		}
@@ -742,7 +751,7 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 
 
 			//open dialog if not crash
-			MessageDialog ^dialog = ref new MessageDialog("Successfully switched to full screen mode.");
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SwitchFullscreenSuccessText"));
 
 			//save settings if not crash
 			UICommand ^confirm = ref new UICommand("OK",
@@ -777,9 +786,20 @@ void SettingsPage::cboTheme_SelectionChanged(Platform::Object^ sender, Windows::
 		if (this->cboTheme->SelectedIndex != EmulatorSettings::Current->Theme)
 		{
 			EmulatorSettings::Current->Theme = this->cboTheme->SelectedIndex;
-			MessageDialog ^dialog = ref new MessageDialog("The theme will be applied the next time the app starts.");
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThemeNextStartText"));
 			dialog->ShowAsync();
 		}
+	}
+}
+
+void SettingsPage::cboCommandButtonPosition_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+{
+	if (initdone)
+	{
+
+		EmulatorSettings::Current->CommandButtonPosition = this->cboCommandButtonPosition->SelectedIndex;
+
+		DirectXPage::Current->ChangeCommandPosition();
 	}
 }
 
@@ -794,6 +814,9 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
 	}
 }
+
+
+
 
 
 

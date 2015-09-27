@@ -35,6 +35,7 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::ApplicationModel::Resources;
 
 StorageFolderModel::StorageFolderModel(StorageFolder ^folder)
 { 
@@ -54,11 +55,26 @@ SelectROMPane::SelectROMPane()
 
 	this->InitializeComponent();
 
+	//move command bar to bottom if setting says so
+	if ((EmulatorSettings::Current->CommandButtonPosition == 0 && Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+		|| EmulatorSettings::Current->CommandButtonPosition == 2)
+	{
+		svContainer->SetValue(Grid::RowProperty, 0);
+		LayoutRoot->RowDefinitions->GetAt(0)->Height = GridLength(1, GridUnitType::Star);
+
+		topbar->SetValue(Grid::RowProperty, 2);
+
+		LayoutRoot->RowDefinitions->GetAt(1)->Height = GridLength::Auto;
+	
+		
+	}
+
+
 	if (App::HasAds)
 	{
 		AdControl^ adControl = ref new AdControl();
 		LayoutRoot->Children->Append(adControl);
-		adControl->SetValue(Grid::RowProperty, 2);
+		adControl->SetValue(Grid::RowProperty, 1);
 	}
 
 	//bind list of ROM to display
@@ -269,21 +285,23 @@ void SelectROMPane::saveBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	}
 	else
 	{
-		MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to save? This will overwrite the selected save state.", "Overwrite?");
-		UICommand ^confirm = ref new UICommand("Yes",
+		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+		MessageDialog ^dialog = ref new MessageDialog(loader->GetString("OverwriteSaveConfirmText"),loader->GetString("OverwriteAsk"));
+		UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
 			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 		{
 			DirectXPage::Current->SaveState();
 		}));
 
-		UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
-			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
-		{
-			DisableSaveConfirmation(true);
-			DirectXPage::Current->SaveState();
-		}));
+		//UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
+		//	ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		//{
+		//	DisableSaveConfirmation(true);
+		//	DirectXPage::Current->SaveState();
+		//}));
 
-		UICommand ^no = ref new UICommand("No",
+		UICommand ^no = ref new UICommand(loader->GetString("NoText"),
 			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 		{
 			//do nothing
@@ -309,21 +327,24 @@ void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	}
 	else
 	{
-		MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to load? All unsaved progress will be lost.", "Warning");
-		UICommand ^confirm = ref new UICommand("Yes",
+		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+
+		MessageDialog ^dialog = ref new MessageDialog(loader->GetString("LoadConfirmPrompt"), loader->GetString("WarningText"));
+		UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
 			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 		{
 			DirectXPage::Current->LoadState();
 		}));
 
-		UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
-			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
-		{
-			DisableLoadConfirmation(true);
-			DirectXPage::Current->LoadState();
-		}));
+		//UICommand ^confirmRemember = ref new UICommand("Yes, don't ask again",
+		//	ref new UICommandInvokedHandler([this](IUICommand ^cmd)
+		//{
+		//	DisableLoadConfirmation(true);
+		//	DirectXPage::Current->LoadState();
+		//}));
 
-		UICommand ^no = ref new UICommand("No",
+		UICommand ^no = ref new UICommand(loader->GetString("NoText"),
 			ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 		{
 			//do nothing
@@ -343,15 +364,17 @@ void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 
 void SelectROMPane::resetBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	MessageDialog ^dialog = ref new MessageDialog("Are you sure you want to reset the console?", "Warning");
-	UICommand ^confirm = ref new UICommand("Yes",
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+	MessageDialog ^dialog = ref new MessageDialog(loader->GetString("ResetConfirmPrompt"), loader->GetString("WarningText"));
+	UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
 		ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 	{
 		DirectXPage::Current->Reset();
 	}));
 
 
-	UICommand ^no = ref new UICommand("No",
+	UICommand ^no = ref new UICommand(loader->GetString("NoText"),
 		ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 	{
 		//do nothing
@@ -448,12 +471,14 @@ void VBA10::SelectROMPane::lbAllROMMainGrid_RightTapped(Platform::Object^ sender
 
 void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect rect)
 {
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
 	auto menu = ref new PopupMenu();
-	menu->Commands->Append(ref new UICommand("Delete", ref new UICommandInvokedHandler([this, entry](IUICommand^ command)
+	menu->Commands->Append(ref new UICommand(loader->GetString("DeleteText"), ref new UICommandInvokedHandler([this, entry, loader](IUICommand^ command)
 	{
 		if (IsROMLoaded() && entry->FolderPath + L"\\" + entry->FileName == ROMFile->Path) //rom is runnning
 		{
-			MessageDialog ^dialog = ref new MessageDialog("You cannot remove a running ROM. Please start another ROM or restart the app.");
+			MessageDialog ^dialog = ref new MessageDialog(loader->GetString("CannotDeleteRunningROMError"));
 			dialog->ShowAsync();
 		}
 		else
@@ -461,12 +486,12 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 			MessageDialog ^dialog;
 
 			if (entry->LocationType == 0)  //private folder
-				dialog = ref new MessageDialog("This will *delete* the ROM file and save files from the app's private storage. Continue?", "Confirm");
+				dialog = ref new MessageDialog(loader->GetString("DeleteROMPrompt"), loader->GetString("ConfirmText"));
 
 			else
-				dialog = ref new MessageDialog("This will remove the ROM entry from the app's list. Your actual ROM files and save files will not be affected. Continue?", "Confirm");
+				dialog = ref new MessageDialog(loader->GetString("RemoveROMPrompt"), loader->GetString("ConfirmText"));
 
-			UICommand ^confirm = ref new UICommand("Yes",
+			UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
 				ref new UICommandInvokedHandler([this, entry](IUICommand ^cmd)
 			{
 				//find the index of the entry in the list
@@ -552,7 +577,7 @@ void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect
 			}));
 
 
-			UICommand ^no = ref new UICommand("No",
+			UICommand ^no = ref new UICommand(loader->GetString("NoText"),
 				ref new UICommandInvokedHandler([this](IUICommand ^cmd)
 			{
 				//do nothing

@@ -217,6 +217,18 @@ namespace VBA10
 			}
 		}
 
+		property int CommandButtonPosition
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(CommandButtonPositionKey, CommandButtonPositionDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(CommandButtonPositionKey, value);
+			}
+		}
+
 #pragma region Button positions
 
 		property double PadLeftP
@@ -660,6 +672,7 @@ namespace VBA10
 		Platform::String^ TurboBehaviorKey = "TurboBehaviorKey";
 		Platform::String^ PixelFilterKey = "PixelFilterKey";
 		Platform::String^ PixelShaderKey = "PixelShaderKey";
+		Platform::String^ CommandButtonPositionKey = "CommandButtonPositionKey";
 
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
@@ -717,6 +730,7 @@ namespace VBA10
 		const int TurboBehaviorDefault = 0;
 		const int PixelFilterDefault = 0; //0: none
 		const int PixelShaderDefault = 1; //0: nearest neighbor, 1: bilinear
+		const int CommandButtonPositionDefault = 0; //auto
 
 
 #pragma region button positions (in cm based on 6x10cm phone)
