@@ -657,6 +657,9 @@
   <data name="BottomCbi.Content" xml:space="preserve">
     <value>Bottom</value>
   </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Hamburger and command button positions</value>
+  </data>
   <data name="TopCbi.Content" xml:space="preserve">
     <value>Top</value>
   </data>
