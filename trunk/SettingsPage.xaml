@@ -622,10 +622,14 @@
                                   HorizontalAlignment="Stretch" 
                                   VerticalAlignment="Top" 
                                    SelectedIndex="0" 
-                                  Header="Command button position"
                                   Margin="0,0,0,10" 
                                   SelectionChanged="cboCommandButtonPosition_SelectionChanged"
                                   >
+                            <ComboBox.Header>
+                                    <TextBlock Text="**Hamburger and command button position" 
+                                               x:Uid="CommandButtonPosition"
+                                               TextWrapping="Wrap"/>
+                            </ComboBox.Header>
                             <ComboBoxItem Content="Auto" x:Uid="AutoCbi"/>
                             <ComboBoxItem Content="Top" x:Uid="TopCbi"/>
                             <ComboBoxItem Content="Bottom" x:Uid="BottomCbi"/>

@@ -62,20 +62,37 @@ SelectROMPane::SelectROMPane()
 		svContainer->SetValue(Grid::RowProperty, 0);
 		LayoutRoot->RowDefinitions->GetAt(0)->Height = GridLength(1, GridUnitType::Star);
 
+		LayoutRoot->RowDefinitions->GetAt(1)->Height = GridLength::Auto;
+
 		topbar->SetValue(Grid::RowProperty, 2);
 
-		LayoutRoot->RowDefinitions->GetAt(1)->Height = GridLength::Auto;
-	
+		if (App::HasAds)
+		{
+			AdControl^ adControl = ref new AdControl();
+			LayoutRoot->Children->Append(adControl);
+			adControl->SetValue(Grid::RowProperty, 1);
+		}
 		
 	}
-
-
-	if (App::HasAds)
+	else
 	{
-		AdControl^ adControl = ref new AdControl();
-		LayoutRoot->Children->Append(adControl);
-		adControl->SetValue(Grid::RowProperty, 1);
+		topbar->SetValue(Grid::RowProperty, 0);
+		LayoutRoot->RowDefinitions->GetAt(0)->Height = GridLength::Auto;
+
+		svContainer->SetValue(Grid::RowProperty, 1);
+		LayoutRoot->RowDefinitions->GetAt(1)->Height = GridLength(1, GridUnitType::Star);
+
+		if (App::HasAds)
+		{
+			AdControl^ adControl = ref new AdControl();
+			LayoutRoot->Children->Append(adControl);
+			adControl->SetValue(Grid::RowProperty, 2);
+		}
+
 	}
+
+
+
 
 	//bind list of ROM to display
 	cvsAllROMEntries->Source = App::ROMDB->AllROMDBEntries;
