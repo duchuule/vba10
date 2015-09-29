@@ -411,20 +411,32 @@ void SelectROMPane::selectStateBtn_Click(Platform::Object^ sender, Windows::UI::
 {
 	Popup ^statePopup = ref new Popup();
 	statePopup->IsLightDismissEnabled = true;
+	statePopup->MaxHeight = Window::Current->Bounds.Height - 48;
+	statePopup->IsLightDismissEnabled = true;
 
 	SelectStatePane ^pane = ref new SelectStatePane(GetSavestateSlot());
 	statePopup->Child = pane;
-	//pane->Width = 200;//statePopup->Width;
-	pane->MaxHeight = Window::Current->Bounds.Height - 48; //statePopup->MaxHeight;
+	pane->Width = statePopup->Width;
+	pane->MaxHeight = statePopup->MaxHeight;
 
-	
+
 	//auto transform = ((UIElement^)sender)->TransformToVisual(nullptr); //nullptr to get position related to windows
 	auto transform = ((UIElement^)topbar)->TransformToVisual(nullptr);
 
 	Windows::Foundation::Point point = transform->TransformPoint(Windows::Foundation::Point());
 	statePopup->HorizontalOffset = point.X + 1; //+ selectStateBtn->ActualWidth / 2.0f - pane->Width / 2.0f;
-	statePopup->VerticalOffset = point.Y + selectStateBtn->ActualHeight; 
 
+	//command bar at bottom
+	if ((EmulatorSettings::Current->CommandButtonPosition == 0 && Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+		|| EmulatorSettings::Current->CommandButtonPosition == 2)
+	{
+
+		statePopup->VerticalOffset = 0;
+		
+	}
+	else
+		statePopup->VerticalOffset = point.Y + selectStateBtn->ActualHeight;
+	
 	//statePopup->Measure(Windows::Foundation::Size(Window::Current->Bounds.Width, Window::Current->Bounds.Height));
 	//statePopup->SetValue(Canvas::LeftProperty, Window::Current->Bounds.Left);
 	//statePopup->SetValue(Canvas::TopProperty, this->windowBounds.Height - (88 + pane->DesiredSize.Height));
