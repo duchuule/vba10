@@ -62,6 +62,9 @@
     <Filter Include="Strings\zh-Hans">
       <UniqueIdentifier>{72083474-f23e-430b-b7d1-7f9089b53456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings\it">
+      <UniqueIdentifier>{3888e976-c0f2-4fc4-ba4d-f026c64f8c82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -936,6 +939,9 @@
     </PRIResource>
     <PRIResource Include="Strings\zh-Hans\Resources.resw">
       <Filter>Strings\zh-Hans</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\it\Resources.resw">
+      <Filter>Strings\it</Filter>
     </PRIResource>
   </ItemGroup>
 </Project>
