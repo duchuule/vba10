@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Afegir</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Afegir</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>Afegir ROM</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Relació d'aspecte</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Eix</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Botó</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Opacitat del controlador virtual: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Escala del botó virtual:</value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Botó</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>No pots treure una ROM en curs, obre un altre o reinicia la app.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Aquest emulador suporta els codis de Gameshark, CodeBreaker i  GameGenie.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>TRUCS</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Trucs</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Tanca</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Codi:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Posició del menú hamburguesa i de la barra de botons</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Configurar</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Conectar</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Contacte:</value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>Filtre de CPU (lent)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Credits:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Fosc</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Zona morta (Stick analògic): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Estimats usuaris de VBA10:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>Aixo *eliminara* l'arxiu de la ROM i les partides guardades. Continuar?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Descripció:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Error, la conexió amb el dispositiu ha fallat.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Desactiva la confirmació de carrega</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Desactiva la confirmació de guardar partida</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Tipus de pantalla</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Abaix</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-direccions</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Abaix</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Stick analògic dinàmic</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Stick analògic fixe</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad Esquerra</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>NOTA: El D-Pad únicament pot ser utilitzat com a control de direcció i no pot ser assignat a cap altre funció..</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad Dreta</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>Estil del D-pad</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad Adalt</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Editar disseny dels botons</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Primer has d'insertar el codi de trucs.</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Activar el mode turbo</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>EXPORTA</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Exporta</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>No es pot trobar la carpeta d'exportacions.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Si importes la rom amb l'opció d'emmagatzematge local tots els arxius de guardar partida s'emmagatzemen a la mateixa carpeta que la rom; només s'ha d'anar allà i copiar-los a qualsevol lloc on necessiti. Encara que si vostè està a l'Ordinador / Tablet i emmagatzema la rom a la carpeta OneDrive, tots els teus dispositiu es sincronitzen automàticament a la xarxa.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Si per alguna raó no pots accedir a la carpeta on tens les roms, ex: la ROM esta guardada a l'espai privat de la aplicació, utilitza aquesta opció per exportar-lo a OneDrive.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Exportar</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>No s'ha pogut conectar a</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Aquest tipus d'arxiu no és suportat.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Archius importats correctament.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Sembla que es el primer cop que conectes un comandament, fes click a OK per configurar-lo.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frame skip (mode no-turbo)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frame skip (mode turbo)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Únicament son suportats el comandament de la Xbox i un HID.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Compra el pack premium o veu un video curt per activar aquesta funció.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>Filtre de CPU (ràpid)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>Ajuda</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Ajuda</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Ara pots assignar els botons com tu prefereixis. Es poden assignar fins a dos botons per a cada funció.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Amagar el botó del menú hamburguesa</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>Configuració HID del Gamepad </value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>S'ha detectat un comandament HID.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Deixa presionat per activar</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Inici</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>Com es fa…</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Com restaurar partides guardades</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>IMPORTAR</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>ha sigut importat exitosament</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Utilitza aquesta opcio per importar un arxiu ja present al teu telèfon o ordinador. NOTA: Degut a un error a Windows 10 no seràs capaç de veure el contigut de la carpeta on estàs navegant. Únicament has de seleccionar la carpeta que conté la ROM i apareixera a una llista on podras importar-la.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Utilitza aquesta opcio per importar ROMs i arxius de partides guardades des de OneDrive, els quals seràn copiats al espai del dispositiu. NOTA: Es recomana que guardis les ROMs a una carpeta accesible i que utilitzis la opció de Guardat Local al importar-los, aixo evita la pèrdua del progrés si l'app es corromp.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>Importar ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>Importar R/S</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Importar partida guardada</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Importar</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Codi de format invalid.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>està connectat.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Escala del comandament virtual: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Dreceres de teclat</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Esquerra</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Llum</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Llista</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Carregar</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Estas segur que ho vols carregar? Els progresos sense guardar es perdran.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Carregant…</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Carregant llista de producció. Espera un moment...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Error! No hi ha conexio a internet o be els servidors de Microsoft no funcionen. Intenta-ho en un altre moment.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Carregar productes</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Espai local</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Error de xarxa.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>No s'ha insertat cap codi de trucs.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>Has de seleccionar al menys un arxiu!</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>No s'ha detectat cap comandament HID.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>No es pot trobar una ROM que coincideixi amb el nom.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>Cap</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>S'ha trobat un arxiu no suportat!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>S'ha trobat un arxiu no suportat!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>No s'ha detectat cap comandament d'XBox.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Sobreescriure?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Estas segur que vols guardar la partida? Sobreescriurà la resta de partides guardades.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Si us plau, espera a que s'hagi descarregat tot.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Això és una funció premium. Pots utilitzar aquesta funció ara però el próxim cop que iniciis la app tornara al seu valor original.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Això és una funció premium. Els usuaris gratuïts poden utilitzar Cap, Bilinear o HQ2x.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Primer, apreta Start.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Procesant…</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>El producte no és avalible actualment.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Comprat, gràcies!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Compra completada, els anuncis no apareixeran un cop tornis a iniciar la app.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Compra exitosa.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>Això és una *alerta* sobre compres dins l'app a Windows 10. Per un petit percentatge de comptes de Microsoft, inclòs el meu, després de comprar els productes dins l'app, experimentaras els següents problemes: (1) l'aplicació es bloqueja al obrir-se, (2) l'aplicació ja no es pot descarregar des de la botiga degut a l'error 0x803F7002 i (3), fins i tot si l'aplicació es troba en segon plà, la botiga encara reportarà el producte no comprat.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>Si vols prendre el risc, fes click al botó de sota per carregar els productes. Recorda que Microsoft s'ocupa de totes les compres, així que no puc reemborsar res si la teva compra no es pot procesar. Puc proporcionar-te l' .appx si ja no es pot descarregar l'aplicació. Per VBA8 actual pagat usuaris: La versió 2.27 és la actual i et deixa sol·licitar codis de desbloqueig per VBA10, tingues en compte que: l'ús d'un codi de desbloqueig pot provocar els mateixos mateixos errors semblants als de pagament dels productes, a excepció que no perdràs diners.</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>Això moura la ROM sencera de la llista. La teva ROM i les teves partides guardades no es veuran afectades. Continuar?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Reiniciar</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Estas segur que vols reiniciar la consola?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Tanca la aplicació completament.
+2. Asegurat que el nom del arxiu de la partida guardada coincideixi amb el nom de la ROM (exceptuant la extensió).
+3. Obra la app i importa l'arxiu de la partida guardada.
+4. Inicia el joc.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Dreta</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Arxiu guardat correctament.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Partida guardada 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Partida guardada 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Partida guardada 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Partida guardada 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Partida guardada 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Partida guardada 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Partida guardada 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Partida guardada 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Partida guardada 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Partida guardada 9 (automàtic)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Linies d'exploració</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Selecciona arxius per exportar</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Selecciona el/s arxiu/s per importar</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Sisuplau, selecciona el HID gamepad.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>Selecciona el directori de la ROM</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>Selecciona la ROM</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Seleccionar estat</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Configuració</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>Mostrar FPS</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Registrat</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Registrar-se</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>So</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Si us plau, inicia una ROM primer.</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Estret</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>S'ha canviat exitosament a pantalla complerta.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Sincronitzar l'àudio (millor qualitat, CPU intens)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Gràcies! Disfruta del teu controlador de Xbox/HID durant la següent hora. Apreta aquest botó un cop hagi expirat la hroa per seguir utilitzant el controlador de Xbox/HID.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>El tema apareixera el próxim com que inici la app.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Adalt</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Mostrar botons visuals</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Comportament del botó de turbo</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Activar turbo on/off</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>Mode TV</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Desconegut</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Adalt</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Carrega completada exitosament.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Utilitzar pantalla complerta</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Versió: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Perill</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Veure video</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Necesites veure el video per activar aquesta caracteristica.</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>El controlador de Xbox està conectat</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Si</value>
+  </data>
+</root>

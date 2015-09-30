@@ -92,6 +92,10 @@
                             <Run  Text="- 汉化-智机网abc2419."/>
                             <LineBreak />
                             <Run  Text="- Matteo Santoro for Italian translation."/>
+                            <LineBreak />
+                            <Run  Text="- Òscar Sánchez for Catalan translation."/>
+                            <LineBreak />
+                            <Run  Text="- Rahadian Rihadi for Indonesian translation."/>
                     	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>

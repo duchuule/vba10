@@ -1524,7 +1524,9 @@
     <ResourceCompile Include="VBA10.rc" />
   </ItemGroup>
   <ItemGroup>
+    <PRIResource Include="Strings\ca\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\id\Resources.resw" />
     <PRIResource Include="Strings\it\Resources.resw" />
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
   </ItemGroup>
