@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>Tentang</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Tambah</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Tambah</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>Tambah ROM</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Aspek perbandingan</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Axis</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Bawah</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Transparansi kontrol maya:</value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Skala tombol maya: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Tombol</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Beli</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Batal</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>Kamu tidak bisa menghapus ROM yang sedang dimainkan. Mainkan ROM lainnya terlebih dahulu atau restart aplikasi.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Emulator ini mendukung kode Gameshark, CodeBreaker dan GameGenie.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>CHEATS</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Cheats</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Tutup</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Kode:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Posisi tombol Hamburger</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Konfirmasi</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Koneksi</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Kontak: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>Filter CPU (lamban)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Credits:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Gelap</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (analog stick): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Kepada pengguna VBA10:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>Ini akan *menghapus* ROM dan data penyimpanan dari sistem aplikasi. Lanjutkan?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Hapus</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Deskripsi:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Terjadi kesalahan, koneksi perangkat gagal.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Hilangkan konfirmasi memuat</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Hilangkan konfirmasi menyimpan</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Tipe display</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Bawah</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-arah</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Bawah</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Analog stick dinamis</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Analog stick tetap</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad Kiri</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>CATATAN: D-pad hanya bisa digunakan untuk mengarahkan, tidak dapat digunakan untuk fungsi lainnya.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad Kanan</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>Jenis D-pad </value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad Atas</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Ubah susunan tombol</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Kamu harus memasukkan kode cheat terlebih dahulu.</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Aktifkan mode turbo</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Terjadi Kesalahan</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>EKSPOR</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Ekspor</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Folder ekspor tidak ditemukan.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Jika kamu mengimpor ROM melalui penyimpanan lokal, maka seluruh data penyimpanan tersimpan di folder yang sama dengan ROM; cukup cek ke folder tersebut dan salin kemanapun bila dibutuhkan. Namun, jika kamu menggunakan Desktop/Tablet dan menyimpan ROM di folder OneDrive, seluruh data penyimpanan kamu akan otomatis tersinkronisasi ke cloud.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Jika kamu tidak dapat mengakses folder ROM, misalkan, ROM tersimpan di dalam sistem aplikasi, gunakan pilihan ini untuk mengekspor data penyimpanan ke OneDrive.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Ekspor</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Gagal untuk mengkoneksikan</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Jenis file ini tidak didukung.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Impor data berhasil.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Sepertinya ini pertama kalinya kamu mengkoneksikan gamepad ini. Klik OK untuk pengaturan.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frame skip (non-turbo mode)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frame skip (turbo mode)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Gamepad Xbox dan generic HID didukung.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Beli paket premium atau tonton video pendek untuk mengaktifkan fitur ini.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>Umum</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>Filter GPU (cepat)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>BANTUAN</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Bantuan</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Kamu bisa menetapkan tombol secara bebas. Untuk setiap fungsi bisa ditetapkan hingga dua tombol.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Sembunyikan tombol hamburger</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>Pengaturan HID Gamepad</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>Gamepad HID terdeteksi.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Tahan untuk aktivasi</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Beranda</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>Cara</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Cara memulihkan data penyimpanan</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>IMPOR</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>berhasil diimpor.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Pakai opsi ini untuk mengimpor data yang ada di handphone atau PC. CATATAN: ada bug di Windows 10, kamu tidak akan bisa melihat isi folder yang sedang dicari. Pilih aja folder yang ada ROM-nya, nanti daftar impornya akan muncul.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Pakai opsi ini untuk mengimpor ROM dan data penyimpanan dari OneDrive, yang akan di-copy ke sistem aplikasi. CATATAN: data yang mau diimpor sebaiknya diletakkan di folder yang bebas diakses pengguna dan pakai penyimpanan lokal untuk mengimpornya yang akan mencegah hilangnya data bila aplikasi rusak.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>Impor ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>Impor R/S</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Impor data penyimpanan</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Impor</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>kode format tidak valid.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>terkoneksi.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Skala joystick maya: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Atur Tombol</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Terang</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Daftar</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Muat</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Apakah kamu yakin ingin memuat? Seluruh proses yang belum di simpan akan hilang.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Memuat...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Memuat daftar produk. Mohon tunggu…</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Terjadi kesalahan! Tidak ada koneksi internet atau server Microsoft sedang bermasalah. Mohon coba lagi nanti.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Muat produk</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Penyimpanan lokal</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Jaringan Bermasalah.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>Belum ada kode cheat yang dimasukkan.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>Kamu harus memilih minimal satu data.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>HID gamepad tidak terdeteksi.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Nama ROM yang sesuai tidak dapat ditemukan.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>File yang didukung tidak ditemukan!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>File yang didukung tidak ditemukan!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>Tidak</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>XBox controller tidak terdeteksi.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Orisinil</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Timpa data?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Apakah kamu yakin ingin menyimpan data? Data pada lokasi penyimpanan yang dipilih akan tertimpa.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Mohon tunggu hingga seluruh file selesai diunduh.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Ini adalah fitur premium. Kamu bisa menggunakan fitur ini, namun setelah restart aplikasi akan kembali ke pengaturan semula.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Ini adalah fitur premium. Pengguna fitur gratis hanya bisa menggunakan None, Bilinear atau HQ2x.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Tekan tombol Start terlebih dahulu.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Sedang dalam proses...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>Produk tidak tersedia untuk sementara waktu.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Pembelian</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Pembelian berhasil, terima kasih!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Pembelian berhasil, iklan tidak akan muncul setelah restart aplikasi.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Pembelian berhasil.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Pembelian</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>This is a *warning* about in-app purchase in Windows 10. For a small percentage of Microsoft accounts, mine included, after you purchase the in-app products, you will experience the following problems: (1) app crashes upon opening, (2) app can no longer be downloaded from store due to error 0x803F7002, and (3) even if you sideload the app, the store still reports the product as not purchased.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>If you want to take risk, click on the button below to load the products. Keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work. I can, however, provide you with the .appx to sideload if you can no longer download the app. To current VBA8 paid users: version 2.27 is now availalbe which lets you request VBA10 unlock codes, but be aware: using an unlock code has all the same bugs as paying for the products, except you won't lose money.</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>This will remove the ROM entry from the app's list. Your actual ROM files and save files will not be affected. Continue?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Ulang</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Apakah kamu yakin ingin mereset konsol?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Keluar dari aplikasi.
+2. Pastikan nama data penyimpanan sama dengan nama ROM (kecuali ekstensinya).
+3. Buka kembali aplikasi dan impor data penyimpanan.
+4. Mainkan gamenya.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Kanan</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Data penyimpanan berhasil diimpor.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Data 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Data 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Data 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Data 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Data 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Data 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Data 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Data 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Data 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Data 9 (otomatis)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Scanlines</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Pilih file yang mau diekspor</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Pilih file untuk diimpor</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Pilih HID gamepad.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>Pilih Lokasi ROM</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>Pilih ROM</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Pilih Lokasi</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>Munculkan FPS</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Berhasil masuk</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Masuk</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Masuk</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Suara</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Mainkan ROM terlebih dahulu</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Rentang</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Berhasil pindah ke mode layar penuh.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Sinkronisasikan Suara (kualitas lebih baik, kinerja CPU intensif)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Terima kasih! Nikmati penggunaan Xbox/HID controller kamu satu jam kedepan. Klik tombol ini lagi setelah satu jam berakhir untuk bisa kembali menggunakan Xbox/HID controller.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>Tema akan diaplikasikan setelah restart aplikasi.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Munculkan tombol virtual</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Perilaku Tombol Turbo</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Tekan untuk aktif/non-aktif</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>mode TV</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Tidak diketahui</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Unggah berhasil.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Pasang mode layar penuh.</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Versi: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Peringatan</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Tonton Video</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Tonton video secara keseluruhan untuk mengaktivasikan fitur.</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>XBox controller terkoneksi.</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Ya</value>
+  </data>
+</root>

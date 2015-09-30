@@ -65,6 +65,12 @@
     <Filter Include="Strings\it">
       <UniqueIdentifier>{3888e976-c0f2-4fc4-ba4d-f026c64f8c82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings\ca">
+      <UniqueIdentifier>{3e8936b5-234f-4c79-8217-c0d6c3008fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\id">
+      <UniqueIdentifier>{8c17719d-615b-451e-9209-0e5dc8a566f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -942,6 +948,12 @@
     </PRIResource>
     <PRIResource Include="Strings\it\Resources.resw">
       <Filter>Strings\it</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\ca\Resources.resw">
+      <Filter>Strings\ca</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\id\Resources.resw">
+      <Filter>Strings\id</Filter>
     </PRIResource>
   </ItemGroup>
 </Project>
