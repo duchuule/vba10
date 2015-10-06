@@ -46,7 +46,7 @@ HIDGamepadConfig::HIDGamepadConfig() :
 void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 {
 	navigatedAway = false;
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 	if (!EventHandlerForDevice::Current->IsDeviceConnected) //connection failed
 	{
 		//this->txtNotification->Visibility = Windows::UI::Xaml::Visibility::Visible;
@@ -231,7 +231,7 @@ void HIDGamepadConfig::OnInputReportEvent(HidDevice^ sender, HidInputReportRecei
 	//check buttons
 	auto bcontrols = inputReport->ActivatedBooleanControls;
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	if (configureStage == 0) //record start button and default value of numeric buttons
 	{

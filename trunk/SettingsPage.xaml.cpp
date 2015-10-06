@@ -15,6 +15,7 @@
 #include "App.xaml.h"
 #include "AdControl.xaml.h"
 #include "Filter/ShaderManager.h"
+#include "XboxConfigPage.xaml.h"
 
 using namespace VBA10;
 
@@ -44,7 +45,7 @@ SettingsPage::SettingsPage()
 {
 	InitializeComponent();
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	//create ad control
 	if (App::HasAds)
@@ -153,10 +154,12 @@ SettingsPage::SettingsPage()
 	if (!xboxConnected)
 	{
 		this->txtControllerStatus->Text = loader->GetString("NoXboxControllerText");
+		this->ConfigureXboxBtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	}
 	else
 	{
 		this->txtControllerStatus->Text = loader->GetString("XboxControllerConnectedText");
+		this->ConfigureXboxBtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	}
 
 	
@@ -247,14 +250,14 @@ void SettingsPage::OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertis
 {
 	this->emulator->ResetXboxTimer();
 	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
-	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThanksWatchVideoText"));
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("ThanksWatchVideoText"));
 	dialog->ShowAsync();
 }
 
 
 void SettingsPage::OnCancelled(Platform::Object ^sender, Platform::Object ^args)
 {
-	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("WatchWholeVideoError") );
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("WatchWholeVideoError") );
 	dialog->ShowAsync();
 }
 
@@ -262,7 +265,7 @@ void SettingsPage::OnCompleted(Platform::Object ^sender, Platform::Object ^args)
 {
 	this->emulator->ResetXboxTimer();
 	this->runBuyNotice->Foreground = ref new SolidColorBrush(Windows::UI::Colors::Black);
-	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThanksWatchVideoText"));
+	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("ThanksWatchVideoText"));
 	dialog->ShowAsync();
 }
 
@@ -275,7 +278,7 @@ void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xam
 
 	if (this->HIDDeviceList->Size > 1 && index < 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SelectHIDGamepadPrompt"));
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("SelectHIDGamepadPrompt"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -310,7 +313,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 	if (this->HIDDeviceList->Size > 1 && index < 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SelectHIDGamepadPrompt"));
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("SelectHIDGamepadPrompt"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -324,7 +327,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 		{
 			bool openSuccess = openDeviceTask.get();
 
-			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 			if (openSuccess)
 			{
@@ -391,7 +394,7 @@ void SettingsPage::UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, Virt
 	auto s = vk.ToString();
 	if (s->Length() >= 20)
 	{
-		s = ResourceLoader::GetForCurrentView()->GetString("UnknownText");
+		s = ResourceLoader::GetForViewIndependentUse()->GetString("UnknownText");
 	}
 
 	box->Text = s;
@@ -628,7 +631,7 @@ void SettingsPage::cboPixelFilter_SelectionChanged(Platform::Object^ sender, Win
 
 		if (!App::IsPremium)
 		{
-			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("PremiumCPUFilterPrompt"));
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("PremiumCPUFilterPrompt"));
 			dialog->ShowAsync();
 		}
 	}
@@ -646,7 +649,7 @@ void SettingsPage::cboPixelShader_SelectionChanged(Platform::Object^ sender, Win
 			//revert the choice
 			this->cboPixelShader->SelectedIndex = EmulatorSettings::Current->PixelShader;
 
-			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("PremiumGPUFilterPrompt"));
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("PremiumGPUFilterPrompt"));
 			dialog->ShowAsync();
 			return;
 		}
@@ -751,7 +754,7 @@ void SettingsPage::fullscreenToggle_Toggled(Platform::Object^ sender, Windows::U
 
 
 			//open dialog if not crash
-			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("SwitchFullscreenSuccessText"));
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("SwitchFullscreenSuccessText"));
 
 			//save settings if not crash
 			UICommand ^confirm = ref new UICommand("OK",
@@ -786,7 +789,7 @@ void SettingsPage::cboTheme_SelectionChanged(Platform::Object^ sender, Windows::
 		if (this->cboTheme->SelectedIndex != EmulatorSettings::Current->Theme)
 		{
 			EmulatorSettings::Current->Theme = this->cboTheme->SelectedIndex;
-			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("ThemeNextStartText"));
+			MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("ThemeNextStartText"));
 			dialog->ShowAsync();
 		}
 	}

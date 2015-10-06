@@ -40,7 +40,7 @@ HelpPage::HelpPage()
 	auto myPackage = Windows::ApplicationModel::Package::Current;
 	auto version = myPackage->Id->Version;
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	versionBlock->Text = loader->GetString("VersionText") + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
 

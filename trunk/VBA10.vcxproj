@@ -308,7 +308,6 @@
     <Image Include="Assets\Extension.targetsize-64.png" />
     <Image Include="Assets\Extension.targetsize-96.png" />
     <Image Include="Assets\MediumTile.scale-100.png" />
-    <Image Include="Assets\MediumTile.scale-125.png" />
     <Image Include="Assets\MediumTile.scale-150.png" />
     <Image Include="Assets\MediumTile.scale-200.png" />
     <Image Include="Assets\MediumTile.scale-400.png" />
@@ -318,12 +317,6 @@
     <Image Include="Assets\play.png" />
     <Image Include="Assets\plus_sign.png" />
     <Image Include="Assets\SmallTile.scale-100.png" />
-    <Image Include="Assets\SmallTile.scale-125.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\SmallTile.scale-150.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
     <Image Include="Assets\SmallTile.scale-200.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
@@ -336,12 +329,10 @@
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-400.png" />
     <Image Include="Assets\StoreLogo.scale-100.png" />
-    <Image Include="Assets\StoreLogo.scale-125.png" />
     <Image Include="Assets\StoreLogo.scale-150.png" />
     <Image Include="Assets\StoreLogo.scale-200.png" />
     <Image Include="Assets\StoreLogo.scale-400.png" />
     <Image Include="Assets\WideTile.scale-100.png" />
-    <Image Include="Assets\WideTile.scale-125.png" />
     <Image Include="Assets\WideTile.scale-150.png" />
     <Image Include="Assets\WideTile.scale-200.png" />
     <Image Include="Assets\WideTile.scale-400.png" />
@@ -494,6 +485,9 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="virtualcontrollerinput.h" />
+    <ClInclude Include="XboxConfigPage.xaml.h">
+      <DependentUpon>XboxConfigPage.xaml</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdControl.xaml.cpp">
@@ -1209,6 +1203,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="XboxConfigPage.xaml.cpp">
+      <DependentUpon>XboxConfigPage.xaml</DependentUpon>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <AppxSystemBinary Include="16994Sparksoft.VBA10.dll" />
@@ -1270,6 +1267,9 @@
     </Page>
     <Page Include="StandardStyles.xaml" />
     <Page Include="Styles.xaml" />
+    <Page Include="XboxConfigPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Filter\hq2x_PS.hlsl">

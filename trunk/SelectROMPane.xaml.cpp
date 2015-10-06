@@ -302,7 +302,7 @@ void SelectROMPane::saveBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	}
 	else
 	{
-		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 		MessageDialog ^dialog = ref new MessageDialog(loader->GetString("OverwriteSaveConfirmText"),loader->GetString("OverwriteAsk"));
 		UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
@@ -344,7 +344,7 @@ void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	}
 	else
 	{
-		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+		auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 
 		MessageDialog ^dialog = ref new MessageDialog(loader->GetString("LoadConfirmPrompt"), loader->GetString("WarningText"));
@@ -381,7 +381,7 @@ void SelectROMPane::loadBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 
 void SelectROMPane::resetBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	MessageDialog ^dialog = ref new MessageDialog(loader->GetString("ResetConfirmPrompt"), loader->GetString("WarningText"));
 	UICommand ^confirm = ref new UICommand(loader->GetString("YesText"),
@@ -500,7 +500,7 @@ void VBA10::SelectROMPane::lbAllROMMainGrid_RightTapped(Platform::Object^ sender
 
 void SelectROMPane::ShowContextMenu(ROMDBEntry^ entry, Windows::Foundation::Rect rect)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	auto menu = ref new PopupMenu();
 	menu->Commands->Append(ref new UICommand(loader->GetString("DeleteText"), ref new UICommandInvokedHandler([this, entry, loader](IUICommand^ command)

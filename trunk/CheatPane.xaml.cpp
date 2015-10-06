@@ -172,7 +172,7 @@ void CheatPane::addButton_Click(Platform::Object^ sender, Windows::UI::Xaml::Rou
 
 bool CheatPane::CheckCodeFormat(Platform::String ^codeText, void(*messageCallback)(Platform::String ^))
 {
-	auto loader =  Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader =  Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 
 	if (codeText == nullptr || codeText->IsEmpty())

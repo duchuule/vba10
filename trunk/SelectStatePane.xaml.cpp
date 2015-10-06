@@ -34,7 +34,7 @@ SelectStatePane::SelectStatePane(int selectedSlot):initdone(false)
 
 void SelectStatePane::Init(void)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	this->savestateVector = ref new Platform::Collections::Vector<Platform::String ^>();
 	this->savestateVector->Append(loader->GetString("Savestate0Text"));

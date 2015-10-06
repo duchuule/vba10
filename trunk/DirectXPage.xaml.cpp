@@ -155,7 +155,7 @@ DirectXPage::DirectXPage():
 	// Declare the top level nav items
 	navlist = ref new Vector<NavMenuItem^>();
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 	navlist->Append(
 		ref new NavMenuItem(
 			loader->GetString("HomeText"),

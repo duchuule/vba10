@@ -42,7 +42,7 @@ SelectFilesPane::SelectFilesPane(IVector<Platform::String^>^ list, Platform::Str
 	{
 		this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
-		this->txtNoFile->Text = ResourceLoader::GetForCurrentView()->GetString("NoSupportedFileText");
+		this->txtNoFile->Text = ResourceLoader::GetForViewIndependentUse()->GetString("NoSupportedFileText");
 	}
 	initdone = true;
 
@@ -60,7 +60,7 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 {
 	if (this->fileList->SelectedItems->Size == 0)
 	{
-		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForCurrentView()->GetString("NoFileSelectedText"));
+		MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("NoFileSelectedText"));
 		dialog->ShowAsync();
 		return;
 	}
@@ -68,7 +68,7 @@ void SelectFilesPane::OkBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 	this->fileList->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 	this->txtNoFile->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	this->OkBtn->IsEnabled = false;
-	this->txtNoFile->Text = ResourceLoader::GetForCurrentView()->GetString("ProcessingText");
+	this->txtNoFile->Text = ResourceLoader::GetForViewIndependentUse()->GetString("ProcessingText");
 
 
 	Vector<int>^ selectedIndices = ref new Vector<int>  ();
