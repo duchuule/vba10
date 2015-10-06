@@ -640,6 +640,7 @@
     <Page Include="SelectFilesPane.xaml" />
     <Page Include="HIDGamepadConfig.xaml" />
     <Page Include="BlankPage.xaml" />
+    <Page Include="XboxConfigPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SpriteBatch_PS.hlsl">
@@ -785,12 +786,6 @@
     <Image Include="Assets\SmallTile.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\SmallTile.scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallTile.scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\AppList.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
@@ -807,9 +802,6 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\MediumTile.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\MediumTile.scale-125.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\MediumTile.scale-150.png">
@@ -839,9 +831,6 @@
     <Image Include="Assets\WideTile.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\WideTile.scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\WideTile.scale-150.png">
       <Filter>Assets</Filter>
     </Image>
@@ -849,9 +838,6 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\WideTile.scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.scale-125.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\StoreLogo.scale-150.png">

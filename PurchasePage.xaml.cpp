@@ -70,7 +70,7 @@ void PurchasePage::ButtonBuyNow_Clicked(Platform::Object^ sender, Windows::UI::X
 
 				if (CurrentApp::LicenseInformation->ProductLicenses->Lookup(key)->IsActive)
 				{
-					auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+					auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 					//prompt user to restart app if it's ad removal
 					if (key == "removeads" || key == "noads_premium")
@@ -113,7 +113,7 @@ void PurchasePage::loadProductsBtn_Click(Platform::Object^ sender, Windows::UI::
 	{
 		try
 		{
-			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+			auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 			ListingInformation^ li = tli.get();
 

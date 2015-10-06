@@ -669,4 +669,13 @@
   <data name="Credits.Text" xml:space="preserve">
     <value>Credits:</value>
   </data>
+  <data name="EmulatorFunction.Text" xml:space="preserve">
+    <value>Emulator function</value>
+  </data>
+  <data name="XboxButton.Text" xml:space="preserve">
+    <value>Xbox button</value>
+  </data>
+  <data name="XboxGamepadConfig.Text" xml:space="preserve">
+    <value>Xbox Gamepad Config</value>
+  </data>
 </root>

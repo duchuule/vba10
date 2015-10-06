@@ -143,7 +143,7 @@ void FileBrowserPane::fileList_SelectionChanged(Platform::Object^ sender, Window
 	if (this->loading)
 		return;
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	OneDriveFileItem ^ item = (OneDriveFileItem ^)(this->fileList->SelectedItem);
 	if (item == nullptr)
@@ -339,7 +339,7 @@ task<size_t> FileBrowserPane::DownloadFile(OneDriveFileItem^ item, CreationColli
 
 void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	//check to see if any thing is downloading
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)
@@ -363,7 +363,7 @@ void FileBrowserPane::closeBtn_Click(Platform::Object^ sender, Windows::UI::Xaml
 
 void FileBrowserPane::OnNavigatingFrom(Windows::UI::Xaml::Navigation::NavigatingCancelEventArgs^ e)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)
 	{
@@ -420,7 +420,7 @@ void FileBrowserPane::backBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 		return;
 	}
 
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	//check to see if any thing is downloading
 	for (unsigned int i = 0; i < this->fileVector->Size; i++)

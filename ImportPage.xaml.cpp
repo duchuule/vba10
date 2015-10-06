@@ -55,7 +55,7 @@ ImportPage::ImportPage()
 
 void ImportPage::chooseFolderbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	FolderPicker ^picker = ref new FolderPicker();
 
@@ -264,7 +264,7 @@ void ImportPage::importSavbtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 
 	picker->ViewMode = PickerViewMode::List;
 	//picker->CommitButtonText = "Select";
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 
 	task<void> t = create_task(picker->PickSingleFileAsync()).then([this, loader](StorageFile ^file)
@@ -354,7 +354,7 @@ void ImportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 
 void ImportPage::signin_Completed(bool isLoggedIn)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	if (isLoggedIn)
 	{

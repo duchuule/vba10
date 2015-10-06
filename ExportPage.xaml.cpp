@@ -72,7 +72,7 @@ void ExportPage::SignInbtn_Click(Platform::Object^ sender, Windows::UI::Xaml::Ro
 
 void ExportPage::signin_Completed(bool isLoggedIn)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	if (isLoggedIn)
 	{
@@ -136,7 +136,7 @@ void ExportPage::signin_Completed(bool isLoggedIn)
 
 void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	//get a list of rom
 	Vector<Platform::String ^> ^romNames = ref new Vector<Platform::String ^>();

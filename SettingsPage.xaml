@@ -36,7 +36,7 @@
                       >
                     <StackPanel Orientation="Vertical" x:Name="InputStackPanel" 
                                   HorizontalAlignment="Left" 
-                                MaxWidth="500"
+                                MaxWidth="440"
                                 Margin="12,0">
                         <StackPanel.Resources>
                             <CollectionViewSource x:Name="vsControllerList"/>
@@ -51,23 +51,28 @@
                                  x:Name="runBuyNotice"/>
                         </TextBlock>
 
-                        <StackPanel Orientation="Horizontal"
-                                    Margin="0,0,0,8"
-                                    x:Name="panelGamepadActivate">
+                        <Grid Margin="0,0,0,8"
+                            x:Name="panelGamepadActivate">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            
                             <Button x:Name="purchaseBtn" Content="**Buy" 
-                            Click="purchaseBtn_Click"
-                            Width="120"
+                                    Click="purchaseBtn_Click"
                                     x:Uid="BuyBtn"
-                            Margin =" 0, 0, 8, 0"/>
+                                    HorizontalAlignment="Stretch"
+                            />
 
                             <Button x:Name="watchVideoBtn" Content="**Watch Video" 
-                            Width="120"
-                            Margin =" 0, 0, 0, 0" 
-                            Click="watchVideobtn_Click"
-                                    x:Uid="WatchVideoBtn"/>
+                                    Click="watchVideobtn_Click"
+                                    x:Uid="WatchVideoBtn"
+                                    HorizontalAlignment="Stretch"
+                                    Grid.Column="2"/>
 
 
-                        </StackPanel>
+                        </Grid>
 
                         <TextBlock TextWrapping="Wrap" 
                                    Text="txtControllerStatus - set by cpp"
@@ -76,7 +81,13 @@
                                    Margin="0,0,0,8"
                                    >
                         </TextBlock>
-                        
+
+                        <Button x:Name="ConfigureXboxBtn" Content="**Configure" 
+                                x:Uid="ConfigureBtn"
+                                 HorizontalAlignment="Stretch"
+                                Margin="0,0,0,12"
+                                       />
+
                         <StackPanel x:Name="panelHIDGamepad" >
                             <TextBlock Text="txtHIDGamepad - set by cpp" 
                                        Foreground="Blue"
@@ -100,23 +111,28 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
 
-                            <StackPanel Orientation="Horizontal"
-                                    Margin =" 0, 0, 0, 12"
+                            <Grid Margin =" 0, 0, 0, 12"
                                         x:Name="panelHIDConnect">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                
                                 <Button x:Name="ConfigureBtn" Content="**Configure" 
-                                    Width="120"
-                                    Margin =" 0, 0, 8, 0"
                                         x:Uid="ConfigureBtn"
-                                        Click="ConfigureBtn_Click"/>
+                                        Click="ConfigureBtn_Click"
+                                        HorizontalAlignment="Stretch"
+                                        />
 
-                                    <Button x:Name="ConnectBtn" Content="**Connect" 
-                                            x:Uid="ConnectBtn"
-                                Width="120"
-                                Margin =" 0, 0, 0, 0" 
-                                Click="ConnectBtn_Click"/>
+                                <Button x:Name="ConnectBtn" Content="**Connect" 
+                                        x:Uid="ConnectBtn"
+                                        Click="ConnectBtn_Click"
+                                        HorizontalAlignment="Stretch"
+                                        Grid.Column="2"/>
 
 
-                            </StackPanel>
+                            </Grid>
                         </StackPanel>
 
                         <ComboBox Name="cboTurboBehavior" 
@@ -404,7 +420,7 @@
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="500"
+                                MaxWidth="440"
                                 Margin="12,0">
                         <!--<ToggleSwitch Toggled="hzToggle_Toggled" Header="30 Hz mode for displays with 30 Hz" Name="hzToggle" IsOn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>-->
 
@@ -571,7 +587,7 @@
                       >
                     <StackPanel Orientation="Vertical"
                                   HorizontalAlignment="Left" 
-                                MaxWidth="500"
+                                MaxWidth="440"
                                 Margin="12,0">
                         
                         
