@@ -159,7 +159,7 @@ SettingsPage::SettingsPage()
 	else
 	{
 		this->txtControllerStatus->Text = loader->GetString("XboxControllerConnectedText");
-		this->ConfigureXboxBtn->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		this->ConfigureXboxBtn->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 
 	
@@ -268,6 +268,15 @@ void SettingsPage::OnCompleted(Platform::Object ^sender, Platform::Object ^args)
 	MessageDialog ^dialog = ref new MessageDialog(ResourceLoader::GetForViewIndependentUse()->GetString("ThanksWatchVideoText"));
 	dialog->ShowAsync();
 }
+
+void SettingsPage::ConfigureXboxBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->Frame->Navigate(
+		TypeName(XboxConfigPage::typeid),
+		nullptr,
+		ref new Windows::UI::Xaml::Media::Animation::DrillInNavigationTransitionInfo());
+}
+
 
 void SettingsPage::ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -817,6 +826,9 @@ void SettingsPage::hideHamburgerToggle_Toggled(Platform::Object^ sender, Windows
 		EmulatorSettings::Current->HideHamburger = this->hideHamburgerToggle->IsOn;
 	}
 }
+
+
+
 
 
 

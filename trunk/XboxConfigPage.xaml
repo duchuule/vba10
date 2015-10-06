@@ -1,0 +1,116 @@
+﻿<Page
+    x:Class="VBA10.XboxConfigPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VBA10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Background="{ThemeResource ListBoxBorderThemeBrush}"
+                    VerticalAlignment="Stretch"
+                    Orientation="Horizontal" >
+
+            <TextBlock Text="**Xbox Gamepad Config" 
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       Margin="12,4,0,4"
+                       x:Uid="XboxGamepadConfig"
+                       x:Name="txtTitle"
+                       />
+        </StackPanel>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      >
+            <StackPanel MaxWidth="500"
+                       HorizontalAlignment="Left">
+
+                <TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"
+                               Height="0"
+                               />
+
+                
+                <Grid  Margin="12,0,12,0"
+                  x:Name="gridMain"
+                       >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="**Xbox button" x:Uid="XboxButton"  Margin="0,12,0,4" Style="{ThemeResource BaseTextBlockStyle}"  />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="**Emulator function" x:Uid="EmulatorFunction"  Margin="0,12,0,4" Style="{ThemeResource BaseTextBlockStyle}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="A"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cboA"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="B"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cboB"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="X"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cboX"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Y"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cboY"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="L1"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="5" Grid.Column="1" x:Name="cboL1"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="L2"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="6" Grid.Column="1" x:Name="cboL2"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="R1"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="7" Grid.Column="1" x:Name="cboR1"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="R2"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="8" Grid.Column="1" x:Name="cboR2"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="9" Grid.Column="0" Text="**L3 (Left stick press)" x:Uid="L3LeftStick"  VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="9" Grid.Column="1" x:Name="cboL3"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="**R3 (Right stick press)" x:Uid="R3RightStick" VerticalAlignment="Center" Margin="0,12,0,4"  />
+                    <ComboBox Grid.Row="10" Grid.Column="1" x:Name="cboR3"  HorizontalAlignment="Stretch"  Margin="0,12,0,4"  />
+                </Grid>
+
+
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Orientation="Horizontal"
+                            Margin="0,8,0,4"
+                    Grid.Row="2"
+                    HorizontalAlignment="Center">
+            <Button Content="**Cancel" 
+                Width="120"
+                HorizontalAlignment="Center"
+                   x:Name="CancelBtn"
+                    Margin="0,0,8,0"
+                    x:Uid="CancelBtn" Click="CancelBtn_Click"
+           />
+
+            <Button Content="**OK" 
+                Width="120"
+                HorizontalAlignment="Center"
+                   x:Name="OkBtn"
+                    x:Uid="OKBtn" Click="OkBtn_Click"
+           />
+        </StackPanel>
+    </Grid>
+</Page>

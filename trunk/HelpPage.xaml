@@ -97,6 +97,12 @@
                             <LineBreak />
                             <Run  Text="- Rahadian Rihadi for Indonesian translation."/>
                     	    <LineBreak />
+                            <Run  Text="- Luiz Alberto for Portuguese translation."/>
+                    	    <LineBreak />
+                            <Run  Text="- Vladislav Beliy for Ukrainian translation."/>
+                    	    <LineBreak />
+                            <Run  Text="- Vladimir Volkov for Russian translation."/>
+                    	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
                     	    <LineBreak/>
