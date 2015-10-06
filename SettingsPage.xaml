@@ -85,7 +85,7 @@
                         <Button x:Name="ConfigureXboxBtn" Content="**Configure" 
                                 x:Uid="ConfigureBtn"
                                  HorizontalAlignment="Stretch"
-                                Margin="0,0,0,12"
+                                Margin="0,0,0,12" Click="ConfigureXboxBtn_Click"
                                        />
 
                         <StackPanel x:Name="panelHIDGamepad" >

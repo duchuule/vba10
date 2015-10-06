@@ -229,6 +229,128 @@ namespace VBA10
 			}
 		}
 
+		property int XboxA
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxAKey, XboxADefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxAKey, value);
+			}
+		}
+
+		property int XboxB
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxBKey, XboxBDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxBKey, value);
+			}
+		}
+
+		property int XboxX
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxXKey, XboxXDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxXKey, value);
+			}
+		}
+
+		property int XboxY
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxYKey, XboxYDefault);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxYKey, value);
+			}
+		}
+
+
+		property int XboxL1
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxL1Key, XboxL1Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxL1Key, value);
+			}
+		}
+
+
+		property int XboxL2
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxL2Key, XboxL2Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxL2Key, value);
+			}
+		}
+
+		property int XboxL3
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxL3Key, XboxL3Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxL3Key, value);
+			}
+		}
+
+		property int XboxR1
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxR1Key, XboxR1Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxR1Key, value);
+			}
+		}
+
+		property int XboxR2
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxR2Key, XboxR2Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxR2Key, value);
+			}
+		}
+
+		property int XboxR3
+		{
+			int get()
+			{
+				return GetValueOrDefault<int>(XboxR3Key, XboxR3Default);
+			}
+			void set(int value)
+			{
+				AddOrUpdateValue(XboxR3Key, value);
+			}
+		}
+
 #pragma region Button positions
 
 		property double PadLeftP
@@ -674,6 +796,17 @@ namespace VBA10
 		Platform::String^ PixelShaderKey = "PixelShaderKey";
 		Platform::String^ CommandButtonPositionKey = "CommandButtonPositionKey";
 
+		Platform::String^ XboxAKey = "XboxAKey";
+		Platform::String^ XboxBKey = "XboxBKey";
+		Platform::String^ XboxXKey = "XboxXKey";
+		Platform::String^ XboxYKey = "XboxYKey";
+		Platform::String^ XboxL1Key = "XboxL1Key";
+		Platform::String^ XboxL2Key = "XboxL2Key";
+		Platform::String^ XboxR1Key = "XboxR1Key";
+		Platform::String^ XboxR2Key = "XboxR2Key";
+		Platform::String^ XboxL3Key = "XboxL3Key";
+		Platform::String^ XboxR3Key = "XboxR3Key";
+
 #pragma region button positions
 		Platform::String^ PadLeftPKey = "PadLeftPKey";
 		Platform::String^ PadBottomPKey = "PadBottomPKey";
@@ -731,7 +864,16 @@ namespace VBA10
 		const int PixelFilterDefault = 0; //0: none
 		const int PixelShaderDefault = 1; //0: nearest neighbor, 1: bilinear
 		const int CommandButtonPositionDefault = 0; //auto
-
+		const int XboxADefault = 1; //A
+		const int XboxBDefault = 2; //B
+		const int XboxXDefault = 2; //B
+		const int XboxYDefault = 5; //A+B
+		const int XboxL1Default = 3; //L
+		const int XboxL2Default = 3; //L
+		const int XboxR1Default = 4; //R
+		const int XboxR2Default = 4; //R
+		const int XboxL3Default = 0; //none
+		const int XboxR3Default = 6; //turbo
 
 #pragma region button positions (in cm based on 6x10cm phone)
 		const double PadLeftPDefault = 0.1f; //from left

@@ -672,6 +672,15 @@
   <data name="EmulatorFunction.Text" xml:space="preserve">
     <value>Emulator function</value>
   </data>
+  <data name="L3LeftStick.Text" xml:space="preserve">
+    <value>L3 (Left stick press)</value>
+  </data>
+  <data name="R3RightStick.Text" xml:space="preserve">
+    <value>R3 (Right stick press)</value>
+  </data>
+  <data name="TurboText" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
   <data name="XboxButton.Text" xml:space="preserve">
     <value>Xbox button</value>
   </data>
