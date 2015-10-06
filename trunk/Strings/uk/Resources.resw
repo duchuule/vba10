@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>Про нас</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Додати</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Додати</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>Додати ROM</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Відношення сторін</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Автоматично</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Ось</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Білінійний</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Низ</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Непрозорість віртуального контроллера: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Масштаб віртуальних клавіш: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Клавіша</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Купити</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Відмінити</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>Ви не можете видалити ROM в процесі гри. Будь ласка запустіть інший ROM або перезавантажте программу.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Цей емулятор підтримує коди Gameshark, CodeBreaker and GameGenie.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>Чіт коди</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Чіт-коди</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Код:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Гамбургер та позиції командних клавіш</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Налащтувати</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Підтвердити</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Підключитись</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Контакт: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>Фільтр процессора (повільний)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Розробники:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Темний</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Мертва зона (аналоговий контроллер): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Дорогі користувачі VBA10:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>Це *видалить* файл гри та всі збережені файли з локального сховища. Продовжити?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Опис:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Помилка, неможливо з’єднатися з пристроєм.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Відключити підтвердження для завантаження</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Відключити підтвердження для збереження</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Тип екрану</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Вниз</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>Широкоформатний</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>Джойстик Вниз</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Динамічний аналоговий контроллер</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Зафіксований контроллер</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>Джойстик Вниз</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>ПРИМІТКА: джойстик може використовуватись тільки для сторін. Налаштувати його для іншийх функцій не можна</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>Джойстик Вправо</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>Стиль джойстику</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>Джойстик вверх</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Змінити розташування клавіш</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Спочатку введіть чіт-код.</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Включити режим Турбо</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>ЕКСПОРТУВАТИ</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Експорт</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Немає доступу до папки для експортування.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Якщо ROM був завантажений з локального сховища, той усі файли ігор будуть лежати в тій же папці; вам лише буде потрібно зайти в папку та скопіювати їх куди завгодно. Найкращий варіант це завантажувати ROM до сховища OneDrive, в такому випадку, всі файли ігор будуть синхронізуватись.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Якшо по якихось причинах ви не маєте доступу до папки з ROM’ом, тобто ROM знаходиться в закритій папці файлової системи, використувайте ці функції щоб вивантажити ваші файли до OneDrive.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Вивантажити</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Не вдалося з’єднатись з </value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Данний тип файлів не підтримується.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Файл було успішно імпортовано.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Здається ви вперше підключили джойстик. Натисніть ОК для його налаштування.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Пропуск кадрів (звичайний режим)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Пропуск кадрів (режим турбо)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Більшість геймпадів ві HID та Xbox підтримуються даним емулятором.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Купити пакет преміум або переглянути коротке відео для підключення цієї функції.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>Головне</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>ГПУ фільтр (швидко)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>ДОПОМОГА</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Допомога</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Ви тепер можете назначати будь які функції на усі клавіші. До двох функцій на одрну клавішу.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Згорнути зображення гамбургеру</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>Налаштування контроллера HID</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>Геймпад HID не було знайдено.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Тримайте для активації</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Додому</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>Інструкція</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Як відновити збережені файли ігор</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>ЗАВАНТАЖИТИ</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>успішно завантажено.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Використовуйте цю функцію для файлів які вже знаходяться на вашому телефоні чи ПК. ПРИМІТКА: через помилку  у Windows 10, у вас не буде можливості переглядати вміст папки яку ви переглядаєте. Просто виберіть папку яка містить ROM файл і ви побачите список ігор які підтримуються.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Використовуйте цю функцію  для імпорту ROM’ів та збереженнь для ігор з OneDrive, вони будуть скопійовані на пам’ять вашого пристрою. ПРИМІТКА: рекомендуємо авантажувати ROM’и в папку яка доступна користувачу та використовувати локальне сховище для їх імпорту, це передбачить втрату збережених данних якщо ваша програма вилетить.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>Завантажити ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>Завантажити декілька ROM’ів</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Завантажити збережені файли ігор</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Завантажити</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Введення</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Неправильний формат чіт-коду.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>підключений.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Масштаб віртуального джойстику: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Назначення клавіш</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Вліво</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Світлий</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Список</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Завантажити</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Ви впевнені що бажаєте завантажити дані? Весь не збережений прогресс буде врачено.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Завантаження...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Завантаження списку продуктів. Будь ласка зачекайте...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Помилка! Немає з’єднання з Інтернетом або помилилка серверу Microsoft. Повторіть спробу пізніше.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Завантажити продукти</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Локальне сховище</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Помилка з’єднання.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>Чіт-код не був введений</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>Ви повинні виьрати хоча б один файл.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>Контроллер HID не знайдено.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Неможливо знайти ROM файл з таким ім’ям.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>Пусто</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>Немає файлів які підтрмуються!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>Немає файлу який підтрмуються!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>Ні</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>Контроллер Xbox не знайдено.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>оригінал</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Перезаписати?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Ви впевнені що бажаєте зберегти? Це перезапише дані на вибраному слоті.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Будь ласка зачекайте доки всі файли будуть завантажені</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Це є платна функція. Ви можете використовувати цю функцію зараз, але після закриття програми настройки не будуть збережені.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Це є платна функція. У цій версії ми можете використовувати, білінийний або HQ2x.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Спочатку натисніть Старт.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Виконується...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>даний продукт зараз недоступний.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Купити</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Дякуємо вам за покупку!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Покупка завершена успішно, реклама не буде відображатись після перезапуску програми</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Успішно куплено.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Купити</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>*Увага* інформація про покупки в Windows 10. На малий відсоток аккаунтів Microsoft, є декілька випадків, після того як ви зробили покупку у програмі, майте на увазі що можуть виникнуті наступні проблеми: (1) програма вилітає при відкритті, (2) програма не може бути завантажена з магазину через помилку 0x803F7002, а також  (3) навіть якщо ви заплатили за програму, магазин все ще буде показувати протилежне.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>На ваш страх та риск, ви можете натиснути на кнопку завантажити продукти. Майте на увазі що Microsoft контролює всі покупки, тобто я не зможу вам повернути кошти якщо важ платіж не був зарахований. Я можу тільки надіслати вам копію програми у форматі .appx в тому випадку, якщо ви не зможете більше завантажити програму з магазину. Для користувачів VBA8: версія 2.27  тепер доступна, тепер ви можете запросити код активації для VBA10, але майте на увазі: використавши промо-код  помилки програми не будуть усунені, але ви більше не втратите ваші кошти.</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>Це видалить ROM зі списку ігор. Ваші ROM файли ти збережені файли не будуть змінені. Продовжити?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Перезапустити</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Ви впевнені що хочете перезавантажити консоль?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Повністью закрийте программу.
+2. Впевніться що назва файлу з данними гри співпадають з назвою гри (включно з розширенням файлу).
+3. Відкрийте програму та завантажте файл з данними гри.
+4. Запустіть гру.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Вправо</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Збережені файли були успішно завантажені.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Слот для збереження 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Слот для збереження 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Слот для збереження 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Слот для збереження 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Слот для збереження 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Слот для збереження 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Слот для збереження 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Слот для збереження 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Слот для збереження 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Слот для збереження 9 (автоматичний)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Растрові</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Вибрати</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Вибрати файл(и) для експорту</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Виберіть файл(и) для імпорту</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Будь ласка виберіть HID контроллер.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>Виберіть папку яка містить ROM</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>Вибрати ROM</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Вибрати слот</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>Показати FPS </value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Увійшов</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Увійти</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Sign inУвійти</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Звук</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Запустіть ROM спочатку</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Протяжність</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Успішно переключено на повноекранний режим.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Синхронізація звуку (краща якість, ресурсоємний СPU)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Дякуємо! Насолоджуйтесь вашим Xbox/HID контроллером на протязі наступної години. Натисніть цю клавішу знову після тоготяк вийде час для подальшлго користування контроллерами Xbox/HID .</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>Тема буде примінена коли ви наступний раз запустите программу.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Верх</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Показати віртуальні клавіші</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Турбо</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Режим кнопки Турбо</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Режим Турбо (вкл/викл)</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>Режим ТВ</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Невідомий</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Вгору</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Вивантаження успішно завершено</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Використовувати повноекранний режим</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Версія: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Відео</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Увага</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Дивитись відео</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Ви маєте подивитись відео до кінця для активації цієї функції.</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>Контроллер Xbox підключено успішно.</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Так</value>
+  </data>
+</root>
