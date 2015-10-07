@@ -103,6 +103,10 @@
                     	    <LineBreak />
                             <Run  Text="- Vladimir Volkov for Russian translation."/>
                     	    <LineBreak />
+                            <Run  Text="- Andrés Ricaurte for Spanish translation."/>
+                            <LineBreak />
+                            <Run  Text="- Danupol Intranurak for Thai translation."/>
+                    	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
                     	    <LineBreak/>

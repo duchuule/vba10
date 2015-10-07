@@ -80,6 +80,12 @@
     <Filter Include="Strings\uk">
       <UniqueIdentifier>{0bbc8c86-ff60-4a8b-8c8c-c862a54d630e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings\es">
+      <UniqueIdentifier>{3f4d1dcc-a790-4759-8b82-b2e8e578ca7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\th">
+      <UniqueIdentifier>{debef34e-1cf5-4176-a60b-163801642b1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -322,6 +328,7 @@
     <ClCompile Include="Filter\ShaderManager.cpp">
       <Filter>Filters</Filter>
     </ClCompile>
+    <ClCompile Include="XboxConfigPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -600,6 +607,7 @@
     <ClInclude Include="Filter\ShaderManager.h">
       <Filter>Filters</Filter>
     </ClInclude>
+    <ClInclude Include="XboxConfigPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -958,6 +966,12 @@
     </PRIResource>
     <PRIResource Include="Strings\uk\Resources.resw">
       <Filter>Strings\uk</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\es\Resources.resw">
+      <Filter>Strings\es</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\th\Resources.resw">
+      <Filter>Strings\th</Filter>
     </PRIResource>
   </ItemGroup>
 </Project>

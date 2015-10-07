@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>เกี่ยวกับ</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>เพิ่ม</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>เพิ่ม</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>เพิ่ม ROM</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>อัตราส่วน</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>อัตโนมัติ</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>แกน</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>ปุ่ม</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Virtual controller opacity: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Virtual button scale: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>ปุ่ม</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>ซือ</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>ยกเลิก</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>คุณไม่สามารถลบ ROM ที่กำลังทำงานได้ โปรดลองเลือก ROM อื่นหรือปิดแอปเปิดใหม่เพื่อลบ</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>อีมูเลเตอร์นี้รองกับการใช้ Gameshark, CodeBreaker และ GameGenie codes</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>สูตร</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>สูตร</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>โค้ด:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Hamburger และตำแหน่งของปุ่มคำสั่ง</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>ปรับแต่ง</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>ยืนยัน</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>เชื่อมต่อ</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>ติดต่อ: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU ฟิลเตอร์ (ช้า)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>เครดิต:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>มืด</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (อนาล็อก):</value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>ถึงผู้ใช้ VBA10:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>จะ*ลบ*  ROM และ Save จากพื้นที่จัดเก็บส่วนตัวของแอป ,ดำเนินการต่อ ?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>ลบ</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>รายละเอียด:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>ผิดพลาด, อุปกรณ์เชื่อมต่อล้มเหลว</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>ปิดใช้งานการ Load ยืนยัน</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>ปิดใช้งานการ Save ยืนยัน</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>ตัวเลือกการแสดงผล</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>ลง</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-way</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Down</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Dynamic analog stick</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Fixed analog stick</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad ซ้าย</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>NOTE: the D-pad สามารถนำไปใช้ควบคุมทิศทาง และไม่สามารถกำหนดให้กับฟังก์ชันอื่น</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad ขวา</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>D-pad สไตล์</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad ขึ้น</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>แก้ไขเค้าโครงปุ่ม</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>คุณต้องใส่สูตรก่อน</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>เปิดโหมด turbo</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>ผิดพลาด</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>ส่งออก</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>ส่งออก</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>ไม่พบโฟลเดอร์ส่งออก</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>ถ้าคุณนำเข้า ROM จากข้อมูลในเครื่อง Save ทั้งหมดจะถูกบันทึกไว้ที่เดียวกับ ROM คุณสามารถ Copy ได้ตามความต้องการบน คอมพิวเตอร์/แท็บเล็ต และ ROM ใน OneDrive ทั้งหมดที่ถูก Save จะซิงค์อัตโนมัติบน cloud</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>ถ้าไม่สามารถเข้าถึงไฟล์ ROM ของคุณ เช่นถูกเก็บไว้ในพื้นที่ส่วนตัวของเครื่อง คุณสามารถใช้ตัวเลือกนี้ในการส่งออกไฟล์ Save ไปยัง OneDrive</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>ส่งออก</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>ล้มเหลวในการเชื่อมต่อกับ</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>ไฟล์นี้ไม่รองรับ</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>ไฟล์นำเข้าสำเร็จ</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>นี่เป็นครั้งแรกที่คุณเชื่อมต่อจอยนี้ คลิกตกลงเพื่อปรับแต่งมัน</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frame skip (non-turbo mode)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frame skip (turbo mode)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>ทั้ง Xbox และ gamepads HID ทั่วไปได้รับการสนับสนุน</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>ซื้อแพคเกจพรีเมี่ยมคุณลักษณะหรือดูวิดีโอสั้น ๆ เพื่อเปิดใช้งานคุณลักษณะนี้</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU ฟิลเตอร์ (เร็ว)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>ช่วยเหลือ</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>ช่วยเหลือ</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>ตอนนี้คุณสามารถกำหนดปุ่มตามที่คุณต้องการ ถึงสองปุ่มสามารถกำหนดสำหรับแต่ละฟังก์ชั่น</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>ซ่อนปุ่ม hamburger</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID Gamepad Config</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>ตรวจพบ HID gamepad</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>กดค้างไว้เพื่อเปิดใช้งาน</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>วิธีการ</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>วิธีเรียกคืน Save</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>นำเข้า</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>ถูกนำเข้าเรียบร้อยแล้ว</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>ใช้งานตัวเลือกนี้เพื่อนำเข้าไฟล์ที่มีอยู่ใน โทรศัพท์หรือPC หมายเหตุ:เนื่องจากปัญหาบน Windows 10 คุณจะไม่ดูเนื้อหาในโฟลเดอร์ที่กำลังดู ให้เลือกโฟลเดอร์นั้นเพื่อที่จะแสดงเนื้อหาที่จะนำเข้า</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>ใช้งานตัวเลือกนี้เพื่อนำเข้าไฟล์จาก OneDrive แล้วจะจัดเก็บไว้ในพื้นที่ส่วนตัวของแอป หมายเหตุ:แนะนำให้เก็บรอมไว้ในพื้นที่จัดเก็บของคุณเพื่อป้องกันการสูญเสียความคืบหน้า ถ้าแอปของคุณเกิดเสีย</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>นำเข้า ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>นำเข้า R/S</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>นำเข้า Save</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>นำเข้า</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>รูปแบบโค้ดไม่ถูกต้อง</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>เชื่อมต่อ</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Virtual joystick scale: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Key Bindings</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>ซ้าย</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>สว่าง</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>คุณแน่ใจหรือว่าต้องการ Load? ความคืบหน้าทั้งหมดที่ไม่ได้ Save จะหายไป</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>โหลดรายการผลิตภัณฑ์ กรุณารอสักครู่ …….</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>ผิดพลาด! ไม่มีการเชื่อมต่ออินเทอร์เน็ตหรือเซิร์ฟเวอร์ Microsoft ผิดพลาด โปรดลองอีกครั้งในภายหลัง</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>โหลดผลิตภัณฑ์</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>พื้นที่ในเครื่อง</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>เครื่อข่ายผิดพลาด</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>ไม่มีสูตรป้อนในนี้</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>คุณจะต้องเลือกอย่างน้อยหนึ่งไฟล์</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>ไม่พบ HID gamepad</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>ไม่พบชื่อ ROM ที่ตรงกัน</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>ไม่มีไฟล์ที่สนับสนุนพบ!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>ไม่มีไฟล์ที่สนับสนุนพบ!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>ไม่</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>ไม่พบ XBox controller</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>เขียนทับ?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>คุณต้องการที่จะSave? นี้จะเขียนทับ save state ที่เลือก</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>กรุณารอจนกว่าไฟล์ทั้งหมดได้เสร็จสิ้นการดาวน์โหลด</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>นี้เป็นคุณลักษณะพิเศษ คุณสามารถใช้คุณลักษณะนี้ เมื่อเริ่มแอปใหม่อีกครั้ง</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>นี้เป็นคุณลักษณะพิเศษ คุณสามารถใช้ฟรีได้เฉพาะ None, Bilinear หรือ HQ2x</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>กดปุ่มเริ่มก่อน</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>ไม่มีผลิตภัณฑ์ที่สามารถใช้ได้ในขณะนี้</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>ซื้อ</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>ซื้อแล้ว,ขอบคุณครับ</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>ซื้อสำเร็จ,โฆษณาจะไม่แสดงในครั้งต่อไปที่คุณเริ่มแอป</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>ซื้อสำเร็จ</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>ซื้อ</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>นี้เป็น *คำเตือน* จากการซื้อใน Windows10 สำหรับปัญหาบางส่วนจากบัญชี Microsoft หลังจากที่คุณได้ซื้อแอป จะพบปัญหาดังนี้ (1) ปัญหาการเปิดแอป (2) แอปไม่สามารถดาวโหลดจาก Storeได้จากปัญหา 0x803F7002,และ (3) แม้ว่าคุณจะ sideload  แอปนี้, Store จะแจ้งว่าคุณยังไม่ได้ซื้อแอป</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>ถ้าคุณยอมรับความเสี่ยงที่อาจเกิดขึ้น, คลิกปุ่ม โหลดผลิตภัณฑ์ โปรดจำไว้ว่า บัญชี Microsoft จะบันทึกการซื้อของคุณ คุณจะไม่สามารถขอเงินคืนจากผมได้ถ้ามันไม่สำเร็จ คุณสามารถ sideload .appx ถ้าคุณไม่สามารถโหลดจาก Store ได้ สำหรับคนที่ซื้อ VBA8 ในเวอร์ชั่น: 2.27 คุณสามารถกดขอรหัสปลดล็อก VBA10 ได้เหมือนกัน ข้อระวัง: ใช้รหัสปลดล็อกได้ทุกข้อบกพร่องเช่นเดียวกับการซื้อผลิตภัณฑ์ ยกเว้นคุณจะไม่เสียเงิน</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>นี้จะลบรายการ ROM จากรายการแอป ไฟล์ ROM และ Saveจะไม่ได้รับผลกระทบ ดำเนิดต่อ?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>คุณต้องการตั้งค่าคอนโซลแน่ใจหรือไม่</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. ออกจากแอปให้สมบูรณ์
+2. ตรวจสอบให้แน่ใจว่าชื่อของ Save ตรงกับไฟล์ ROM ให้เหมือนกัน (ยกเว้นนามสกุลไฟล์)
+3. เปิดแอปและนำเข้าไฟล์
+4. เริ่มเกม</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>ขวา</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Save ไฟล์นำเข้าสำเร็จ</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Savestate 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Savestate 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Savestate 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Savestate 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Savestate 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Savestate 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Savestate 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Savestate 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Savestate 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Savestate 9 (อัตโนมัติ)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Scanlines</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>เลือกไฟล์ที่จะนำเข้า</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>เลือกไฟล์ที่จะนำเข้า</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>โปรดเลือก HID gamepad</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>เลือกตำแหน่งของ ROM </value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>เลือก ROM</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Select State</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>การตั้งค่า</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>แสดง FPS</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>ลงชื่อเข้าใช้ แล้ว</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>ลงชื่อเข้าใช้</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>ลงชื่อเข้าใช้</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>เสียง</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>โปรดเริ่ม ROM ก่อน</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Stretch</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>สำเร็จในการสลับไปโหมดเต็มจอ</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>ซิงโครไนส์เสียง (คุณภาพดีกว่า,CPU แรง)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>ขอบคุณ เพลิดเพลินกับคอนโทรลเลอร์ Xbox/HID สำหรับชั่วโมงถัดไป คลิกปุ่มนี้อีกครั้งหลังจากเวลาหมดอายุการใช้ตัวควบคุม Xbox/HID</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>ชุดรูปแบบ</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>ชุดรูปแบบใช้ที่ใช้ได้เมื่อเริ่มแอปอีกครั้ง</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Show virtual buttons</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Turbo button behavior</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Toggle turbo on/off</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV mode</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>ไม่รู้จัก</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>ขึ้น</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>อับโหลดเสร็จสมบูรณ์</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>ใช้โหมดเต็มจอ</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>เวอร์ชัน:</value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>คำเตือน</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>ดู Video</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>คุณจำเป็นต้องดู Video ทั้งหมดเพื่อเปิดใช้งานคุณลักษณะ</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>XBox controller ได้เชื่อมต่อ</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>ใช่</value>
+  </data>
+</root>
