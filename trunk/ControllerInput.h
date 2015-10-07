@@ -21,6 +21,8 @@ namespace VBA10
 	private:
 		ControllerState state;
 		CXBOXController *xboxPad;
+
+		void GetMapping(int pressedButton, bool* a, bool* b, bool* l, bool* r, bool* turbo);
 	};
 }
 #endif
