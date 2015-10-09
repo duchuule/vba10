@@ -1,0 +1,690 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>Hakkında</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>ROM Ekle</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>En-Boy oranı</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Otomatik</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Eksen</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Sanal kontrolcü saydamlığı: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Sanal buton yerleşimi: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Buton</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Satın al</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>Çalışan ROM dosyasını silemezsiniz. Başka bir ROM başlatın veya uygulamayı tekrar çalıştırın.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Bu emülatör Gameshark, CodeBreaker ve GameGenie kodlarını desteklemektedir.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>HİLELER</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Hileler</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Kod: </value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Hamburger ve komut butonları yerleşimi</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Yapılandırma</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Onayla</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Bağlan</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>İletişim: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU filtresi (yavaş)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Emeği Geçenler:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Koyu</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (analog çubuk): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Sevgili VBA10 Kullanıcıları:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>Bu seçenek uygulamanın özel klasöründeki ROM ve kayıt dosyalarını *silecek*. Devam etmek istiyor musunuz?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Başlık: </value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Hata, aygıt bağlantısı yapılamadı.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Yükleme onayını kaldır</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Kaydetme onayını kaldır</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Görüntü tazeleme</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Aşağı</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-yönlü</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Aşağı</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Dinamik analog çubuk</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Sabit analog çubuk</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad Sol</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>NOT: D-pad sadece yönlendirme için kullanılabilir, diğer seçenekler atanamaz.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad :Sağ</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>D-pad türü</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad Yukarı</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Buton yerleşimini ayarla</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Önce bir hile kodu girmelisiniz.</value>
+  </data>
+  <data name="EmulatorFunction.Text" xml:space="preserve">
+    <value>Emulatör fonksiyonu</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Turbo modu aktifleştir</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>DIŞA AKTAR</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Dışa Aktar</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Dışa aktarma klasörü bulunamadı.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Eğer yerel depolama seçeneği ile bir rom seçtiyseniz, tüm kayıt dosyaları da aynı klasör içinde saklanır. Tek yapmanız gereken o klasöre gidip kayıt dosyalarını kopyalamak. Daha iyisi, eğer bir Masaüstü/Tablet üzerinden dosyalarınızı OneDrive'a kaydettiyseniz, tüm kayıtlarınız otamatik olarak bulutta saklanır.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Eğer bir şekilde rom klasörüne erişemezseniz, misal, rom uygulamanın gizli klasörlerinde duruyorsa, kayıtlarınızı OneDrive'a yüklemek için bu seçeneği kullanın.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Dışa aktar</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Erişim sağlanamadı</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Bu dosya türü desteklenmiyor.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Dosyalar başarı ile içe aktarıldı.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Görünüşe göre bu gamepad ile ilk bağlantınız. Ayar yapmak için TAMAM deyin.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Kare atlama (Turbo mod dışında)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Kare atlama (Turbo mod)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Xbox ve genel HID uyumlu gamepadler desteklenmektedir.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Aktif etmek için Premium özellik paketini satın alın veya kısa vidyoyu izleyin.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>Genel</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU filtresi (hızlı)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>YARDIM</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Yardım</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Artık istediğiniz gibi tuş ataması yapabilirsiniz. Her özellik için en fazla iki tuş atayabilirsiniz.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Hamburger butonu gizle</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID Kontrolcü Ayarı</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>HID kontrolcü(ler) algılandı.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Basılı tutarak</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Ana Ekran</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>Nasıl</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Kayıtlar nasıl kurtarılır</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>İÇE AKTAR</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>başarı ile içe aktarıldı.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Eğer dosyalar hali hazırda telefon veya PC'nizde ise bu seçeneği kullanın. NOT: Windows 10'da bir hata nedeniyle klasördeki dosyaları göremeyebilirsiniz. Bu durumda dosyaların bulunduğu klasörü seçin ve karşınıza çıkan listeden içe aktarmak istediğiniz ROMu seçin.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>OneDrive üzerindeki rom veya kayıt dosyalarınızı içe aktarmak için bu seçeneği kullanın. İnen dosyalar uygulamanın özel klasörüne kopyalacak. NOT: Dosyalarınızı kullanıcı erişimi sağlanabilen bir klasörde tutmanızı tavsiye ederim. Bu, uygulama bir hata ile karşılaşınca ilerlemenizi kurtarmanıza olanak sağlar.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>ROM içe aktar</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>R/S içe aktar</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Kayıt içe aktar</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>İçe Aktar</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Geçersiz kod biçimi.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>bağlandı.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Sanal joystick ölçeği: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Tuş Atamaları</value>
+  </data>
+  <data name="L3LeftStick.Text" xml:space="preserve">
+    <value>L3 (Sol çubuk basışı)</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Açık</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Yüklemek istediğinize emin misiniz? Tüm kaydedilmeyen ilerleme duman olacak.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Yükleniyor...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Tüm seçenek listesi yükleniyor. Bekleyin...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Hata! İnternet bağlantısı yok veya Microsoft sunucu hatası. Daha sonra tekrar deneyin.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Seçenekleri yükle</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Yerel depolama</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Ağ hatası.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>Herhangi bir kod girilmedi.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>En azından bir tane seçmelisiniz.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>HID kontrolcü algılanamadı.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Eşleşen bir ROM ismi bulunamadı.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>Yok</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>Desteklenen dosya bulunamadı!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>Desteklenen dosya bulunamadı!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>XBox kontrolcüsü bulunamadı.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Orijinal</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Üzerine yaz?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Kaydetmek istiyor musunuz? Seçilen kayıt yuvasının üzerine yazılacak.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Lütfen tün dosyalar indirilirken bekleyin.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Bu premium özellik. Şimdilik bu özelliği kullanabilirsiniz ancak bir dahaki açılışta Yok olarak seçilecek.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Bu premium özellik. Ücretsiz kullanıcılar Yok, Bilinear veya HQ2x kullanabilir.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Önce Başlat butonuna bas.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>İşleniyor...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>Seçenek şu anda mevcut değil.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Ödeme yap</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Ödendi, teşekkürler!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Ödeme başarılı, uygulamayı bir sonraki açılışta reklamlar gösterilmeyecek.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Ödeme başarılı.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Ödeme yap</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>Bu uygulama-içi ödeme yapacaklar için bir *uyarı*. Bir kısım Microsoft hesabı, benimki de dahil, uygulama-içi ödeme yaptıktan sonra şu hatalarla karşılaşabilirsiniz: (1) uygulama açılışında çökme, (2) uygulama bir daha mağazadan inmeyebilir ve 0x803F7002 hatası verebilir ve (3) uygulama açılsa dahi mağaza hala ödeme yapılmamış olarak görebilir.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>Eğer risk almak istiyorsanız aşağıdaki butona tıklayın ve seçenekleri görün. Aklınızda bulunsun ödeme işlerini Microsoft hallediyor, o nedenle ödeme başarısız olursa size herhangi bir geri ödeme yapamam. Ancak uygulamayı indiremiyorsanız size .appx dosyasını verebilirim. Şimdiki VBA8 kullanıcıları: versiyon 2.27 ile birlikte VBA10 erişim kodları alabilirsiniz. Yine de erişim kodu kullandığınızda ödeme ile karşılaşılan aynı hataları alma olasılığınız var, sadece para kaybetmemiş olacaksınız.</value>
+  </data>
+  <data name="R3RightStick.Text" xml:space="preserve">
+    <value>R3 (Sağ çubuk basışı)</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>Bu seçenek ROM dosyasını uygulama listesinden silecek. Devam etmek istiyor musunuz?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Tekrar Başlat.</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Konsolu yeniden başlatmak istiyor musunuz?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Uygulamadan tamamen çıkın.
+2. Kayıt dosyası ile ROM dosyasının aynı isimde olduğundan emin olun (uzamtı hariç).
+3.Uygulamayı başlatıp kayıt dosyasını içe aktarın.
+4. Oyunu başlatın.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Sağ</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Kayıt dosyası başarı ile içe aktarıldı.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Kayıt yuvası 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Kayıt yuvası 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Kayıt yuvası 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Kayıt yuvası 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Kayıt yuvası 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Kayıt yuvası 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Kayıt yuvası 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Kayıt yuvası 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Kayıt yuvası 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Kayıt yuvası 9 (otomatik)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Scanlines</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Seç</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Dosya(ları) dışa aktarmak için seçin</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>İçe aktarmak için dosya(lar) seç</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Bir HID kontrolcü seç.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>ROM Klasörü seç</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>ROMseç</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Konum Seç.</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>FPS Göster</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Giriş yapıldı</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Giriş yap</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Giriş yap</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Ses</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Önce bir rom seçmelisiniz.</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Uzat</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Tam ekran moduna başarı ile geçildi.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Sesi senkronize et (en iyi kalite, CPU yüklenmesi)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Teşekkürler! Xbox/HID kontrolcünüz ile gelecek saatlerde iyi vakit geçirin. Eğer Xbox/HID konrolcünüzü kullanırken süre dolarsa tekrar bu tuşa basın.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>Seçilen tema uygulama tekrar başlatıldığında aktif olacak.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Üst</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Sanal tuşları göster</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Turbo buton davranışı</value>
+  </data>
+  <data name="TurboText" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Turbo aç/kapat</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV modu</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Bilinmiyor</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Yukarı</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Yükleme başarı ile tamamlandı.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Tam ekranda kullan</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Versiyon: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Vidyo</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Vidyo izle</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Bu özelliği aktif etmek için vidyoyu baştan sona izlemelisiniz.</value>
+  </data>
+  <data name="XboxButton.Text" xml:space="preserve">
+    <value>Xbox tuşu</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>XBox kontrolcüsü bağlandı.</value>
+  </data>
+  <data name="XboxGamepadConfig.Text" xml:space="preserve">
+    <value>Xbox Kontrolcü ayarı</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+</root>

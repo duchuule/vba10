@@ -97,7 +97,7 @@
                             <LineBreak />
                             <Run  Text="- Rahadian Rihadi for Indonesian translation."/>
                     	    <LineBreak />
-                            <Run  Text="- Luiz Alberto for Portuguese translation."/>
+                            <Run  Text="- Luiz Alberto for Brazillian Portuguese translation."/>
                     	    <LineBreak />
                             <Run  Text="- Vladislav Beliy for Ukrainian translation."/>
                     	    <LineBreak />
@@ -106,6 +106,10 @@
                             <Run  Text="- Andrés Ricaurte for Spanish translation."/>
                             <LineBreak />
                             <Run  Text="- Danupol Intranurak for Thai translation."/>
+                    	    <LineBreak />
+                            <Run  Text="- Ali Ciddi for Turkish translation."/>
+                            <LineBreak />
+                            <Run  Text="- Flávio Marta for European Portuguese translation."/>
                     	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
