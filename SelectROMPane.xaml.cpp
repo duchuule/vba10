@@ -36,6 +36,8 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::AccessCache;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel::Resources;
+using namespace Windows::Devices::HumanInterfaceDevice;
+using namespace Windows::Devices::Enumeration;
 
 StorageFolderModel::StorageFolderModel(StorageFolder ^folder)
 { 
@@ -54,6 +56,9 @@ SelectROMPane::SelectROMPane()
 	initdone = false;
 
 	this->InitializeComponent();
+
+
+	auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
 
 	//move command bar to bottom if setting says so
 	if ((EmulatorSettings::Current->CommandButtonPosition == 0 && Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
@@ -104,6 +109,10 @@ SelectROMPane::SelectROMPane()
 
 	//disable the command bar if no rom is loaded
 	topbar->IsEnabled = IsROMLoaded();
+
+
+
+
 
 	initdone = true;
 }

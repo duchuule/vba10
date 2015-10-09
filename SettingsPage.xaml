@@ -21,7 +21,8 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="SETTINGS"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="**SETTINGS"
+                       x:Uid="SETTINGS"/>
         </Grid>
 
         

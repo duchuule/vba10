@@ -78,6 +78,7 @@ namespace VBA10
 		task<void> UpdateDBEntry();
 		task<void> SaveBeforeStop();
 		void ImportRomFromFile(Windows::ApplicationModel::Activation::FileActivatedEventArgs^ args);
+		void ShowNotification(Platform::String^ notificationText);
 		
 
 	protected:

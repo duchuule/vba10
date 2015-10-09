@@ -54,6 +54,8 @@ using namespace Windows::Globalization; //to get date time
 using namespace Windows::System::Display;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Storage::AccessCache;
+using namespace Windows::Devices::HumanInterfaceDevice;
+using namespace Windows::Devices::Enumeration;
 
 using namespace std;
 using namespace VBA10;
@@ -237,6 +239,41 @@ DirectXPage::DirectXPage():
 		RootSplitView->IsPaneOpen = true;
 		
 	}, task_continuation_context::use_current());
+
+
+	//check hid gamepad connection
+	auto deviceSelector = HidDevice::GetDeviceSelector(0x0001, 0x0005);
+	create_task(DeviceInformation::FindAllAsync(deviceSelector))
+		.then([loader, this](DeviceInformationCollection^ collection)
+	{
+
+		//VID_045E = microsoft
+		Vector<DeviceInformation^>^ HIDDeviceList = ref new Vector<DeviceInformation^>();
+		Vector<String^>^ deviceIDs = ref new Vector<String^>();
+		for (int i = 0; i < collection->Size; i++)
+		{
+			DeviceInformation^ device = collection->GetAt(i);
+
+			//ignore microsoft xbox controller
+			wstring deviceid(device->Id->Begin(), device->Id->End());
+			if (deviceid.find(L"VID_045E") != string::npos)
+				continue;
+
+			HIDDeviceList->Append(device);
+			deviceIDs->Append(device->Name);
+		}
+
+		if (HIDDeviceList->Size > 0)
+		{
+			this->ShowNotification(deviceIDs->GetAt(0) + " detected.");
+		}
+		else
+		{
+
+		}
+
+	}, task_continuation_context::use_current());
+
 	
 
 }
@@ -1120,4 +1157,13 @@ void DirectXPage::AcceptPositionBtn_Click(Platform::Object^ sender, Windows::UI:
 {
 	this->m_main->emulator->LeaveButtonEditMode(true);
 	this->panelEditButton->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+}
+
+void DirectXPage::ShowNotification(Platform::String^ notificationText)
+{
+	this->txtNotification->Text = notificationText;
+	//this->notificationPanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+	this->notificationEntranceExit->Begin();
+	
+	//DispatcherTimer dispatcherTimer = ref new DispatcherTimer();
 }
