@@ -166,10 +166,10 @@
     <value>Este emulador soporta códigos de Gameshark, CodeBreaker y GameGenie.</value>
   </data>
   <data name="CHEATS.Text" xml:space="preserve">
-    <value>CHEATS</value>
+    <value>TRAMPAS</value>
   </data>
   <data name="CheatsText" xml:space="preserve">
-    <value>Cheats</value>
+    <value>Trampas</value>
   </data>
   <data name="CloseBtn.Content" xml:space="preserve">
     <value>Cerrar</value>
@@ -577,7 +577,7 @@
     <value>Selecciona Guardado</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>Configuración</value>
+    <value>Configurar</value>
   </data>
   <data name="ShowFPS.Header" xml:space="preserve">
     <value>Mostrar FPS</value>
@@ -668,5 +668,11 @@
   </data>
   <data name="YesText" xml:space="preserve">
     <value>Si</value>
+  </data>
+  <data name="SETTINGS.Text" xml:space="preserve">
+    <value>CONFIGURACIÓN</value>
+  </data>
+  <data name="PURCHASE.Text" xml:space="preserve">
+    <value>COMPRAR</value>
   </data>
 </root>

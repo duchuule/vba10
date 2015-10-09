@@ -687,4 +687,10 @@
   <data name="XboxGamepadConfig.Text" xml:space="preserve">
     <value>Xbox Gamepad Config</value>
   </data>
+  <data name="PURCHASE.Text" xml:space="preserve">
+    <value>PURCHASE</value>
+  </data>
+  <data name="SETTINGS.Text" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
 </root>

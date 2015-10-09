@@ -20,7 +20,8 @@
               Height="48"
               Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
             <TextBlock x:Name="title" 
-                     Style="{StaticResource PageTitleTextBlockStyle}" Text="PURCHASE"/>
+                     Style="{StaticResource PageTitleTextBlockStyle}" Text="**PURCHASE"
+                       x:Uid="PURCHASE"/>
         </Grid>
 
         <!--<TextBlock Grid.Row="0" Text="invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel invisible text to stretch the panel"

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="16994Sparksoft.VBA10" Publisher="CN=9289A21E-3389-49E2-A9E0-46AA1289C3CB" Version="1.18.187.0" />
+  <Identity Name="16994Sparksoft.VBA10" Publisher="CN=9289A21E-3389-49E2-A9E0-46AA1289C3CB" Version="1.19.189.0" />
   <mp:PhoneIdentity PhoneProductId="2b9558e5-6253-426c-8989-3284f508e743" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>VBA10</DisplayName>
