@@ -66,7 +66,7 @@ namespace VBA10
 
 		HIDControllerInput ^HidInput;
 
-		task<bool> RestoreHidConfig();
+		bool RestoreHidConfig();
 
 		void EnterButtonEditMode();
 		bool IsButtonEditMode();

@@ -242,14 +242,21 @@ DirectXPage::DirectXPage():
 
 
 	//check hid gamepad connection
-	auto deviceSelector = HidDevice::GetDeviceSelector(0x0001, 0x0005);
-	create_task(DeviceInformation::FindAllAsync(deviceSelector))
+	
+	create_task(LoadHidConfig())
+		.then([loader, this] ()
+	{
+		auto deviceSelector = HidDevice::GetDeviceSelector(0x0001, 0x0005);
+		return DeviceInformation::FindAllAsync(deviceSelector);
+	}, task_continuation_context::use_current())
 		.then([loader, this](DeviceInformationCollection^ collection)
 	{
 
 		//VID_045E = microsoft
 		Vector<DeviceInformation^>^ HIDDeviceList = ref new Vector<DeviceInformation^>();
-		Vector<String^>^ deviceIDs = ref new Vector<String^>();
+		Vector<String^>^ deviceNames = ref new Vector<String^>();
+		int totalHIDDeviceNumber = 0;
+
 		for (int i = 0; i < collection->Size; i++)
 		{
 			DeviceInformation^ device = collection->GetAt(i);
@@ -259,18 +266,58 @@ DirectXPage::DirectXPage():
 			if (deviceid.find(L"VID_045E") != string::npos)
 				continue;
 
-			HIDDeviceList->Append(device);
-			deviceIDs->Append(device->Name);
+			totalHIDDeviceNumber++;
+
+			//only add known device to the list
+			if (hidConfigs->HasKey(device->Id))
+			{
+				HIDDeviceList->Append(device);
+				deviceNames->Append(device->Name);
+			}
 		}
 
 		if (HIDDeviceList->Size > 0)
 		{
-			this->ShowNotification(deviceIDs->GetAt(0) + " detected.");
+			//connect to the first known device
+
+			return create_task(EventHandlerForDevice::Current->OpenDeviceAsync(HIDDeviceList->GetAt(0)))
+				.then([this, HIDDeviceList, deviceNames](task<bool> openDeviceTask)
+			{
+				try
+				{
+					bool openSuccess = openDeviceTask.get();
+
+					auto loader = Windows::ApplicationModel::Resources::ResourceLoader::GetForViewIndependentUse();
+
+					if (openSuccess)
+					{
+
+						this->m_main->emulator->RestoreHidConfig();
+						Platform::String^ notification = EventHandlerForDevice::Current->DeviceInformation->Name + " " + loader->GetString("IsConnectedText");
+						if (!App::IsPremium)
+							notification += " " + "To use it, please go to Settings to watch a video.";
+						this->ShowNotification(notification);
+					}
+					else
+					{
+						this->ShowNotification( loader->GetString("FailedConnectToText") + " " + HIDDeviceList->GetAt(0)->Name);
+					}
+				}
+				catch (...) {}
+
+			}, task_continuation_context::use_current());
+
+
+
+			
+		}
+		else if (totalHIDDeviceNumber > 0)
+		{
+			this->ShowNotification("A new HID gampad is detected. Please go to Settings to configure it.");
+			return create_task([] {});
 		}
 		else
-		{
-
-		}
+			return create_task([] {});
 
 	}, task_continuation_context::use_current());
 
