@@ -1530,8 +1530,10 @@
     <PRIResource Include="Strings\id\Resources.resw" />
     <PRIResource Include="Strings\it\Resources.resw" />
     <PRIResource Include="Strings\pt-br\Resources.resw" />
+    <PRIResource Include="Strings\pt-PT\Resources.resw" />
     <PRIResource Include="Strings\ru\Resources.resw" />
     <PRIResource Include="Strings\th\Resources.resw" />
+    <PRIResource Include="Strings\tr\Resources.resw" />
     <PRIResource Include="Strings\uk\Resources.resw" />
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
   </ItemGroup>

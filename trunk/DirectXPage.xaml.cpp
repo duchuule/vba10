@@ -295,7 +295,7 @@ DirectXPage::DirectXPage():
 						this->m_main->emulator->RestoreHidConfig();
 						Platform::String^ notification = EventHandlerForDevice::Current->DeviceInformation->Name + " " + loader->GetString("IsConnectedText");
 						if (!App::IsPremium)
-							notification += " " + "To use it, please go to Settings to watch a video.";
+							notification += " " + loader->GetString("WatchVideoPrompt");
 						this->ShowNotification(notification);
 					}
 					else
@@ -313,7 +313,7 @@ DirectXPage::DirectXPage():
 		}
 		else if (totalHIDDeviceNumber > 0)
 		{
-			this->ShowNotification("A new HID gampad is detected. Please go to Settings to configure it.");
+			this->ShowNotification(loader->GetString("NewGamePadText"));
 			return create_task([] {});
 		}
 		else
