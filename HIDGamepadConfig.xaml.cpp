@@ -63,9 +63,11 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 
 
 		//Read stored configuration and display
-		create_task(emulator->RestoreHidConfig())
-			.then([this, loader] (bool success) 
-		{
+		//create_task(emulator->RestoreHidConfig())
+		//	.then([this, loader] (bool success) 
+		//{
+		bool success = emulator->RestoreHidConfig();
+
 			RegisterForInputReportEvents();
 
 			EventHandlerForDevice::Current->OnDeviceConnected =
@@ -162,7 +164,7 @@ void HIDGamepadConfig::OnNavigatedTo(NavigationEventArgs^ /* e */)
 					}
 				}
 			}
-		}, task_continuation_context::use_current());
+		//}, task_continuation_context::use_current());
 
 
 		

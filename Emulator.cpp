@@ -367,12 +367,12 @@ namespace VBA10
 		SetEvent(this->updateEvent);
 	}
 
-	task<bool> EmulatorGame::RestoreHidConfig() 
+	bool EmulatorGame::RestoreHidConfig() 
 	{
 
-		return create_task(LoadHidConfig())
-			.then([this] 
-		{
+		//return create_task(LoadHidConfig())
+		//	.then([this] 
+		//{
 			//initialize boolean button map
 			this->HidInput->booleanControlMapping = ref new Map <int, Platform::String^ >();
 
@@ -413,39 +413,6 @@ namespace VBA10
 
 
 
-				////transfer boolean control
-				//for (auto bpair : config->booleanControlMapping)
-				//{
-				//	int bid = bpair->Key;
-				//	String^ function = bpair->Value;
-
-				//	this->HidInput->booleanControlMapping->Insert(bid, function);
-				//}
-
-				////transfer numeric control
-				//for (auto ncontrol : this->HidInput->allNumericControls)
-				//{
-				//	for (auto ncontrol2 : config->allNumericControls)
-				//	{
-				//		if (ncontrol->UsagePage == ncontrol2->UsagePage && ncontrol->UsageId == ncontrol2->UsageId)  //find the match
-				//		{
-				//			//transfer the value
-				//			ncontrol->Type = ncontrol2->Type;
-				//			ncontrol->DefaultValue = ncontrol2->DefaultValue;
-				//			ncontrol->MaximumValue = ncontrol2->MaximumValue;
-				//			for (auto npair : ncontrol2->Mapping)
-				//			{
-				//				int nid = npair->Key;
-				//				String^ function = npair->Value;
-				//				ncontrol->Mapping->Insert(nid, function);
-				//			}
-
-				//			break;
-				//		}
-
-
-				//	}
-				//}
 
 				return true;
 			}
@@ -453,7 +420,7 @@ namespace VBA10
 			{
 				return false;
 			}
-		}, task_continuation_context::use_current());
+		//}, task_continuation_context::use_current());
 	}
 
 

@@ -205,6 +205,7 @@
             <TextBlock x:Name="txtNotification"
                 Text="test" Foreground="White"
                        Margin="12,4,12,4"
+                       TextWrapping="Wrap"
                        
                        />
         </StackPanel>

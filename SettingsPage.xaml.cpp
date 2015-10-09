@@ -342,9 +342,10 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 			{
 				this->txtHIDGamepad->Text = EventHandlerForDevice::Current->DeviceInformation->Name + " " + loader->GetString("IsConnectedText");
 
-				create_task(emulator->RestoreHidConfig())
-					.then([this, loader](bool restoreSuccess)
-				{
+				//create_task(emulator->RestoreHidConfig())
+				//	.then([this, loader](bool restoreSuccess)
+				//{
+					bool restoreSuccess = emulator->RestoreHidConfig();
 					if (!restoreSuccess)
 					{
 						//open dialog
@@ -362,7 +363,7 @@ void SettingsPage::ConnectBtn_Click(Platform::Object^ sender, Windows::UI::Xaml:
 						dialog->Commands->Append(confirm);
 						dialog->ShowAsync();
 					}
-				});
+				//});
 			}
 			else
 			{
