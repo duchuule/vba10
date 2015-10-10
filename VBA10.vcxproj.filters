@@ -92,6 +92,9 @@
     <Filter Include="Strings\tr">
       <UniqueIdentifier>{a064ead5-574f-4b9d-8c60-cbbfca6470a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings\da">
+      <UniqueIdentifier>{405158b9-1a6d-4594-a82b-376ae727ac1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -984,6 +987,9 @@
     </PRIResource>
     <PRIResource Include="Strings\tr\Resources.resw">
       <Filter>Strings\tr</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\da\Resources.resw">
+      <Filter>Strings\da</Filter>
     </PRIResource>
   </ItemGroup>
 </Project>
