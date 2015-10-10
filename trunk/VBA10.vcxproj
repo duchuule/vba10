@@ -1525,6 +1525,7 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\ca\Resources.resw" />
+    <PRIResource Include="Strings\da\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\es\Resources.resw" />
     <PRIResource Include="Strings\id\Resources.resw" />

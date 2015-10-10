@@ -1,0 +1,690 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>Om</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Tilføj</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Tilføj</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>Tilføj ROM</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Format forhold</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Axis</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilineær</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Bund</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Virtuel controller opacitet</value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Virtuel knap skala:</value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Knap</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Køb</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Annuller </value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>Du kan ikke fjerne et kørende ROM. Venligst start et andet ROM eller genstart appen.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Denne emulator understøtter Gameshark, CodeBreaker og GameGenie koder.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>SNYDEKODER</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Snydekoder</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Luk</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Kode:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Hamburger og kommandoknap positioner.</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Konfigurer</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Bekræft</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Tilslut</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Kontakt:</value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU filter (langsomt)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Medvirkende:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Mørk</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (analog stick): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Kære VBA10 brugere:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>Dette vil *slette* ROM filen og gemte spil fra appens private opbevaring. Fortsæt?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Slet</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Beskrivelse:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Fejl, enheds forbindelse fejlede.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Slå indlæs bekræftelse fra</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Slå gemme bekræftese fra</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Skærm type</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Ned</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-vejs</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D-pad Ned</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Dynamisk analog stick</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Hurtig analog stick</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D-pad Venstre</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>BEMÆRK: D-padden kan kun bruges til retning, og ikke andre funktioner.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D-pad Højre</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>D-pad Stil</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D-pad Op</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Ændre knap layout</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Du skal indtaste en snydekode først</value>
+  </data>
+  <data name="EmulatorFunction.Text" xml:space="preserve">
+    <value>Emulator funktion</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Slå turbo tilstand til</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Fejl</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>EKSPORTER</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Eksporter</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Kunne ikke finde eksporterings mappe.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Hvis du importere roms ved at bruge den lokale opbevarings mulighed, bliver alle filerne gemt i den samme mappe som roms; du skal bare gå derhen og kopiere dem hvor end du vil have dem. Bedre endnu, hvis du er på en Computer/Tablet og opbevarer dine rom's i OneDrive mappen, bliver alle dine saves automatisk synkroniseret til skyen.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Hvis du af en grund ikke kan komme ind i mappen, bliver dine rom's opbevaret i appens private opbevaring, brug denne mulighed for at eksportere saves til OneDrive.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Eksporter</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Kunne ikke tilslutte til</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Denne fil type er ikke understøttet.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Filerne blev importeret korrekt.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Det ser ud til at dette er den første gang du tilslutter denne controller. Tryk OK for at konfigurere den</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frame skip (ikke-turbo tilstand)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frame skip (turbo tilstand)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Både Xbox og generiske HID controllere understøttes.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Køb en premium funktions pakke eller se en kort video for at slå denne funktion til.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>Generelt</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU filter (hurtigt)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>HJÆLP</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Hjælp</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Du kan nu tildele knapper, som du ønsker. Op til to knapper kan tildeles hver funktion.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Skjul hamburger knap</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID Controller konfiguration</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>HID controller(e) registreret.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Tryk og hold for at aktivere</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Hjem</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>Hvordan</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Hvordan man genopretter gemte spil</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>IMPORTER</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>blev importeret korrekt.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Brug denne indstilling til at importere en fil der allerede er på en telefon eller PC. BEMÆRK: På grund af en fejl i Windows 10, vil du ikke kunne se indholdet af den mappe du kigger i. Bare vælg den mappe der har dine roms, og du vil få en liste over roms du kan importere</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Brug denne indstilling til at importere roms og saves fra OneDrive, som vil blive kopieret til appens private lager. BEMÆRK: Det anbefales, at du gemmer roms på en bruger-tilgængelig mappe og bruger lokal opbevaring for at importere dem, som vil forhindre tab af fremskridt, hvis appen bliver korrupt.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>Importer ROM</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>Importer R/S</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Importer gemt spil</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Ugyldig kode format.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>er tilsluttet.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Virtuel joystick skala: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Taste Bindinger</value>
+  </data>
+  <data name="L3LeftStick.Text" xml:space="preserve">
+    <value>L3 (Venstre stick tryk)</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Venstre</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Lys</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Indlæs</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Er du sikker på, at du vil indlæse? Alt ugemt fremskridt vil blive tabt.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Indlæser…</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Indlæser produktions listen. Vent venligst…</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Fejl! Ingen interetforbindelse eller Microsoft serverfejl. Prøv igen senere.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Indlæs produkter</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Lokal plads</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Netværk fejl.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>Ingen snydekode er blevet indtastet.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>Du skal vælge mindst en fil.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>Ingen HID controller fundet.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Kunne ikke finde et matchende ROM navn.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>Ingen understøttet fil fundet!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>Ingen understøttet fil fundet!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>Nej</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>Ingen Xbox controller fundet.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Overskriv?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Er du sikker på du at du vil gemme? Dette vil overskrive den valgte gemme tilstand</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Vent venligst indtil alle filer er færdige med at downloade.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Dette er en premium funktion. Du kan bruge denne funktion nu, men den vil blive sat til Ingen næste gang du starter appen.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Dette er en premium funktion. Gratis brugere kan bruge Ingen, Bilineær eller HQ2x.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Først tryk på Start knappen.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Behandler...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>Produktet er ikke tilgængeligt i øjeblikket.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Køb</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Købt, tak!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Køb gennemført, reklamer vil ikke blive vist næste gang du starter appen.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Køb gennemført.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Køb</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>Dette er en advarsel om in-app køb i Windows 10. For en lille procentdel af Microsoft-konti, min inkluderet, efter du køber in-app produkter, vil du opleve følgende problemer: (1) Appen lukker ved opstart, (2) Appen kan ikke længere blive downloadet fra Store på grund af fejlen 0x803F7002, og (3) Selv hvis du sideloader appen, vil Store stadig rapportere produktet som ikke købt.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>Hvis du ønsker at tage risikoen, tryk på knappen nedenfor for at indlæse produkterne. Husk at Microsoft håndterer alle køb, så jeg kan ikke refundere købet, hvis det ikke virker. Jeg kan dog give dig den .appx fil du skal bruge til at sideloade appen, hvis du ikke længere kan hente appen. Til betalte VBA8 brugere: Version 2.27 er nu tilgængelig som lader dig anmode om en VBA10 betalings kode. Men vær opmærksom på, at ved hjælp af en oplåsingskode har du alle de samme fej, som for et betalt produkt, undtagen at du ikke mister penge.</value>
+  </data>
+  <data name="R3RightStick.Text" xml:space="preserve">
+    <value>R3 (Højre stick tryk)</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>Dette vil fjerne ROM'et fra app listen. Dine ROM filer og saves vil ikke blive berørt. Fortsæt?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Nulstil</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Er du sikker på at du vil nulstille konsollen?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Luk appen helt.
+2. Tjek at navnet på save filen matcher navnet af rom filen præcist (undtagen udvidelsen)
+3. Åben appen og importer save filen.
+4. Start spillet.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Højre</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Gem</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Gemme fil blev importeret korrekt.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Gemmetilstand 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Gemmetilstand 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Gemmetilstand 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Gemmetilstand 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Gemmetilstand 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Gemmetilstand 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Gemmetilstand 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Gemmetilstand 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Gemmetilstand 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Gemmetilstand 9 (automatisk)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Skanderingslinier</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Vælg fil(er) der skal eksporteres.</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Vælg fil(er) der skal importeres</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Vælg venligt en HID controller.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>Vælg ROM mappe</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>Vælg ROM</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Indlæs tilstand</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Indstillinger</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>Vis FPS</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Logget ind</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Log ind </value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Log ind </value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Lyd</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Venligst start et rom først</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Stræk</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Korrekt skiftet til fuldskærm.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Synkroniser lyd (bedre kvalitet, cpu intensivt)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Tak! Nyd din Xbox / HID controller den næste time. Klik på denne knap igen efter tiden udløber, for at fortsætte med at bruge en Xbox / HID controller.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>Temaet vil bive anvendt, næste gang denne app starter.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Vis virtuelle knapper</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Turbo knap adfærd</value>
+  </data>
+  <data name="TurboText" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Slå turbo til/fra</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV tilstand</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Ukendt</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Op</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Upload gennemført korrekt.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Brug fuldskærms tilstand</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Version: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Advarsel</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Se video</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Du skal se hele videoen før funktionen bliver aktiveret.</value>
+  </data>
+  <data name="XboxButton.Text" xml:space="preserve">
+    <value>Xbox knap</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>Xbox controller er tilsluttet.</value>
+  </data>
+  <data name="XboxGamepadConfig.Text" xml:space="preserve">
+    <value>Xbox Controller konfiguration</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+</root>
