@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>ROM hinzufügen</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>Seitenverhältnis</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>Achse</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>Virtueller Controller Deckkraft: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>Virtuelle Schaltfläche Skalierung: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>Schaltfläche</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>Kaufen</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>Eine laufende ROM kann nicht entfernt werden. Bitte starten Sie eine andere ROM oder starten Sie die App neu.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>Dieser Emulator unterstützt Gameshark, CodeBreaker und GameGenie codes.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>CHEATS</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>Cheats</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Code:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>Hamburger und Command Schaltflächen Positionen</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>Konfigurieren</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Bestätigen</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Kontakt: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU filter (langsam)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>Credits:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>Deadzone (Analog-Stick): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>Sehr geehrte VBA10 Benutzer:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>ROM und Speicherstände werden aus dem App-Speicher *gelöscht*. Fortfahren?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>Fehler, Geräteverbindung fehlgeschlagen.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>Ladebestätigung deaktivieren</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>Speicherbestätigung deaktivieren</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>Bildwiederholfrequenz</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>Unten</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8-way</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>Steuerkreuz Unten</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>Dynamischer Analog-Stick</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>Fixierter Analog-Stick</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>Steuerkreuz Links</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>Hinweis: Das Steuerkreuz eignet sich nur für die Richtung und kann nicht für andere Funktionen verwendet werden.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>Steuerkreuz Rechts</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>Steuerkreuz-Stil</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>Steuerkreuz Oben</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>Button-Layout bearbeiten</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>Sie müssen zuerst einen Cheat-Code eingeben.</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>Turbomodus aktivieren</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>EXPORT</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>Es konnte kein Ordner zum Exportieren gefunden werden.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>Wenn du die ROM mit der lokalen Speicher-Option importierst, dann werden alle Speicherstände im selben Ordner wie die ROM geladen; du musst einfach nur dorthin gehen und sie dorthin kopieren, wo du sie brauchst. Wenn du auf dem Desktop/Tablet bist, ist es besser, wenn Sie die ROM in den OneDrive Ordner speichern, denn dann werden alle Speicherstände automatisch mit der Cloud synchronisiert.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Wenn Sie aus irgendeinem Grund nicht auf den ROM-Ordner zugreifen können, z.B. wenn die ROM im privaten App-Speicher gespeichert ist, dann nutzen Sie diese Option zum Exportieren der Speicherstände auf OneDrive.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>Fehler beim verbinden mit</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>Dieser Dateityp wird nicht unterstützt.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>Dateien erfolgreich importiert.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>Es sieht aus als hätten Sie dieses Gamepad zum ersten mal Verbunden. Klicken Sie auf OK, um ihn zu konfigurieren.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>Frames überspringen (ohne Turbo-Modus)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>Frames überspringen (Turbo-Modus)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Xbox und generische HID-Gamepads werden unterstützt.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value>Kaufen Sie ein Premium-Feature-Paket oder sehen Sie ein kurzes Video an um dieses Feature zu aktivieren.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU filter (schnell)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>HILFE</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>Jetzt können Sie Tasten zuweisen, wie Sie es wünschen. Für jede Funktion können bis zu zwei Tasten zugewiesen werden.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>Hamburger-Schaltfläche verstecken</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID Gamepad Config</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>HID-Gamepad(s) erkannt.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>Halten, um zu aktivieren</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>So wird es gemacht</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>Gewusst wie: Speicherstände wiederherstellen</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>IMPORT</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>wurde erfolgreich importiert.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>Verwenden Sie diese Option zum Importieren einer Datei, die auf Ihrem Telefon oder PC bereits vorhanden ist. Hinweis: Aufgrund eines Fehlers in Windows 10 sind Sie nicht in der Lage, den Inhalt des untersuchten Ordners zu sehen. Wählen Sie einfach den Ordner der die ROM enthält und es wird einer Liste von ROMS zum Importieren präsentiert.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>Verwenden Sie diese Option, um ROMS und Speicherstände aus OneDrive zu Importieren und zu Speichern. Diese werden dann an den privaten App-Speicher weitergeleitet. Hinweis: Es wird empfohlen, dass Sie die ROMS auf einen für den Benutzer zugänglichen Ordner speichern und verwenden Sie die Option "lokaler Speicher" zum importieren, damit der Verlust des Fortschritts verhindert wird, falls die App beschädigt wird.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>ROM importieren</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>R/S importieren</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>Speicherstand importieren</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>Steuerung</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>Ungültiger Code.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>ist verbunden.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>Virtueller Joystick Skalierung: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>Tastenbelegung</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>Laden</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie laden möchten? Alle ungespeicherten Fortschritte gehen verloren.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Wird geladen...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>Lade Produktionsliste. Bitte warten...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>Fehler! Keine Internetverbindung oder Microsoft-Server-Fehler. Bitte versuchen Sie es später erneut.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>Lade Produkte</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>Lokaler Speicher</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>Netzwerkfehler.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>Es wurde kein Cheat-Code eingegeben.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>Sie müssen mindestens eine Datei auswählen.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>Kein HID-Gamepad erkannt.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>Es wurde keine passende ROM gefunden.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>Nicht unterstützte Datei gefunden!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>Nicht unterstützte Datei gefunden!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>Kein Xbox Controller erkannt.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>Überschreiben?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie speichern möchten? Damit werden die ausgewählten Speichernstände überschrieben.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>Bitte warten Sie bis alle Dateien heruntergeladen worden sind.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>Dies ist ein Premium-Feature. Sie können das Feature jetzt jetzt nutzen, aber die Einstellung wird beim nächsten Start zurückgesetzt.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>Dies ist ein Premium-Feature. Free-Benutzer können None, Bilinear or HQ2x benutzen.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>Drücken Sie zunächst auf die Schaltfläche "Start".</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>Verarbeitet...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>Produkt ist momentan nicht verfügbar.</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>Kaufen</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>Gekauft, vielen Dank!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>Erfolgreicher Kauf, Werbungen werden beim nächsten Start der App nicht mehr angezeigt.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>Kauf erfolgreich.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>Kaufen</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>Das ist eine *Warnung* über den In-App-Kauf in Windows 10. Ein kleiner Prozentsatz der Microsoft-Konten, inklusive meiner, erleben nach einem In-App-Kauf folgende Probleme: (1) App stürzt ab beim Öffnen, (2) App kann nicht mehr vom Store aufgrund eines Fehlers 0x803F7002 heruntergeladen werden, (3) und auch wenn Sie die App Sideloaden, wird die App im Store als nicht gekauft angezeigt.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>Wenn Sie ein Risiko eingehen möchten, klicken Sie auf die Schaltfläche unten, um die Produkte zu laden. Beachten Sie, dass Microsoft alle Einkäufe verwaltet, so dass ich Ihnen nichts erstatten kann, falls beim Kauf ein Problem aufritt. Ich kann Ihnen jedoch die .appx-Datei zum Sideloaden bieten, wenn Sie die App nicht mehr herunterladen können. Aktuelle VBA8 Premium-Benutzer: Version 2.27 ist jetzt verfügbar, welche Sie VBA10 Freischaltcodes anfordern lässt, aber beachten Sie: mit einem Freischaltcode hat man die selben Bugs wie beim Bezahlen für Produkte, außer, dass Sie kein Geld bezahlen müssen.</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>Dadurch wird der ROM-Eintrag aus der App-Liste entfernt. Ihre jetzigen ROM-Dateien und Speicherstände werden nicht beeinträchtigt. Fortfahren?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie die Konsole zurücksetzen möchten?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. Beenden Sie die App.
+2. Stellen Sie sicher, dass der Name des Speicherstanden mit dem der ROM übereinstimmt. (außer der Erweiterung).
+3. Öffnen Sie die App und importieren Sie den Speicherstand.
+4. Starten Sie das Spiel.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>Speicherstand erfolgreich importiert.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>Speicherstand 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>Speicherstand 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>Speicherstand 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>Speicherstand 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>Speicherstand 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>Speicherstand 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>Speicherstand 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>Speicherstand 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>Speicherstand 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>Speicherstand 9 (auto)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>Scanlines</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>Auswählen</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>Datei(en) zum Exportieren auswählen</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>Wählen Sie die zu importierenden Datei(en)</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>Bitte wählen Sie ein HID-Gamepad.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>ROM Verzeichnis auswählen</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>ROM auswählen</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>Speicherstand wählen</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>FPS anzeigen</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>Eingeloggt</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Einloggen</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>Sound</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>Bitte starten Sie zuerst eine ROM.</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>Strecken</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>Erfolgreich zum Vollbildmodus gewechselt.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>Synchronisieren von Audio (bessere Qualität, CPU-intensiv)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>Vielen Dank! Genießen Sie Ihren Xbox/HID-Controller für die nächste Stunde. Drücken Sie diese Taste erneut, nachdem die Zeit abgelaufen ist, um die Xbox/HID-Controller weiter zu verwenden.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>Motiv</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>Das Motiv wird beim nächsten Start der App angewendet.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>Virtuelle Schaltflächen anzeigen</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>Turbo</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>Turbo-Taste-Verhalten</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>Turbo ein-/ausschalten</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV-Modus</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>Oben</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>Hochladen erfolgreich abgeschlossen.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>Vollbildmodus</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>Version: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>Grafik</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>Warnung</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>Video ansehen</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>Sie müssen das ganze Video ansehen, um das Feature zu aktivieren.</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>Xbox Controller ist verbunden.</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+</root>
