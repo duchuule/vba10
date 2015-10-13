@@ -160,7 +160,7 @@ void ExportPage::exportOneDrivebtn_Click(Platform::Object^ sender, Windows::UI::
 		Search::QueryOptions ^options = ref new Search::QueryOptions();
 		options->FileTypeFilter->Append("*");
 		options->IndexerOption = Search::IndexerOption::DoNotUseIndexer;
-		options->UserSearchFilter = entry->DisplayName;
+		options->UserSearchFilter = "\"" + entry->DisplayName + "\"";
 		create_task(entry->Folder->CreateFileQueryWithOptions(options)->GetFilesAsync())
 			.then([this, loader](IVectorView<StorageFile ^> ^files)
 		{

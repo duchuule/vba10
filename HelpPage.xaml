@@ -113,6 +113,10 @@
                     	    <LineBreak />
                             <Run  Text="- Simon Kudsk for Danish translation."/>
                     	    <LineBreak />
+                            <Run  Text="- Gijs Hoedemaker for Dutch translation."/>
+                    	    <LineBreak />
+                            <Run  Text="- Matthias Tomasetig for German translation."/>
+                    	    <LineBreak />
                             <LineBreak />
                     	    <Run  Text="The author is not responsible for any illegal use of this software. Further more, there is no warranty for this software and the author is not liable for any damages."/>
                     	    <LineBreak/>
