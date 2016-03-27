@@ -60,6 +60,7 @@ void App::CheckProductLicense()
 	HasAds = true;
 	IsPremium = false;
 
+#ifdef NDEBUG
 	//bool IsActive = CurrentApp::LicenseInformation->IsActive;
 	bool IsTrial = CurrentApp::LicenseInformation->IsTrial;
 	//auto expiredate = CurrentApp::LicenseInformation->ExpirationDate.UniversalTime;
@@ -76,6 +77,7 @@ void App::CheckProductLicense()
 
 	if (CurrentApp::LicenseInformation->ProductLicenses->Lookup("premiumfeatures")->IsActive)
 		IsPremium = true;
+#endif
 
 	//revert pixel filter if not premium
 	if (!App::IsPremium)

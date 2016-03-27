@@ -699,4 +699,7 @@
   <data name="WatchVideoPrompt" xml:space="preserve">
     <value>To use it, please go to Settings to watch a video.</value>
   </data>
+  <data name="PurchaseWarning3.Text" xml:space="preserve">
+    <value>If you want to take risk, go ahead but keep in mind that Microsoft handles all the purchases, so I cannot refund you anything should your purchase does not work.</value>
+  </data>
 </root>

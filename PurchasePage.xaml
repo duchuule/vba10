@@ -54,15 +54,15 @@
                     <LineBreak/>
                     <LineBreak/>
                         <Run Text="If you want to take risk**" 
-                             x:Uid="PurchaseWarning2"/>
+                             x:Uid="PurchaseWarning3"/>
                     </TextBlock>
                     
-                    <Button x:Name="loadProductsBtn"
+                    <!--<Button x:Name="loadProductsBtn"
                             Content="**Load products"
                             Margin="0,4,0,12"
                             Click="loadProductsBtn_Click"
                             x:Uid="LoadProductBtn"
-                            />
+                            />-->
                     <TextBlock Text="**Loading production" 
                        TextWrapping="Wrap"
                        Margin="0,48,0,12"
