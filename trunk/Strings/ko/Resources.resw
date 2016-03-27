@@ -1,0 +1,696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About.Header" xml:space="preserve">
+    <value>정보</value>
+  </data>
+  <data name="Add.Text" xml:space="preserve">
+    <value>추가</value>
+  </data>
+  <data name="AddBtn.Content" xml:space="preserve">
+    <value>추가</value>
+  </data>
+  <data name="AddROMBtn.Content" xml:space="preserve">
+    <value>ROM 추가</value>
+  </data>
+  <data name="AspectRatio.Header" xml:space="preserve">
+    <value>화면 비율</value>
+  </data>
+  <data name="AutoCbi.Content" xml:space="preserve">
+    <value>자동</value>
+  </data>
+  <data name="AxisText" xml:space="preserve">
+    <value>축</value>
+  </data>
+  <data name="BilinearCbi.Content" xml:space="preserve">
+    <value>이중 선형</value>
+  </data>
+  <data name="BottomCbi.Content" xml:space="preserve">
+    <value>아래</value>
+  </data>
+  <data name="ButtonOpacity.Text" xml:space="preserve">
+    <value>가상 컨트롤러 불투명도: </value>
+  </data>
+  <data name="ButtonScale.Text" xml:space="preserve">
+    <value>가상 버튼 크기: </value>
+  </data>
+  <data name="ButtonText" xml:space="preserve">
+    <value>버튼</value>
+  </data>
+  <data name="BuyBtn.Content" xml:space="preserve">
+    <value>구매</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="CannotDeleteRunningROMError" xml:space="preserve">
+    <value>실행중인 ROM은 삭제할 수 없습니다. 다른 ROM을 시작하거나 앱을 다시 시작해주세요.</value>
+  </data>
+  <data name="CheatInstruction.Text" xml:space="preserve">
+    <value>이 에뮬레이터는 Gameshark, CodeBreaker 또는 GameGenie 코드를 지원합니다.</value>
+  </data>
+  <data name="CHEATS.Text" xml:space="preserve">
+    <value>치트</value>
+  </data>
+  <data name="CheatsText" xml:space="preserve">
+    <value>치트</value>
+  </data>
+  <data name="CloseBtn.Content" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>코드:</value>
+  </data>
+  <data name="CommandButtonPosition.Text" xml:space="preserve">
+    <value>햄버거 및 기능 버튼 위치</value>
+  </data>
+  <data name="ConfigureBtn.Content" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>확인</value>
+  </data>
+  <data name="ConnectBtn.Content" xml:space="preserve">
+    <value>연결</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>연락처: </value>
+  </data>
+  <data name="CPUFilter.Header" xml:space="preserve">
+    <value>CPU 필터 (느림)</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>도움:</value>
+  </data>
+  <data name="DarkCbi.Content" xml:space="preserve">
+    <value>어둡게</value>
+  </data>
+  <data name="Deadzone.Text" xml:space="preserve">
+    <value>데드 존 (아날로그 스틱): </value>
+  </data>
+  <data name="DearVBA10Users.Text" xml:space="preserve">
+    <value>VBA10 사용자에게:</value>
+  </data>
+  <data name="DeleteROMPrompt" xml:space="preserve">
+    <value>ROM 파일과 세이브 파일을 앱 저장공간에서 삭제하게 됩니다. 계속하시겠습니까?</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>삭제</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>설명:</value>
+  </data>
+  <data name="DeviceConnectionFailText" xml:space="preserve">
+    <value>오류, 장치 연결에 실패했습니다.</value>
+  </data>
+  <data name="DisableLoadConfirm.Header" xml:space="preserve">
+    <value>불러오기 확인 안 함</value>
+  </data>
+  <data name="DisableSaveConfirm.Header" xml:space="preserve">
+    <value>저장 확인 안 함</value>
+  </data>
+  <data name="DisplayType.Header" xml:space="preserve">
+    <value>표시 형식</value>
+  </data>
+  <data name="Down.Text" xml:space="preserve">
+    <value>아래</value>
+  </data>
+  <data name="Dpad8wayCbi.Content" xml:space="preserve">
+    <value>8방향 버튼</value>
+  </data>
+  <data name="DpadDownText" xml:space="preserve">
+    <value>D패드 아래</value>
+  </data>
+  <data name="DpadDynamicStickCbi.Content" xml:space="preserve">
+    <value>위치 가변형 아날로그 스틱</value>
+  </data>
+  <data name="DpadFixedStickCbi.Content" xml:space="preserve">
+    <value>고정된 아날로그 스틱</value>
+  </data>
+  <data name="DpadLeftText" xml:space="preserve">
+    <value>D패드 왼쪽</value>
+  </data>
+  <data name="DpadNote" xml:space="preserve">
+    <value>안내: D패드는 방향 조작만을 지원하며 다른 기능 지정은 불가능합니다.</value>
+  </data>
+  <data name="DpadRightText" xml:space="preserve">
+    <value>D패드 오른쪽</value>
+  </data>
+  <data name="DpadStyle.Header" xml:space="preserve">
+    <value>D패드 형태</value>
+  </data>
+  <data name="DpadUpText" xml:space="preserve">
+    <value>D패드 위</value>
+  </data>
+  <data name="EditLayoutBtn.Content" xml:space="preserve">
+    <value>버튼 위치 변경</value>
+  </data>
+  <data name="EmptyCheatCodeError" xml:space="preserve">
+    <value>치트 코드를 먼저 입력해야 합니다.</value>
+  </data>
+  <data name="EmulatorFunction.Text" xml:space="preserve">
+    <value>에뮬레이터 기능</value>
+  </data>
+  <data name="EnableTurboMode.Header" xml:space="preserve">
+    <value>터보 모드 활성화</value>
+  </data>
+  <data name="ErrorText" xml:space="preserve">
+    <value>오류</value>
+  </data>
+  <data name="EXPORT.Text" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="ExportBtn.Content" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="ExportFolderError" xml:space="preserve">
+    <value>내보낼 폴더를 찾을 수 없습니다.</value>
+  </data>
+  <data name="ExportLocalInstruction.Text" xml:space="preserve">
+    <value>내부 저장소에서 ROM을 가져왔다면, 모든 세이브 파일들은 ROM과 같은 장소에 저장되어 있습니다. 해당 위치에 가서 파일을 복사하기만 하면 됩니다. 현재 데스크탑/테블릿을 사용 중이며 ROM이 OneDrive에 저장되어 있다면 모든 세이브 파일들은 자동으로 클라우드와 동기화되어 있습니다.</value>
+  </data>
+  <data name="ExportOneDriveInstruction.Text" xml:space="preserve">
+    <value>만약 어떤 이유로 폴더에 접근하지 못한다면(ROM이 앱 저장공간에 저장된 경우 등), OneDrive로 파일을 내보내기 위해 이 옵션을 사용하세요.</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="FailedConnectToText" xml:space="preserve">
+    <value>연결에 실패했습니다:</value>
+  </data>
+  <data name="FileNotSupportedError" xml:space="preserve">
+    <value>이 파일 형식은 지원하지 않습니다.</value>
+  </data>
+  <data name="FilesImportSuccessText" xml:space="preserve">
+    <value>파일을 가져왔습니다.</value>
+  </data>
+  <data name="FirstTimeHIDConnectText" xml:space="preserve">
+    <value>게임패드를 처음으로 연결했습니다. 확인을 눌러 설정하세요.</value>
+  </data>
+  <data name="FrameSkipNonturbo.Header" xml:space="preserve">
+    <value>프레임 스킵 (일반 모드)</value>
+  </data>
+  <data name="FrameSkipTurbo.Header" xml:space="preserve">
+    <value>프레임 스킵 (터보 모드)</value>
+  </data>
+  <data name="GamepadInstruction1.Text" xml:space="preserve">
+    <value>Xbox 컨트롤러와 범용 HID 게임패드를 지원합니다.</value>
+  </data>
+  <data name="GamepadInstruction2.Text" xml:space="preserve">
+    <value> 프리미엄 기능 상품을 구매하거나 짧은 동영상을 보고 이 기능을 활성화할 수 있습니다.</value>
+  </data>
+  <data name="General.Header" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="GPUFilter.Header" xml:space="preserve">
+    <value>GPU 필터 (빠름)</value>
+  </data>
+  <data name="HELP.Text" xml:space="preserve">
+    <value>도움말</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>도움말</value>
+  </data>
+  <data name="HIDConfigInstruction" xml:space="preserve">
+    <value>이제 원하는대로 버튼을 지정할 수 있습니다. 각 기능 당 두 개의 버튼까지 지정 가능합니다.</value>
+  </data>
+  <data name="HideHamburger.Header" xml:space="preserve">
+    <value>햄버거 메뉴 버튼 숨기기</value>
+  </data>
+  <data name="HIDGamepadConfig.Text" xml:space="preserve">
+    <value>HID 게임패드 설정</value>
+  </data>
+  <data name="HIDGamepadDetectedText" xml:space="preserve">
+    <value>HID 게임패드 감지됨.</value>
+  </data>
+  <data name="HoldActivateCbi.Content" xml:space="preserve">
+    <value>누르는 동안 활성화</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>홈</value>
+  </data>
+  <data name="HowTo.Header" xml:space="preserve">
+    <value>방법</value>
+  </data>
+  <data name="HowToRestoreSave.Text" xml:space="preserve">
+    <value>세이브 복구 방법</value>
+  </data>
+  <data name="IMPORT.Text" xml:space="preserve">
+    <value>가져오기</value>
+  </data>
+  <data name="ImportedSuccessText" xml:space="preserve">
+    <value>을(를) 가져왔습니다.</value>
+  </data>
+  <data name="ImportLocalInstruction.Text" xml:space="preserve">
+    <value>다른 폰 또는 PC에서 가져온 파일을 사용하려면 선택하세요. 안내: Windows 10의 버그로, 폴더 내부의 파일을 보지 못 할 수 있습니다. ROM이 있는 폴더를 선택하면 가져올 ROM 목록을 선택할 수 있습니다.</value>
+  </data>
+  <data name="ImportOneDriveInstruction.Text" xml:space="preserve">
+    <value>OneDrive에서 ROM 또는 세이브 파일을 가져오려면 선택하세요. 파일은 앱 저장공간으로 복사됩니다. 안내: 앱이 특정 사유로 손상되어 진행한 데이터를 잃는 것을 방지하기 위해 ROM을 접근 가능한 폴더에 저장한 후 내부 저장소 옵션을 이용하여 불러오는 것을 권장합니다.</value>
+  </data>
+  <data name="ImportROMBtn.Content" xml:space="preserve">
+    <value>ROM 가져오기</value>
+  </data>
+  <data name="ImportRSBtn.Content" xml:space="preserve">
+    <value>가져오기</value>
+  </data>
+  <data name="ImportSaveBtn.Content" xml:space="preserve">
+    <value>세이브 가져오기</value>
+  </data>
+  <data name="ImportText" xml:space="preserve">
+    <value>가져오기</value>
+  </data>
+  <data name="Input.Header" xml:space="preserve">
+    <value>입력</value>
+  </data>
+  <data name="InvalidCheatCodeError" xml:space="preserve">
+    <value>올바르지 않은 코드 형식.</value>
+  </data>
+  <data name="IsConnectedText" xml:space="preserve">
+    <value>이(가) 연결되었습니다.</value>
+  </data>
+  <data name="JoystickScale.Text" xml:space="preserve">
+    <value>가상 조이스틱 크기: </value>
+  </data>
+  <data name="KeyBindings.Text" xml:space="preserve">
+    <value>키 설정</value>
+  </data>
+  <data name="L3LeftStick.Text" xml:space="preserve">
+    <value>L3 (왼쪽 스틱 누르기)</value>
+  </data>
+  <data name="Left.Text" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="LightCbi.Content" xml:space="preserve">
+    <value>밝게</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>목록</value>
+  </data>
+  <data name="Load.Label" xml:space="preserve">
+    <value>불러오기</value>
+  </data>
+  <data name="LoadConfirmPrompt" xml:space="preserve">
+    <value>정말 불러오겠습니까? 모든 저장되지 않은 데이터는 잃어버리게 됩니다.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>불러오는 중...</value>
+  </data>
+  <data name="LoadingProduct.Text" xml:space="preserve">
+    <value>목록을 불러오는 중입니다. 잠시만 기다려주세요...</value>
+  </data>
+  <data name="LoadingProductError.Text" xml:space="preserve">
+    <value>오류 발생! 인터넷 접속이 불가능하거나 MS 서버에 오류가 있습니다. 나중에 다시 시도해주세요.</value>
+  </data>
+  <data name="LoadProductBtn.Content" xml:space="preserve">
+    <value>상품 가져오기</value>
+  </data>
+  <data name="LocalStorage.Text" xml:space="preserve">
+    <value>내부 저장소</value>
+  </data>
+  <data name="NetworkErrorText" xml:space="preserve">
+    <value>네트워크 오류.</value>
+  </data>
+  <data name="NoCheat.Text" xml:space="preserve">
+    <value>치트 코드가 입력되지 않았습니다.</value>
+  </data>
+  <data name="NoFileSelectedText" xml:space="preserve">
+    <value>적어도 하나의 파일을 선택해야 합니다.</value>
+  </data>
+  <data name="NoHIDGamepadText" xml:space="preserve">
+    <value>HID 게임패드를 찾을 수 없습니다.</value>
+  </data>
+  <data name="NoMatchingROMError" xml:space="preserve">
+    <value>일치하는 ROM 이름을 찾을 수 없습니다.</value>
+  </data>
+  <data name="NoneCbi.Content" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="NoSupportedFile.Text" xml:space="preserve">
+    <value>지원하는 파일을 찾을 수 없습니다!</value>
+  </data>
+  <data name="NoSupportedFileText" xml:space="preserve">
+    <value>지원하는 파일을 찾을 수 없습니다!</value>
+  </data>
+  <data name="NoText" xml:space="preserve">
+    <value>아니오</value>
+  </data>
+  <data name="NoXboxControllerText" xml:space="preserve">
+    <value>XBox 컨트롤러를 찾을 수 없습니다.</value>
+  </data>
+  <data name="OKBtn.Content" xml:space="preserve">
+    <value>확인</value>
+  </data>
+  <data name="OriginalCbi.Content" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="OverwriteAsk" xml:space="preserve">
+    <value>덮어쓰겠습니까?</value>
+  </data>
+  <data name="OverwriteSaveConfirmText" xml:space="preserve">
+    <value>정말로 저장하시겠습니까? 선택한 세이브를 덮어쓰게 됩니다.</value>
+  </data>
+  <data name="PleaseWaitDownloadText" xml:space="preserve">
+    <value>모든 파일이 다운로드 될 때까지 기다려 주십시오.</value>
+  </data>
+  <data name="PremiumCPUFilterPrompt" xml:space="preserve">
+    <value>프리미엄 전용 기능입니다. 기능을 사용할 수 있지만 다음에 앱이 시작될 때 설정이 다시 초기화될 것입니다.</value>
+  </data>
+  <data name="PremiumGPUFilterPrompt" xml:space="preserve">
+    <value>프리미엄 전용 기능입니다. 무료 사용자는 없음, 이중 선형, HQ2x를 사용할 수 있습니다.</value>
+  </data>
+  <data name="PressStartPrompt" xml:space="preserve">
+    <value>첫번째로 시작 버튼을 누르세요.</value>
+  </data>
+  <data name="ProcessingText" xml:space="preserve">
+    <value>작업 중...</value>
+  </data>
+  <data name="ProductNotAvailableText" xml:space="preserve">
+    <value>현재 상품이 유효하지 않습니다.</value>
+  </data>
+  <data name="PURCHASE.Text" xml:space="preserve">
+    <value>결제</value>
+  </data>
+  <data name="PurchaseBtn.Content" xml:space="preserve">
+    <value>결제</value>
+  </data>
+  <data name="PurchasedThankText" xml:space="preserve">
+    <value>결제되었습니다, 감사합니다!</value>
+  </data>
+  <data name="PurchaseSuccessNoAdsText" xml:space="preserve">
+    <value>결제 완료되었습니다, 다음에 앱 실행 시 광고가 나타나지 않을 것입니다.</value>
+  </data>
+  <data name="PurchaseSuccessText" xml:space="preserve">
+    <value>결제 완료.</value>
+  </data>
+  <data name="PurchaseText" xml:space="preserve">
+    <value>결제</value>
+  </data>
+  <data name="PurchaseWarning1.Text" xml:space="preserve">
+    <value>Windows 10 인앱 결제에 관한 주의사항입니다. Microsoft 계정 중 일부의 경우 인앱 상품을 결제한 후에 다음과 같은 문제를 경험할 가능성이 있습니다: (1) 앱을 실행할 때 크래시 발생, (2) 0x803F7002 오류로 인해 스토어에서 앱을 더 이상 받을 수 없는 경우, (3) sideload를 이용하여 앱을 설치하더라도, 스토어에서는 여전히 결제하지 않은 것으로 나옴.</value>
+  </data>
+  <data name="PurchaseWarning2.Text" xml:space="preserve">
+    <value>해당 위험을 감수하려는 경우, 아래의 버튼을 눌러 상품 목록을 불러오세요. 모든 결제는 Microsoft가 관리하기 때문에, 결제 후 작동을 하지 않는 경우에도 환불 처리가 불가능하다는 것을 기억하십시오. 다만, 스토어에서 더 이상 이 앱을 받을 수 없는 상황의 경우 sideload로 설치하기 위해 .appx 파일을 제공해드릴 수 있습니다. VBA8를 구매한 사용자에게: 2.27 버전에서는 VBA10 언락 코드를 요청할 수 있습니다. 다만 언락 코드를 사용하더라도 돈이 들지 않는다는 것을 제외하면 스토어를 통해 결제하는 경우와 동일한 버그를 경험할 수 있습니다.</value>
+  </data>
+  <data name="R3RightStick.Text" xml:space="preserve">
+    <value>R3 (오른쪽 스틱 누르기)</value>
+  </data>
+  <data name="RemoveROMPrompt" xml:space="preserve">
+    <value>목록에서 ROM을 삭제합니다. 실제 ROM 파일 및 세이브 파일에는 영향을 미치지 않습니다. 계속하시겠습니까?</value>
+  </data>
+  <data name="Reset.Label" xml:space="preserve">
+    <value>리셋</value>
+  </data>
+  <data name="ResetConfirmPrompt" xml:space="preserve">
+    <value>정말로 콘솔을 리셋하시겠습니까?</value>
+  </data>
+  <data name="RestoreSaveInstruction.Text" xml:space="preserve">
+    <value>1. 앱을 완전히 종료합니다.
+2. 세이브 파일 이름을 롬파일의 이름과 동일하게 바꿉니다. (확장자 제외)
+3. 앱을 열고 세이브 파일을 불러옵니다.
+4. 게임을 시작합니다.</value>
+  </data>
+  <data name="Right.Text" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="Save.Label" xml:space="preserve">
+    <value>저장</value>
+  </data>
+  <data name="SaveFileImportSuccessText" xml:space="preserve">
+    <value>세이브 파일을 가져왔습니다.</value>
+  </data>
+  <data name="Savestate0Text" xml:space="preserve">
+    <value>저장시점 0</value>
+  </data>
+  <data name="Savestate1Text" xml:space="preserve">
+    <value>저장시점 1</value>
+  </data>
+  <data name="Savestate2Text" xml:space="preserve">
+    <value>저장시점 2</value>
+  </data>
+  <data name="Savestate3Text" xml:space="preserve">
+    <value>저장시점 3</value>
+  </data>
+  <data name="Savestate4Text" xml:space="preserve">
+    <value>저장시점 4</value>
+  </data>
+  <data name="Savestate5Text" xml:space="preserve">
+    <value>저장시점 5</value>
+  </data>
+  <data name="Savestate6Text" xml:space="preserve">
+    <value>저장시점 6</value>
+  </data>
+  <data name="Savestate7Text" xml:space="preserve">
+    <value>저장시점 7</value>
+  </data>
+  <data name="Savestate8Text" xml:space="preserve">
+    <value>저장시점 8</value>
+  </data>
+  <data name="Savestate9Text" xml:space="preserve">
+    <value>저장시점 9 (자동)</value>
+  </data>
+  <data name="ScanlinesCbi.Content" xml:space="preserve">
+    <value>스캔라인</value>
+  </data>
+  <data name="Select.Text" xml:space="preserve">
+    <value>선택</value>
+  </data>
+  <data name="SelectFileExportText" xml:space="preserve">
+    <value>내보낼 파일 선택</value>
+  </data>
+  <data name="SelectFileImportText" xml:space="preserve">
+    <value>가져올 파일을 선택하세요</value>
+  </data>
+  <data name="SelectHIDGamepadPrompt" xml:space="preserve">
+    <value>HID 게임패드를 선택하세요.</value>
+  </data>
+  <data name="SelectROMDirText" xml:space="preserve">
+    <value>ROM 폴더 선택</value>
+  </data>
+  <data name="SelectROMText" xml:space="preserve">
+    <value>ROM 선택</value>
+  </data>
+  <data name="SelectState.Label" xml:space="preserve">
+    <value>시점 선택</value>
+  </data>
+  <data name="SETTINGS.Text" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="SettingsText" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="ShowFPS.Header" xml:space="preserve">
+    <value>FPS 표시</value>
+  </data>
+  <data name="SignedInText" xml:space="preserve">
+    <value>로그인 됨</value>
+  </data>
+  <data name="SignInBtn.Content" xml:space="preserve">
+    <value>로그인</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>로그인</value>
+  </data>
+  <data name="Sound.Header" xml:space="preserve">
+    <value>소리</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>시작</value>
+  </data>
+  <data name="StartARom.Text" xml:space="preserve">
+    <value>먼저 ROM을 시작해 주십시오.</value>
+  </data>
+  <data name="StretchCbi.Content" xml:space="preserve">
+    <value>늘리기</value>
+  </data>
+  <data name="SwitchFullscreenSuccessText" xml:space="preserve">
+    <value>풀스크린 모드로 전환되었습니다.</value>
+  </data>
+  <data name="SyncAudio.Text" xml:space="preserve">
+    <value>소리 동기화 (CPU 사용량 증가, 나은 품질)</value>
+  </data>
+  <data name="ThanksWatchVideoText" xml:space="preserve">
+    <value>감사합니다! 1시간동안 Xbox/HID 컨트롤러를 즐기세요. 시간이 만료된 후 Xbox/HID 컨트롤러를 계속 사용하려면 다시 버튼을 누르세요.</value>
+  </data>
+  <data name="Theme.Header" xml:space="preserve">
+    <value>테마</value>
+  </data>
+  <data name="ThemeNextStartText" xml:space="preserve">
+    <value>테마는 앱을 다시 실행 시 적용됩니다.</value>
+  </data>
+  <data name="TopCbi.Content" xml:space="preserve">
+    <value>위</value>
+  </data>
+  <data name="TouchToggle.Header" xml:space="preserve">
+    <value>가상 버튼 표시</value>
+  </data>
+  <data name="Turbo.Text" xml:space="preserve">
+    <value>터보</value>
+  </data>
+  <data name="TurboBehavior.Header" xml:space="preserve">
+    <value>터보 버튼 작동방식</value>
+  </data>
+  <data name="TurboText" xml:space="preserve">
+    <value>터보</value>
+  </data>
+  <data name="TurboToggleCbi.Content" xml:space="preserve">
+    <value>눌러서 터보 켜짐/꺼짐 전환</value>
+  </data>
+  <data name="TVModeCbi.Content" xml:space="preserve">
+    <value>TV 모드</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>알 수 없음</value>
+  </data>
+  <data name="Up.Text" xml:space="preserve">
+    <value>위</value>
+  </data>
+  <data name="UploadSuccessText" xml:space="preserve">
+    <value>업로드가 완료되었습니다.</value>
+  </data>
+  <data name="UseFullscreen.Header" xml:space="preserve">
+    <value>풀스크린 모드 사용</value>
+  </data>
+  <data name="VersionText" xml:space="preserve">
+    <value>버전: </value>
+  </data>
+  <data name="Video.Header" xml:space="preserve">
+    <value>화면</value>
+  </data>
+  <data name="WarningText" xml:space="preserve">
+    <value>경고</value>
+  </data>
+  <data name="WatchVideoBtn.Content" xml:space="preserve">
+    <value>동영상 보기</value>
+  </data>
+  <data name="WatchWholeVideoError" xml:space="preserve">
+    <value>기능을 활성화하기 위해서는 동영상을 끝까지 봐야 합니다.</value>
+  </data>
+  <data name="XboxButton.Text" xml:space="preserve">
+    <value>Xbox 버튼</value>
+  </data>
+  <data name="XboxControllerConnectedText" xml:space="preserve">
+    <value>XBox 컨트롤러가 연결되었습니다.</value>
+  </data>
+  <data name="XboxGamepadConfig.Text" xml:space="preserve">
+    <value>Xbox 게임패드 설정</value>
+  </data>
+  <data name="YesText" xml:space="preserve">
+    <value>예</value>
+  </data>
+</root>
