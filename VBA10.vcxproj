@@ -1541,15 +1541,19 @@
     <PRIResource Include="Strings\de\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\es\Resources.resw" />
+    <PRIResource Include="Strings\fr\Resources.resw" />
     <PRIResource Include="Strings\id\Resources.resw" />
     <PRIResource Include="Strings\it\Resources.resw" />
+    <PRIResource Include="Strings\ko\Resources.resw" />
     <PRIResource Include="Strings\nl\Resources.resw" />
+    <PRIResource Include="Strings\pl\Resources.resw" />
     <PRIResource Include="Strings\pt-br\Resources.resw" />
     <PRIResource Include="Strings\pt-PT\Resources.resw" />
     <PRIResource Include="Strings\ru\Resources.resw" />
     <PRIResource Include="Strings\th\Resources.resw" />
     <PRIResource Include="Strings\tr\Resources.resw" />
     <PRIResource Include="Strings\uk\Resources.resw" />
+    <PRIResource Include="Strings\vi\Resources.resw" />
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

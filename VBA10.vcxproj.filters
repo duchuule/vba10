@@ -101,6 +101,18 @@
     <Filter Include="Strings\nl">
       <UniqueIdentifier>{6da2a43b-7554-4094-8583-c79d2ea68592}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings\vi">
+      <UniqueIdentifier>{e26e7c84-43ff-4216-9a1e-8609ddd79787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\pl">
+      <UniqueIdentifier>{76296338-09a5-4f87-b096-65f514b227c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\ko">
+      <UniqueIdentifier>{e5a33a95-af27-4d94-b1b2-14ca5d367594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\fr">
+      <UniqueIdentifier>{3242cacb-f356-4768-88fb-dfff67532a7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -1002,6 +1014,18 @@
     </PRIResource>
     <PRIResource Include="Strings\nl\Resources.resw">
       <Filter>Strings\nl</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\vi\Resources.resw">
+      <Filter>Strings\vi</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\pl\Resources.resw">
+      <Filter>Strings\pl</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\ko\Resources.resw">
+      <Filter>Strings\ko</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\fr\Resources.resw">
+      <Filter>Strings\fr</Filter>
     </PRIResource>
   </ItemGroup>
 </Project>

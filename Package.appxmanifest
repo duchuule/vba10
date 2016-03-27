@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="16994Sparksoft.VBA10" Publisher="CN=9289A21E-3389-49E2-A9E0-46AA1289C3CB" Version="1.21.194.0" />
+  <Identity Name="16994Sparksoft.VBA10" Publisher="CN=9289A21E-3389-49E2-A9E0-46AA1289C3CB" Version="1.22.196.0" />
   <mp:PhoneIdentity PhoneProductId="2b9558e5-6253-426c-8989-3284f508e743" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>VBA10</DisplayName>
@@ -24,12 +24,10 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#4D3A89" />
       </uap:VisualElements>
-
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="gameboyfile">
             <uap:DisplayName>Gameboy ROM file</uap:DisplayName>
-            <uap:EditFlags OpenIsSafe="true" />
             <uap:Logo>Assets\Extension.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.gba</uap:FileType>
@@ -39,17 +37,17 @@
           </uap:FileTypeAssociation>
         </uap:Extension>
       </Extensions>
-      
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
     <DeviceCapability Name="humaninterfacedevice">
       <Device Id="any">
-        <Function Type="usage:0001 0004" />        <!--joy stick-->
-        <Function Type="usage:0001 0005" />        <!--gamepad-->
+        <Function Type="usage:0001 0004" />
+        <!--joy stick-->
+        <Function Type="usage:0001 0005" />
+        <!--gamepad-->
       </Device>
     </DeviceCapability>
   </Capabilities>
-  
 </Package>
