@@ -57,6 +57,10 @@ App::App()
 
 void App::CheckProductLicense()
 {
+	HasAds = false;
+	IsPremium = true;
+
+/* Since VBA10 is unpublished, enable all features
 	HasAds = true;
 	IsPremium = false;
 
@@ -84,7 +88,7 @@ void App::CheckProductLicense()
 	{
 		EmulatorSettings::Current->PixelFilter = 0;
 	}
-
+	*/
 }
 
 /// <summary>
