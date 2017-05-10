@@ -148,11 +148,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>VBA10_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>VBA10_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>D:\Duc\Documents\Visual Studio 2015\Projects\VBA10\AppPackages\</AppxPackageDir>
-    <PackageCertificateThumbprint>08CD9A4FE4AF2AA8EA82CE08CD6DE0DE1B1D9452</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>848A58A80420B0058E01C68EF3AFF76DC6C329CF</PackageCertificateThumbprint>
     <AppxBundle>Always</AppxBundle>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
