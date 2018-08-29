@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VBA10"
-    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
     xmlns:adduplex="using:AdDuplex"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,25 +25,10 @@
         <!--<adduplex:AdControl x:Name="AdDuplexAdControl" 
                             AppKey="53f0124b-fa9c-40be-a364-4589d505adcd"
                             AdUnitId="166555"
-                            VerticalAlignment="Bottom" 
-                            VerticalContentAlignment="Bottom"
-                              IsEnabled="False"
-                            Visibility="Visible"
-                            RefreshInterval="20"
+                             RefreshInterval="20"
                     />-->
         
-        <UI:AdControl ApplicationId="90156e70-3263-4775-8d1e-918443468f13" 
-                      AdUnitId="11532490"
-                      Height="50"
-                      Width="320" 
-                      VerticalAlignment="Bottom"
-                      x:Name="MSAdControl" 
-                      ErrorOccurred="MSAdControl_ErrorOccurred" 
-                      AdRefreshed="MSAdControl_AdRefreshed" 
-                      AutoRefreshIntervalInSeconds="30"
-                      Visibility="Visible"
-                      >
-        </UI:AdControl>
+
 
         
         

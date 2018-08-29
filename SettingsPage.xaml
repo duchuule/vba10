@@ -66,11 +66,11 @@
                                     HorizontalAlignment="Stretch"
                             />
 
-                            <Button x:Name="watchVideoBtn" Content="**Watch Video" 
+                            <!--<Button x:Name="watchVideoBtn" Content="**Watch Video" 
                                     Click="watchVideobtn_Click"
                                     x:Uid="WatchVideoBtn"
                                     HorizontalAlignment="Stretch"
-                                    Grid.Column="2"/>
+                                    Grid.Column="2"/>-->
 
 
                         </Grid>

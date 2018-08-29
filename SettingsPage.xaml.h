@@ -24,11 +24,11 @@ namespace VBA10
 		EmulatorGame *emulator;
 		bool initdone;
 		Platform::Collections::Vector<Windows::Devices::Enumeration::DeviceInformation^>^ HIDDeviceList;
-		Microsoft::Advertising::WinRT::UI::InterstitialAd^ MyVideoAd;
+		//Microsoft::Advertising::WinRT::UI::InterstitialAd^ MyVideoAd;
 
 		//input
 		void ConfigureBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		//void watchVideobtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void UpdateTextBox(Windows::UI::Xaml::Controls::TextBox ^box, VirtualKey vk);
 		void touchToggle_Toggled(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void keyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
@@ -73,8 +73,8 @@ namespace VBA10
 		void purchaseBtn_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
 
-		void OnAdReady(Platform::Object ^sender, Platform::Object ^args);
-		void OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^args);
+		//void OnAdReady(Platform::Object ^sender, Platform::Object ^args);
+		//void OnErrorOccurred(Platform::Object ^sender, Microsoft::Advertising::WinRT::UI::AdErrorEventArgs ^args);
 		void OnCancelled(Platform::Object ^sender, Platform::Object ^args);
 		void OnCompleted(Platform::Object ^sender, Platform::Object ^args);
 		void cboTheme_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);

@@ -148,11 +148,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>VBA10_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>VBA10_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxPackageDir>D:\Duc\Documents\Visual Studio 2015\Projects\VBA10\AppPackages\</AppxPackageDir>
-    <PackageCertificateThumbprint>848A58A80420B0058E01C68EF3AFF76DC6C329CF</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>91DAD9BEFF797214BE31B3D92D5DBECB33EDF581</PackageCertificateThumbprint>
     <AppxBundle>Always</AppxBundle>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -1530,8 +1530,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="AdDuplex.Windows10, Version=10.1.1.0" />
-    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0" />
     <SDKReference Include="SQLite.UWP.2015, Version=3.18.0" />
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0" />
   </ItemGroup>
